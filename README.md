@@ -7,7 +7,7 @@ From my perspective, an MVP for a ReqnRoll Living Doc
 should be a CLI program designed to post-process an HTML report,
 similar to the current Living Doc functionality in SpecFlow.
 
-This demo solution is meant as input and inspiration to a possible final solution...
+This demo solution is intended to serve as input and inspiration for a potential final solution.
 
 During test execution, an output file named TestAutomation.json will be generated,
 containing the majority of the information needed to build a custom report generator
