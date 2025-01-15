@@ -15,6 +15,11 @@ utilizing the FeatureContext and ScenarioContext classes. Additionally,
 a lightweight TestExecutionReportGenerator will produce a simple HTML
 report based on the TestAutomation.json file.
 
+## How-To-Use
+* Execute the ReqnRoll BDD business tests in the solution...
+* Run the LivingDoc.bat file from the project's root folder...
+
+## Download
 GitHub: https://github.com/ExpressiumOSS/ReqnRollTestExecutionReport
 
 
