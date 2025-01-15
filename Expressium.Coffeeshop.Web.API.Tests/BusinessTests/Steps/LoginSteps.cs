@@ -1,0 +1,31 @@
+using Expressium.Coffeeshop.Web.API.Models;
+using Expressium.Coffeeshop.Web.API.Pages;
+using Expressium.Coffeeshop.Web.API.Tests.Factories;
+using Reqnroll;
+
+namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
+{
+    [Binding]
+    public class LoginSteps : BaseSteps
+    {
+        public LoginSteps(ContextController contextController) : base(contextController)
+        {
+        }
+
+        [Given(@"I have logged in with valid user credentials")]
+        public void GivenIHaveLoggedInWithValidUserCredentials()
+        {
+            var loginPage = new LoginPage(logger, driver);
+            loginPage.SetUsername(configuration.Username);
+            loginPage.SetPassword(configuration.Password);
+            loginPage.ClickLogin();
+        }
+
+        [Then(@"I should be redirected to the Home page")]
+        public void ThenIShouldBeRedirectedToTheHomePage()
+        {
+            var homePage = new HomePage(logger, driver);
+            Asserts.EqualTo(homePage.GetTitle(), "XHome", "Validate the HomePage title property...");
+        }
+    }
+}
