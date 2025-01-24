@@ -1,4 +1,4 @@
-echo Runnning ReqnRoll LivingDoc Generator...
+echo off
 
 cd .\Expressium.Coffeeshop.Web.API.Tests\bin\Debug\net6.0
 

@@ -9,7 +9,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
         public ContactUsSteps(ContextController contextController) : base(contextController)
         {
         }
-        
+
         [When(@"I complete and submit the Contact Us formular")]
         public void WhenICreateAndSubmitTheContactUsFormular()
         {
@@ -31,6 +31,12 @@ namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
 
             var expected = "Your contact information has been send - Thanks...";
             Asserts.EqualTo(contactUsPage.GetNotification(), expected, "Validate ContactUsPage notification message...");
+        }
+
+        [When("I delete the Contact Us inquiry")]
+        public void WhenIDeleteTheContactUsInquiry()
+        {
+            throw new PendingStepException();
         }
     }
 }

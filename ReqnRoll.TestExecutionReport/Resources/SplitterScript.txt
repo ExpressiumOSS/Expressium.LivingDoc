@@ -1,0 +1,29 @@
+﻿    <script>
+        const splitter = document.getElementById('splitter');
+        const leftSection = document.getElementById('left-section');
+        const rightSection = document.getElementById('right-section');
+
+        let isDragging = false;
+
+        splitter.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            document.body.style.cursor = 'col-resize';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            const totalWidth = leftSection.offsetWidth + rightSection.offsetWidth + splitter.offsetWidth;
+            const leftWidth = e.clientX - leftSection.getBoundingClientRect().left;
+
+            if (leftWidth > 50 && leftWidth < totalWidth - 50) {
+                leftSection.style.flex = `0 0 ${leftWidth}px`;
+                rightSection.style.flex = `1 1 auto`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            document.body.style.cursor = 'default';
+        });
+    </script>

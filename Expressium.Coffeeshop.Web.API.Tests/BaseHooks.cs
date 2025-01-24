@@ -1,14 +1,12 @@
 using Reqnroll;
 using Reqnroll.BoDi;
-using ReqnRoll.TestExecution;
-using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
 namespace Expressium.Coffeeshop.Web.API.Tests
 {
     [Binding]
-    public class BaseHooks : BaseTestFixture
+    public partial class BaseHooks : BaseTestFixture
     {
         private readonly FeatureContext featureContext;
         private readonly ScenarioContext scenarioContext;
@@ -16,10 +14,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         private readonly IObjectContainer objectContainer;
 
         private ContextController contextController;
-
-        private static ExecutionContext executionContext;
-        private DateTime executionStartTime;
-        private DateTime executionEndTime;
 
         public BaseHooks(FeatureContext featureContext, ScenarioContext scenarioContext, IReqnrollOutputHelper reqnrollOutputHelper, IObjectContainer objectContainer)
         {
@@ -40,11 +34,22 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             objectContainer.RegisterInstanceAs(contextController);
         }
 
+        [BeforeTestRun]
+        public static void BeforeTestRun()
+        {
+            InitializeTestExecution();
+        }
+
+        [AfterTestRun]
+        public static void AfterTestRun()
+        {
+            FinalizeTestExecution();
+        }
+
         [BeforeScenario]
         public void BeforeScenario()
         {
-            AddExecutionFeature();
-            AddExecutionScenario();
+            AddTestExecutionBeforeScenario();
 
             InitializeFixture();
 
@@ -58,10 +63,18 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             FinalizeFixture();
 
             if (File.Exists(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".log")))
+            {
                 reqnrollOutputHelper.AddAttachment(".\\" + GetTestName() + "\\" + GetTestName() + ".log");
+                AddTestExecutionScenarioAttachment(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".log"));
+            }
 
             if (File.Exists(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".png")))
+            {
                 reqnrollOutputHelper.AddAttachment(".\\" + GetTestName() + "\\" + GetTestName() + ".png");
+                AddTestExecutionScenarioAttachment(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".png"));
+            }
+
+            AddTestExecutionAfterScenario();
         }
 
         [BeforeStep]
@@ -74,7 +87,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         [AfterStep]
         public void AfterStep()
         {
-            ExecutionStep();
+            AddTestExecutionAfterStep();
 
             logger.InfoFormat("");
             logger.InfoFormat("// " + scenarioContext.StepContext.StepInfo.StepDefinitionType + " " + scenarioContext.StepContext.StepInfo.Text);
@@ -93,7 +106,15 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
         protected override string GetTestName()
         {
-            string name = scenarioContext.ScenarioInfo.Title;
+            string postfix = null;
+            if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
+            {
+                var arguments = scenarioContext.ScenarioInfo.Arguments.Values;
+                foreach (var argument in arguments)
+                    postfix += " " + argument;
+            }
+
+            var name = scenarioContext.ScenarioInfo.Title + postfix;
             name = string.Join("", name.Split(Path.GetInvalidFileNameChars()));
             return Regex.Replace(name, @"^\w| \w", (match) => match.Value.Replace(" ", "").ToUpper());
         }
@@ -109,76 +130,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         protected override string GetTestDescription()
         {
             return scenarioContext.ScenarioInfo.Title;
-        }
-
-        [BeforeTestRun]
-        public static void BeforeTestRun()
-        {
-            executionContext = new ExecutionContext();
-            executionContext.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            executionContext.ExecutionTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
-
-            System.Threading.Thread.Sleep(1000);
-        }
-
-        [AfterTestRun]
-        public static void AfterTestRun()
-        {
-            ExecutionUtilities.SerializeAsJson(Path.Combine(Directory.GetCurrentDirectory(), "TestExecution.json"), executionContext);
-        }
-
-        private void AddExecutionFeature()
-        {
-            if (!executionContext.IsFeatureAdded(featureContext.FeatureInfo.Title))
-            {
-                executionContext.Features.Add(new ExecutionFeature()
-                {
-                    Tags = string.Join(", ", featureContext.FeatureInfo.Tags),
-                    Title = featureContext.FeatureInfo.Title,
-                    Description = featureContext.FeatureInfo.Description,
-                    FolderPath = featureContext.FeatureInfo.FolderPath
-                });
-            }
-        }
-
-        private void AddExecutionScenario()
-        {
-            if (executionContext.IsFeatureAdded(featureContext.FeatureInfo.Title))
-            {
-                executionStartTime = DateTime.Now;
-
-                var executionFeature = executionContext.GetFeature(featureContext.FeatureInfo.Title);
-                executionFeature.Scenarios.Add(new ExecutionScenario()
-                {
-                    Tags = string.Join(", ", scenarioContext.ScenarioInfo.Tags),
-                    Title = scenarioContext.ScenarioInfo.Title,
-                    Description = scenarioContext.ScenarioInfo.Description
-                });
-            }
-        }
-
-        private void ExecutionStep()
-        {
-            if (executionContext.IsFeatureAdded(featureContext.FeatureInfo.Title))
-            {
-                executionEndTime = DateTime.Now;
-
-                var executionFeature = executionContext.GetFeature(featureContext.FeatureInfo.Title);
-                if (executionFeature.IsScenarioAdded(scenarioContext.ScenarioInfo.Title))
-                {
-                    var executionScenario = executionFeature.GetScenario(scenarioContext.ScenarioInfo.Title);
-                    executionScenario.Status = scenarioContext.ScenarioExecutionStatus.ToString();
-                    executionScenario.Duration = (executionEndTime - executionStartTime).ToString();
-
-                    executionScenario.Steps.Add(new ExecutionStep()
-                    {
-                        Type = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString(),
-                        Text = scenarioContext.StepContext.StepInfo.Text,
-                        Status = scenarioContext.StepContext.Status.ToString(),
-                        Error = scenarioContext.TestError?.Message
-                    });
-                }
-            }
         }
     }
 }

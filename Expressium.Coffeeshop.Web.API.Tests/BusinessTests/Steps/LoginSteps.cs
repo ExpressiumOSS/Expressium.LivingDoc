@@ -1,6 +1,7 @@
 using Expressium.Coffeeshop.Web.API.Models;
 using Expressium.Coffeeshop.Web.API.Pages;
 using Expressium.Coffeeshop.Web.API.Tests.Factories;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Reqnroll;
 
 namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
@@ -26,6 +27,15 @@ namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
         {
             var homePage = new HomePage(logger, driver);
             Asserts.EqualTo(homePage.GetTitle(), "XHome", "Validate the HomePage title property...");
+        }
+
+        [Given(@"I have logged in with invalid user credentials")]
+        public void GivenIHaveLoggedInWithInvalidUserCredentials()
+        {
+            var loginPage = new LoginPage(logger, driver);
+            loginPage.SetUsername(configuration.Username);
+            loginPage.SetPassword("");
+            loginPage.ClickLogin();
         }
     }
 }

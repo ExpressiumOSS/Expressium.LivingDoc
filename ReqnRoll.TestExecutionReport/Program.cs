@@ -8,8 +8,8 @@ namespace ReqnRoll.TestExecutionReport
         {
             if (args.Length == 2)
             {
-                var testExecutionReportGenerator = new TestExecutionReportGenerator(args[0], args[1]);
-                testExecutionReportGenerator.Execute();
+                var testReportGenerator = new TestExecutionReportGenerator(args[0], args[1]);
+                testReportGenerator.Execute();
             }
             else
             {

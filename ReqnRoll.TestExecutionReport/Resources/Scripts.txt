@@ -1,0 +1,35 @@
+﻿    <script>
+        function loadScenario(x) {
+            let details = document.getElementById(x).innerHTML;
+            document.getElementById('right-section').innerHTML = details;
+        }
+    </script>
+    <script>
+        function filterFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search-filter");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("search-list");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+
+                var found = false;
+                for (j = 0; j < tr[i].getElementsByTagName("td").length; j++) {
+                    td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            found = true;
+                        }
+                    }
+                }
+
+                if (found) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>

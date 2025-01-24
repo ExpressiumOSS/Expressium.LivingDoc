@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace ReqnRoll.TestExecution
 {
-    public class ExecutionUtilities
+    public class TestExecutionUtilities
     {
         public static T DeserializeAsJson<T>(string filePath)
         {

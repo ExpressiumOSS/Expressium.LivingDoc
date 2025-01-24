@@ -1,0 +1,171 @@
+﻿    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #content-wrapper {
+            display: flex;
+            height: calc(100% - 98px); /* Adjust for header and footer height */
+            flex-direction: row; /* Change to row for vertical splitter */
+        }
+
+        #splitter {
+            width: 2px;
+            background: #ddd;
+            cursor: col-resize;
+        }
+
+        #left-section, #right-section {
+            flex: 1;
+            overflow: auto;
+        }
+
+        header {
+            background-color: #4CAF50;
+            background-color: steelblue;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 1.5em;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            color: #555;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9em;
+        }
+
+        input.filter {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        table.grid {
+            border: 1px;
+            width: 100%;
+        }
+
+        table.grid tr:hover td {
+            background-color: whitesmoke;
+        }
+
+        td {
+            padding: 4px;
+        }
+
+        th {
+            background-color: steelblue;
+            color: white;
+            padding: 4px;
+        }
+
+        .project-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .project-date {
+            color: gray;
+        }
+
+        .feature-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .scenario-name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tag-names {
+            color: gray;
+        }
+
+        .duration {
+            color: gray;
+        }
+
+        .chart-percentage {
+            font-size: 42px;
+            line-height: 1.0;
+        }
+
+        .chart-status {
+            font-size: 32px;
+            color: gray;
+            line-height: 1.0;
+        }
+
+        .userstory {
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            color: gray;
+            padding-left: 25px;
+        }
+
+        .step-keyword {
+            color: #2471A3;
+            padding-left: 25px;
+            font-weight: bold;
+        }
+
+        .step-status {
+            color: gray;
+            font-style: italic;
+        }
+
+        .step-failed {
+            color: #FF4136;
+            background-color: #FFF5F5;
+            outline: 1px solid #FF4136;
+            font-style: italic;
+            text-align: center;
+            padding: 8px;
+        }
+
+        data-item {
+            visibility: hidden;
+        }
+
+        a {
+            color: steelblue;
+            text-decoration: none;
+        }
+
+        .color-passed {
+            color: #2ECC40;
+        }
+
+        .bgcolor-passed {
+            background: #2ECC40;
+        }
+
+        .color-failed {
+            color: #FF4136;
+        }
+
+        .bgcolor-failed {
+            background: #FF4136;
+        }
+
+        .color-inconclusive {
+            color: #FFA636;
+        }
+
+        .bgcolor-inconclusive {
+            background: #FFA636;
+        }
+
+        .color-skipped {
+            color: #FFDC00;
+        }
+
+        .bgcolor-skipped {
+            background: #FFDC00;
+        }
+    </style>
