@@ -4,13 +4,20 @@
             document.getElementById('right-section').innerHTML = details;
         }
     </script>
+	<script>
+		function presetScenarios(x) {
+			let input = document.getElementById("search-filter");
+            input.value = x;
+
+            filterScenarios();
+		}
+	</script>
     <script>
-        function filterFunction() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("search-filter");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("search-list");
-            tr = table.getElementsByTagName("tr");
+        function filterScenarios() {
+            var input = document.getElementById("search-filter");
+            var filter = input.value.toUpperCase();
+            var table = document.getElementById("search-list");
+            var tr = table.getElementsByTagName("tr");
 
             for (i = 0; i < tr.length; i++) {
 
@@ -19,6 +26,15 @@
                     td = tr[i].getElementsByTagName("td")[j];
                     if (td) {
                         txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            found = true;
+                        }
+                    }
+                }
+
+                if (!found) {
+                    var txtValue = tr[i].getAttribute("tags");
+                    if (txtValue != null) {
                         if (txtValue.toUpperCase().indexOf(filter) > -1) {
                             found = true;
                         }

@@ -32,11 +32,5 @@ namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
             var expected = "Your contact information has been send - Thanks...";
             Asserts.EqualTo(contactUsPage.GetNotification(), expected, "Validate ContactUsPage notification message...");
         }
-
-        [When("I delete the Contact Us inquiry")]
-        public void WhenIDeleteTheContactUsInquiry()
-        {
-            throw new PendingStepException();
-        }
     }
 }

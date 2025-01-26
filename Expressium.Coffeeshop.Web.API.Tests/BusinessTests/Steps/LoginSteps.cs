@@ -37,5 +37,11 @@ namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
             loginPage.SetPassword("");
             loginPage.ClickLogin();
         }
+
+        [Then("I should have an error message on the Login page")]
+        public void ThenIShouldHaveAnErrorMessageOnTheLoginPage()
+        {
+            throw new PendingStepException();
+        }
     }
 }

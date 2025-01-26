@@ -106,15 +106,15 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
         protected override string GetTestName()
         {
-            string postfix = null;
+            var name = scenarioContext.ScenarioInfo.Title;
+
             if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
             {
                 var arguments = scenarioContext.ScenarioInfo.Arguments.Values;
                 foreach (var argument in arguments)
-                    postfix += " " + argument;
+                    name += " " + argument;
             }
 
-            var name = scenarioContext.ScenarioInfo.Title + postfix;
             name = string.Join("", name.Split(Path.GetInvalidFileNameChars()));
             return Regex.Replace(name, @"^\w| \w", (match) => match.Value.Replace(" ", "").ToUpper());
         }

@@ -34,7 +34,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             {
                 testExecutionContext.Features.Add(new TestExecutionFeature()
                 {
-                    Tags = string.Join(", ", featureContext.FeatureInfo.Tags),
+                    Tags = string.Join(" ", featureContext.FeatureInfo.Tags),
                     Title = featureContext.FeatureInfo.Title,
                     Description = featureContext.FeatureInfo.Description,
                     FolderPath = featureContext.FeatureInfo.FolderPath
@@ -47,10 +47,12 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
                 testExecutionScenario = (new TestExecutionScenario()
                 {
-                    Tags = string.Join(", ", scenarioContext.ScenarioInfo.Tags),
+                    Tags = string.Join(" ", scenarioContext.ScenarioInfo.Tags),
                     Title = scenarioContext.ScenarioInfo.Title,
                     Description = scenarioContext.ScenarioInfo.Description
                 });
+
+                testExecutionScenario.Examples.Add(new TestExecutionExample());
 
                 if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
                 {
@@ -66,7 +68,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
                     for (int i = 0; i < numberOfArguments; i++)
                     {
-                        testExecutionScenario.Arguments.Add(new TestExecutionArgument()
+                        testExecutionScenario.Examples[0].Arguments.Add(new TestExecutionArgument()
                         {
                             Name = arrayOfKeys[i],
                             Value = arrayOfValues[i]
@@ -82,15 +84,24 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             {
                 testExecutionEndTime = DateTime.Now;
 
-                testExecutionScenario.Status = scenarioContext.ScenarioExecutionStatus.ToString();
-                testExecutionScenario.Duration = (testExecutionEndTime - testExecutionStartTime);
-                testExecutionScenario.Error = scenarioContext.TestError?.Message;
-                testExecutionScenario.Stacktrace = scenarioContext.TestError?.StackTrace;
+                testExecutionScenario.Examples[0].Status = scenarioContext.ScenarioExecutionStatus.ToString();
+                testExecutionScenario.Examples[0].Duration = (testExecutionEndTime - testExecutionStartTime);
+                testExecutionScenario.Examples[0].Error = scenarioContext.TestError?.Message;
+                testExecutionScenario.Examples[0].Stacktrace = scenarioContext.TestError?.StackTrace;
 
                 if (testExecutionContext.IsFeatureAdded(featureContext.FeatureInfo.Title))
                 {
                     var testExecutionFeature = testExecutionContext.GetFeature(featureContext.FeatureInfo.Title);
-                    testExecutionFeature.Scenarios.Add(testExecutionScenario);
+
+                    if (testExecutionFeature.IsScenarioAdded(scenarioContext.ScenarioInfo.Title))
+                    {
+                        var testExecutionScenarioParent = testExecutionFeature.GetScenario(scenarioContext.ScenarioInfo.Title);
+                        testExecutionScenarioParent.Examples.Add(testExecutionScenario.Examples[0]);
+                    }
+                    else
+                    {
+                        testExecutionFeature.Scenarios.Add(testExecutionScenario);
+                    }
                 }
             }
         }
@@ -99,7 +110,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             if (testExecutionScenario != null)
             {
-                testExecutionScenario.Attachments.Add(filePath);
+                testExecutionScenario.Examples[0].Attachments.Add(filePath);
             }
         }
 
@@ -107,7 +118,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             if (testExecutionScenario != null)
             {
-                testExecutionScenario.Steps.Add(new TestExecutionStep()
+                testExecutionScenario.Examples[0].Steps.Add(new TestExecutionStep()
                 {
                     Type = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString(),
                     Text = scenarioContext.StepContext.StepInfo.Text,

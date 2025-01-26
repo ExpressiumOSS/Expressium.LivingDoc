@@ -55,12 +55,16 @@
 
         td {
             padding: 4px;
+            padding-top: 3px;
+            padding-bottom: 3px;
         }
 
         th {
             background-color: steelblue;
             color: white;
             padding: 4px;
+            padding-top: 3px;
+            padding-bottom: 3px;
         }
 
         .project-name {
@@ -167,5 +171,17 @@
 
         .bgcolor-skipped {
             background: #FFDC00;
+        }
+
+        .examples {
+            color: gray;
+        }
+
+        .status-dot {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
         }
     </style>
