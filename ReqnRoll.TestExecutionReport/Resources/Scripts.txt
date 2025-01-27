@@ -6,7 +6,7 @@
     </script>
 	<script>
 		function presetScenarios(x) {
-			let input = document.getElementById("search-filter");
+			let input = document.getElementById("scenario-filter");
             input.value = x;
 
             filterScenarios();
@@ -14,9 +14,9 @@
 	</script>
     <script>
         function filterScenarios() {
-            var input = document.getElementById("search-filter");
+            var input = document.getElementById("scenario-filter");
             var filter = input.value.toUpperCase();
-            var table = document.getElementById("search-list");
+            var table = document.getElementById("scenario-list");
             var tr = table.getElementsByTagName("tr");
 
             for (i = 0; i < tr.length; i++) {

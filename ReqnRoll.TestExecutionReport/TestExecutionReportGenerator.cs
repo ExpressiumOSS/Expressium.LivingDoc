@@ -15,7 +15,7 @@ namespace ReqnRoll.TestExecutionReport
         private string filePath;
         private string outputPath;
 
-        public TestExecutionReportGenerator(string filePath, string outputPath)
+        internal TestExecutionReportGenerator(string filePath, string outputPath)
         {
             this.filePath = filePath;
             this.outputPath = outputPath;
@@ -37,6 +37,9 @@ namespace ReqnRoll.TestExecutionReport
                 Directory.Delete(outputPath, true);
             Directory.CreateDirectory(outputPath);
             Directory.CreateDirectory(Path.Combine(outputPath, "Attachments"));
+
+            // Sort list of Features by Tags...
+            executionContext.OrderFeaturesByTags();
 
             // Assign Unique Identifier to all Scenarios...
             foreach (var feature in executionContext.Features)
@@ -60,8 +63,6 @@ namespace ReqnRoll.TestExecutionReport
                     }
                 }
             }
-
-            executionContext.OrderFeaturesByTags();
 
             Console.WriteLine("Generating Test Execution HTML Report...");
             GenerateTestExecutionReport(executionContext);
@@ -89,6 +90,25 @@ namespace ReqnRoll.TestExecutionReport
             SaveListOfLinesToFile(htmlFilePath, listOfLines);
         }
 
+        private static void SaveListOfLinesToFile(string filePath, List<string> listOfLines)
+        {
+            var content = string.Join(Environment.NewLine, listOfLines);
+
+            var htmlParser = new HtmlParser();
+            var htmlDocument = htmlParser.ParseDocument(content);
+
+            using (var streamWriter = new StringWriter())
+            {
+                htmlDocument.ToHtml(streamWriter, new PrettyMarkupFormatter
+                {
+                    Indentation = "\t",
+                    NewLine = "\n"
+                });
+
+                File.WriteAllText(filePath, streamWriter.ToString());
+            }
+        }
+
         private List<string> GenerateHead()
         {
             var listOfLines = new List<string>();
@@ -108,12 +128,12 @@ namespace ReqnRoll.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateStyles()
+        private List<string> GenerateStyles()
         {
             return Resources.Styles.Split(Environment.NewLine).ToList();
         }
 
-        internal List<string> GenerateScripts()
+        private List<string> GenerateScripts()
         {
             return Resources.Scripts.Split(Environment.NewLine).ToList();
         }
@@ -189,7 +209,7 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add("<tr>");
             listOfLines.Add("<td>");
-            listOfLines.AddRange(GenerateScenarioTableGrid(executionContext));
+            listOfLines.AddRange(GenerateScenarioList(executionContext));
             listOfLines.Add("</td>");
             listOfLines.Add("</tr>");
 
@@ -251,7 +271,7 @@ namespace ReqnRoll.TestExecutionReport
             return listOfLines;
         }
 
-        internal static List<string> CreateScenarioStatusChartPercentage(int numberOfTests, int numberOfPassed)
+        private static List<string> CreateScenarioStatusChartPercentage(int numberOfTests, int numberOfPassed)
         {
             var listOfLines = new List<string>();
 
@@ -267,14 +287,14 @@ namespace ReqnRoll.TestExecutionReport
             return listOfLines;
         }
 
-        internal static List<string> CreateScenarioStatusChartGraphics(int numberOfPassed, int numberOfInconclusive, int numberOfFailed, int numberOfSkipped, int numberOfTotal)
+        private static List<string> CreateScenarioStatusChartGraphics(int numberOfPassed, int numberOfInconclusive, int numberOfFailed, int numberOfSkipped, int numberOfTotal)
         {
             var numberOfPassedPercent = (int)Math.Round(100.0f / numberOfTotal * numberOfPassed);
             var numberOfInconclusivePercent = (int)Math.Round(100.0f / numberOfTotal * numberOfInconclusive);
             var numberOfFailedPercent = (int)Math.Round(100.0f / numberOfTotal * numberOfFailed);
             var numberOfSkippedPercent = (int)Math.Round(100.0f / numberOfTotal * numberOfSkipped);
 
-            int sumOfPercent = numberOfPassedPercent + numberOfInconclusivePercent + numberOfFailedPercent + numberOfSkippedPercent;
+            var sumOfPercent = numberOfPassedPercent + numberOfInconclusivePercent + numberOfFailedPercent + numberOfSkippedPercent;
             if (sumOfPercent > 100)
             {
                 if (numberOfPassedPercent > 1)
@@ -303,7 +323,7 @@ namespace ReqnRoll.TestExecutionReport
             return listOfLines;
         }
 
-        private IEnumerable<string> GenerateScenarioPreFilters(TestExecutionContext executionContext)
+        private List<string> GenerateScenarioPreFilters(TestExecutionContext executionContext)
         {
             List<string> listOfLines = new List<string>();
 
@@ -325,17 +345,17 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add("<!-- Features Filter Section -->");
             listOfLines.Add("<div>");
-            listOfLines.Add("<input class='filter' onkeyup='filterScenarios()' id='search-filter' type='text' placeholder='Filter by Text'>");
+            listOfLines.Add("<input class='filter' onkeyup='filterScenarios()' id='scenario-filter' type='text' placeholder='Filter by Text'>");
             listOfLines.Add("</div>");
 
             return listOfLines;
         }
 
-        private List<string> GenerateScenarioTableGrid(TestExecutionContext executionContext)
+        private List<string> GenerateScenarioList(TestExecutionContext executionContext)
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Scenarios Table Section -->");
+            listOfLines.Add("<!-- Scenario List Section -->");
             listOfLines.Add("<table class='grid'>");
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
@@ -345,7 +365,7 @@ namespace ReqnRoll.TestExecutionReport
             //listOfLines.Add("<th></th>"); Status Dot
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
-            listOfLines.Add("<tbody id='search-list'>");
+            listOfLines.Add("<tbody id='scenario-list'>");
 
             foreach (var feature in executionContext.Features)
             {
@@ -353,7 +373,7 @@ namespace ReqnRoll.TestExecutionReport
                 {
                     var status = scenario.GetStatus().ToLower();
 
-                    listOfLines.Add($"<tr tags='{scenario.GetTags()}' onclick=\"loadScenario('{scenario.Id}');\">");
+                    listOfLines.Add($"<tr tags='{feature.GetTags() + " " + scenario.GetTags()}' onclick=\"loadScenario('{scenario.Id}');\">");
                     listOfLines.Add($"<td>" + feature.Title + "</td>");
                     listOfLines.Add($"<td><a href='#'>" + scenario.Title + "</a></td>");
                     listOfLines.Add($"<td>" + scenario.GetStatus() + "</td>");
@@ -388,12 +408,11 @@ namespace ReqnRoll.TestExecutionReport
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add("<!-- Scenario Data Section -->");
+                    listOfLines.Add("<!-- Data Section -->");
                     listOfLines.Add($"<div class='data-item' id='{scenario.Id}'>");
-
                     listOfLines.AddRange(GenerateDataFeatureInformation(feature));
+                    listOfLines.Add("<br />");
                     listOfLines.AddRange(GenerateDataScenarioInformation(scenario));
-
                     listOfLines.Add("</div>");
                 }
             }
@@ -405,22 +424,46 @@ namespace ReqnRoll.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
+            listOfLines.Add("<!-- Data Feature Information Section -->");
+            listOfLines.AddRange(GenerateFeatureTagSection(feature));
+            listOfLines.AddRange(GenerateFeatureNameSection(feature));
+            listOfLines.AddRange(GenerateFeatureDescriptionSection(feature));
+            return listOfLines;
+        }
+
+        private List<string> GenerateFeatureTagSection(TestExecutionFeature feature)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Feature Tag Section -->");
             listOfLines.Add("<div>");
+            listOfLines.Add("<span class='tag-names'>" + feature.GetTags() + "</span>");
+            listOfLines.Add("</div>");
 
-            if (feature.IsTagged())
-            {
-                listOfLines.Add("<span class='tag-names'>" + feature.GetTags() + "</span>");
-                listOfLines.Add("<br />");
-            }
+            return listOfLines;
+        }
 
+        private List<string> GenerateFeatureNameSection(TestExecutionFeature feature)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Feature Name Section -->");
+            listOfLines.Add("<div>");
             listOfLines.Add("<span class='feature-name'>Feature: " + feature.Title + "</span>");
             listOfLines.Add("</div>");
 
-            listOfLines.Add("<div class='userstory'>");
+            return listOfLines;
+        }
+
+        private List<string> GenerateFeatureDescriptionSection(TestExecutionFeature feature)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Feature Description Section -->");
+            listOfLines.Add("<div class='feature-description'>");
             var listOfDescription = feature.Description.Trim().Split("\n");
             foreach (var line in listOfDescription)
                 listOfLines.Add("<span>" + line.Trim() + "</span><br />");
-            listOfLines.Add("<br />");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -430,6 +473,7 @@ namespace ReqnRoll.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
+            listOfLines.Add("<!-- Data Scenario Information Section -->");
             bool scenarioSplitter = false;
             foreach (var example in scenario.Examples)
             {
@@ -437,104 +481,152 @@ namespace ReqnRoll.TestExecutionReport
                     listOfLines.Add("<hr>");
                 scenarioSplitter = true;
 
-                listOfLines.Add("<div>");
-                if (scenario.IsTagged())
-                {
-                    listOfLines.Add("<span class='tag-names'>" + scenario.GetTags() + "</span>");
-                    listOfLines.Add("<br />");
-                }
-                listOfLines.Add("</div>");
-
-                var status = example.GetStatus().ToLower();
-
-                var scenarioKeyword = "Scenario:";
-                if (scenario.Examples.Count > 1)
-                    scenarioKeyword = "Scenario Outline:";
+                listOfLines.AddRange(GenerateScenarioTagSection(scenario));
 
                 listOfLines.Add("<table>");
                 listOfLines.Add("<tbody>");
 
-                listOfLines.Add("<tr>");
-                listOfLines.Add("<td>");
-
-                //if (example.IsPassed())
-                //    listOfLines.Add($"<span class='color-{status}'>&check;</span>");
-                //else
-                //    listOfLines.Add($"<span class='color-{status}'>&#x2718;</span>");
-                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
-
-                listOfLines.Add("</td>");
-                listOfLines.Add("<td colspan='2'>");
-                listOfLines.Add("<span class='scenario-name'>" + scenarioKeyword + " " + scenario.Title + " </span>");
-                listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
-                listOfLines.Add("</td>");
-                listOfLines.Add("</tr>");
-
-                foreach (var step in example.Steps)
-                {
-                    listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td></td>");
-                    listOfLines.Add($"<td colspan='2'><span class='step-keyword'>" + step.Type + "</span> " + step.Text + "</td>");
-                    listOfLines.Add($"</tr>");
-                }
-
-                if (scenario.Examples.Count > 1)
-                {
-                    listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td></td>");
-                    listOfLines.Add($"<td colspan='2' class='examples'>&nbsp;<b>Examples:</b></td>");
-                    listOfLines.Add($"</tr>");
-
-                    listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td></td>");
-                    listOfLines.Add($"<td colspan='2' class='examples'>");
-                    listOfLines.Add("<table>");
-                    listOfLines.Add("<tbody>");
-
-                    listOfLines.Add($"<tr>");
-                    foreach (var argument in example.Arguments)
-                        listOfLines.Add($"<td><i>| " + argument.Name + "</i></td>");
-                    listOfLines.Add($"<td>|</td>");
-                    listOfLines.Add($"</tr>");
-
-                    listOfLines.Add($"<tr>");
-                    foreach (var argument in example.Arguments)
-                        listOfLines.Add($"<td>| " + argument.Value + "</td>");
-                    listOfLines.Add($"<td>|</td>");
-                    listOfLines.Add($"</tr>");
-
-                    listOfLines.Add("</tbody>");
-                    listOfLines.Add("</table>");
-                    listOfLines.Add($"</td>");
-                    listOfLines.Add($"</tr>");
-                }
-
-                string message = null;
-                if (example.Error != null)
-                    message = example.Error;
-                else if (example.IsStepPending())
-                    message = "Pending Step Definition";
-                else if (example.IsStepUndefined())
-                    message = "Undefined Step Definition";
-                else if (example.IsStepBindingError())
-                    message = "Binding Error Step Definition";
-                else
-                {
-                }
-
-                if (message != null)
-                {
-                    listOfLines.Add("<tr><td></td></tr>");
-                    listOfLines.Add("<tr>");
-                    listOfLines.Add("<td colspan='3' class='step-failed'>" + message + "</td>");
-                    listOfLines.Add("</tr>");
-                }
+                listOfLines.AddRange(GenerateScenarioHeaderSection(scenario, example));
+                listOfLines.AddRange(GenerateScenarioStepSection(example));
+                listOfLines.AddRange(GenerateScenarioExamplesSection(example));
+                listOfLines.AddRange(GenerateScenarioMessageSection(example));
 
                 listOfLines.Add("</tbody>");
                 listOfLines.Add("</table>");
 
                 listOfLines.Add("<br />");
                 listOfLines.AddRange(GenerateDataAttachments(example));
+            }
+
+            return listOfLines;
+        }
+
+        private List<string> GenerateScenarioTagSection(TestExecutionScenario scenario)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Scenario Tag Section -->");
+            listOfLines.Add("<div>");
+            listOfLines.Add("<span class='tag-names'>" + scenario.GetTags() + "</span>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        private List<string> GenerateScenarioHeaderSection(TestExecutionScenario scenario, TestExecutionExample example)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Scenario Header Section -->");
+
+            var status = example.GetStatus().ToLower();
+
+            var scenarioKeyword = "Scenario:";
+            if (example.Arguments.Count > 0)
+                scenarioKeyword = "Scenario Outline:";
+
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<td>");
+            listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("<td colspan='2'>");
+            listOfLines.Add("<span class='scenario-name'>" + scenarioKeyword + " " + scenario.Title + " </span>");
+            listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("</tr>");
+
+            return listOfLines;
+        }
+
+        private List<string> GenerateScenarioExamplesSection(TestExecutionExample example)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Scenario Examples Section -->");
+
+            if (example.Arguments.Count > 0)
+            {
+                listOfLines.Add($"<tr>");
+                listOfLines.Add($"<td></td>");
+                listOfLines.Add($"<td colspan='2' class='examples'>&nbsp;<b>Examples:</b></td>");
+                listOfLines.Add($"</tr>");
+
+                listOfLines.Add($"<tr>");
+                listOfLines.Add($"<td></td>");
+                listOfLines.Add($"<td colspan='2' class='examples'>");
+                listOfLines.Add("<table>");
+                listOfLines.Add("<tbody>");
+
+                listOfLines.Add($"<tr>");
+                foreach (var argument in example.Arguments)
+                    listOfLines.Add($"<td><i>| " + argument.Name + "</i></td>");
+                listOfLines.Add($"<td>|</td>");
+                listOfLines.Add($"</tr>");
+
+                listOfLines.Add($"<tr>");
+                foreach (var argument in example.Arguments)
+                    listOfLines.Add($"<td>| " + argument.Value + "</td>");
+                listOfLines.Add($"<td>|</td>");
+                listOfLines.Add($"</tr>");
+
+                listOfLines.Add("</tbody>");
+                listOfLines.Add("</table>");
+                listOfLines.Add($"</td>");
+                listOfLines.Add($"</tr>");
+            }
+
+            return listOfLines;
+        }
+
+        private List<string> GenerateScenarioStepSection(TestExecutionExample example)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Scenario Steps Section -->");
+
+            foreach (var step in example.Steps)
+            {
+                var status = step.GetStatus().ToLower();
+
+                //if (example.IsPassed())
+                //    listOfLines.Add($"<span class='color-{status}'>&check;</span>");
+                //else
+                //    listOfLines.Add($"<span class='color-{status}'>&#x2718;</span>");
+
+                listOfLines.Add($"<tr>");
+                listOfLines.Add($"<td></td>");
+                listOfLines.Add($"<td colspan='2'><span class='step-keyword'>" + step.Type + "</span> " + step.Text + "</td>");
+                listOfLines.Add($"</tr>");
+            }
+
+            return listOfLines;
+        }
+
+        private List<string> GenerateScenarioMessageSection(TestExecutionExample example)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Scenario Message Section -->");
+
+            string message = null;
+            if (example.Error != null)
+                message = example.Error;
+            else if (example.IsStepPending())
+                message = "Pending Step Definition";
+            else if (example.IsStepUndefined())
+                message = "Undefined Step Definition";
+            else if (example.IsStepBindingError())
+                message = "Binding Error Step Definition";
+            else
+            {
+            }
+
+            if (message != null)
+            {
+                listOfLines.Add("<tr><td></td></tr>");
+                listOfLines.Add("<tr>");
+                listOfLines.Add("<td colspan='3' class='step-failed'>" + message + "</td>");
+                listOfLines.Add("</tr>");
             }
 
             return listOfLines;
@@ -561,25 +653,6 @@ namespace ReqnRoll.TestExecutionReport
             }
 
             return listOfLines;
-        }
-
-        private static void SaveListOfLinesToFile(string filePath, List<string> listOfLines)
-        {
-            var content = string.Join(Environment.NewLine, listOfLines);
-
-            var htmlParser = new HtmlParser();
-            var htmlDocument = htmlParser.ParseDocument(content);
-
-            using (var streamWriter = new StringWriter())
-            {
-                htmlDocument.ToHtml(streamWriter, new PrettyMarkupFormatter
-                {
-                    Indentation = "\t",
-                    NewLine = "\n"
-                });
-
-                File.WriteAllText(filePath, streamWriter.ToString());
-            }
         }
     }
 }
