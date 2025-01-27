@@ -126,6 +126,7 @@
         .step-failed {
             color: var(--failed-color);
             background-color: #FFF5F5;
+            background-color: #FCDDDD;            
             outline: 1px solid var(--failed-color);
             text-align: center;
             padding: 8px;
@@ -144,7 +145,7 @@
             syntax: "<color>";
             inherits: false;
             initial-value: #2ECC40;
-            initial-value: #22BB33;
+            initial-value: #4AB356;            
         }
 
         .color-passed {
@@ -159,6 +160,7 @@
             syntax: "<color>";
             inherits: false;
             initial-value: #FF4136;
+            initial-value: #F03D2D;            
         }
 
         .color-failed {
@@ -173,6 +175,7 @@
             syntax: "<color>";
             inherits: false;
             initial-value: #FFA636;
+            initial-value: #F8A700;            
         }
 
         .color-inconclusive {

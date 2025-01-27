@@ -1,4 +1,4 @@
-﻿@BusinessTests @Products
+﻿@TA-3000 @Products @BusinessTests
 Feature: Product Management
 	As a User
 	I want to order products from the web application

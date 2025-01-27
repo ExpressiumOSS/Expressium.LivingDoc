@@ -1,4 +1,4 @@
-@BusinessTests @ContactUs
+@TA-2000 @ContactUs @BusinessTests
 Feature: ContactUs
 	As a User
 	I want to send to a user Contact Us inquiry

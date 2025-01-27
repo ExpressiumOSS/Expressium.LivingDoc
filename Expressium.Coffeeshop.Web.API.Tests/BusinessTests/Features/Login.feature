@@ -1,4 +1,4 @@
-@BusinessTests @Login
+@TA-1000 @Login @BusinessTests
 Feature: Login
 	As a User
 	I want to login on the web application
@@ -13,4 +13,3 @@ Scenario: Successful User Login with Valid Credentials
 Scenario: Unsuccessful User Login with Invalid Credentials
 	Given I have logged in with invalid user credentials
 	Then I should have an error message on the Login page
-
