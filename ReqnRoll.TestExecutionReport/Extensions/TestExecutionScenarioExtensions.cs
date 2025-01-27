@@ -4,6 +4,11 @@ namespace ReqnRoll.TestExecutionReport.Extensions
 {
     public static class TestExecutionScenarioExtensions
     {
+        public static bool IsTagged(this TestExecutionScenario scenario)
+        {
+            return !string.IsNullOrEmpty(scenario.Tags);
+        }
+
         public static string GetTags(this TestExecutionScenario scenario)
         {
             return scenario.Tags.FormatTags();

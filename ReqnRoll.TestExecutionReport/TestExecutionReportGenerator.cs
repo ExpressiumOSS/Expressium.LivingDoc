@@ -283,11 +283,11 @@ namespace ReqnRoll.TestExecutionReport
                 numberOfFailedPercent += 1.0f;
 
             var listOfLines = new List<string>();
-            listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfFailed} Failed, {numberOfInconclusive} Inconclusive, {numberOfSkipped} Skipped, {numberOfPassed} Passed Scenarios</p>");
-            listOfLines.Add($"<div class='bgcolor-passed' style='width: 100%; height: 1em;'>");
-            listOfLines.Add($"<div class='bgcolor-failed' style='width: {(int)numberOfFailedPercent}%; height: 1em; float: left'></div>");
+            listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfPassed} Passed, {numberOfInconclusive} Inconclusive, {numberOfFailed} Failed, {numberOfSkipped} Skipped Scenarios</p>");
+            listOfLines.Add($"<div class='bgcolor-skipped' style='width: 100%; height: 1em;'>");
+            listOfLines.Add($"<div class='bgcolor-passed' style='width: {(int)numberOfPassedPercent}%; height: 1em; float: left'></div>");
             listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: {(int)numberOfInconclusivePercent}%; height: 1em; float: left'></div>");
-            listOfLines.Add($"<div class='bgcolor-skipped' style='width: {(int)numberOfSkippedPercent}%; height: 1em; float: left'></div>");
+            listOfLines.Add($"<div class='bgcolor-failed' style='width: {(int)numberOfFailedPercent}%; height: 1em; float: left'></div>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -299,11 +299,11 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add("<!-- Features PreFilters Section -->");
             listOfLines.Add("<div>");
-            listOfLines.Add("<button class='color-failed' onclick='presetScenarios(\"failed\")'>Failed</button>");
-            listOfLines.Add("<button class='color-inconclusive' onclick='presetScenarios(\"inconclusive\")'>Inconclusive</button>");
-            listOfLines.Add("<button class='color-skipped' onclick='presetScenarios(\"skipped\")'>Skipped</button>");
-            listOfLines.Add("<button class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
-            listOfLines.Add("<button class='color-reset' onclick='presetScenarios(\"\")'>Reset</button>");
+            listOfLines.Add("<button title='Passed' class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
+            listOfLines.Add("<button title='Inconclusive' class='color-inconclusive' onclick='presetScenarios(\"inconclusive\")'>Inconclusive</button>");
+            listOfLines.Add("<button title='Failed' class='color-failed' onclick='presetScenarios(\"failed\")'>Failed</button>");
+            listOfLines.Add("<button title='Skipped' class='color-skipped' onclick='presetScenarios(\"skipped\")'>Skipped</button>");
+            listOfLines.Add("<button title='Clear' class='color-clear' onclick='presetScenarios(\"\")'>Clear</button>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -332,6 +332,7 @@ namespace ReqnRoll.TestExecutionReport
             listOfLines.Add("<th>Feature</th>");
             listOfLines.Add("<th>Scenario</th>");
             listOfLines.Add("<th>Status</th>");
+            //listOfLines.Add("<th></th>"); Status Dot
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody id='search-list'>");
@@ -345,10 +346,8 @@ namespace ReqnRoll.TestExecutionReport
                     listOfLines.Add($"<tr tags='{scenario.GetTags()}' onclick=\"loadScenario('{scenario.Id}');\">");
                     listOfLines.Add($"<td>" + feature.Title + "</td>");
                     listOfLines.Add($"<td><a href='#'>" + scenario.Title + "</a></td>");
-                    listOfLines.Add($"<td>");
-                    listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
-                    listOfLines.Add(scenario.GetStatus());
-                    listOfLines.Add($"</td>");
+                    listOfLines.Add($"<td>" + scenario.GetStatus() + "</td>");
+                    //listOfLines.Add($"<td><span class='status-dot bgcolor-{status}'></span></td>");
                     listOfLines.Add($"</tr>");
                 }
             }
@@ -398,7 +397,7 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add("<div>");
 
-            if (!string.IsNullOrEmpty(feature.Tags))
+            if (feature.IsTagged())
             {
                 listOfLines.Add("<span class='tag-names'>" + feature.GetTags() + "</span>");
                 listOfLines.Add("<br />");
@@ -429,12 +428,14 @@ namespace ReqnRoll.TestExecutionReport
                 scenarioSplitter = true;
 
                 listOfLines.Add("<div>");
-                if (!string.IsNullOrEmpty(scenario.Tags))
+                if (scenario.IsTagged())
                 {
                     listOfLines.Add("<span class='tag-names'>" + scenario.GetTags() + "</span>");
                     listOfLines.Add("<br />");
                 }
                 listOfLines.Add("</div>");
+
+                var status = example.GetStatus().ToLower();
 
                 var scenarioKeyword = "Scenario:";
                 if (scenario.Examples.Count > 1)
@@ -446,11 +447,11 @@ namespace ReqnRoll.TestExecutionReport
                 listOfLines.Add("<tr>");
                 listOfLines.Add("<td>");
 
-                var status = example.GetStatus().ToLower();
-                if (example.IsPassed())
-                    listOfLines.Add($"<span class='color-{status}'>&check;</span>");
-                else
-                    listOfLines.Add($"<span class='color-{status}'>&#x2718;</span>");
+                //if (example.IsPassed())
+                //    listOfLines.Add($"<span class='color-{status}'>&check;</span>");
+                //else
+                //    listOfLines.Add($"<span class='color-{status}'>&#x2718;</span>");
+                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
 
                 listOfLines.Add("</td>");
                 listOfLines.Add("<td colspan='2'>");
@@ -514,11 +515,8 @@ namespace ReqnRoll.TestExecutionReport
                 if (message != null)
                 {
                     listOfLines.Add("<tr><td></td></tr>");
-                    listOfLines.Add("<tr><td></td></tr>");
-                    listOfLines.Add($"<tr class='step-failed'>");
-                    listOfLines.Add("<td colspan='3'>");
-                    listOfLines.Add(message);
-                    listOfLines.Add("</td>");
+                    listOfLines.Add("<tr>");
+                    listOfLines.Add("<td colspan='3' class='step-failed'>" + message + "</td>");
                     listOfLines.Add("</tr>");
                 }
 
