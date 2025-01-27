@@ -243,7 +243,7 @@ namespace ReqnRoll.TestExecutionReport
             }
 
             listOfLines.Add("<!-- Status Chart Section -->");
-            listOfLines.Add("<div style='width: 80%; max-width: 500px;'>");
+            listOfLines.Add("<div style='width: 80%; max-width: 450px;'>");
             listOfLines.AddRange(CreateScenarioStatusChartPercentage(numberOfTests, numberOfPassed));
             listOfLines.AddRange(CreateScenarioStatusChartGraphics(numberOfPassed, numberOfInconclusive, numberOfFailed, numberOfSkipped, numberOfTests));
             listOfLines.Add("</div>");
@@ -274,12 +274,30 @@ namespace ReqnRoll.TestExecutionReport
             var numberOfFailedPercent = (int)Math.Round(100.0f / numberOfTotal * numberOfFailed);
             var numberOfSkippedPercent = (int)Math.Round(100.0f / numberOfTotal * numberOfSkipped);
 
+            int sumOfPercent = numberOfPassedPercent + numberOfInconclusivePercent + numberOfFailedPercent + numberOfSkippedPercent;
+            if (sumOfPercent > 100)
+            {
+                if (numberOfPassedPercent > 1)
+                    numberOfPassedPercent -= 1;
+                else if (numberOfInconclusivePercent > 1)
+                    numberOfInconclusivePercent -= 1;
+                else if (numberOfFailedPercent > 1)
+                    numberOfFailedPercent -= 1;
+                else if (numberOfSkippedPercent > 1)
+                    numberOfSkippedPercent -= 1;
+                else
+                {
+                }
+            }
+
             var listOfLines = new List<string>();
             listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfPassed} Passed, {numberOfInconclusive} Inconclusive, {numberOfFailed} Failed, {numberOfSkipped} Skipped Scenarios</p>");
-            listOfLines.Add($"<div class='bgcolor-skipped' style='width: 100%; height: 1em;'>");
+
+            listOfLines.Add($"<div style='width: 100%; height: 1em;'>");
             listOfLines.Add($"<div class='bgcolor-passed' style='width: {numberOfPassedPercent}%; height: 1em; float: left'></div>");
             listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: {numberOfInconclusivePercent}%; height: 1em; float: left'></div>");
             listOfLines.Add($"<div class='bgcolor-failed' style='width: {numberOfFailedPercent}%; height: 1em; float: left'></div>");
+            listOfLines.Add($"<div class='bgcolor-skipped' style='width: {numberOfSkippedPercent}%; height: 1em; float: left'></div>");
             listOfLines.Add("</div>");
 
             return listOfLines;
