@@ -408,7 +408,7 @@ namespace ReqnRoll.TestExecutionReport
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add("<!-- Data Section -->");
+                    listOfLines.Add("<!-- Scenario Data Section -->");
                     listOfLines.Add($"<div class='data-item' id='{scenario.Id}'>");
                     listOfLines.AddRange(GenerateDataFeatureInformation(feature));
                     listOfLines.Add("<br />");
@@ -424,10 +424,10 @@ namespace ReqnRoll.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Data Feature Information Section -->");
             listOfLines.AddRange(GenerateFeatureTagSection(feature));
             listOfLines.AddRange(GenerateFeatureNameSection(feature));
             listOfLines.AddRange(GenerateFeatureDescriptionSection(feature));
+
             return listOfLines;
         }
 
@@ -473,7 +473,6 @@ namespace ReqnRoll.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Data Scenario Information Section -->");
             bool scenarioSplitter = false;
             foreach (var example in scenario.Examples)
             {
@@ -542,10 +541,9 @@ namespace ReqnRoll.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Scenario Examples Section -->");
-
             if (example.Arguments.Count > 0)
             {
+                listOfLines.Add("<!-- Scenario Examples Section -->");
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td></td>");
                 listOfLines.Add($"<td colspan='2' class='examples'>&nbsp;<b>Examples:</b></td>");
@@ -613,8 +611,6 @@ namespace ReqnRoll.TestExecutionReport
 
             var status = example.GetStatus().ToLower();
 
-            listOfLines.Add("<!-- Scenario Message Section -->");
-
             string message = null;
             if (example.Error != null)
                 message = example.Error;
@@ -630,6 +626,7 @@ namespace ReqnRoll.TestExecutionReport
 
             if (message != null)
             {
+                listOfLines.Add("<!-- Scenario Message Section -->");
                 listOfLines.Add($"<tr><td></td></tr>");
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td colspan='3' class='step-{status}'>" + message + "</td>");
@@ -645,6 +642,7 @@ namespace ReqnRoll.TestExecutionReport
 
             if (example.Attachments.Count > 0)
             {
+                listOfLines.Add("<!-- Scenario Attachments Section -->");
                 listOfLines.Add("<div class='attachments'>");
                 listOfLines.Add("<span class='scenario-name'>Attachments:</span>");
                 listOfLines.Add("<ul>");

@@ -43,5 +43,12 @@ namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
         {
             throw new PendingStepException();
         }
+
+        [Then("I should be redirected to the Login page")]
+        public void ThenIShouldBeRedirectedToTheLoginPage()
+        {
+            var loginPage = new LoginPage(logger, driver);
+            Asserts.EqualTo(loginPage.GetTitle(), "Login", "Validate the LoginPage title property...");
+        }
     }
 }

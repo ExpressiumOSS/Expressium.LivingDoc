@@ -16,6 +16,8 @@ namespace Expressium.Coffeeshop.Web.API.Pages
         private WebRadioButton Male => new WebRadioButton(driver, By.Id("gender_0"));
         private WebRadioButton Female => new WebRadioButton(driver, By.Id("gender_1"));
         private WebCheckBox IAgreeToTheTermsOfUse => new WebCheckBox(driver, By.Name("agreement"));
+        private WebButton Submit => new WebButton(driver, By.Name("submit"));
+        private WebButton Reset => new WebButton(driver, By.Name("reset"));
 
         public RegistrationPage(ILog logger, IWebDriver driver) : base(logger, driver)
         {
@@ -104,6 +106,18 @@ namespace Expressium.Coffeeshop.Web.API.Pages
         {
             logger.InfoFormat("GetIAgreeToTheTermsOfUse()");
             return IAgreeToTheTermsOfUse.GetChecked();
+        }
+
+        public void ClickSubmit()
+        {
+            logger.InfoFormat("ClickSubmit()");
+            Submit.Click();
+        }
+
+        public void ClickReset()
+        {
+            logger.InfoFormat("ClickReset()");
+            Reset.Click();
         }
 
         public void FillForm(RegistrationPageModel model)
