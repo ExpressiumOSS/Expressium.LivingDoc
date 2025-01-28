@@ -29,7 +29,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             contextController.Configuration = configuration;
             contextController.Logger = logger;
             contextController.Asserts = Asserts;
-            contextController.Driver = driver;
+            contextController.Driver = lazyWebDriver;
 
             objectContainer.RegisterInstanceAs(contextController);
         }

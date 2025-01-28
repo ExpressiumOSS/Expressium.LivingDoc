@@ -12,14 +12,17 @@ namespace Expressium.Coffeeshop.Web.API.Tests
     public class BaseTestFixture
     {
         protected readonly Configuration configuration;
+        protected readonly LazyWebDriver lazyWebDriver;
 
         protected ILog logger;
         protected Asserts Asserts;
-        protected IWebDriver driver;
+
+        protected IWebDriver driver => lazyWebDriver.Driver;
 
         public BaseTestFixture()
         {
             configuration = Configuration.GetCurrentConfiguation();
+            lazyWebDriver = new LazyWebDriver(configuration);
         }
 
         [OneTimeSetUp]
@@ -79,7 +82,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 }
 
                 driver.Quit();
-                driver = null;
             }
 
             LogMessageAsError(GetTestResultMessage());
@@ -128,10 +130,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
         protected virtual void InitializeBrowser()
         {
-            driver = WebDriverFactory.Initialize(configuration.BrowserType, configuration.Url,
-                configuration.Maximize, configuration.Headless, configuration.WindowSize,
-                configuration.WindowWidth, configuration.WindowHeight);
-
             if (configuration.ShowAlerts)
             {
                 var message = GetTestDescription();

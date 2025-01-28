@@ -7,7 +7,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
     {
         public Configuration Configuration { get; set; }
         public ILog Logger { get; set; }
-        public IWebDriver Driver { get; set; }
+        public LazyWebDriver Driver { get; set; }
         public Asserts Asserts {  get; set; }
     }
 }
