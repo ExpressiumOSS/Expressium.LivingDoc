@@ -486,7 +486,7 @@ namespace ReqnRoll.TestExecutionReport
                 listOfLines.Add("<table>");
                 listOfLines.Add("<tbody>");
 
-                listOfLines.AddRange(GenerateScenarioHeaderSection(scenario, example));
+                listOfLines.AddRange(GenerateScenarioTitleSection(scenario, example));
                 listOfLines.AddRange(GenerateScenarioStepSection(example));
                 listOfLines.AddRange(GenerateScenarioExamplesSection(example));
                 listOfLines.AddRange(GenerateScenarioMessageSection(example));
@@ -513,11 +513,11 @@ namespace ReqnRoll.TestExecutionReport
             return listOfLines;
         }
 
-        private List<string> GenerateScenarioHeaderSection(TestExecutionScenario scenario, TestExecutionExample example)
+        private List<string> GenerateScenarioTitleSection(TestExecutionScenario scenario, TestExecutionExample example)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Scenario Header Section -->");
+            listOfLines.Add("<!-- Scenario Title Section -->");
 
             var status = example.GetStatus().ToLower();
 
@@ -588,17 +588,17 @@ namespace ReqnRoll.TestExecutionReport
             {
                 var status = step.GetStatus().ToLower();
 
-                //var stepMarker = "";
-                //if (step.IsPassed())
-                //    stepMarker = "&check;";
-                //else
-                //    stepMarker = "&#x2718;";
+                var stepMarker = "";
+                if (step.IsPassed())
+                    stepMarker = "&check;";
+                else
+                    stepMarker = "&#x2718;";
 
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td></td>");
                 listOfLines.Add($"<td colspan='2'>");
-                //listOfLines.Add($"<span class='color-{status}'>{stepMarker}</span>");
-                listOfLines.Add($"<span class='step-keyword'>" + step.Type + "</span> ");
+                listOfLines.Add($"<span class='step-indent color-{status}'>{stepMarker}</span>");
+                listOfLines.Add($"<span class='step-keyword'> " + step.Type + "</span> ");
                 listOfLines.Add($"<span>" + step.Text + "</span>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");

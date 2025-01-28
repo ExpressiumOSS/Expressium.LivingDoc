@@ -112,9 +112,12 @@
             line-height: 1.0;
         }
 
+        .step-indent {
+            padding-left: 25px;
+        }
+
         .step-keyword {
             color: #2471A3;
-            padding-left: 25px;
             font-weight: bold;
         }
 
