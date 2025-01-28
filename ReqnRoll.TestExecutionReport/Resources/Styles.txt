@@ -125,9 +125,16 @@
 
         .step-failed {
             color: var(--failed-color);
-            background-color: #FFF5F5;
-            background-color: #FCDDDD;            
+            background-color: #FFE6E6;            
             outline: 1px solid var(--failed-color);
+            text-align: center;
+            padding: 8px;
+        }
+
+        .step-inconclusive {
+            color: var(--inconclusive-color);
+            background-color: #FFF0E6;            
+            outline: 1px solid var(--inconclusive-color);
             text-align: center;
             padding: 8px;
         }

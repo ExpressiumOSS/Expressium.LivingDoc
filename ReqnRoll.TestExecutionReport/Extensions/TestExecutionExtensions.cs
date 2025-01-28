@@ -14,65 +14,65 @@ namespace ReqnRoll.TestExecutionReport.Extensions
 
     internal static class TestExecutionExtensions
     {
-        public static bool IsPassed(this string step)
+        public static bool IsPassed(this string value)
         {
-            if (step == TestExecutionStatuses.OK.ToString())
+            if (value == TestExecutionStatuses.OK.ToString())
                 return true;
             return false;
         }
 
-        public static bool IsFailed(this string step)
+        public static bool IsFailed(this string value)
         {
-            if (step == TestExecutionStatuses.TestError.ToString())
+            if (value == TestExecutionStatuses.TestError.ToString())
                 return true;
             return false;
         }
 
-        public static bool IsSkipped(this string step)
+        public static bool IsSkipped(this string value)
         {
-            if (step == TestExecutionStatuses.Skipped.ToString())
+            if (value == TestExecutionStatuses.Skipped.ToString())
                 return true;
             return false;
         }
 
-        public static bool IsInconclusive(this string step)
+        public static bool IsInconclusive(this string value)
         {
-            if (step.IsStepPending() || step.IsStepUndefined() || step.IsStepBindingError())
+            if (value.IsStepPending() || value.IsStepUndefined() || value.IsStepBindingError())
                 return true;
             return false;
         }
 
-        public static bool IsStepPending(this string step)
+        public static bool IsStepPending(this string value)
         {
-            if (step == TestExecutionStatuses.StepDefinitionPending.ToString())
+            if (value == TestExecutionStatuses.StepDefinitionPending.ToString())
                 return true;
             return false;
         }
 
-        public static bool IsStepUndefined(this string step)
+        public static bool IsStepUndefined(this string value)
         {
-            if (step == TestExecutionStatuses.UndefinedStep.ToString())
+            if (value == TestExecutionStatuses.UndefinedStep.ToString())
                 return true;
             return false;
         }
 
-        public static bool IsStepBindingError(this string step)
+        public static bool IsStepBindingError(this string value)
         {
-            if (step == TestExecutionStatuses.BindingError.ToString())
+            if (value == TestExecutionStatuses.BindingError.ToString())
                 return true;
             return false;
         }
 
-        public static string GetStatus(this string step)
+        public static string GetStatus(this string value)
         {
-            if (step.IsPassed())
+            if (value.IsPassed())
                 return ReportStatuses.Passed.ToString();
-            else if (step.IsSkipped())
-                return ReportStatuses.Skipped.ToString();
-            else if (step.IsSkipped())
-                return ReportStatuses.Failed.ToString();
-            else if (step.IsInconclusive())
+            else if (value.IsInconclusive())
                 return ReportStatuses.Inconclusive.ToString();
+            else if (value.IsFailed())
+                return ReportStatuses.Failed.ToString();
+            else if (value.IsSkipped())
+                return ReportStatuses.Skipped.ToString();
             else
             {
                 return ReportStatuses.Undefined.ToString();

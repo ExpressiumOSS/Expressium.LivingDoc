@@ -362,7 +362,7 @@ namespace ReqnRoll.TestExecutionReport
             listOfLines.Add("<th>Feature</th>");
             listOfLines.Add("<th>Scenario</th>");
             listOfLines.Add("<th>Status</th>");
-            //listOfLines.Add("<th></th>"); Status Dot
+            //listOfLines.Add("<th></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody id='scenario-list'>");
@@ -588,14 +588,19 @@ namespace ReqnRoll.TestExecutionReport
             {
                 var status = step.GetStatus().ToLower();
 
-                //if (example.IsPassed())
-                //    listOfLines.Add($"<span class='color-{status}'>&check;</span>");
+                //var stepMarker = "";
+                //if (step.IsPassed())
+                //    stepMarker = "&check;";
                 //else
-                //    listOfLines.Add($"<span class='color-{status}'>&#x2718;</span>");
+                //    stepMarker = "&#x2718;";
 
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td></td>");
-                listOfLines.Add($"<td colspan='2'><span class='step-keyword'>" + step.Type + "</span> " + step.Text + "</td>");
+                listOfLines.Add($"<td colspan='2'>");
+                //listOfLines.Add($"<span class='color-{status}'>{stepMarker}</span>");
+                listOfLines.Add($"<span class='step-keyword'>" + step.Type + "</span> ");
+                listOfLines.Add($"<span>" + step.Text + "</span>");
+                listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
             }
 
@@ -605,6 +610,8 @@ namespace ReqnRoll.TestExecutionReport
         private List<string> GenerateScenarioMessageSection(TestExecutionExample example)
         {
             var listOfLines = new List<string>();
+
+            var status = example.GetStatus().ToLower();
 
             listOfLines.Add("<!-- Scenario Message Section -->");
 
@@ -623,10 +630,10 @@ namespace ReqnRoll.TestExecutionReport
 
             if (message != null)
             {
-                listOfLines.Add("<tr><td></td></tr>");
-                listOfLines.Add("<tr>");
-                listOfLines.Add("<td colspan='3' class='step-failed'>" + message + "</td>");
-                listOfLines.Add("</tr>");
+                listOfLines.Add($"<tr><td></td></tr>");
+                listOfLines.Add($"<tr>");
+                listOfLines.Add($"<td colspan='3' class='step-{status}'>" + message + "</td>");
+                listOfLines.Add($"</tr>");
             }
 
             return listOfLines;
