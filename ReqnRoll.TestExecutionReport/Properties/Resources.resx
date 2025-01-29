@@ -121,6 +121,9 @@
 	<data name="SplitterScript" type="System.Resources.ResXFileRef, System.Windows.Forms">
 		<value>..\Resources\SplitterScript.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
 	</data>
+	<data name="Heads" type="System.Resources.ResXFileRef, System.Windows.Forms">
+		<value>..\Resources\Heads.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+	</data>
 	<data name="Styles" type="System.Resources.ResXFileRef, System.Windows.Forms">
 		<value>..\Resources\Styles.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
 	</data>

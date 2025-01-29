@@ -115,17 +115,18 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add($"<head>");
 
-            listOfLines.Add("<meta charset='UTF-8'>");
-            listOfLines.Add("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-            listOfLines.Add("<title>ReqnRoll LivingDoc</title>");
-            listOfLines.Add("<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>");
-
+            listOfLines.AddRange(GenerateHeads());
             listOfLines.AddRange(GenerateStyles());
             listOfLines.AddRange(GenerateScripts());
 
             listOfLines.Add($"</head>");
 
             return listOfLines;
+        }
+
+        private List<string> GenerateHeads()
+        {
+            return Resources.Heads.Split(Environment.NewLine).ToList();
         }
 
         private List<string> GenerateStyles()

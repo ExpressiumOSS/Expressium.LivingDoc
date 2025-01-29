@@ -61,12 +61,35 @@ namespace ReqnRoll.TestExecutionReport.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 		&lt;meta charset=&quot;UTF-8&quot;&gt;
+        ///		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+        ///		&lt;title&gt;ReqnRoll LivingDoc&lt;/title&gt;
+        ///		&lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;.
+        /// </summary>
+        internal static string Heads {
+            get {
+                return ResourceManager.GetString("Heads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to     &lt;script&gt;
-        ///        function validateForm(x) {
+        ///        function loadScenario(x) {
         ///            let details = document.getElementById(x).innerHTML;
-        ///            document.getElementById(&apos;scenariodetails&apos;).innerHTML = details;
+        ///            document.getElementById(&apos;right-section&apos;).innerHTML = details;
         ///        }
-        ///    &lt;/script&gt;.
+        ///    &lt;/script&gt;
+        ///	&lt;script&gt;
+        ///		function presetScenarios(x) {
+        ///			let input = document.getElementById(&quot;scenario-filter&quot;);
+        ///            input.value = x;
+        ///
+        ///            filterScenarios();
+        ///		}
+        ///	&lt;/script&gt;
+        ///    &lt;script&gt;
+        ///        function filterScenarios() {
+        ///            var input = document.getElementById(&quot;scenario-f [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Scripts {
             get {
@@ -99,7 +122,7 @@ namespace ReqnRoll.TestExecutionReport.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to     &lt;style&gt;
+        ///   Looks up a localized string similar to 		&lt;style&gt;
         ///        body, html {
         ///            height: 100%;
         ///            margin: 0;
@@ -108,17 +131,17 @@ namespace ReqnRoll.TestExecutionReport.Properties {
         ///
         ///        #content-wrapper {
         ///            display: flex;
-        ///            height: calc(100% - 100px); /* Adjust for header and footer height */
+        ///            height: calc(100% - 98px); /* Adjust for header and footer height */
         ///            flex-direction: row; /* Change to row for vertical splitter */
         ///        }
         ///
         ///        #splitter {
-        ///            width: 5px;
+        ///            width: 2px;
         ///            background: #ddd;
         ///            cursor: col-resize;
         ///        }
         ///
-        ///        #left-section, #right-s [rest of string was truncated]&quot;;.
+        ///        #left-section, #right-sect [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Styles {
             get {
