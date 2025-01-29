@@ -207,32 +207,11 @@ namespace ReqnRoll.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
-            var numberOfPassed = 0;
-            var numberOfInconclusive = 0;
-            var numberOfFailed = 0;
-            var numberOfSkipped = 0;
-            var numberOfTests = 0;
-
-            foreach (var feature in executionContext.Features)
-            {
-                foreach (var scenario in feature.Scenarios)
-                {
-                    if (scenario.IsFailed())
-                        numberOfFailed++;
-                    else if (scenario.IsInconclusive())
-                        numberOfInconclusive++;
-                    else if (scenario.IsSkipped())
-                        numberOfSkipped++;
-                    else if (scenario.IsPassed())
-                        numberOfPassed++;
-                    else
-                    {
-                        numberOfInconclusive++;
-                    }
-
-                    numberOfTests++;
-                }
-            }
+            var numberOfPassed = executionContext.GetNumberOfPassed();
+            var numberOfInconclusive = executionContext.GetNumberOfInconclusive();
+            var numberOfFailed = executionContext.GetNumberOfFailed();
+            var numberOfSkipped = executionContext.GetNumberOfSkipped();
+            var numberOfTests = executionContext.GetNumberOfTests();
 
             listOfLines.Add("<!-- Status Chart Section -->");
             listOfLines.Add("<div class='container' style='text-align: center; max-width: 500px; padding-bottom: 32px;'>");

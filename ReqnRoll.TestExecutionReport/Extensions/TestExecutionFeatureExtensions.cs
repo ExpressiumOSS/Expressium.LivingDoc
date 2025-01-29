@@ -1,5 +1,4 @@
 ﻿using ReqnRoll.TestExecution;
-using System;
 
 namespace ReqnRoll.TestExecutionReport.Extensions
 {
