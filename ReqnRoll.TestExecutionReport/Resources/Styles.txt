@@ -141,6 +141,14 @@
             text-align: center;
             padding: 8px;
         }
+
+        .step-passed {
+            color: var(--passed-color);
+            background-color: #ECFFDC;            
+            outline: 1px solid var(--passed-color);
+            text-align: center;
+            padding: 8px;
+        }
         
         data-item {
             visibility: hidden;

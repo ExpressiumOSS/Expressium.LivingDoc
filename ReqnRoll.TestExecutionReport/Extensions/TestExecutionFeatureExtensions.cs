@@ -14,5 +14,34 @@ namespace ReqnRoll.TestExecutionReport.Extensions
         {
             return feature.Tags.FormatTags();
         }
+
+        public static string GetStatus(this TestExecutionFeature feature)
+        {
+            foreach (var scenario in feature.Scenarios)
+            {
+                if (scenario.IsFailed())
+                    return ReportStatuses.Failed.ToString();
+            }
+
+            foreach (var scenario in feature.Scenarios)
+            {
+                if (scenario.IsInconclusive())
+                    return ReportStatuses.Inconclusive.ToString();
+            }
+
+            foreach (var scenario in feature.Scenarios)
+            {
+                if (scenario.IsSkipped())
+                    return ReportStatuses.Skipped.ToString();
+            }
+
+            foreach (var scenario in feature.Scenarios)
+            {
+                if (scenario.IsPassed())
+                    return ReportStatuses.Passed.ToString();
+            }
+
+            return ReportStatuses.Undefined.ToString();
+        }
     }
 }
