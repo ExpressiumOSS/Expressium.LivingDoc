@@ -10,8 +10,11 @@ namespace ReqnRoll.TestExecutionReport.Extensions
             return context.ExecutionTime.ToString("ddd dd. MMM yyyy HH':'mm':'ss \"GMT\"z");
         }
 
-        public static void OrderFeaturesByTags(this TestExecutionContext context)
+        public static void OrderByTags(this TestExecutionContext context)
         {
+            foreach (var feature in context.Features)
+                feature.OrderByTags();
+
             context.Features = context.Features.OrderBy(x => x.Tags).ToList();
         }
 

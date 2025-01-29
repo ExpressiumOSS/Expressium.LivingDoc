@@ -1,4 +1,5 @@
 ﻿using ReqnRoll.TestExecution;
+using System.Linq;
 
 namespace ReqnRoll.TestExecutionReport.Extensions
 {
@@ -7,6 +8,11 @@ namespace ReqnRoll.TestExecutionReport.Extensions
         public static bool IsTagged(this TestExecutionFeature feature)
         {
             return !string.IsNullOrEmpty(feature.Tags);
+        }
+
+        public static void OrderByTags(this TestExecutionFeature feature)
+        {
+            feature.Scenarios = feature.Scenarios.OrderBy(x => x.Tags).ToList();
         }
 
         public static string GetTags(this TestExecutionFeature feature)

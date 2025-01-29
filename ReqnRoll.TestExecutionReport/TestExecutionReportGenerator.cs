@@ -39,7 +39,7 @@ namespace ReqnRoll.TestExecutionReport
             Directory.CreateDirectory(Path.Combine(outputPath, "Attachments"));
 
             // Sort list of Features by Tags...
-            executionContext.OrderFeaturesByTags();
+            executionContext.OrderByTags();
 
             // Assign Unique Identifier to all Scenarios...
             foreach (var feature in executionContext.Features)
