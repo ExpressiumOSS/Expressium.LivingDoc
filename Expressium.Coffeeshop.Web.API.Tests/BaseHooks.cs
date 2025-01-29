@@ -88,9 +88,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         public void AfterStep()
         {
             AddTestExecutionAfterStep();
-
-            logger.InfoFormat("");
-            logger.InfoFormat("// " + scenarioContext.StepContext.StepInfo.StepDefinitionType + " " + scenarioContext.StepContext.StepInfo.Text);
         }
 
         protected override string GetTestId()

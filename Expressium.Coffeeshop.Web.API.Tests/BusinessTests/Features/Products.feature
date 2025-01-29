@@ -1,10 +1,10 @@
-﻿@TA-3000 @Products @BusinessTests
+﻿@TA-4000 @Products @BusinessTests
 Feature: Product Management
 	As a User
 	I want to order products from the web application
 	So that I can enjoy my favorite coffee
 
-@TA-3001 @Review
+@TA-4001 @Review
 Scenario Outline: Ordering Coffee Confirmation Notification
 	Given I have logged in with valid user credentials
 	When I add <Brand> coffee to the shopping cart

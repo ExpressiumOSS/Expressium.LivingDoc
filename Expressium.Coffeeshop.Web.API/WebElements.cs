@@ -22,7 +22,7 @@ namespace Expressium.Coffeeshop.Web.API
 
         static WebElements()
         {
-            ElementTimeOut = 10000;
+            ElementTimeOut = 5000;
 
             Highlight = false;
             HighlightTimeOut = 150;
