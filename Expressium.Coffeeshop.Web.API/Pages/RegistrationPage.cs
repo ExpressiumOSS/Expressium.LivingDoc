@@ -18,6 +18,7 @@ namespace Expressium.Coffeeshop.Web.API.Pages
         private WebCheckBox IAgreeToTheTermsOfUse => new WebCheckBox(driver, By.Name("agreement"));
         private WebButton Submit => new WebButton(driver, By.Name("submit"));
         private WebButton Reset => new WebButton(driver, By.Name("reset"));
+        private WebButton Cancel => new WebButton(driver, By.Name("cancel"));
 
         public RegistrationPage(ILog logger, IWebDriver driver) : base(logger, driver)
         {
@@ -118,6 +119,12 @@ namespace Expressium.Coffeeshop.Web.API.Pages
         {
             logger.InfoFormat("ClickReset()");
             Reset.Click();
+        }
+
+        public void ClickCancel()
+        {
+            logger.InfoFormat("ClickCancel()");
+            Cancel.Click();
         }
 
         public void FillForm(RegistrationPageModel model)

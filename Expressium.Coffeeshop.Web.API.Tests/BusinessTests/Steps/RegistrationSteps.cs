@@ -24,5 +24,18 @@ namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
             registrationPage.FillForm(registrationPageModel);
             registrationPage.ClickSubmit();
         }
+
+        [When("I complete and cancel the Registration formular")]
+        public void WhenICompleteAndCancelTheRegistrationFormular()
+        {
+            var loginPage = new LoginPage(logger, driver);
+            loginPage.ClickCreateAnAccount();
+
+            var registrationPageModel = RegistrationPageModelFactory.Default();
+
+            var registrationPage = new RegistrationPage(logger, driver);
+            registrationPage.FillForm(registrationPageModel);
+            registrationPage.ClickCancel();
+        }
     }
 }

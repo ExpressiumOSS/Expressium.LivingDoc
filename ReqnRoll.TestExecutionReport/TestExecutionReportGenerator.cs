@@ -400,12 +400,12 @@ namespace ReqnRoll.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
-            bool scenarioSplitter = false;
+            bool exampleSplitter = false;
             foreach (var example in scenario.Examples)
             {
-                if (scenarioSplitter)
+                if (exampleSplitter)
                     listOfLines.Add("<hr>");
-                scenarioSplitter = true;
+                exampleSplitter = true;
 
                 listOfLines.AddRange(GenerateScenarioTagSection(scenario));
 
@@ -508,6 +508,7 @@ namespace ReqnRoll.TestExecutionReport
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td></td>");
                 listOfLines.Add($"<td colspan='2' class='examples'>");
+
                 listOfLines.Add("<table>");
                 listOfLines.Add("<tbody>");
 
@@ -525,6 +526,7 @@ namespace ReqnRoll.TestExecutionReport
 
                 listOfLines.Add("</tbody>");
                 listOfLines.Add("</table>");
+
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
             }
@@ -547,8 +549,6 @@ namespace ReqnRoll.TestExecutionReport
                 message = "Undefined Step Definition";
             else if (example.IsStepBindingError())
                 message = "Binding Error Step Definition";
-            //else if (example.IsPassed())
-            //message = "Scenario Successfully Passed";
             else
             {
             }
