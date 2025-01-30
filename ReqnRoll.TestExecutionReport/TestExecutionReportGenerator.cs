@@ -15,6 +15,7 @@ namespace ReqnRoll.TestExecutionReport
         private string filePath;
         private string outputPath;
 
+        private bool includeOnLoadAnalytics = false;
         private bool includeStatusChart = true;
         private bool includeStatusChartToggle = false;
         private bool includeStatusChartAnalytics = false;
@@ -83,7 +84,12 @@ namespace ReqnRoll.TestExecutionReport
             listOfLines.Add("<!DOCTYPE html>");
             listOfLines.Add("<html>");
             listOfLines.AddRange(GenerateHead());
-            listOfLines.Add("<body>");
+
+            if (includeOnLoadAnalytics)
+                listOfLines.Add("<body onload=\"loadScenario('analytics');\">");
+            else
+                listOfLines.Add("<body>");
+
             listOfLines.AddRange(GenerateHeader());
             listOfLines.AddRange(GenerateContent(executionContext));
             listOfLines.AddRange(GenerateFooter());
@@ -160,6 +166,15 @@ namespace ReqnRoll.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
+            if (includeOnLoadAnalytics)
+            {
+                listOfLines.Add("<div class='bg-light'>");
+                listOfLines.Add("<nav style='background-color: darkgray; padding: 8px;'>");
+                listOfLines.Add("<a href='#' style='color: white;' onclick=\"loadScenario('analytics');\">Analytics</a>");
+                listOfLines.Add("</nav>");
+                listOfLines.Add("</div>");
+            }
+
             listOfLines.Add("<!-- Content Wrapper Section -->");
             listOfLines.Add("<div id='content-wrapper'>");
 
@@ -218,8 +233,9 @@ namespace ReqnRoll.TestExecutionReport
             {
                 if (includeStatusChartToggle)
                 {
-                    listOfLines.Add("<div class='container' style='text-align: left;'>");
-                    listOfLines.Add("<a id='status-chart-button' href='#' onclick='showStatusChart()' title='Close Status Chart'><b>&#9866;</b></a>");
+                    listOfLines.Add("<!-- Status Chart Toggle Section -->");
+                    listOfLines.Add("<div class='container' style='text-align: right;'>");
+                    listOfLines.Add("<a id='status-chart-button' style='padding: 10px;' href='#' onclick='showStatusChart()' title='Close Status Chart'><b>&#9866;</b></a>");
                     listOfLines.Add("</div>");
                 }
 
@@ -426,6 +442,30 @@ namespace ReqnRoll.TestExecutionReport
                     listOfLines.Add("</div>");
                 }
             }
+
+            var _includeStatusChart = includeStatusChart;
+            var _includeStatusChartAnalytics = includeStatusChartAnalytics;
+            var _includeStatusChartToggle = includeStatusChartToggle;
+
+            includeStatusChart = true;
+            includeStatusChartAnalytics = true;
+            includeStatusChartToggle = false;
+
+            listOfLines.Add("<!-- Analytics Data Section -->");
+            listOfLines.Add($"<div class='data-item' id='analytics'>");
+
+            listOfLines.Add("<div class='container' style='padding-bottom: 8px;'>");
+            listOfLines.Add("<span class='project-name'>Analytics</span>");
+            listOfLines.Add("<br>");
+            listOfLines.Add("</div>");
+
+            listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
+            listOfLines.Add("</div>");
+
+
+            includeStatusChart = _includeStatusChart;
+            includeStatusChartAnalytics = _includeStatusChartAnalytics;
+            includeStatusChartToggle = _includeStatusChartToggle;
 
             return listOfLines;
         }
