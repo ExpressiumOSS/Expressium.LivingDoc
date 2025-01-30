@@ -42,6 +42,8 @@
         input.filter {
             width: 100%;
             box-sizing: border-box;
+            background-color: whitesmoke;
+            border-width: 1px;
         }
 
         table.grid {
@@ -50,7 +52,7 @@
         }
 
         table.grid tr:hover td {
-            background-color: whitesmoke;
+            background-color: #C7D9E8;
         }
 
         td {
@@ -62,9 +64,11 @@
         th {
             background-color: steelblue;
             color: white;
-            padding: 4px;
+            padding: 5px;
             padding-top: 3px;
             padding-bottom: 3px;
+			border: solid;
+			border-width: 1px;
         }
 
         .project-name {
@@ -110,6 +114,12 @@
             font-size: 32px;
             color: gray;
             line-height: 1.0;
+        }
+
+        .chart-count {
+            font-size: 18px;
+            line-height: 1.0;
+            text-align: center;
         }
 
         .step-indent {
@@ -226,5 +236,10 @@
             border-radius: 4px;
             border-width: thin;
             background-color: whitesmoke;
+        }
+
+        .sort-column {
+            float: right;
+			font-weight: normal;
         }
 		</style>

@@ -184,7 +184,7 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.AddRange(GenerateProjectInformation(executionContext));
             listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
-            //listOfLines.AddRange(GenerateScenarioPreFilters(executionContext));
+            listOfLines.AddRange(GenerateScenarioPreFilters(executionContext));
             listOfLines.AddRange(GenerateScenarioFilter(executionContext));
             listOfLines.AddRange(GenerateScenarioList(executionContext));
 
@@ -247,14 +247,57 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfPassed} Passed, {numberOfInconclusive} Inconclusive, {numberOfFailed} Failed, {numberOfSkipped} Skipped Scenarios</p>");
 
-            listOfLines.Add($"<div style='width: 100%; height: 1em;'>");
-            listOfLines.Add($"<div class='bgcolor-passed' style='width: {numberOfPassedPercent}%; height: 1em; float: left'></div>");
-            listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: {numberOfInconclusivePercent}%; height: 1em; float: left'></div>");
-            listOfLines.Add($"<div class='bgcolor-failed' style='width: {numberOfFailedPercent}%; height: 1em; float: left'></div>");
-            listOfLines.Add($"<div class='bgcolor-skipped' style='width: {numberOfSkippedPercent}%; height: 1em; float: left'></div>");
+            listOfLines.Add($"<div style='width: 100%; height: 0.8em;'>");
+            listOfLines.Add($"<div class='bgcolor-passed' style='width: {numberOfPassedPercent}%; height: 0.8em; float: left'></div>");
+            listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: {numberOfInconclusivePercent}%; height: 0.8em; float: left'></div>");
+            listOfLines.Add($"<div class='bgcolor-failed' style='width: {numberOfFailedPercent}%; height: 0.8em; float: left'></div>");
+            listOfLines.Add($"<div class='bgcolor-skipped' style='width: {numberOfSkippedPercent}%; height: 0.8em; float: left'></div>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
+
+            var includeAnalytics = false;
+            if (includeAnalytics)
+            {
+                listOfLines.Add("<!-- Status Analytics Section -->");
+                listOfLines.Add("<div class='container' style='text-align: center; max-width: 600px; padding-bottom: 8px;'>");
+
+                listOfLines.Add("<table width='100%'>");
+                listOfLines.Add("<tr>");
+
+                listOfLines.Add("<td class='color-passed' align='center'>");
+                listOfLines.Add($"<span class='chart-count'>{numberOfPassed}<br />Passed<br /></span>");
+                listOfLines.Add($"<div class='bgcolor-passed' style='width: 110px; height: 0.4em;'></div>");
+                listOfLines.Add("</td>");
+
+                listOfLines.Add("<td class='color-failed' align='center'>");
+                listOfLines.Add($"<span class='chart-count'>{numberOfFailed}<br />Failed<br /></span>");
+                listOfLines.Add($"<div class='bgcolor-failed' style='width: 110px; height: 0.4em;'></div>");
+                listOfLines.Add("</td>");
+
+                listOfLines.Add("<td class='color-inconclusive' align='center'>");
+                listOfLines.Add($"<span class='chart-count'>{numberOfInconclusive}<br />Inconclusive<br /></span>");
+                listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: 110px; height: 0.4em;'></div>");
+                listOfLines.Add("</td>");
+
+                listOfLines.Add("<td class='color-skipped' align='center'>");
+                listOfLines.Add($"<span class='chart-count'>{numberOfSkipped}<br />Skipped<br /></span>");
+                listOfLines.Add($"<div class='bgcolor-skipped' style='width: 110px; height: 0.4em;'></div>");
+                listOfLines.Add("</td>");
+
+                listOfLines.Add("<td class='color-total' align='center'>");
+                listOfLines.Add($"<span class='chart-count'>{numberOfTests}<br />Total<br /></span>");
+                listOfLines.Add($"<div style='background-color: black; width: 110px; height: 0.4em;'></div>");
+                listOfLines.Add("</td>");
+
+                listOfLines.Add("</tr>");
+                listOfLines.Add("</table>");
+
+                listOfLines.Add("</div>");
+
+                listOfLines.Add("<hr>");
+                listOfLines.Add("<br />");
+            }
 
             return listOfLines;
         }
@@ -264,13 +307,16 @@ namespace ReqnRoll.TestExecutionReport
             List<string> listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Features PreFilters Section -->");
-            listOfLines.Add("<div class='container' style='text-align: right; padding-bottom: 8px;'>");
+
+            listOfLines.Add("<!-- ");
+            listOfLines.Add("<div class='container' style='text-align: right; padding-bottom: 6px;'>");
             listOfLines.Add("<button title='Passed' class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
             listOfLines.Add("<button title='Inconclusive' class='color-inconclusive' onclick='presetScenarios(\"inconclusive\")'>Inconclusive</button>");
             listOfLines.Add("<button title='Failed' class='color-failed' onclick='presetScenarios(\"failed\")'>Failed</button>");
             listOfLines.Add("<button title='Skipped' class='color-skipped' onclick='presetScenarios(\"skipped\")'>Skipped</button>");
             listOfLines.Add("<button title='Clear' class='color-clear' onclick='presetScenarios(\"\")'>Clear</button>");
             listOfLines.Add("</div>");
+            listOfLines.Add(" -->");
 
             return listOfLines;
         }
@@ -280,8 +326,8 @@ namespace ReqnRoll.TestExecutionReport
             List<string> listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Features Filter Section -->");
-            listOfLines.Add("<div class='container' style='padding-bottom: 8px;'>");
-            listOfLines.Add("<input class='filter' onkeyup='filterScenarios()' id='scenario-filter' type='text' placeholder='Filter by Text'>");
+            listOfLines.Add("<div class='container' style='padding-bottom: 6px;'>");
+            listOfLines.Add("<input class='filter' onkeyup='filterScenarios()' id='scenario-filter' type='text' placeholder='Filter by Keywords'>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -293,12 +339,12 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add("<!-- Scenario List Section -->");
             listOfLines.Add("<div class='container'>");
-            listOfLines.Add("<table class='grid'>");
+            listOfLines.Add("<table id='scenariolist' class='grid'>");
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
-            listOfLines.Add("<th>Feature</th>");
-            listOfLines.Add("<th>Scenario</th>");
-            listOfLines.Add("<th>Status</th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(0)'>Feature<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(2)'>Status<span class='sort-column'>&udarr;</span></th>");
             //listOfLines.Add("<th></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
@@ -478,12 +524,12 @@ namespace ReqnRoll.TestExecutionReport
                 if (step.IsPassed())
                     stepMarker = "&check;";
                 else
-                    stepMarker = "&#x2718;";
+                    stepMarker = "&cross;";
 
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td></td>");
                 listOfLines.Add($"<td colspan='2'>");
-                listOfLines.Add($"<span class='step-indent color-{status}'>{stepMarker}</span>");
+                listOfLines.Add($"<span class='step-indent color-{status}'><b>{stepMarker}</b></span>");
                 listOfLines.Add($"<span class='step-keyword'> " + step.Type + "</span> ");
                 listOfLines.Add($"<span>" + step.Text + "</span>");
                 listOfLines.Add($"</td>");
@@ -594,3 +640,5 @@ namespace ReqnRoll.TestExecutionReport
         }
     }
 }
+
+// https://www.toptal.com/designers/htmlarrows/symbols
