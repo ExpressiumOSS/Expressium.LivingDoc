@@ -456,12 +456,45 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add("<div class='container' style='padding-bottom: 8px;'>");
             listOfLines.Add("<span class='project-name'>Analytics</span>");
-            listOfLines.Add("<br>");
+            listOfLines.Add("<br />");
             listOfLines.Add("</div>");
 
             listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
+
+            listOfLines.Add("<br />");
+            listOfLines.Add("<div class='container'>");
+            listOfLines.Add("<table width='100%'>");
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<th></th>");
+            listOfLines.Add("<th colspan='5' align='center'>Scenario</th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<th>Feature</th>");
+            listOfLines.Add("<th>Passed</th>");
+            listOfLines.Add("<th>Inconclusive</th>");
+            listOfLines.Add("<th>Failed</th>");
+            listOfLines.Add("<th>Skipped</th>");
+            listOfLines.Add("<th>Tests</th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+            listOfLines.Add("<tbody>");
+            foreach (var feature in executionContext.Features)
+            {
+                listOfLines.Add("<tr>");
+                listOfLines.Add($"<td>{feature.Title}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfPassed()}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfInconclusive()}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfFailed()}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfSkipped()}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfTests()}</td>");
+                listOfLines.Add("</tr>");
+            }
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
             listOfLines.Add("</div>");
 
+            listOfLines.Add("</div>");
 
             includeStatusChart = _includeStatusChart;
             includeStatusChartAnalytics = _includeStatusChartAnalytics;
