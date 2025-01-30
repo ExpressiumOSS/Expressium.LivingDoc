@@ -1,7 +1,14 @@
 ﻿    <script>
-        function loadScenario(x) {
-            let details = document.getElementById(x).innerHTML;
-            document.getElementById('right-section').innerHTML = details;
+        function loadScenario(x,y) {
+            let feature = document.getElementById(x).innerHTML;
+            let scenario = document.getElementById(y).innerHTML;
+            document.getElementById('right-section').innerHTML = feature + scenario;
+        }
+    </script>
+    <script>
+        function loadAnalytics(x) {
+            let analytics = document.getElementById(x).innerHTML;
+            document.getElementById('right-section').innerHTML = analytics;
         }
     </script>
 	<script>

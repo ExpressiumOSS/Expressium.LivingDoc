@@ -50,6 +50,8 @@ namespace ReqnRoll.TestExecutionReport
             // Assign Unique Identifier to all Scenarios...
             foreach (var feature in executionContext.Features)
             {
+                feature.Id = Guid.NewGuid().ToString();
+
                 foreach (var scenario in feature.Scenarios)
                     scenario.Id = Guid.NewGuid().ToString();
             }
@@ -86,7 +88,7 @@ namespace ReqnRoll.TestExecutionReport
             listOfLines.AddRange(GenerateHead());
 
             if (includeOnLoadAnalytics)
-                listOfLines.Add("<body onload=\"loadScenario('analytics');\">");
+                listOfLines.Add("<body onload=\"loadAnalytics('analytics');\">");
             else
                 listOfLines.Add("<body>");
 
@@ -166,14 +168,14 @@ namespace ReqnRoll.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
-            if (includeOnLoadAnalytics)
-            {
-                listOfLines.Add("<div class='bg-light'>");
-                listOfLines.Add("<nav style='background-color: darkgray; padding: 8px;'>");
-                listOfLines.Add("<a href='#' style='color: white;' onclick=\"loadScenario('analytics');\">Analytics</a>");
-                listOfLines.Add("</nav>");
-                listOfLines.Add("</div>");
-            }
+            //if (includeOnLoadAnalytics)
+            //{
+            //    listOfLines.Add("<div class='bg-light'>");
+            //    listOfLines.Add("<nav style='background-color: darkgray; padding: 8px;'>");
+            //    listOfLines.Add("<a href='#' style='color: white;' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
+            //    listOfLines.Add("</nav>");
+            //    listOfLines.Add("</div>");
+            //}
 
             listOfLines.Add("<!-- Content Wrapper Section -->");
             listOfLines.Add("<div id='content-wrapper'>");
@@ -397,7 +399,7 @@ namespace ReqnRoll.TestExecutionReport
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr tags='{feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{scenario.Id}');\">");
+                    listOfLines.Add($"<tr tags='{feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
                     listOfLines.Add($"<td>{feature.Title}</td>");
                     listOfLines.Add($"<td><a href='#'>{scenario.Title}</a></td>");
                     listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
@@ -429,76 +431,26 @@ namespace ReqnRoll.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
+            listOfLines.AddRange(GenerateFeatureDataSections(executionContext));
+            listOfLines.AddRange(GenerateScenarioDataSections(executionContext));
+            listOfLines.AddRange(GenerateAnalyticsSection(executionContext));
+
+            return listOfLines;
+        }
+
+        private List<string> GenerateFeatureDataSections(TestExecutionContext executionContext)
+        {
+            var listOfLines = new List<string>();
+
             foreach (var feature in executionContext.Features)
             {
-                foreach (var scenario in feature.Scenarios)
-                {
-                    listOfLines.Add("<!-- Scenario Data Section -->");
-                    listOfLines.Add($"<div class='data-item' id='{scenario.Id}'>");
-                    listOfLines.AddRange(GenerateFeatureTagSection(feature));
-                    listOfLines.AddRange(GenerateFeatureNameSection(feature));
-                    listOfLines.AddRange(GenerateFeatureDescriptionSection(feature));
-                    listOfLines.AddRange(GenerateDataScenarioInformation(scenario));
-                    listOfLines.Add("</div>");
-                }
+                listOfLines.Add("<!-- Feature Data Section -->");
+                listOfLines.Add($"<div class='data-item' id='{feature.Id}'>");
+                listOfLines.AddRange(GenerateFeatureTagSection(feature));
+                listOfLines.AddRange(GenerateFeatureNameSection(feature));
+                listOfLines.AddRange(GenerateFeatureDescriptionSection(feature));
+                listOfLines.Add("</div>");
             }
-
-            var _includeStatusChart = includeStatusChart;
-            var _includeStatusChartAnalytics = includeStatusChartAnalytics;
-            var _includeStatusChartToggle = includeStatusChartToggle;
-
-            includeStatusChart = true;
-            includeStatusChartAnalytics = true;
-            includeStatusChartToggle = false;
-
-            listOfLines.Add("<!-- Analytics Data Section -->");
-            listOfLines.Add($"<div class='data-item' id='analytics'>");
-
-            listOfLines.Add("<div class='container' style='padding-bottom: 8px;'>");
-            listOfLines.Add("<span class='project-name'>Analytics</span>");
-            listOfLines.Add("<br />");
-            listOfLines.Add("</div>");
-
-            listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
-
-            listOfLines.Add("<br />");
-            listOfLines.Add("<div class='container'>");
-            listOfLines.Add("<table width='100%'>");
-            listOfLines.Add("<thead>");
-            listOfLines.Add("<tr>");
-            listOfLines.Add("<th></th>");
-            listOfLines.Add("<th colspan='5' align='center'>Scenario</th>");
-            listOfLines.Add("</tr>");
-            listOfLines.Add("<tr>");
-            listOfLines.Add("<th>Feature</th>");
-            listOfLines.Add("<th>Passed</th>");
-            listOfLines.Add("<th>Inconclusive</th>");
-            listOfLines.Add("<th>Failed</th>");
-            listOfLines.Add("<th>Skipped</th>");
-            listOfLines.Add("<th>Tests</th>");
-            listOfLines.Add("</tr>");
-            listOfLines.Add("</thead>");
-            listOfLines.Add("<tbody>");
-            foreach (var feature in executionContext.Features)
-            {
-                listOfLines.Add("<tr>");
-                listOfLines.Add($"<td>{feature.Title}</td>");
-                listOfLines.Add($"<td align='center'>{feature.GetNumberOfPassed()}</td>");
-                listOfLines.Add($"<td align='center'>{feature.GetNumberOfInconclusive()}</td>");
-                listOfLines.Add($"<td align='center'>{feature.GetNumberOfFailed()}</td>");
-                listOfLines.Add($"<td align='center'>{feature.GetNumberOfSkipped()}</td>");
-                listOfLines.Add($"<td align='center'>{feature.GetNumberOfTests()}</td>");
-                listOfLines.Add("</tr>");
-            }
-            listOfLines.Add("</tbody>");
-            listOfLines.Add("</table>");
-            listOfLines.Add("</div>");
-
-            listOfLines.Add("</div>");
-
-            includeStatusChart = _includeStatusChart;
-            includeStatusChartAnalytics = _includeStatusChartAnalytics;
-            includeStatusChartToggle = _includeStatusChartToggle;
 
             return listOfLines;
         }
@@ -542,34 +494,44 @@ namespace ReqnRoll.TestExecutionReport
             return listOfLines;
         }
 
-        private List<string> GenerateDataScenarioInformation(TestExecutionScenario scenario)
+        private List<string> GenerateScenarioDataSections(TestExecutionContext executionContext)
         {
             var listOfLines = new List<string>();
 
-            bool exampleSplitter = false;
-            foreach (var example in scenario.Examples)
+            foreach (var feature in executionContext.Features)
             {
-                if (exampleSplitter)
-                    listOfLines.Add("<hr>");
-                exampleSplitter = true;
+                foreach (var scenario in feature.Scenarios)
+                {
+                    listOfLines.Add("<!-- Scenario Data Section -->");
+                    listOfLines.Add($"<div class='data-item' id='{scenario.Id}'>");
 
-                listOfLines.AddRange(GenerateScenarioTagSection(scenario));
+                    bool exampleSplitter = false;
+                    foreach (var example in scenario.Examples)
+                    {
+                        if (exampleSplitter)
+                            listOfLines.Add("<hr>");
+                        exampleSplitter = true;
 
-                listOfLines.Add("<!-- Scenario Outline Section -->");
-                listOfLines.Add("<div class='container' style='padding-bottom: 16px;'>");
-                listOfLines.Add("<table>");
-                listOfLines.Add("<tbody>");
+                        listOfLines.AddRange(GenerateScenarioTagSection(scenario));
 
-                listOfLines.AddRange(GenerateScenarioTitleSection(scenario, example));
-                listOfLines.AddRange(GenerateScenarioStepSection(example));
-                listOfLines.AddRange(GenerateScenarioExamplesSection(example));
-                listOfLines.AddRange(GenerateScenarioMessageSection(example));
+                        listOfLines.Add("<!-- Scenario Outline Section -->");
+                        listOfLines.Add("<div class='container' style='padding-bottom: 16px;'>");
+                        listOfLines.Add("<table>");
+                        listOfLines.Add("<tbody>");
 
-                listOfLines.Add("</tbody>");
-                listOfLines.Add("</table>");
-                listOfLines.Add("</div>");
+                        listOfLines.AddRange(GenerateScenarioTitleSection(scenario, example));
+                        listOfLines.AddRange(GenerateScenarioStepSection(example));
+                        listOfLines.AddRange(GenerateScenarioExamplesSection(example));
+                        listOfLines.AddRange(GenerateScenarioMessageSection(example));
 
-                listOfLines.AddRange(GenerateDataAttachments(example));
+                        listOfLines.Add("</tbody>");
+                        listOfLines.Add("</table>");
+                        listOfLines.Add("</div>");
+
+                        listOfLines.AddRange(GenerateScenarioAttachments(example));
+                    }
+                    listOfLines.Add("</div>");
+                }
             }
 
             return listOfLines;
@@ -715,7 +677,7 @@ namespace ReqnRoll.TestExecutionReport
             return listOfLines;
         }
 
-        private List<string> GenerateDataAttachments(TestExecutionExample example)
+        private List<string> GenerateScenarioAttachments(TestExecutionExample example)
         {
             var listOfLines = new List<string>();
 
@@ -735,6 +697,70 @@ namespace ReqnRoll.TestExecutionReport
                 listOfLines.Add("</ul>");
                 listOfLines.Add("</div>");
             }
+
+            return listOfLines;
+        }
+
+        private List<string> GenerateAnalyticsSection(TestExecutionContext executionContext)
+        {
+            var listOfLines = new List<string>();
+
+            var _includeStatusChart = includeStatusChart;
+            var _includeStatusChartAnalytics = includeStatusChartAnalytics;
+            var _includeStatusChartToggle = includeStatusChartToggle;
+
+            includeStatusChart = true;
+            includeStatusChartAnalytics = true;
+            includeStatusChartToggle = false;
+
+            listOfLines.Add("<!-- Analytics Data Section -->");
+            listOfLines.Add($"<div class='data-item' id='analytics'>");
+
+            listOfLines.Add("<div class='container' style='padding-bottom: 8px;'>");
+            listOfLines.Add("<span class='project-name'>Analytics</span>");
+            listOfLines.Add("<br />");
+            listOfLines.Add("</div>");
+
+            listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
+
+            listOfLines.Add("<br />");
+            listOfLines.Add("<div class='container'>");
+            listOfLines.Add("<table width='100%'>");
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<th></th>");
+            listOfLines.Add("<th colspan='5' align='center'>Scenario</th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<th>Feature</th>");
+            listOfLines.Add("<th>Passed</th>");
+            listOfLines.Add("<th>Inconclusive</th>");
+            listOfLines.Add("<th>Failed</th>");
+            listOfLines.Add("<th>Skipped</th>");
+            listOfLines.Add("<th>Tests</th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+            listOfLines.Add("<tbody>");
+            foreach (var feature in executionContext.Features)
+            {
+                listOfLines.Add("<tr>");
+                listOfLines.Add($"<td>{feature.Title}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfPassed()}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfInconclusive()}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfFailed()}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfSkipped()}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfTests()}</td>");
+                listOfLines.Add("</tr>");
+            }
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            includeStatusChart = _includeStatusChart;
+            includeStatusChartAnalytics = _includeStatusChartAnalytics;
+            includeStatusChartToggle = _includeStatusChartToggle;
 
             return listOfLines;
         }
