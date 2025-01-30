@@ -15,6 +15,11 @@ namespace ReqnRoll.TestExecutionReport
         private string filePath;
         private string outputPath;
 
+        private bool includeStatusChart = true;
+        private bool includeStatusChartToggle = false;
+        private bool includeStatusChartAnalytics = false;
+        private bool includeScenariosPreFilters = false;
+
         internal TestExecutionReportGenerator(string filePath, string outputPath)
         {
             this.filePath = filePath;
@@ -184,6 +189,7 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.AddRange(GenerateProjectInformation(executionContext));
             listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
+            listOfLines.AddRange(GenerateScenarioListSeperator(executionContext));
             listOfLines.AddRange(GenerateScenarioPreFilters(executionContext));
             listOfLines.AddRange(GenerateScenarioFilter(executionContext));
             listOfLines.AddRange(GenerateScenarioList(executionContext));
@@ -196,7 +202,7 @@ namespace ReqnRoll.TestExecutionReport
             List<string> listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Project Information Section -->");
-            listOfLines.Add("<div class='container' style='padding-bottom: 16px;'>");
+            listOfLines.Add("<div class='container' style='padding-bottom: 8px;'>");
             listOfLines.Add("<span class='project-name'>" + executionContext.Title + "</span><br />");
             listOfLines.Add("<span class='project-date'>generated " + executionContext.GetExecutionTime() + "</span>");
             listOfLines.Add("</div>");
@@ -208,104 +214,115 @@ namespace ReqnRoll.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
-            // Toggle Visibility of Status Chart...
-            //listOfLines.Add("<div class='container' style='text-align: left;'>");
-            //listOfLines.Add("<a id='status-chart-button' href='#' onclick='showStatusChart()' title='Close Status Chart'><b>&#9866;</b></a>");
-            //listOfLines.Add("</div>");
-
-            var numberOfPassed = executionContext.GetNumberOfPassed();
-            var numberOfInconclusive = executionContext.GetNumberOfInconclusive();
-            var numberOfFailed = executionContext.GetNumberOfFailed();
-            var numberOfSkipped = executionContext.GetNumberOfSkipped();
-            var numberOfTests = executionContext.GetNumberOfTests();
-
-            listOfLines.Add("<!-- Status Chart Section -->");
-            listOfLines.Add("<div id='status-chart'>");
-
-            listOfLines.Add("<div class='container' style='text-align: center; max-width: 500px; padding-bottom: 32px;'>");
-
-            var procentOfPassed = numberOfPassed / (float)numberOfTests * 100;
-            if (float.IsNaN(procentOfPassed))
-                procentOfPassed = 0;
-
-            listOfLines.Add($"<span class='chart-percentage'>{procentOfPassed.ToString("0")}%</span><br />");
-            listOfLines.Add("<span class='chart-status'>Passed</span>");
-
-            var numberOfPassedPercent = (int)Math.Round(100.0f / numberOfTests * numberOfPassed);
-            var numberOfInconclusivePercent = (int)Math.Round(100.0f / numberOfTests * numberOfInconclusive);
-            var numberOfFailedPercent = (int)Math.Round(100.0f / numberOfTests * numberOfFailed);
-            var numberOfSkippedPercent = (int)Math.Round(100.0f / numberOfTests * numberOfSkipped);
-
-            var sumOfPercent = numberOfPassedPercent + numberOfInconclusivePercent + numberOfFailedPercent + numberOfSkippedPercent;
-            if (sumOfPercent > 100)
+            if (includeStatusChart)
             {
-                if (numberOfPassedPercent > 1)
-                    numberOfPassedPercent -= 1;
-                else if (numberOfInconclusivePercent > 1)
-                    numberOfInconclusivePercent -= 1;
-                else if (numberOfFailedPercent > 1)
-                    numberOfFailedPercent -= 1;
-                else if (numberOfSkippedPercent > 1)
-                    numberOfSkippedPercent -= 1;
-                else
+                if (includeStatusChartToggle)
                 {
+                    listOfLines.Add("<div class='container' style='text-align: left;'>");
+                    listOfLines.Add("<a id='status-chart-button' href='#' onclick='showStatusChart()' title='Close Status Chart'><b>&#9866;</b></a>");
+                    listOfLines.Add("</div>");
                 }
-            }
 
-            listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfPassed} Passed, {numberOfInconclusive} Inconclusive, {numberOfFailed} Failed, {numberOfSkipped} Skipped Scenarios</p>");
+                var numberOfPassed = executionContext.GetNumberOfPassed();
+                var numberOfInconclusive = executionContext.GetNumberOfInconclusive();
+                var numberOfFailed = executionContext.GetNumberOfFailed();
+                var numberOfSkipped = executionContext.GetNumberOfSkipped();
+                var numberOfTests = executionContext.GetNumberOfTests();
 
-            listOfLines.Add($"<div style='width: 100%; height: 0.8em;'>");
-            listOfLines.Add($"<div class='bgcolor-passed' style='width: {numberOfPassedPercent}%; height: 0.8em; float: left'></div>");
-            listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: {numberOfInconclusivePercent}%; height: 0.8em; float: left'></div>");
-            listOfLines.Add($"<div class='bgcolor-failed' style='width: {numberOfFailedPercent}%; height: 0.8em; float: left'></div>");
-            listOfLines.Add($"<div class='bgcolor-skipped' style='width: {numberOfSkippedPercent}%; height: 0.8em; float: left'></div>");
-            listOfLines.Add("</div>");
+                listOfLines.Add("<!-- Status Chart Section -->");
+                listOfLines.Add("<div id='status-chart'>");
 
-            listOfLines.Add("</div>");
+                listOfLines.Add("<div class='container' style='text-align: center; max-width: 500px; padding-bottom: 16px;'>");
 
-            var includeAnalytics = false;
-            if (includeAnalytics)
-            {
-                listOfLines.Add("<!-- Status Analytics Section -->");
-                listOfLines.Add("<div class='container' style='text-align: center; max-width: 600px; padding-bottom: 8px;'>");
+                var procentOfPassed = numberOfPassed / (float)numberOfTests * 100;
+                if (float.IsNaN(procentOfPassed))
+                    procentOfPassed = 0;
 
-                listOfLines.Add("<table width='100%'>");
-                listOfLines.Add("<tr>");
+                listOfLines.Add($"<span class='chart-percentage'>{procentOfPassed.ToString("0")}%</span><br />");
+                listOfLines.Add("<span class='chart-status'>Passed</span>");
 
-                listOfLines.Add("<td class='color-passed' align='center'>");
-                listOfLines.Add($"<span class='chart-count'>{numberOfPassed}<br />Passed<br /></span>");
-                listOfLines.Add($"<div class='bgcolor-passed' style='width: 110px; height: 0.4em;'></div>");
-                listOfLines.Add("</td>");
+                var numberOfPassedPercent = (int)Math.Round(100.0f / numberOfTests * numberOfPassed);
+                var numberOfInconclusivePercent = (int)Math.Round(100.0f / numberOfTests * numberOfInconclusive);
+                var numberOfFailedPercent = (int)Math.Round(100.0f / numberOfTests * numberOfFailed);
+                var numberOfSkippedPercent = (int)Math.Round(100.0f / numberOfTests * numberOfSkipped);
 
-                listOfLines.Add("<td class='color-failed' align='center'>");
-                listOfLines.Add($"<span class='chart-count'>{numberOfFailed}<br />Failed<br /></span>");
-                listOfLines.Add($"<div class='bgcolor-failed' style='width: 110px; height: 0.4em;'></div>");
-                listOfLines.Add("</td>");
+                var sumOfPercent = numberOfPassedPercent + numberOfInconclusivePercent + numberOfFailedPercent + numberOfSkippedPercent;
+                if (sumOfPercent > 100)
+                {
+                    if (numberOfPassedPercent > 1)
+                        numberOfPassedPercent -= 1;
+                    else if (numberOfInconclusivePercent > 1)
+                        numberOfInconclusivePercent -= 1;
+                    else if (numberOfFailedPercent > 1)
+                        numberOfFailedPercent -= 1;
+                    else if (numberOfSkippedPercent > 1)
+                        numberOfSkippedPercent -= 1;
+                    else
+                    {
+                    }
+                }
 
-                listOfLines.Add("<td class='color-inconclusive' align='center'>");
-                listOfLines.Add($"<span class='chart-count'>{numberOfInconclusive}<br />Inconclusive<br /></span>");
-                listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: 110px; height: 0.4em;'></div>");
-                listOfLines.Add("</td>");
+                listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfPassed} Passed, {numberOfInconclusive} Inconclusive, {numberOfFailed} Failed, {numberOfSkipped} Skipped Scenarios</p>");
 
-                listOfLines.Add("<td class='color-skipped' align='center'>");
-                listOfLines.Add($"<span class='chart-count'>{numberOfSkipped}<br />Skipped<br /></span>");
-                listOfLines.Add($"<div class='bgcolor-skipped' style='width: 110px; height: 0.4em;'></div>");
-                listOfLines.Add("</td>");
-
-                listOfLines.Add("<td class='color-total' align='center'>");
-                listOfLines.Add($"<span class='chart-count'>{numberOfTests}<br />Total<br /></span>");
-                listOfLines.Add($"<div style='background-color: black; width: 110px; height: 0.4em;'></div>");
-                listOfLines.Add("</td>");
-
-                listOfLines.Add("</tr>");
-                listOfLines.Add("</table>");
+                listOfLines.Add($"<div style='width: 100%; height: 0.8em;'>");
+                listOfLines.Add($"<div class='bgcolor-passed' style='width: {numberOfPassedPercent}%; height: 0.8em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: {numberOfInconclusivePercent}%; height: 0.8em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-failed' style='width: {numberOfFailedPercent}%; height: 0.8em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-skipped' style='width: {numberOfSkippedPercent}%; height: 0.8em; float: left'></div>");
+                listOfLines.Add("</div>");
 
                 listOfLines.Add("</div>");
 
-                listOfLines.Add("<hr>");
-                listOfLines.Add("<br />");
+                if (includeStatusChartAnalytics)
+                {
+                    listOfLines.Add("<!-- Status Analytics Section -->");
+                    listOfLines.Add("<div class='container' style='text-align: center; max-width: 600px; padding-bottom: 16px;'>");
+
+                    listOfLines.Add("<table width='100%'>");
+                    listOfLines.Add("<tr>");
+
+                    listOfLines.Add("<td class='color-passed' align='center'>");
+                    listOfLines.Add($"<span class='chart-count'>{numberOfPassed}<br />Passed<br /></span>");
+                    listOfLines.Add($"<div class='bgcolor-passed' style='width: 110px; height: 0.4em;'></div>");
+                    listOfLines.Add("</td>");
+
+                    listOfLines.Add("<td class='color-failed' align='center'>");
+                    listOfLines.Add($"<span class='chart-count'>{numberOfFailed}<br />Failed<br /></span>");
+                    listOfLines.Add($"<div class='bgcolor-failed' style='width: 110px; height: 0.4em;'></div>");
+                    listOfLines.Add("</td>");
+
+                    listOfLines.Add("<td class='color-inconclusive' align='center'>");
+                    listOfLines.Add($"<span class='chart-count'>{numberOfInconclusive}<br />Inconclusive<br /></span>");
+                    listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: 110px; height: 0.4em;'></div>");
+                    listOfLines.Add("</td>");
+
+                    listOfLines.Add("<td class='color-skipped' align='center'>");
+                    listOfLines.Add($"<span class='chart-count'>{numberOfSkipped}<br />Skipped<br /></span>");
+                    listOfLines.Add($"<div class='bgcolor-skipped' style='width: 110px; height: 0.4em;'></div>");
+                    listOfLines.Add("</td>");
+
+                    listOfLines.Add("<td class='color-total' align='center'>");
+                    listOfLines.Add($"<span class='chart-count'>{numberOfTests}<br />Total<br /></span>");
+                    listOfLines.Add($"<div style='background-color: black; width: 110px; height: 0.4em;'></div>");
+                    listOfLines.Add("</td>");
+
+                    listOfLines.Add("</tr>");
+                    listOfLines.Add("</table>");
+
+                    listOfLines.Add("</div>");
+                }
+
+                listOfLines.Add("</div>");
             }
 
+            return listOfLines;
+        }
+
+        private List<string> GenerateScenarioListSeperator(TestExecutionContext executionContext)
+        {
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<div style='height: 8px;'>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -317,15 +334,16 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add("<!-- Features PreFilters Section -->");
 
-            listOfLines.Add("<!-- ");
-            listOfLines.Add("<div class='container' style='text-align: right; padding-bottom: 6px;'>");
-            listOfLines.Add("<button title='Passed' class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
-            listOfLines.Add("<button title='Inconclusive' class='color-inconclusive' onclick='presetScenarios(\"inconclusive\")'>Inconclusive</button>");
-            listOfLines.Add("<button title='Failed' class='color-failed' onclick='presetScenarios(\"failed\")'>Failed</button>");
-            listOfLines.Add("<button title='Skipped' class='color-skipped' onclick='presetScenarios(\"skipped\")'>Skipped</button>");
-            listOfLines.Add("<button title='Clear' class='color-clear' onclick='presetScenarios(\"\")'>Clear</button>");
-            listOfLines.Add("</div>");
-            listOfLines.Add(" -->");
+            if (includeScenariosPreFilters)
+            {
+                listOfLines.Add("<div class='container' style='text-align: right; padding-bottom: 6px;'>");
+                listOfLines.Add("<button title='Passed' class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
+                listOfLines.Add("<button title='Inconclusive' class='color-inconclusive' onclick='presetScenarios(\"inconclusive\")'>Inconclusive</button>");
+                listOfLines.Add("<button title='Failed' class='color-failed' onclick='presetScenarios(\"failed\")'>Failed</button>");
+                listOfLines.Add("<button title='Skipped' class='color-skipped' onclick='presetScenarios(\"skipped\")'>Skipped</button>");
+                listOfLines.Add("<button title='Clear' class='color-clear' onclick='presetScenarios(\"\")'>Clear</button>");
+                listOfLines.Add("</div>");
+            }
 
             return listOfLines;
         }
