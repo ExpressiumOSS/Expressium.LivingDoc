@@ -208,6 +208,11 @@ namespace ReqnRoll.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
+            // Toggle Visibility of Status Chart...
+            //listOfLines.Add("<div class='container' style='text-align: left;'>");
+            //listOfLines.Add("<a id='status-chart-button' href='#' onclick='showStatusChart()' title='Close Status Chart'><b>&#9866;</b></a>");
+            //listOfLines.Add("</div>");
+
             var numberOfPassed = executionContext.GetNumberOfPassed();
             var numberOfInconclusive = executionContext.GetNumberOfInconclusive();
             var numberOfFailed = executionContext.GetNumberOfFailed();
@@ -215,6 +220,8 @@ namespace ReqnRoll.TestExecutionReport
             var numberOfTests = executionContext.GetNumberOfTests();
 
             listOfLines.Add("<!-- Status Chart Section -->");
+            listOfLines.Add("<div id='status-chart'>");
+
             listOfLines.Add("<div class='container' style='text-align: center; max-width: 500px; padding-bottom: 32px;'>");
 
             var procentOfPassed = numberOfPassed / (float)numberOfTests * 100;
@@ -298,6 +305,8 @@ namespace ReqnRoll.TestExecutionReport
                 listOfLines.Add("<hr>");
                 listOfLines.Add("<br />");
             }
+
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }
