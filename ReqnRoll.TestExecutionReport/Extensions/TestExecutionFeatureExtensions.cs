@@ -48,5 +48,30 @@ namespace ReqnRoll.TestExecutionReport.Extensions
 
             return ReportStatuses.Undefined.ToString();
         }
+
+        public static int GetNumberOfPassed(this TestExecutionFeature feature)
+        {
+            return feature.Scenarios.Count(scenario => scenario.IsPassed());
+        }
+
+        public static int GetNumberOfFailed(this TestExecutionFeature feature)
+        {
+            return feature.Scenarios.Count(scenario => scenario.IsFailed());
+        }
+
+        public static int GetNumberOfInconclusive(this TestExecutionFeature feature)
+        {
+            return feature.Scenarios.Count(scenario => scenario.IsInconclusive());
+        }
+
+        public static int GetNumberOfSkipped(this TestExecutionFeature feature)
+        {
+            return feature.Scenarios.Count(scenario => scenario.IsSkipped());
+        }
+
+        public static int GetNumberOfTests(this TestExecutionFeature feature)
+        {
+            return feature.Scenarios.Count();
+        }
     }
 }
