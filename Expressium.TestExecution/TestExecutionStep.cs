@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReqnRoll.TestExecution
+namespace Expressium.TestExecution
 {
     public class TestExecutionStep
     {

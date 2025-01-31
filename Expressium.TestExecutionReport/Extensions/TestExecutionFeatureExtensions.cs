@@ -1,7 +1,7 @@
-﻿using ReqnRoll.TestExecution;
+﻿using Expressium.TestExecution;
 using System.Linq;
 
-namespace ReqnRoll.TestExecutionReport.Extensions
+namespace Expressium.TestExecutionReport.Extensions
 {
     public static class TestExecutionFeatureExtensions
     {

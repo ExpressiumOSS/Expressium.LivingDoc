@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ReqnRoll.TestExecution
+namespace Expressium.TestExecution
 {
     public class TestExecutionExample
     {

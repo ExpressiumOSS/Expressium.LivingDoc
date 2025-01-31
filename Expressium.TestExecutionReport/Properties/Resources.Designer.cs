@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReqnRoll.TestExecutionReport.Properties {
+namespace Expressium.TestExecutionReport.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ReqnRoll.TestExecutionReport.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ReqnRoll.TestExecutionReport.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Expressium.TestExecutionReport.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -59,11 +59,11 @@ namespace ReqnRoll.TestExecutionReport.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 		&lt;meta charset=&quot;UTF-8&quot;&gt;
         ///		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-        ///		&lt;title&gt;ReqnRoll LivingDoc&lt;/title&gt;
+        ///		&lt;title&gt;Expressium LivingDoc&lt;/title&gt;
         ///		&lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;.
         /// </summary>
         internal static string Heads {

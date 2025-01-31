@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ReqnRoll.TestExecution
+namespace Expressium.TestExecution
 {
     public class TestExecutionContext
     {

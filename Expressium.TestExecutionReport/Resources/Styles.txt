@@ -220,6 +220,20 @@
             background: var(--skipped-color);
         }
 
+        @property --undefined-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: darkgray;
+        }
+
+        .color-undefined {
+            color: var(--undefined-color);
+        }
+
+        .bgcolor-undefined {
+            background: var(--undefined-color);
+        }
+
         .examples {
             color: gray;
         }

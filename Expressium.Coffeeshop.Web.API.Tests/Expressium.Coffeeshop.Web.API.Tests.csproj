@@ -19,8 +19,8 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Expressium.Coffeeshop.Web.API\Expressium.Coffeeshop.Web.API.csproj" />
-		<ProjectReference Include="..\ReqnRoll.TestExecutionReport\ReqnRoll.TestExecutionReport.csproj" />
-		<ProjectReference Include="..\ReqnRoll.TestExecution\ReqnRoll.TestExecution.csproj" />
+		<ProjectReference Include="..\Expressium.TestExecutionReport\Expressium.TestExecutionReport.csproj" />
+		<ProjectReference Include="..\Expressium.TestExecution\Expressium.TestExecution.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

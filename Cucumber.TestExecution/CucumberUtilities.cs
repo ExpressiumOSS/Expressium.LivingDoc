@@ -1,11 +1,20 @@
 ﻿using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
-namespace ReqnRoll.TestExecution
+namespace Cucumber.TestExecution
 {
-    public class TestExecutionUtilities
+    public static class CucumberUtilities
     {
+        public static string CapitalizeWords(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+
+            return Regex.Replace(value, @"(^\w)|(\s\w)", m => m.Value.ToUpper());
+        }
+
         public static T DeserializeAsJson<T>(string filePath)
         {
             var jsonString = File.ReadAllText(filePath);

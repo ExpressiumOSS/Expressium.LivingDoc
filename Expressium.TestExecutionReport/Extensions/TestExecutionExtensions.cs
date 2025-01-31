@@ -1,7 +1,7 @@
-﻿using ReqnRoll.TestExecution;
+﻿using Expressium.TestExecution;
 using System;
 
-namespace ReqnRoll.TestExecutionReport.Extensions
+namespace Expressium.TestExecutionReport.Extensions
 {
     public enum ReportStatuses
     {

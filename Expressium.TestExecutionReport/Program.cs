@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReqnRoll.TestExecutionReport
+namespace Expressium.TestExecutionReport
 {
     public class Program
     {
@@ -13,8 +13,8 @@ namespace ReqnRoll.TestExecutionReport
             }
             else
             {
-                Console.WriteLine("ReqnRoll.TestExecutionReport.exe [FILEPATH] [OUTPUTPATH]");
-                Console.WriteLine("ReqnRoll.TestExecutionReport.exe C:\\SourceCode\\company-project-tests\\TestExecution.json C:\\SourceCode\\company-project-tests\\TestReport");
+                Console.WriteLine("Expressium.TestExecutionReport.exe [FILEPATH] [OUTPUTPATH]");
+                Console.WriteLine("Expressium.TestExecutionReport.exe C:\\SourceCode\\company-project-tests\\TestExecution.json C:\\SourceCode\\company-project-tests\\TestReport");
             }
         }
     }

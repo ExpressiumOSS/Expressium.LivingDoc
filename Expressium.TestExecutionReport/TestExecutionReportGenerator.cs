@@ -1,14 +1,14 @@
 ﻿using AngleSharp.Html;
 using AngleSharp.Html.Parser;
-using ReqnRoll.TestExecution;
-using ReqnRoll.TestExecutionReport.Extensions;
-using ReqnRoll.TestExecutionReport.Properties;
+using Expressium.TestExecution;
+using Expressium.TestExecutionReport.Extensions;
+using Expressium.TestExecutionReport.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace ReqnRoll.TestExecutionReport
+namespace Expressium.TestExecutionReport
 {
     internal class TestExecutionReportGenerator
     {
@@ -158,7 +158,7 @@ namespace ReqnRoll.TestExecutionReport
 
             listOfLines.Add("<!-- Header Section -->");
             listOfLines.Add("<header>");
-            listOfLines.Add("ReqnRoll LivingDoc");
+            listOfLines.Add("Expressium LivingDoc");
             listOfLines.Add("</header>");
 
             return listOfLines;

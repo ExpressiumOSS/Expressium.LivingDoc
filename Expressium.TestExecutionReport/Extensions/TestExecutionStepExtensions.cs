@@ -1,6 +1,6 @@
-﻿using ReqnRoll.TestExecution;
+﻿using Expressium.TestExecution;
 
-namespace ReqnRoll.TestExecutionReport.Extensions
+namespace Expressium.TestExecutionReport.Extensions
 {
     public static class TestExecutionStepExtensions
     {
