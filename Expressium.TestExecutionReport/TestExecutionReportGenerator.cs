@@ -15,11 +15,14 @@ namespace Expressium.TestExecutionReport
         private string filePath;
         private string outputPath;
 
+        private bool includeHeader = true;
+        private bool includeProjectInformation = false;
+        private bool includePageHeader = false;
         private bool includeOnLoadAnalytics = false;
-        private bool includeStatusChart = true;
+        private bool includeStatusChart = false;
         private bool includeStatusChartToggle = false;
         private bool includeStatusChartAnalytics = false;
-        private bool includeScenariosPreFilters = false;
+        private bool includeScenariosPreFilters = true;
 
         internal TestExecutionReportGenerator(string filePath, string outputPath)
         {
@@ -93,6 +96,7 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add("<body>");
 
             listOfLines.AddRange(GenerateHeader());
+            listOfLines.AddRange(GenerateHeaderProjectInformation(executionContext));
             listOfLines.AddRange(GenerateContent(executionContext));
             listOfLines.AddRange(GenerateFooter());
             listOfLines.AddRange(GenerateData(executionContext));
@@ -156,10 +160,13 @@ namespace Expressium.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Header Section -->");
-            listOfLines.Add("<header>");
-            listOfLines.Add("Expressium LivingDoc");
-            listOfLines.Add("</header>");
+            if (includeHeader)
+            {
+                listOfLines.Add("<!-- Header Section -->");
+                listOfLines.Add("<header>");
+                listOfLines.Add("Expressium LivingDoc");
+                listOfLines.Add("</header>");
+            }
 
             return listOfLines;
         }
@@ -204,6 +211,9 @@ namespace Expressium.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
+            if (includePageHeader)
+                listOfLines.Add("<div class='page-name'>Living Documentation</div>");
+
             listOfLines.AddRange(GenerateProjectInformation(executionContext));
             listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
             listOfLines.AddRange(GenerateScenarioListSeperator(executionContext));
@@ -214,15 +224,36 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
+        private List<string> GenerateHeaderProjectInformation(TestExecutionContext executionContext)
+        {
+            List<string> listOfLines = new List<string>();
+
+            if (includeProjectInformation)
+            {
+                listOfLines.Add("<!-- Project Information Section -->");
+                listOfLines.Add("<div class='bg-light'>");
+                listOfLines.Add("<div style='padding: 8px; padding-left: 24px; padding-right: 24px; background-color: #C7D9E8;'>");
+                listOfLines.Add("<span class='project-name'>" + executionContext.Title + "</span><br />");
+                listOfLines.Add("<span class='project-date'>generated " + executionContext.GetExecutionTime() + "</span>");
+                listOfLines.Add("</div>");
+                listOfLines.Add("</div>");
+            }
+
+            return listOfLines;
+        }
+
         private List<string> GenerateProjectInformation(TestExecutionContext executionContext)
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Information Section -->");
-            listOfLines.Add("<div class='container' style='padding-bottom: 8px;'>");
-            listOfLines.Add("<span class='project-name'>" + executionContext.Title + "</span><br />");
-            listOfLines.Add("<span class='project-date'>generated " + executionContext.GetExecutionTime() + "</span>");
-            listOfLines.Add("</div>");
+            if (!includeProjectInformation)
+            {
+                listOfLines.Add("<!-- Project Information Section -->");
+                listOfLines.Add("<div class='container' style='padding-bottom: 8px;'>");
+                listOfLines.Add("<span class='project-name'>" + executionContext.Title + "</span><br />");
+                listOfLines.Add("<span class='project-date'>generated " + executionContext.GetExecutionTime() + "</span>");
+                listOfLines.Add("</div>");
+            }
 
             return listOfLines;
         }
@@ -242,8 +273,8 @@ namespace Expressium.TestExecutionReport
                 }
 
                 var numberOfPassed = executionContext.GetNumberOfPassed();
-                var numberOfInconclusive = executionContext.GetNumberOfInconclusive();
                 var numberOfFailed = executionContext.GetNumberOfFailed();
+                var numberOfIncomplete = executionContext.GetNumberOfIncomplete();
                 var numberOfSkipped = executionContext.GetNumberOfSkipped();
                 var numberOfTests = executionContext.GetNumberOfTests();
 
@@ -260,17 +291,17 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add("<span class='chart-status'>Passed</span>");
 
                 var numberOfPassedPercent = (int)Math.Round(100.0f / numberOfTests * numberOfPassed);
-                var numberOfInconclusivePercent = (int)Math.Round(100.0f / numberOfTests * numberOfInconclusive);
                 var numberOfFailedPercent = (int)Math.Round(100.0f / numberOfTests * numberOfFailed);
+                var numberOfIncompletePercent = (int)Math.Round(100.0f / numberOfTests * numberOfIncomplete);
                 var numberOfSkippedPercent = (int)Math.Round(100.0f / numberOfTests * numberOfSkipped);
 
-                var sumOfPercent = numberOfPassedPercent + numberOfInconclusivePercent + numberOfFailedPercent + numberOfSkippedPercent;
+                var sumOfPercent = numberOfPassedPercent + numberOfIncompletePercent + numberOfFailedPercent + numberOfSkippedPercent;
                 if (sumOfPercent > 100)
                 {
                     if (numberOfPassedPercent > 1)
                         numberOfPassedPercent -= 1;
-                    else if (numberOfInconclusivePercent > 1)
-                        numberOfInconclusivePercent -= 1;
+                    else if (numberOfIncompletePercent > 1)
+                        numberOfIncompletePercent -= 1;
                     else if (numberOfFailedPercent > 1)
                         numberOfFailedPercent -= 1;
                     else if (numberOfSkippedPercent > 1)
@@ -280,14 +311,18 @@ namespace Expressium.TestExecutionReport
                     }
                 }
 
-                listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfPassed} Passed, {numberOfInconclusive} Inconclusive, {numberOfFailed} Failed, {numberOfSkipped} Skipped Scenarios</p>");
+                listOfLines.Add("<p></p>");
+                //listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfPassed} Passed, {numberOfIncomplete} Incomplete, {numberOfFailed} Failed, {numberOfSkipped} Skipped Scenarios</p>");
 
                 listOfLines.Add($"<div style='width: 100%; height: 0.8em;'>");
                 listOfLines.Add($"<div class='bgcolor-passed' style='width: {numberOfPassedPercent}%; height: 0.8em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: {numberOfInconclusivePercent}%; height: 0.8em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-incomplete' style='width: {numberOfIncompletePercent}%; height: 0.8em; float: left'></div>");
                 listOfLines.Add($"<div class='bgcolor-failed' style='width: {numberOfFailedPercent}%; height: 0.8em; float: left'></div>");
                 listOfLines.Add($"<div class='bgcolor-skipped' style='width: {numberOfSkippedPercent}%; height: 0.8em; float: left'></div>");
                 listOfLines.Add("</div>");
+
+                var message = GetStatusMessage((int)procentOfPassed);
+                listOfLines.Add($"<span style='color: gray; font-style: italic; margin: 8px; '>{message}</span>");
 
                 listOfLines.Add("</div>");
 
@@ -309,9 +344,9 @@ namespace Expressium.TestExecutionReport
                     listOfLines.Add($"<div class='bgcolor-failed' style='width: 110px; height: 0.4em;'></div>");
                     listOfLines.Add("</td>");
 
-                    listOfLines.Add("<td class='color-inconclusive' align='center'>");
-                    listOfLines.Add($"<span class='chart-count'>{numberOfInconclusive}<br />Inconclusive<br /></span>");
-                    listOfLines.Add($"<div class='bgcolor-inconclusive' style='width: 110px; height: 0.4em;'></div>");
+                    listOfLines.Add("<td class='color-incomplete' align='center'>");
+                    listOfLines.Add($"<span class='chart-count'>{numberOfIncomplete}<br />Incomplete<br /></span>");
+                    listOfLines.Add($"<div class='bgcolor-incomplete' style='width: 110px; height: 0.4em;'></div>");
                     listOfLines.Add("</td>");
 
                     listOfLines.Add("<td class='color-skipped' align='center'>");
@@ -356,8 +391,8 @@ namespace Expressium.TestExecutionReport
             {
                 listOfLines.Add("<div class='container' style='text-align: right; padding-bottom: 6px;'>");
                 listOfLines.Add("<button title='Passed' class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
-                listOfLines.Add("<button title='Inconclusive' class='color-inconclusive' onclick='presetScenarios(\"inconclusive\")'>Inconclusive</button>");
                 listOfLines.Add("<button title='Failed' class='color-failed' onclick='presetScenarios(\"failed\")'>Failed</button>");
+                listOfLines.Add("<button title='Incomplete' class='color-incomplete' onclick='presetScenarios(\"incomplete\")'>Incomplete</button>");
                 listOfLines.Add("<button title='Skipped' class='color-skipped' onclick='presetScenarios(\"skipped\")'>Skipped</button>");
                 listOfLines.Add("<button title='Clear' class='color-clear' onclick='presetScenarios(\"\")'>Clear</button>");
                 listOfLines.Add("</div>");
@@ -716,6 +751,9 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<!-- Analytics Data Section -->");
             listOfLines.Add($"<div class='data-item' id='analytics'>");
 
+            if (includePageHeader)
+                listOfLines.Add("<div class='page-name'>Analytics</div>");
+
             listOfLines.Add("<div class='container' style='padding-bottom: 8px;'>");
             listOfLines.Add("<span class='project-name'>Analytics</span>");
             listOfLines.Add("<br />");
@@ -734,7 +772,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<tr>");
             listOfLines.Add("<th>Feature</th>");
             listOfLines.Add("<th>Passed</th>");
-            listOfLines.Add("<th>Inconclusive</th>");
+            listOfLines.Add("<th>Incomplete</th>");
             listOfLines.Add("<th>Failed</th>");
             listOfLines.Add("<th>Skipped</th>");
             listOfLines.Add("<th>Tests</th>");
@@ -746,7 +784,7 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add("<tr>");
                 listOfLines.Add($"<td>{feature.Title}</td>");
                 listOfLines.Add($"<td align='center'>{feature.GetNumberOfPassed()}</td>");
-                listOfLines.Add($"<td align='center'>{feature.GetNumberOfInconclusive()}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfIncomplete()}</td>");
                 listOfLines.Add($"<td align='center'>{feature.GetNumberOfFailed()}</td>");
                 listOfLines.Add($"<td align='center'>{feature.GetNumberOfSkipped()}</td>");
                 listOfLines.Add($"<td align='center'>{feature.GetNumberOfTests()}</td>");
@@ -763,6 +801,30 @@ namespace Expressium.TestExecutionReport
             includeStatusChartToggle = _includeStatusChartToggle;
 
             return listOfLines;
+        }
+
+        private string GetStatusMessage(int status)
+        {
+            status = 9;
+            if (status == 100)
+                return "The system is fully covered and all tests are successfully validated!";
+            else if (status >= 90)
+                return "The system is extensively covered but some minor gabs exist!";
+            else if (status >= 75)
+                return "The system is well covered but some gabs remain!";
+            else if (status >= 50)
+                return "The system is moderately covered but some potential risks exist!";
+            else if (status >= 25)
+                return "The system is partially covered and many risks remain!";
+            else if (status >= 10)
+                return "The system is minimally covered and contains many undetected risks!";
+            else if (status < 10)
+                return "The system is not covered and has a uncertainties in reliability!";
+            else
+            {
+            }
+
+            return null;
         }
     }
 }

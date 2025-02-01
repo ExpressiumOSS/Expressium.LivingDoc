@@ -30,8 +30,8 @@ namespace Expressium.TestExecutionReport.Extensions
 
             foreach (var scenario in feature.Scenarios)
             {
-                if (scenario.IsInconclusive())
-                    return ReportStatuses.Inconclusive.ToString();
+                if (scenario.IsIncomplete())
+                    return ReportStatuses.Incomplete.ToString();
             }
 
             foreach (var scenario in feature.Scenarios)
@@ -59,9 +59,9 @@ namespace Expressium.TestExecutionReport.Extensions
             return feature.Scenarios.Count(scenario => scenario.IsFailed());
         }
 
-        public static int GetNumberOfInconclusive(this TestExecutionFeature feature)
+        public static int GetNumberOfIncomplete(this TestExecutionFeature feature)
         {
-            return feature.Scenarios.Count(scenario => scenario.IsInconclusive());
+            return feature.Scenarios.Count(scenario => scenario.IsIncomplete());
         }
 
         public static int GetNumberOfSkipped(this TestExecutionFeature feature)

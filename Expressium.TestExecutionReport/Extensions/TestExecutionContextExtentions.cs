@@ -32,11 +32,11 @@ namespace Expressium.TestExecutionReport.Extensions
                 .Count(scenario => scenario.IsFailed());
         }
 
-        public static int GetNumberOfInconclusive(this TestExecutionContext context)
+        public static int GetNumberOfIncomplete(this TestExecutionContext context)
         {
             return context.Features
                 .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.IsInconclusive());
+                .Count(scenario => scenario.IsIncomplete());
         }
 
         public static int GetNumberOfSkipped(this TestExecutionContext context)

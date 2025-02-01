@@ -19,9 +19,9 @@ namespace Expressium.TestExecutionReport.Extensions
             return step.Status.IsSkipped();
         }
 
-        public static bool IsInconclusive(this TestExecutionStep step)
+        public static bool IsIncomplete(this TestExecutionStep step)
         {
-            return step.Status.IsInconclusive();
+            return step.Status.IsIncomplete();
         }
 
         public static string GetStatus(this TestExecutionStep step)

@@ -19,9 +19,9 @@ namespace Expressium.TestExecutionReport.Extensions
             return example.Status.IsSkipped();
         }
 
-        public static bool IsInconclusive(this TestExecutionExample example)
+        public static bool IsIncomplete(this TestExecutionExample example)
         {
-            return example.Status.IsInconclusive();
+            return example.Status.IsIncomplete();
         }
 
         public static bool IsStepPending(this TestExecutionExample example)
@@ -44,8 +44,8 @@ namespace Expressium.TestExecutionReport.Extensions
             if (example.IsFailed())
                 return ReportStatuses.Failed.ToString();
 
-            if (example.IsInconclusive())
-                return ReportStatuses.Inconclusive.ToString();
+            if (example.IsIncomplete())
+                return ReportStatuses.Incomplete.ToString();
 
             if (example.IsSkipped())
                 return ReportStatuses.Skipped.ToString();

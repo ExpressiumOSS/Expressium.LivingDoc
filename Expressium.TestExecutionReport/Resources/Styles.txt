@@ -44,6 +44,10 @@
             box-sizing: border-box;
             background-color: whitesmoke;
             border-width: 1px;
+            outline: none;
+            background-color: lightgray;
+            border: hidden;
+            padding: 10px;
         }
 
         table.grid {
@@ -55,8 +59,9 @@
             background-color: #C7D9E8;
         }
 
-        td {
-            padding: 4px;
+        td, th {
+            padding-left: 6px;
+            padding-right: 6px;
             padding-top: 3px;
             padding-bottom: 3px;
         }
@@ -64,9 +69,6 @@
         th {
             background-color: steelblue;
             color: white;
-            padding: 5px;
-            padding-top: 3px;
-            padding-bottom: 3px;
 			border: solid;
 			border-width: 1px;
         }
@@ -79,6 +81,12 @@
         .project-date {
             color: gray;
         }
+
+		.page-name {
+			font-size: 20px;
+			font-weight: bold;
+			padding-bottom: 12px;
+		}
 
         .feature-name {
             font-size: 18px;
@@ -144,10 +152,10 @@
             padding: 8px;
         }
 
-        .step-inconclusive {
-            color: var(--inconclusive-color);
+        .step-incomplete {
+            color: var(--incomplete-color);
             background-color: #FFF0E6;            
-            outline: 1px solid var(--inconclusive-color);
+            outline: 1px solid var(--incomplete-color);
             text-align: center;
             padding: 8px;
         }
@@ -191,19 +199,19 @@
             background: var(--failed-color);
         }
 
-        @property --inconclusive-color {
+        @property --incomplete-color {
             syntax: "<color>";
             inherits: false;
             initial-value: #FFA636;
-            initial-value: #F8A700;            
+            initial-value: #F8A700;    
         }
 
-        .color-inconclusive {
-            color: var(--inconclusive-color);
+        .color-incomplete {
+            color: var(--incomplete-color);
         }
 
-        .bgcolor-inconclusive {
-            background: var(--inconclusive-color);
+        .bgcolor-incomplete {
+            background: var(--incomplete-color);
         }
 
         @property --skipped-color {
