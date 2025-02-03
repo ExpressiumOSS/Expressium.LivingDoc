@@ -22,37 +22,28 @@
     <script>
         function filterScenarios() {
             var input = document.getElementById("scenario-filter");
-            var filter = input.value.toUpperCase();
+            var filterTokens = input.value.toUpperCase().split(/\s+/);
             var table = document.getElementById("scenario-list");
             var tr = table.getElementsByTagName("tr");
 
-            for (i = 0; i < tr.length; i++) {
-
+            for (var i = 0; i < tr.length; i++) {
+                var tags = tr[i].getAttribute("tags");
+                var td = tr[i].getElementsByTagName("td");
+                var rowText = "";
                 var found = false;
-                for (j = 0; j < tr[i].getElementsByTagName("td").length; j++) {
-                    td = tr[i].getElementsByTagName("td")[j];
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            found = true;
-                        }
-                    }
+
+                for (var j = 0; j < td.length; j++) {
+                    rowText += td[j].textContent.toUpperCase() + " ";
+                }
+                
+                var tagTokens = tags.toUpperCase().split(/\s+/);
+                for (var t = 0; t < tagTokens.length; t++) {
+                    rowText += tagTokens[t].toUpperCase() + " ";
                 }
 
-                if (!found) {
-                    var txtValue = tr[i].getAttribute("tags");
-                    if (txtValue != null) {
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            found = true;
-                        }
-                    }
-                }
+                found = filterTokens.every(token => rowText.includes(token));
 
-                if (found) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
+                tr[i].style.display = found ? "" : "none";
             }
         }
     </script>

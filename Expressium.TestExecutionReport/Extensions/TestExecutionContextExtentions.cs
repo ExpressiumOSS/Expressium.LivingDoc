@@ -56,6 +56,10 @@ namespace Expressium.TestExecutionReport.Extensions
         public static string GetDuration(this TestExecutionContext context)
         {
             var duration = context.EndTime - context.StartTime;
+
+            if (duration.Minutes > 0)
+                return $"{duration.Minutes}min {duration.Seconds}s {duration.Milliseconds}ms";
+
             return $"{duration.Seconds}s {duration.Milliseconds}ms";
         }
     }
