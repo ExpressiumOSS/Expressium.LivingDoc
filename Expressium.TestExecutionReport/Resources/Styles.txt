@@ -253,6 +253,12 @@
 
         .examples {
             color: gray;
+            padding-left: 24px;
+        }
+
+        .step-examples {
+            color: gray;
+            padding-left: 64px;
         }
 
         .status-dot {

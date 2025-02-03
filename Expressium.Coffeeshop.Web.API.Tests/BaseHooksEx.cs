@@ -118,12 +118,37 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             if (testExecutionScenario != null)
             {
-                testExecutionScenario.Examples[0].Steps.Add(new TestExecutionStep()
+                var testExecutionStep = new TestExecutionStep();
+                testExecutionStep.Type = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString();
+                testExecutionStep.Text = scenarioContext.StepContext.StepInfo.Text;
+                testExecutionStep.Status = scenarioContext.StepContext.Status.ToString();
+
+                if (scenarioContext.StepContext.StepInfo.Table != null)
                 {
-                    Type = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString(),
-                    Text = scenarioContext.StepContext.StepInfo.Text,
-                    Status = scenarioContext.StepContext.Status.ToString(),
-                });
+                    foreach (var row in scenarioContext.StepContext.StepInfo.Table.Rows)
+                    {
+                        var keyCollection = row.Keys;
+                        var valueCollection = row.Values;
+
+                        var numberOfArguments = row.Keys.Count;
+
+                        string[] arrayOfKeys = new string[numberOfArguments];
+                        string[] arrayOfValues = new string[numberOfArguments];
+                        keyCollection.CopyTo(arrayOfKeys, 0);
+                        valueCollection.CopyTo(arrayOfValues, 0);
+
+                        for (int i = 0; i < numberOfArguments; i++)
+                        {
+                            testExecutionStep.Arguments.Add(new TestExecutionArgument()
+                            {
+                                Name = arrayOfKeys[i],
+                                Value = arrayOfValues[i]
+                            });
+                        }
+                    }
+                }
+
+                testExecutionScenario.Examples[0].Steps.Add(testExecutionStep);
             }
         }
     }

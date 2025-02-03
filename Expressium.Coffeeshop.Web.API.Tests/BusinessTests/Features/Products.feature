@@ -13,3 +13,11 @@ Examples:
 	| Brand                      | Price |
 	| Santa Rita Cerrado Mineiro | $99   |
 	| La Soledad Antioquia       | $77   |
+
+@TA-4002 @Review
+Scenario: Ordering Multiple Coffees Confirmation Notification
+	Given I have logged in with valid user credentials
+	When I add multiple pieces of coffees to the shopping cart
+		| Brand                  | Pieces |
+		| La Ceiba Huehuetenango | 2      |
+	Then I should have a confirmation notification message

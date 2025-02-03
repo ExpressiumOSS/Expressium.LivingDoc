@@ -28,5 +28,33 @@ namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
             var productsPage = new ProductsPage(logger, driver);
             Asserts.DoesContain(productsPage.GetNotification(), price, "Validating the ProductsPage Price notification...");
         }
+
+        [When("I add multiple pieces of coffees to the shopping cart")]
+        public void WhenIAddMultiplePiecesOfCoffeesToTheShoppingCart(DataTable dataTable)
+        {
+            var coffees = dataTable.CreateInstance<Coffees>();
+
+            var mainMenuBar = new MainMenuBar(logger, driver);
+            mainMenuBar.ClickProducts();
+
+            for (int i = 0; i < coffees.Pieces; i++)
+            {
+                var productsPage = new ProductsPage(logger, driver);
+                productsPage.Grid.ClickCell(coffees.Brand, 6);
+            }
+        }
+
+        [Then("I should have a confirmation notification message")]
+        public void ThenIShouldHaveAConfirmationNotificationMessage()
+        {
+            var productsPage = new ProductsPage(logger, driver);
+            Asserts.IsNotEmpty(productsPage.GetNotification(), "Validating the ProductsPage notification...");
+        }
+
+        private class Coffees
+        {
+            public string Brand { get; set; }
+            public int Pieces { get; set; }
+        }
     }
 }

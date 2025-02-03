@@ -656,6 +656,35 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add($"<span>" + step.Text + "</span>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
+
+                if (step.Arguments.Count > 0)
+                {
+                    listOfLines.Add("<!-- Scenario Steps Table Section -->");
+                    listOfLines.Add($"<tr>");
+                    listOfLines.Add($"<td></td>");
+                    listOfLines.Add($"<td class='step-examples' colspan='2'>");
+
+                    listOfLines.Add("<table>");
+                    listOfLines.Add("<tbody>");
+
+                    listOfLines.Add($"<tr>");
+                    foreach (var argument in step.Arguments)
+                        listOfLines.Add($"<td><i>| " + argument.Name + "</i></td>");
+                    listOfLines.Add($"<td>|</td>");
+                    listOfLines.Add($"</tr>");
+
+                    listOfLines.Add($"<tr>");
+                    foreach (var argument in step.Arguments)
+                        listOfLines.Add($"<td>| " + argument.Value + "</td>");
+                    listOfLines.Add($"<td>|</td>");
+                    listOfLines.Add($"</tr>");
+
+                    listOfLines.Add("</tbody>");
+                    listOfLines.Add("</table>");
+
+                    listOfLines.Add($"</td>");
+                    listOfLines.Add($"</tr>");
+                }
             }
 
             return listOfLines;
@@ -669,13 +698,11 @@ namespace Expressium.TestExecutionReport
             {
                 listOfLines.Add("<!-- Scenario Examples Section -->");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td></td>");
-                listOfLines.Add($"<td colspan='2' class='examples'><b>Examples:</b></td>");
+                listOfLines.Add($"<td colspan='3' class='examples'><b>Examples:</b></td>");
                 listOfLines.Add($"</tr>");
 
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td></td>");
-                listOfLines.Add($"<td colspan='2' class='examples'>");
+                listOfLines.Add($"<td colspan='3' class='examples'>");
 
                 listOfLines.Add("<table>");
                 listOfLines.Add("<tbody>");
