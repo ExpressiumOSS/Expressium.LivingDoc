@@ -462,7 +462,7 @@ namespace Expressium.TestExecutionReport
 
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr tags='{feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
+                    listOfLines.Add($"<tr tags='{feature.Title} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
                     listOfLines.Add($"<td>{feature.Title}</td>");
                     listOfLines.Add($"<td><a href='#'>{scenario.Title}</a></td>");
                     listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
@@ -622,9 +622,9 @@ namespace Expressium.TestExecutionReport
 
             listOfLines.Add("<!-- Scenario Title Section -->");
             listOfLines.Add("<tr>");
-            listOfLines.Add("<td colspan='3'>");
-            listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
-            listOfLines.Add("<span class='scenario-name'>&nbsp;" + scenarioKeyword + " " + scenario.Title + " </span>");
+            listOfLines.Add($"<td><span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span></td>");
+            listOfLines.Add("<td>");
+            listOfLines.Add("<span class='scenario-name'>" + scenarioKeyword + " " + scenario.Title + " </span>");
             listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
             listOfLines.Add("</td>");
             listOfLines.Add("</tr>");
@@ -650,7 +650,7 @@ namespace Expressium.TestExecutionReport
 
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td></td>");
-                listOfLines.Add($"<td colspan='2'>");
+                listOfLines.Add($"<td>");
                 listOfLines.Add($"<span class='step-indent color-{status}'><b>{stepMarker}</b></span>");
                 listOfLines.Add($"<span class='step-keyword'> " + step.Type + "</span> ");
                 listOfLines.Add($"<span>" + step.Text + "</span>");
@@ -662,7 +662,7 @@ namespace Expressium.TestExecutionReport
                     listOfLines.Add("<!-- Scenario Steps Table Section -->");
                     listOfLines.Add($"<tr>");
                     listOfLines.Add($"<td></td>");
-                    listOfLines.Add($"<td class='step-examples' colspan='2'>");
+                    listOfLines.Add($"<td class='examples' style='padding-left: 64px;'>");
 
                     listOfLines.Add("<table>");
                     listOfLines.Add("<tbody>");
@@ -698,11 +698,13 @@ namespace Expressium.TestExecutionReport
             {
                 listOfLines.Add("<!-- Scenario Examples Section -->");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='3' class='examples'><b>Examples:</b></td>");
+                listOfLines.Add($"<td></td>");
+                listOfLines.Add($"<td class='examples'><b>Examples:</b></td>");
                 listOfLines.Add($"</tr>");
 
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='3' class='examples'>");
+                listOfLines.Add($"<td></td>");
+                listOfLines.Add($"<td class='examples'>");
 
                 listOfLines.Add("<table>");
                 listOfLines.Add("<tbody>");
@@ -752,10 +754,8 @@ namespace Expressium.TestExecutionReport
             {
                 listOfLines.Add("<!-- Scenario Message Section -->");
                 listOfLines.Add($"<tr><td></td></tr>");
-                listOfLines.Add($"<tr><td></td></tr>");
-                //listOfLines.Add($"<tr><td colspan='3'><span class='scenario-name'>Message:</span></td></tr>");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='3'>");
+                listOfLines.Add($"<td colspan='2'>");
                 listOfLines.Add($"<div class='step-{status}'>{message}</div>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
