@@ -5,11 +5,6 @@ namespace Expressium.TestExecutionReport.Extensions
 {
     public static class TestExecutionContextExtentions
     {
-        public static string GetExecutionTime(this TestExecutionContext context)
-        {
-            return context.ExecutionTime.ToString("ddd dd. MMM yyyy HH':'mm':'ss \"GMT\"z");
-        }
-
         public static void OrderByTags(this TestExecutionContext context)
         {
             foreach (var feature in context.Features)
@@ -25,18 +20,18 @@ namespace Expressium.TestExecutionReport.Extensions
                 .Count(scenario => scenario.IsPassed());
         }
 
-        public static int GetNumberOfFailed(this TestExecutionContext context)
-        {
-            return context.Features
-                .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.IsFailed());
-        }
-
         public static int GetNumberOfIncomplete(this TestExecutionContext context)
         {
             return context.Features
                 .SelectMany(feature => feature.Scenarios)
                 .Count(scenario => scenario.IsIncomplete());
+        }
+
+        public static int GetNumberOfFailed(this TestExecutionContext context)
+        {
+            return context.Features
+                .SelectMany(feature => feature.Scenarios)
+                .Count(scenario => scenario.IsFailed());
         }
 
         public static int GetNumberOfSkipped(this TestExecutionContext context)
@@ -51,6 +46,17 @@ namespace Expressium.TestExecutionReport.Extensions
             return context.Features
                 .SelectMany(feature => feature.Scenarios)
                 .Count();
+        }
+
+        public static string GetExecutionTime(this TestExecutionContext context)
+        {
+            return context.ExecutionTime.ToString("ddd dd. MMM yyyy HH':'mm':'ss \"GMT\"z");
+        }
+
+        public static string GetDuration(this TestExecutionContext context)
+        {
+            var duration = context.EndTime - context.StartTime;
+            return $"{duration.Seconds}s {duration.Milliseconds}ms";
         }
     }
 }

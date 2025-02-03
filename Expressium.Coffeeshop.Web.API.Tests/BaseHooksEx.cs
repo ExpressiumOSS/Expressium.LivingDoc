@@ -9,9 +9,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         private static TestExecutionContext testExecutionContext;
         private static string outputFileName = "TestExecution.json";
 
-        private DateTime testExecutionStartTime;
-        private DateTime testExecutionEndTime;
-
         private TestExecutionScenario testExecutionScenario;
 
         private static void InitializeTestExecution()
@@ -19,12 +16,16 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             testExecutionContext = new TestExecutionContext();
             testExecutionContext.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
             testExecutionContext.ExecutionTime = DateTime.UtcNow.ToLocalTime();
+            testExecutionContext.StartTime = DateTime.Now;
+            testExecutionContext.EndTime = DateTime.Now;
 
             System.Threading.Thread.Sleep(1000);
         }
 
         private static void FinalizeTestExecution()
         {
+            testExecutionContext.EndTime = DateTime.Now;
+
             TestExecutionUtilities.SerializeAsJson(Path.Combine(Directory.GetCurrentDirectory(), outputFileName), testExecutionContext);
         }
 
@@ -43,8 +44,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
             if (testExecutionContext.IsFeatureAdded(featureContext.FeatureInfo.Title))
             {
-                testExecutionStartTime = DateTime.Now;
-
                 testExecutionScenario = (new TestExecutionScenario()
                 {
                     Tags = string.Join(" ", scenarioContext.ScenarioInfo.Tags),
@@ -52,7 +51,10 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                     Description = scenarioContext.ScenarioInfo.Description
                 });
 
-                testExecutionScenario.Examples.Add(new TestExecutionExample());
+                var testExecutionExample = new TestExecutionExample();
+                testExecutionExample.StartTime = DateTime.Now;
+                testExecutionExample.EndTime = DateTime.Now;
+                testExecutionScenario.Examples.Add(testExecutionExample);
 
                 if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
                 {
@@ -82,12 +84,10 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             if (testExecutionScenario != null)
             {
-                testExecutionEndTime = DateTime.Now;
-
                 testExecutionScenario.Examples[0].Status = scenarioContext.ScenarioExecutionStatus.ToString();
-                testExecutionScenario.Examples[0].Duration = (testExecutionEndTime - testExecutionStartTime);
                 testExecutionScenario.Examples[0].Error = scenarioContext.TestError?.Message;
                 testExecutionScenario.Examples[0].Stacktrace = scenarioContext.TestError?.StackTrace;
+                testExecutionScenario.Examples[0].EndTime = DateTime.Now;
 
                 if (testExecutionContext.IsFeatureAdded(featureContext.FeatureInfo.Title))
                 {

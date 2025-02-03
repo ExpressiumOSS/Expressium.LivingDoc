@@ -45,9 +45,26 @@
             background-color: whitesmoke;
             border-width: 1px;
             outline: none;
-            background-color: lightgray;
+            background-color: #f1f1f1;
             border: hidden;
-            padding: 10px;
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+        td, th {
+            padding-left: 4px;
+            padding-right: 4px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+
+        th {
+            background-color: steelblue;
+            color: white;
+			border: solid;
+			border-width: 1px;
+            padding-left: 6px;
+            padding-right: 6px;
         }
 
         table.grid {
@@ -59,27 +76,13 @@
             background-color: #C7D9E8;
         }
 
-        td, th {
-            padding-left: 6px;
-            padding-right: 6px;
-            padding-top: 3px;
-            padding-bottom: 3px;
-        }
-
-        th {
-            background-color: steelblue;
-            color: white;
-			border: solid;
-			border-width: 1px;
-        }
-
         .project-name {
             font-size: 24px;
             font-weight: bold;
         }
 
         .project-date {
-            color: gray;
+            color: dimgray;
         }
 
 		.page-name {
@@ -126,6 +129,12 @@
 
         .chart-count {
             font-size: 18px;
+            line-height: 1.0;
+            text-align: center;
+        }
+
+        .chart-count-number {
+            font-size: 24px;
             line-height: 1.0;
             text-align: center;
         }
@@ -184,21 +193,6 @@
             background: var(--passed-color);
         }
 
-        @property --failed-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #FF4136;
-            initial-value: #F03D2D;            
-        }
-
-        .color-failed {
-            color: var(--failed-color);
-        }
-
-        .bgcolor-failed {
-            background: var(--failed-color);
-        }
-
         @property --incomplete-color {
             syntax: "<color>";
             inherits: false;
@@ -212,6 +206,21 @@
 
         .bgcolor-incomplete {
             background: var(--incomplete-color);
+        }
+
+        @property --failed-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #FF4136;
+            initial-value: #F03D2D;            
+        }
+
+        .color-failed {
+            color: var(--failed-color);
+        }
+
+        .bgcolor-failed {
+            background: var(--failed-color);
         }
 
         @property --skipped-color {

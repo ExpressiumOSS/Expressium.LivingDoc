@@ -6,9 +6,10 @@ namespace Expressium.TestExecution
     public class TestExecutionExample
     {
         public string Status { get; set; }
-        public TimeSpan Duration { get; set; }
         public string Error { get; set; }
         public string Stacktrace { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         public List<TestExecutionArgument> Arguments { get; set; }
         public List<TestExecutionStep> Steps { get; set; }

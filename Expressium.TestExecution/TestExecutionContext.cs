@@ -8,6 +8,8 @@ namespace Expressium.TestExecution
     {
         public string Title { get; set; }
         public DateTime ExecutionTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         public List<TestExecutionFeature> Features { get; set; }
 

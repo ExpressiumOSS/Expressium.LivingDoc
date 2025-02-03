@@ -14,14 +14,14 @@ namespace Expressium.TestExecutionReport.Extensions
             return step.Status.IsFailed();
         }
 
-        public static bool IsSkipped(this TestExecutionStep step)
-        {
-            return step.Status.IsSkipped();
-        }
-
         public static bool IsIncomplete(this TestExecutionStep step)
         {
             return step.Status.IsIncomplete();
+        }
+
+        public static bool IsSkipped(this TestExecutionStep step)
+        {
+            return step.Status.IsSkipped();
         }
 
         public static string GetStatus(this TestExecutionStep step)

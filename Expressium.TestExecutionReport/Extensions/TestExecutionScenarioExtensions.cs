@@ -22,17 +22,17 @@ namespace Expressium.TestExecutionReport.Extensions
             return false;
         }
 
-        public static bool IsFailed(this TestExecutionScenario scenario)
+        public static bool IsIncomplete(this TestExecutionScenario scenario)
         {
-            if (GetStatus(scenario) == ReportStatuses.Failed.ToString())
+            if (GetStatus(scenario) == ReportStatuses.Incomplete.ToString())
                 return true;
 
             return false;
         }
 
-        public static bool IsIncomplete(this TestExecutionScenario scenario)
+        public static bool IsFailed(this TestExecutionScenario scenario)
         {
-            if (GetStatus(scenario) == ReportStatuses.Incomplete.ToString())
+            if (GetStatus(scenario) == ReportStatuses.Failed.ToString())
                 return true;
 
             return false;
@@ -50,6 +50,12 @@ namespace Expressium.TestExecutionReport.Extensions
         {
             foreach (var example in scenario.Examples)
             {
+                if (example.IsSkipped())
+                    return ReportStatuses.Skipped.ToString();
+            }
+
+            foreach (var example in scenario.Examples)
+            {
                 if (example.IsFailed())
                     return ReportStatuses.Failed.ToString();
             }
@@ -58,12 +64,6 @@ namespace Expressium.TestExecutionReport.Extensions
             {
                 if (example.IsIncomplete())
                     return ReportStatuses.Incomplete.ToString();
-            }
-
-            foreach (var example in scenario.Examples)
-            {
-                if (example.IsSkipped())
-                    return ReportStatuses.Skipped.ToString();
             }
 
             foreach (var example in scenario.Examples)

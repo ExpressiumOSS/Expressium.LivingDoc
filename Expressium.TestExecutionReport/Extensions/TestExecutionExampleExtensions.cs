@@ -9,6 +9,11 @@ namespace Expressium.TestExecutionReport.Extensions
             return example.Status.IsPassed();
         }
 
+        public static bool IsIncomplete(this TestExecutionExample example)
+        {
+            return example.Status.IsIncomplete();
+        }
+
         public static bool IsFailed(this TestExecutionExample example)
         {
             return example.Status.IsFailed();
@@ -17,11 +22,6 @@ namespace Expressium.TestExecutionReport.Extensions
         public static bool IsSkipped(this TestExecutionExample example)
         {
             return example.Status.IsSkipped();
-        }
-
-        public static bool IsIncomplete(this TestExecutionExample example)
-        {
-            return example.Status.IsIncomplete();
         }
 
         public static bool IsStepPending(this TestExecutionExample example)
@@ -43,14 +43,11 @@ namespace Expressium.TestExecutionReport.Extensions
         {
             if (example.IsFailed())
                 return ReportStatuses.Failed.ToString();
-
-            if (example.IsIncomplete())
+            else if (example.IsIncomplete())
                 return ReportStatuses.Incomplete.ToString();
-
-            if (example.IsSkipped())
+            else if (example.IsSkipped())
                 return ReportStatuses.Skipped.ToString();
-
-            if (example.IsPassed())
+            else if (example.IsPassed())
                 return ReportStatuses.Passed.ToString();
 
             return ReportStatuses.Undefined.ToString();
@@ -58,7 +55,8 @@ namespace Expressium.TestExecutionReport.Extensions
 
         public static string GetDuration(this TestExecutionExample example)
         {
-            return $"{example.Duration.Seconds}s {example.Duration.Milliseconds}ms";
+            var duration = example.EndTime - example.StartTime;
+            return $"{duration.Seconds}s {duration.Milliseconds}ms";
         }
     }
 }

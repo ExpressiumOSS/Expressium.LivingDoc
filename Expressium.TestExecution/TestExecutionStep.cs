@@ -7,6 +7,7 @@ namespace Expressium.TestExecution
         public string Type { get; set; }
         public string Text { get; set; }
         public string Status { get; set; }
-        public TimeSpan Duration { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }

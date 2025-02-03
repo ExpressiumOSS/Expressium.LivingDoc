@@ -6,8 +6,8 @@ namespace Expressium.TestExecutionReport.Extensions
     public enum ReportStatuses
     {
         Passed,
-        Failed,
         Incomplete,
+        Failed,
         Skipped,
         Undefined
     }
@@ -17,6 +17,13 @@ namespace Expressium.TestExecutionReport.Extensions
         public static bool IsPassed(this string value)
         {
             if (value == TestExecutionStatuses.OK.ToString())
+                return true;
+            return false;
+        }
+
+        public static bool IsIncomplete(this string value)
+        {
+            if (value.IsStepPending() || value.IsStepUndefined() || value.IsStepBindingError())
                 return true;
             return false;
         }
@@ -31,13 +38,6 @@ namespace Expressium.TestExecutionReport.Extensions
         public static bool IsSkipped(this string value)
         {
             if (value == TestExecutionStatuses.Skipped.ToString())
-                return true;
-            return false;
-        }
-
-        public static bool IsIncomplete(this string value)
-        {
-            if (value.IsStepPending() || value.IsStepUndefined() || value.IsStepBindingError())
                 return true;
             return false;
         }

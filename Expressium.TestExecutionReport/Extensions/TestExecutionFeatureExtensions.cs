@@ -24,6 +24,12 @@ namespace Expressium.TestExecutionReport.Extensions
         {
             foreach (var scenario in feature.Scenarios)
             {
+                if (scenario.IsSkipped())
+                    return ReportStatuses.Skipped.ToString();
+            }
+
+            foreach (var scenario in feature.Scenarios)
+            {
                 if (scenario.IsFailed())
                     return ReportStatuses.Failed.ToString();
             }
@@ -32,12 +38,6 @@ namespace Expressium.TestExecutionReport.Extensions
             {
                 if (scenario.IsIncomplete())
                     return ReportStatuses.Incomplete.ToString();
-            }
-
-            foreach (var scenario in feature.Scenarios)
-            {
-                if (scenario.IsSkipped())
-                    return ReportStatuses.Skipped.ToString();
             }
 
             foreach (var scenario in feature.Scenarios)
@@ -54,14 +54,14 @@ namespace Expressium.TestExecutionReport.Extensions
             return feature.Scenarios.Count(scenario => scenario.IsPassed());
         }
 
-        public static int GetNumberOfFailed(this TestExecutionFeature feature)
-        {
-            return feature.Scenarios.Count(scenario => scenario.IsFailed());
-        }
-
         public static int GetNumberOfIncomplete(this TestExecutionFeature feature)
         {
             return feature.Scenarios.Count(scenario => scenario.IsIncomplete());
+        }
+
+        public static int GetNumberOfFailed(this TestExecutionFeature feature)
+        {
+            return feature.Scenarios.Count(scenario => scenario.IsFailed());
         }
 
         public static int GetNumberOfSkipped(this TestExecutionFeature feature)
