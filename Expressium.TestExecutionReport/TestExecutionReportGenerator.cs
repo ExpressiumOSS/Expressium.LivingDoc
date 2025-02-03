@@ -385,7 +385,7 @@ namespace Expressium.TestExecutionReport
                     listOfLines.Add($"<tr><td><b>Project: </b></td><td>{executionContext.Title}</td></tr>");
                     listOfLines.Add($"<tr><td><b>Execution Time: </b></td><td>{executionContext.GetExecutionTime()}</td></tr>");
                     listOfLines.Add($"<tr><td><b>Duration: </b></td><td>{executionContext.GetDuration()}</td></tr>");
-                    listOfLines.Add($"<tr><td><b>Environment: </b></td><td></td></tr>");
+                    listOfLines.Add($"<tr><td><b>Environment: </b></td><td>{executionContext.Environment}</td></tr>");
                     listOfLines.Add("</tbody>");
                     listOfLines.Add("</table>");
                     listOfLines.Add("</div>");
@@ -861,19 +861,19 @@ namespace Expressium.TestExecutionReport
         private string GetStatusMessage(int status)
         {
             if (status == 100)
-                return "The system is fully covered and all tests are successfully validated!";
+                return "The system is fully covered and successfully validated!";
             else if (status >= 90)
-                return "The system is extensively covered but some minor gabs exist!";
+                return "The system is extensively covered with minor potential risks!";
             else if (status >= 75)
-                return "The system is well covered but some gabs remain!";
+                return "The system is well covered with significant potential risks!";
             else if (status >= 50)
-                return "The system is moderately covered but some potential risks exist!";
+                return "The system is moderately covered with significant potential risks!";
             else if (status >= 25)
-                return "The system is partially covered and many risks remain!";
+                return "The system is partially covered with many potential risks!";
             else if (status >= 10)
-                return "The system is minimally covered and contains many undetected risks!";
+                return "The system is minimally covered with many undetected risks!";
             else if (status < 10)
-                return "The system is not covered and has a uncertainties in reliability!";
+                return "The system is not covered with a uncertainties in reliability!";
             else
             {
             }

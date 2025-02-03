@@ -10,6 +10,7 @@ namespace Expressium.TestExecution
         public DateTime ExecutionTime { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public string Environment { get; set; }
 
         public List<TestExecutionFeature> Features { get; set; }
 
