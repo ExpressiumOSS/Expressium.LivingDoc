@@ -39,6 +39,14 @@
             font-size: 0.9em;
         }
 
+        .panel {
+            padding-bottom: 8px;
+        }
+
+        .prefilters {
+            text-align: right;
+        }
+
         input.filter {
             width: 100%;
             box-sizing: border-box;
@@ -47,7 +55,7 @@
             outline: none;
             background-color: #f1f1f1;
             border: hidden;
-            padding: 6px;
+            padding: 8px;
             border-radius: 4px;
         }
 
@@ -85,12 +93,6 @@
         .project-date {
             color: dimgray;
         }
-
-		.page-name {
-			font-size: 20px;
-			font-weight: bold;
-			padding-bottom: 12px;
-		}
 
         .feature-name {
             font-size: 18px;

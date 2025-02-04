@@ -102,18 +102,3 @@
             }
         }
     </script>
-    <script>
-        function showStatusChart() {
-            let button = document.getElementById('status-chart-button');
-            let div = document.getElementById('status-chart');
-            if (div.style.display === "none") {
-                div.style.display = "";
-                button.title = "Close Status Chart";
-                button.innerHTML = "<b>&#9866;</b>";                        
-            } else {
-                div.style.display = "none";
-                button.title = "Open Status Chart";
-                button.innerHTML = "<b>&#10011;</b>";    
-            }           
-        }
-    </script>
