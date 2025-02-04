@@ -17,10 +17,7 @@ namespace Expressium.TestExecutionReport
 
         private bool includeHeader = true;
         private bool includeProjectInformation = false;
-        private bool includePageHeader = false;
-        private bool includeOnLoadAnalytics = true;
-        private bool includeStatusChart = false;
-        private bool includeStatusChartAnalytics = false;
+        private bool includeTreeview = false;
 
         internal TestExecutionReportGenerator(string filePath, string outputPath)
         {
@@ -87,12 +84,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<!DOCTYPE html>");
             listOfLines.Add("<html>");
             listOfLines.AddRange(GenerateHead());
-
-            if (includeOnLoadAnalytics)
-                listOfLines.Add("<body onload=\"loadAnalytics('analytics');\">");
-            else
-                listOfLines.Add("<body>");
-
+            listOfLines.Add("<body onload=\"loadAnalytics('analytics');\">");
             listOfLines.AddRange(GenerateHeader());
             listOfLines.AddRange(GenerateHeaderProjectInformation(executionContext));
             listOfLines.AddRange(GenerateContent(executionContext));
@@ -173,15 +165,6 @@ namespace Expressium.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
-            //if (includeOnLoadAnalytics)
-            //{
-            //    listOfLines.Add("<div class='bg-light'>");
-            //    listOfLines.Add("<nav style='background-color: darkgray; padding: 8px;'>");
-            //    listOfLines.Add("<a href='#' style='color: white;' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
-            //    listOfLines.Add("</nav>");
-            //    listOfLines.Add("</div>");
-            //}
-
             listOfLines.Add("<!-- Content Wrapper Section -->");
             listOfLines.Add("<div id='content-wrapper'>");
 
@@ -209,11 +192,7 @@ namespace Expressium.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
-            if (includePageHeader)
-                listOfLines.Add("<div class='page-name'>Living Documentation</div>");
-
             listOfLines.AddRange(GenerateProjectInformation(executionContext));
-            listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
             listOfLines.AddRange(GenerateScenarioListSeperator(executionContext));
             listOfLines.AddRange(GenerateScenarioPreFilters(executionContext));
             listOfLines.AddRange(GenerateScenarioFilter(executionContext));
@@ -234,6 +213,13 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add("<span class='project-name'>" + executionContext.Title + "</span><br />");
                 listOfLines.Add("<span class='project-date'>generated " + executionContext.GetExecutionTime() + "</span>");
                 listOfLines.Add("</div>");
+                listOfLines.Add("</div>");
+
+                listOfLines.Add("<!-- Project Navigation Section -->");
+                listOfLines.Add("<div class='bg-light'>");
+                listOfLines.Add("<nav style='background-color: darkgray; padding: 8px; padding-left: 24px; padding-right: 24px;'>");
+                listOfLines.Add("<a href='#' style='color: white;' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
+                listOfLines.Add("</nav>");
                 listOfLines.Add("</div>");
             }
 
@@ -260,140 +246,121 @@ namespace Expressium.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
-            if (includeStatusChart)
+            var numberOfPassed = executionContext.GetNumberOfPassed();
+            var numberOfIncomplete = executionContext.GetNumberOfIncomplete();
+            var numberOfFailed = executionContext.GetNumberOfFailed();
+            var numberOfSkipped = executionContext.GetNumberOfSkipped();
+            var numberOfTests = executionContext.GetNumberOfTests();
+
+            listOfLines.Add("<!-- Status Chart Section -->");
+            listOfLines.Add("<div id='status-chart'>");
+
+            listOfLines.Add("<div class='container' style='text-align: center; max-width: 500px; padding-bottom: 16px;'>");
+
+            var numberOfPercentPassed = (int)Math.Round(100.0f / numberOfTests * numberOfPassed);
+            var numberOfPercentIncomplete = (int)Math.Round(100.0f / numberOfTests * numberOfIncomplete);
+            var numberOfPercentFailed = (int)Math.Round(100.0f / numberOfTests * numberOfFailed);
+            var numberOfPercentSkipped = (int)Math.Round(100.0f / numberOfTests * numberOfSkipped);
+
+            var sumOfPercent = numberOfPercentPassed + numberOfPercentIncomplete + numberOfPercentFailed + numberOfPercentSkipped;
+            if (sumOfPercent > 100)
             {
-                var numberOfPassed = executionContext.GetNumberOfPassed();
-                var numberOfIncomplete = executionContext.GetNumberOfIncomplete();
-                var numberOfFailed = executionContext.GetNumberOfFailed();
-                var numberOfSkipped = executionContext.GetNumberOfSkipped();
-                var numberOfTests = executionContext.GetNumberOfTests();
-
-                listOfLines.Add("<!-- Status Chart Section -->");
-                listOfLines.Add("<div id='status-chart'>");
-
-                listOfLines.Add("<div class='container' style='text-align: center; max-width: 500px; padding-bottom: 16px;'>");
-
-                var numberOfPercentPassed = (int)Math.Round(100.0f / numberOfTests * numberOfPassed);
-                var numberOfPercentIncomplete = (int)Math.Round(100.0f / numberOfTests * numberOfIncomplete);
-                var numberOfPercentFailed = (int)Math.Round(100.0f / numberOfTests * numberOfFailed);
-                var numberOfPercentSkipped = (int)Math.Round(100.0f / numberOfTests * numberOfSkipped);
-
-                var sumOfPercent = numberOfPercentPassed + numberOfPercentIncomplete + numberOfPercentFailed + numberOfPercentSkipped;
-                if (sumOfPercent > 100)
+                if (numberOfPercentPassed > 1)
+                    numberOfPercentPassed -= 1;
+                else if (numberOfPercentIncomplete > 1)
+                    numberOfPercentIncomplete -= 1;
+                else if (numberOfPercentFailed > 1)
+                    numberOfPercentFailed -= 1;
+                else if (numberOfPercentSkipped > 1)
+                    numberOfPercentSkipped -= 1;
+                else
                 {
-                    if (numberOfPercentPassed > 1)
-                        numberOfPercentPassed -= 1;
-                    else if (numberOfPercentIncomplete > 1)
-                        numberOfPercentIncomplete -= 1;
-                    else if (numberOfPercentFailed > 1)
-                        numberOfPercentFailed -= 1;
-                    else if (numberOfPercentSkipped > 1)
-                        numberOfPercentSkipped -= 1;
-                    else
-                    {
-                    }
                 }
-
-                listOfLines.Add($"<span class='chart-percentage'>{numberOfPercentPassed.ToString("0")}%</span><br />");
-                listOfLines.Add("<span class='chart-status'>Passed</span>");
-
-                listOfLines.Add("<p></p>");
-                //listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfPassed} Passed, {numberOfIncomplete} Incomplete, {numberOfFailed} Failed, {numberOfSkipped} Skipped Scenarios</p>");
-
-                listOfLines.Add($"<div style='width: 100%; height: 0.8em;'>");
-                listOfLines.Add($"<div class='bgcolor-passed' style='width: {numberOfPercentPassed}%; height: 0.8em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-incomplete' style='width: {numberOfPercentIncomplete}%; height: 0.8em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-failed' style='width: {numberOfPercentFailed}%; height: 0.8em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-skipped' style='width: {numberOfPercentSkipped}%; height: 0.8em; float: left'></div>");
-                listOfLines.Add("</div>");
-
-                var message = GetStatusMessage((int)numberOfPercentPassed);
-                listOfLines.Add($"<span style='color: gray; font-style: italic; margin: 8px; '>{message}</span>");
-
-                listOfLines.Add("</div>");
-
-                if (includeStatusChartAnalytics)
-                {
-                    listOfLines.Add("<!-- Status Analytics Section -->");
-                    listOfLines.Add("<div class='container' style='text-align: center; max-width: 600px; padding-bottom: 16px;'>");
-
-                    listOfLines.Add("<table width='100%'>");
-                    listOfLines.Add("<tr>");
-
-                    listOfLines.Add("<td class='color-passed' align='center'>");
-                    listOfLines.Add($"<span class='chart-count'>");
-                    listOfLines.Add($"<span class='chart-count-number'>{numberOfPassed}</span><br />");
-                    listOfLines.Add($"<span>{numberOfPercentPassed}%<br /></span>");
-                    listOfLines.Add($"<span>Passed</span><br />");
-                    listOfLines.Add($"<div class='bgcolor-passed' style='width: 110px; height: 0.4em;'></div>");
-                    listOfLines.Add($"</span>");
-                    listOfLines.Add("</td>");
-
-                    listOfLines.Add("<td class='color-incomplete' align='center'>");
-                    listOfLines.Add($"<span class='chart-count'>");
-                    listOfLines.Add($"<span class='chart-count-number'>{numberOfIncomplete}</span><br />");
-                    listOfLines.Add($"<span>{numberOfPercentIncomplete}%<br /></span>");
-                    listOfLines.Add($"<span>Incomplete</span><br />");
-                    listOfLines.Add($"<div class='bgcolor-incomplete' style='width: 110px; height: 0.4em;'></div>");
-                    listOfLines.Add($"</span>");
-                    listOfLines.Add("</td>");
-
-                    listOfLines.Add("<td class='color-failed' align='center'>");
-                    listOfLines.Add($"<span class='chart-count'>");
-                    listOfLines.Add($"<span class='chart-count-number'>{numberOfFailed}</span><br />");
-                    listOfLines.Add($"<span>{numberOfPercentFailed}%<br /></span>");
-                    listOfLines.Add($"<span>Failed</span><br />");
-                    listOfLines.Add($"<div class='bgcolor-failed' style='width: 110px; height: 0.4em;'></div>");
-                    listOfLines.Add($"</span>");
-                    listOfLines.Add("</td>");
-
-                    listOfLines.Add("<td class='color-skipped' align='center'>");
-                    listOfLines.Add($"<span class='chart-count'>");
-                    listOfLines.Add($"<span class='chart-count-number'>{numberOfSkipped}</span><br />");
-                    listOfLines.Add($"<span>{numberOfPercentSkipped}%<br /></span>");
-                    listOfLines.Add($"<span>Skipped</span><br />");
-                    listOfLines.Add($"<div class='bgcolor-skipped' style='width: 110px; height: 0.4em;'></div>");
-                    listOfLines.Add($"</span>");
-                    listOfLines.Add("</td>");
-
-                    listOfLines.Add("<td class='color-total' align='center'>");
-                    listOfLines.Add($"<span class='chart-count'>");
-                    listOfLines.Add($"<span class='chart-count-number'>{numberOfTests}</span><br />");
-                    listOfLines.Add($"<span>100%</span><br />");
-                    listOfLines.Add($"<span>Total</span><br />");
-                    listOfLines.Add($"<div style='background-color: black; width: 110px; height: 0.4em;'></div>");
-                    listOfLines.Add($"</span>");
-                    listOfLines.Add("</td>");
-
-                    listOfLines.Add("</tr>");
-                    listOfLines.Add("</table>");
-
-                    listOfLines.Add("</div>");
-                }
-
-                if (includeStatusChart)
-                {
-                    listOfLines.Add("<!-- Status Properties Section -->");
-                    listOfLines.Add("<br />");
-                    listOfLines.Add("<div class='container'>");
-                    listOfLines.Add("<span class='feature-name'>Properties</span><br />");
-                    listOfLines.Add("<table width='100%' align='center' border='1'>");
-                    listOfLines.Add("<thead>");
-                    listOfLines.Add("<tr><th>Name</th><th>Value</th></tr>");
-                    listOfLines.Add("</thead>");
-                    listOfLines.Add("<tbody>");
-                    listOfLines.Add($"<tr><td><b>Project: </b></td><td>{executionContext.Title}</td></tr>");
-                    listOfLines.Add($"<tr><td><b>Execution Time: </b></td><td>{executionContext.GetExecutionTime()}</td></tr>");
-                    listOfLines.Add($"<tr><td><b>Duration: </b></td><td>{executionContext.GetDuration()}</td></tr>");
-                    listOfLines.Add($"<tr><td><b>Environment: </b></td><td>{executionContext.Environment}</td></tr>");
-                    listOfLines.Add("</tbody>");
-                    listOfLines.Add("</table>");
-                    listOfLines.Add("</div>");
-                    listOfLines.Add("<br />");
-                }
-
-                listOfLines.Add("</div>");
             }
+
+            listOfLines.Add($"<span class='chart-percentage'>{numberOfPercentPassed.ToString("0")}%</span><br />");
+            listOfLines.Add("<span class='chart-status'>Passed</span>");
+
+            listOfLines.Add("<p></p>");
+            //listOfLines.Add($"<p style='color: gray; font-style: italic; margin: 8px; '>{numberOfPassed} Passed, {numberOfIncomplete} Incomplete, {numberOfFailed} Failed, {numberOfSkipped} Skipped Scenarios</p>");
+
+            listOfLines.Add($"<div style='width: 100%; height: 0.8em;'>");
+            listOfLines.Add($"<div class='bgcolor-passed' style='width: {numberOfPercentPassed}%; height: 0.8em; float: left'></div>");
+            listOfLines.Add($"<div class='bgcolor-incomplete' style='width: {numberOfPercentIncomplete}%; height: 0.8em; float: left'></div>");
+            listOfLines.Add($"<div class='bgcolor-failed' style='width: {numberOfPercentFailed}%; height: 0.8em; float: left'></div>");
+            listOfLines.Add($"<div class='bgcolor-skipped' style='width: {numberOfPercentSkipped}%; height: 0.8em; float: left'></div>");
+            listOfLines.Add("</div>");
+
+            var message = GetStatusMessage((int)numberOfPercentPassed);
+            listOfLines.Add($"<span style='color: gray; font-style: italic; margin: 8px; '>{message}</span>");
+
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<!-- Status Analytics Section -->");
+            listOfLines.Add("<div class='container' style='text-align: center; max-width: 600px; padding-bottom: 16px;'>");
+
+            listOfLines.Add("<table align='center'>");
+            listOfLines.Add("<tr>");
+
+            listOfLines.Add("<td class='color-passed chart-count'>");
+            listOfLines.Add($"<span class='chart-count-number'>{numberOfPassed}</span><br />");
+            listOfLines.Add($"<span class='chart-count-percentage'>{numberOfPercentPassed}%</span><br />");
+            listOfLines.Add($"<span class='chart-count-status'>Passed</span><br />");
+            listOfLines.Add($"<div class='bgcolor-passed' style='width: 110px; height: 0.4em;'></div>");
+            listOfLines.Add("</td>");
+
+            listOfLines.Add("<td class='color-incomplete chart-count'>");
+            listOfLines.Add($"<span class='chart-count-number'>{numberOfIncomplete}</span><br />");
+            listOfLines.Add($"<span class='chart-count-percentage'>{numberOfPercentIncomplete}%</span><br />");
+            listOfLines.Add($"<span class='chart-count-status'>Incomplete</span><br />");
+            listOfLines.Add($"<div class='bgcolor-incomplete' style='width: 110px; height: 0.4em;'></div>");
+            listOfLines.Add("</td>");
+
+            listOfLines.Add("<td class='color-failed chart-count'>");
+            listOfLines.Add($"<span class='chart-count-number'>{numberOfFailed}</span><br />");
+            listOfLines.Add($"<span class='chart-count-percentage'>{numberOfPercentFailed}%</span><br />");
+            listOfLines.Add($"<span class='chart-count-status'>Failed</span><br />");
+            listOfLines.Add($"<div class='bgcolor-failed' style='width: 110px; height: 0.4em;'></div>");
+            listOfLines.Add("</td>");
+
+            listOfLines.Add("<td class='color-skipped chart-count'>");
+            listOfLines.Add($"<span class='chart-count-number'>{numberOfSkipped}</span><br />");
+            listOfLines.Add($"<span class='chart-count-percentage'>{numberOfPercentSkipped}%</span><br />");
+            listOfLines.Add($"<span class='chart-count-status'>Skipped</span><br />");
+            listOfLines.Add($"<div class='bgcolor-skipped' style='width: 110px; height: 0.4em;'></div>");
+            listOfLines.Add("</td>");
+
+            listOfLines.Add("<td class='color-total chart-count'>");
+            listOfLines.Add($"<span class='chart-count-number'>{numberOfTests}</span><br />");
+            listOfLines.Add($"<span class='chart-count-percentage'>100%</span><br />");
+            listOfLines.Add($"<span class='chart-count-status'>Total</span><br />");
+            listOfLines.Add($"<div style='background-color: black; width: 110px; height: 0.4em;'></div>");
+            listOfLines.Add("</td>");
+
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</table>");
+
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<!-- Status Properties Section -->");
+            listOfLines.Add("<br />");
+            listOfLines.Add("<div class='container'>");
+            listOfLines.Add("<span class='feature-name'>Properties</span><br />");
+            listOfLines.Add("<table width='100%' align='center' border='1'>");
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr><th>Name</th><th>Value</th></tr>");
+            listOfLines.Add("</thead>");
+            listOfLines.Add("<tbody>");
+            listOfLines.Add($"<tr><td><b>Project: </b></td><td>{executionContext.Title}</td></tr>");
+            listOfLines.Add($"<tr><td><b>Execution Time: </b></td><td>{executionContext.GetExecutionTime()}</td></tr>");
+            listOfLines.Add($"<tr><td><b>Duration: </b></td><td>{executionContext.GetDuration()}</td></tr>");
+            listOfLines.Add($"<tr><td><b>Environment: </b></td><td>{executionContext.Environment}</td></tr>");
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+            listOfLines.Add("<br />");
+
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }
@@ -413,7 +380,6 @@ namespace Expressium.TestExecutionReport
             List<string> listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Features PreFilters Section -->");
-
             listOfLines.Add("<div class='section' style='text-align: right; padding-bottom: 6px;'>");
             listOfLines.Add("<button title='Passed' class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
             listOfLines.Add("<button title='Incomplete' class='color-incomplete' onclick='presetScenarios(\"incomplete\")'>Incomplete</button>");
@@ -444,30 +410,67 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<!-- Scenario List Section -->");
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<table id='scenariolist' class='grid'>");
-            listOfLines.Add("<thead>");
-            listOfLines.Add("<tr>");
-            listOfLines.Add("<th onClick='sortTableByColumn(0)'>Feature<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(2)'>Status<span class='sort-column'>&udarr;</span></th>");
-            //listOfLines.Add("<th></th>");
-            listOfLines.Add("</tr>");
-            listOfLines.Add("</thead>");
+
+            if (!includeTreeview)
+            {
+                listOfLines.Add("<thead>");
+                listOfLines.Add("<tr role='header'>");
+                listOfLines.Add("<th onClick='sortTableByColumn(0)'>Feature<span class='sort-column'>&udarr;</span></th>");
+                listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
+                listOfLines.Add("<th onClick='sortTableByColumn(2)'>Status<span class='sort-column'>&udarr;</span></th>");
+                listOfLines.Add("</tr>");
+                listOfLines.Add("</thead>");
+            }
+
             listOfLines.Add("<tbody id='scenario-list'>");
 
             foreach (var feature in executionContext.Features)
             {
-                //listOfLines.Add($"<tr>");
-                //listOfLines.Add($"<td colspan='3'><b>{feature.Title}<b></td>");
-                //listOfLines.Add($"</tr>");
-
-                foreach (var scenario in feature.Scenarios)
+                if (includeTreeview)
                 {
-                    listOfLines.Add($"<tr tags='{feature.Title} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
-                    listOfLines.Add($"<td>{feature.Title}</td>");
-                    listOfLines.Add($"<td><a href='#'>{scenario.Title}</a></td>");
-                    listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
-                    //listOfLines.Add($"<td><span class='status-dot bgcolor-{scenario.GetStatus()}'></span></td>");
+                    listOfLines.Add($"<tr role='feature'>");
+                    listOfLines.Add($"<td width='16px;'>&#10010;</td>");
+                    listOfLines.Add($"<td colspan='2' style='border-bottom: 1px solid lightgray;'><b>{feature.Title}</b></td>");
+                    listOfLines.Add($"<td style='border-bottom: 1px solid lightgray; text-align: right; padding-right: 15px;'>");
+
+                    if (feature.GetNumberOfPassed() > 0)
+                        listOfLines.Add($"<span class='status-dot bgcolor-passed'></span>");
+
+                    if (feature.GetNumberOfIncomplete() > 0)
+                        listOfLines.Add($"<span class='status-dot bgcolor-incomplete'></span>");
+
+                    if (feature.GetNumberOfFailed() > 0)
+                        listOfLines.Add($"<span class='status-dot bgcolor-failed'></span>");
+
+                    if (feature.GetNumberOfSkipped() > 0)
+                        listOfLines.Add($"<span class='status-dot bgcolor-skipped'></span>");
+
+                    listOfLines.Add($"</td>");
                     listOfLines.Add($"</tr>");
+
+
+                    foreach (var scenario in feature.Scenarios)
+                    {
+                        listOfLines.Add($"<tr role='scenario' tags='{feature.Title} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
+                        listOfLines.Add($"<td width='16px;'></td>");
+                        listOfLines.Add($"<td width='16px;'><span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span></td>");
+                        listOfLines.Add($"<td style='border-bottom: 1px solid lightgray;'>");
+                        listOfLines.Add($"<a href='#'>{scenario.Title}</a></td>");
+                        listOfLines.Add("<td style='border-bottom: 1px solid lightgray;'></td>");
+                        listOfLines.Add($"</tr>");
+                    }
+                }
+
+                if (!includeTreeview)
+                {
+                    foreach (var scenario in feature.Scenarios)
+                    {
+                        listOfLines.Add($"<tr tags='{feature.Title} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
+                        listOfLines.Add($"<td>{feature.Title}</td>");
+                        listOfLines.Add($"<td><a href='#'>{scenario.Title}</a></td>");
+                        listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
+                        listOfLines.Add($"</tr>");
+                    }
                 }
             }
 
@@ -792,25 +795,13 @@ namespace Expressium.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
-            var _includeStatusChart = includeStatusChart;
-            var _includeStatusChartAnalytics = includeStatusChartAnalytics;
-
-            includeStatusChart = true;
-            includeStatusChartAnalytics = true;
-
             listOfLines.Add("<!-- Analytics Data Section -->");
             listOfLines.Add($"<div class='data-item' id='analytics'>");
 
-            if (includePageHeader)
-                listOfLines.Add("<div class='page-name'>Analytics</div>");
-
-            if (!includeProjectInformation)
-            {
-                listOfLines.Add("<div class='section' style='padding-bottom: 8px;'>");
-                listOfLines.Add("<span class='project-name'>Analytics</span>");
-                listOfLines.Add("<br />");
-                listOfLines.Add("</div>");
-            }
+            listOfLines.Add("<div class='section' style='padding-bottom: 8px;'>");
+            listOfLines.Add("<span class='project-name'>Analytics</span>");
+            listOfLines.Add("<br />");
+            listOfLines.Add("</div>");
 
             listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
 
@@ -851,9 +842,6 @@ namespace Expressium.TestExecutionReport
             }
 
             listOfLines.Add("</div>");
-
-            includeStatusChart = _includeStatusChart;
-            includeStatusChartAnalytics = _includeStatusChartAnalytics;
 
             return listOfLines;
         }

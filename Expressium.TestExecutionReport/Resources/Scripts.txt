@@ -27,10 +27,14 @@
             var tr = table.getElementsByTagName("tr");
 
             for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("role");
                 var tags = tr[i].getAttribute("tags");
                 var td = tr[i].getElementsByTagName("td");
                 var rowText = "";
                 var found = false;
+
+                if (role == "feature")
+				    continue;
 
                 for (var j = 0; j < td.length; j++) {
                     rowText += td[j].textContent.toUpperCase() + " ";
