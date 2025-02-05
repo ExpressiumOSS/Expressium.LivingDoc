@@ -11,8 +11,8 @@
             syntax: "<color>";
             inherits: false;
             initial-value: #598EBC;
-            initial-value: #A0A0A0;
             initial-value: #508CBE;     
+            initial-value: #909090;
         }
 
         @property --secondary-color {
@@ -148,7 +148,7 @@
         }
 
         .feature-name {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: bold;
         }
 
@@ -156,11 +156,11 @@
             font-family: Consolas, monospace;
             font-size: 14px;
             color: gray;
-            padding-left: 25px;
+            padding-left: 32px;
         }
 
         .scenario-name {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: bold;
         }
 
@@ -203,7 +203,7 @@
         }
 
         .step-indent {
-            padding-left: 25px;
+            padding-left: 32px;
         }
 
         .step-keyword {
