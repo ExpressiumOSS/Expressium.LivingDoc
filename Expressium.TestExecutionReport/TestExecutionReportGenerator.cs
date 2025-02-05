@@ -645,16 +645,18 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<span class='project-name'>Analytics</span>");
             listOfLines.Add("</div>");
 
-            listOfLines.AddRange(GenerateScenarioStatusChart(executionContext));
+            listOfLines.AddRange(GenerateScenariosStatusChart(executionContext));
             listOfLines.Add("<p></p>");
-            listOfLines.AddRange(GenerateScenarioStatusProperties(executionContext));
+            listOfLines.AddRange(GenerateFeaturesStatusSection(executionContext));
+            listOfLines.Add("<p></p>");
+            //listOfLines.AddRange(GenerateProjectStatusProperties(executionContext));
 
             listOfLines.Add("</div>");
 
             return listOfLines;
         }
 
-        private List<string> GenerateScenarioStatusChart(TestExecutionContext executionContext)
+        private List<string> GenerateScenariosStatusChart(TestExecutionContext executionContext)
         {
             List<string> listOfLines = new List<string>();
 
@@ -754,11 +756,50 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        private List<string> GenerateScenarioStatusProperties(TestExecutionContext executionContext)
+        private List<string> GenerateFeaturesStatusSection(TestExecutionContext executionContext)
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Status Properties Section -->");
+            listOfLines.Add("<!-- Status Feature Section -->");
+            listOfLines.Add("<div class='section' style='max-width: 600px; margin: auto;'>");
+            listOfLines.Add("<span class='feature-name'>Features</span><br />");
+            listOfLines.Add("<table class='grid' width='100%' align='center'>");
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<th align='center'></th>");
+            listOfLines.Add("<th>Name</th>");
+            listOfLines.Add("<th align='center'>Total</th>");
+            listOfLines.Add("<th align='center'>Coverage</th>");
+            listOfLines.Add("<th>Status</th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+            listOfLines.Add("<tbody>");
+
+            foreach (var feature in executionContext.Features)
+            {
+                var percentOfPassed = (int)Math.Round(100.0f / feature.GetNumberOfTests() * feature.GetNumberOfPassed());
+
+                listOfLines.Add($"<tr onclick=\"presetScenarios('{feature.GetStatus().ToLower()}')\">");
+                listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
+                listOfLines.Add($"<td>{feature.Title}</td>");
+                listOfLines.Add($"<td align='center'>{feature.GetNumberOfTests()}</td>");
+                listOfLines.Add($"<td align='center'>{percentOfPassed}%</td>");                
+                listOfLines.Add($"<td>{feature.GetStatus()}</td>");
+                listOfLines.Add($"</tr>");
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        private List<string> GenerateProjectStatusProperties(TestExecutionContext executionContext)
+        {
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Status Project Properties Section -->");
             listOfLines.Add("<div class='section' style='max-width: 600px; margin: auto;'>");
             listOfLines.Add("<span class='feature-name'>Properties</span><br />");
             listOfLines.Add("<table width='100%' align='center' border='1'>");
@@ -802,4 +843,8 @@ namespace Expressium.TestExecutionReport
     }
 }
 
+// HTML Colors
+// https://www.computerhope.com/cgi-bin/htmlcolor.pl?c=4682B4
+
+// HTML Symbols
 // https://www.toptal.com/designers/htmlarrows/symbols
