@@ -20,9 +20,11 @@ namespace Expressium.TestExecutionReport
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr role='header'>");
-            listOfLines.Add("<th onClick='sortTableByColumn(0)'>Feature<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(2)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th align='center' onClick='sortTableByColumn(0)'>&nbsp;#&nbsp;</th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Feature<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(2)'>Scenario<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(3)'>Seqence<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(4)'>Duration<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
@@ -32,10 +34,22 @@ namespace Expressium.TestExecutionReport
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr tags='{feature.Title} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
-                    listOfLines.Add($"<td>{feature.Title}</td>");
-                    listOfLines.Add($"<td><a href='#'><span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span><span>{scenario.Title}</span></a></td>");
-                    listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
+                    listOfLines.Add($"<tr class='gridlines' tags='{feature.Title} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
+
+                    listOfLines.Add($"<td align='center'>");
+                    listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
+                    listOfLines.Add("</td>");
+
+                    listOfLines.Add($"<td>");
+                    listOfLines.Add($"<span><a href='#'>&nbsp;{feature.Title}</a></span>");
+                    listOfLines.Add("</td>");
+
+                    listOfLines.Add($"<td>");
+                    listOfLines.Add($"<span><a href='#'>&nbsp;{scenario.Title}</a></span>");
+                    listOfLines.Add("</td>");
+
+                    listOfLines.Add($"<td align='right'>{scenario.Index}</td>");
+                    listOfLines.Add($"<td align='right'>{scenario.GetDuration()}</td>");
                     listOfLines.Add($"</tr>");
                 }
             }

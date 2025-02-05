@@ -1,4 +1,5 @@
 ﻿using Expressium.TestExecution;
+using System;
 
 namespace Expressium.TestExecutionReport.Extensions
 {
@@ -73,6 +74,26 @@ namespace Expressium.TestExecutionReport.Extensions
             }
 
             return ReportStatuses.Undefined.ToString();
+        }
+
+        public static string GetDuration(this TestExecutionScenario scenario)
+        {
+            TimeSpan? duration = null;
+
+            foreach (var example in scenario.Examples)
+            {
+                if (duration == null)
+                    duration = example.EndTime - example.StartTime;
+                else
+                    duration += example.EndTime - example.StartTime;
+            }
+
+            var totalDuration = duration.GetValueOrDefault();
+
+            if (totalDuration.Minutes > 0)
+                return $"{totalDuration.Minutes}min {totalDuration.Seconds}s";
+
+            return $"{totalDuration.Seconds}s {totalDuration.Milliseconds}ms";
         }
     }
 }

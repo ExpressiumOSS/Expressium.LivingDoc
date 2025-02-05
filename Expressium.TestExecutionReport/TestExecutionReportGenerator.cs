@@ -43,13 +43,17 @@ namespace Expressium.TestExecutionReport
             // Sort list of Features by Tags...
             project.OrderByTags();
 
+            int indexId = 0;
             // Assign Unique Identifier to all Scenarios...
             foreach (var feature in project.Features)
             {
                 feature.Id = Guid.NewGuid().ToString();
 
                 foreach (var scenario in feature.Scenarios)
+                {
                     scenario.Id = Guid.NewGuid().ToString();
+                    scenario.Index = indexId++;
+                }
             }
 
             // Copy Attachments to Output Directory...
