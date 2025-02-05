@@ -1,4 +1,53 @@
-﻿		<style>
+﻿    <style>
+        @property --master-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: steelblue;
+            initial-value: #3C78AA;
+        }
+
+        @property --primary-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #598EBC;
+        }
+
+        @property --secondary-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #C7D9E9;
+        }
+
+        @property --passed-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #4AB356;
+        }
+
+        @property --incomplete-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #F8A700;
+        }
+
+        @property --failed-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #F03D2D;
+        }
+
+        @property --skipped-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: gray;
+        }
+
+        @property --undefined-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: darkgray;
+        }
+
         body, html {
             height: 100%;
             margin: 0;
@@ -7,7 +56,7 @@
 
         #content-wrapper {
             display: flex;
-            height: calc(100% - 98px); /* Adjust for header and footer height */
+            height: calc(100% - 118px); /* Adjust for header and footer height */
             flex-direction: row; /* Change to row for vertical splitter */
         }
 
@@ -23,12 +72,10 @@
         }
 
         header {
-            background-color: #4CAF50;
-            background-color: steelblue;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 1.5em;
+            padding: 8px;
+            padding-left: 16px;
+            border-bottom: 1px solid #ddd;
+            background-color: var(--secondary-color);
         }
 
         footer {
@@ -39,7 +86,7 @@
             font-size: 0.9em;
         }
 
-        .panel {
+        .section {
             padding-bottom: 8px;
         }
 
@@ -67,11 +114,10 @@
         }
 
         th {
-            background-color: darkgray;
-            background-color: steelblue;
+            background-color: var(--primary-color);
             color: white;
-			border: solid;
-			border-width: 1px;
+            border: solid;
+            border-width: 1px;
             padding-left: 6px;
             padding-right: 6px;
         }
@@ -81,9 +127,9 @@
             width: 100%;
         }
 
-        table.grid tr:hover td {
-            background-color: #C7D9E8;
-        }
+            table.grid tr:hover td {
+                background-color: var(--secondary-color);
+            }
 
         .project-name {
             font-size: 24px;
@@ -95,7 +141,7 @@
         }
 
         .feature-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
         }
 
@@ -155,6 +201,7 @@
 
         .step-keyword {
             color: #2471A3;
+            color: var(--master-color);
             font-weight: bold;
         }
 
@@ -165,7 +212,7 @@
 
         .step-failed {
             color: var(--failed-color);
-            background-color: #FFE6E6;            
+            background-color: #FFE6E6;
             outline: 1px solid var(--failed-color);
             text-align: center;
             padding: 8px;
@@ -173,26 +220,19 @@
 
         .step-incomplete {
             color: var(--incomplete-color);
-            background-color: #FFF0E6;            
+            background-color: #FFF0E6;
             outline: 1px solid var(--incomplete-color);
             text-align: center;
             padding: 8px;
         }
-       
+
         data-item {
             visibility: hidden;
         }
 
         a {
-            color: steelblue;
+            color: var(--master-color);
             text-decoration: none;
-        }
-
-        @property --passed-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #2ECC40;
-            initial-value: #4AB356;            
         }
 
         .color-passed {
@@ -203,26 +243,12 @@
             background: var(--passed-color);
         }
 
-        @property --incomplete-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #FFA636;
-            initial-value: #F8A700;    
-        }
-
         .color-incomplete {
             color: var(--incomplete-color);
         }
 
         .bgcolor-incomplete {
             background: var(--incomplete-color);
-        }
-
-        @property --failed-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #FF4136;
-            initial-value: #F03D2D;            
         }
 
         .color-failed {
@@ -233,24 +259,12 @@
             background: var(--failed-color);
         }
 
-        @property --skipped-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: gray;
-        }
-
         .color-skipped {
             color: var(--skipped-color);
         }
 
         .bgcolor-skipped {
             background: var(--skipped-color);
-        }
-
-        @property --undefined-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: darkgray;
         }
 
         .color-undefined {
@@ -281,6 +295,6 @@
 
         .sort-column {
             float: right;
-			font-weight: normal;
+            font-weight: normal;
         }
-		</style>
+    </style>
