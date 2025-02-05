@@ -5,7 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ReqnRoll.TestExecution\ReqnRoll.TestExecution.csproj" />
+	  <ProjectReference Include="..\Expressium.TestExecution\Expressium.TestExecution.csproj" />
 	</ItemGroup>
 
 </Project>

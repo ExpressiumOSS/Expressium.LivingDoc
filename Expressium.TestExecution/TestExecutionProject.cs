@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Expressium.TestExecution
 {
-    public class TestExecutionContext
+    public class TestExecutionProject
     {
         public string Title { get; set; }
         public DateTime ExecutionTime { get; set; }
@@ -14,7 +14,7 @@ namespace Expressium.TestExecution
 
         public List<TestExecutionFeature> Features { get; set; }
 
-        public TestExecutionContext()
+        public TestExecutionProject()
         {
             Features = new List<TestExecutionFeature>();
         }

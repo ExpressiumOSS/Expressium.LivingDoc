@@ -1,17 +1,16 @@
-﻿using ReqnRoll.TestExecution;
-using System;
+﻿using System;
 
-namespace Cucumber.TestExecution
+namespace Expressium.TestExecution.Cucumber
 {
     public static class CucumberConvertor
     {
         public static void SaveAsTestExecution(string inputFileName, string outputFileName)
         {
             Console.WriteLine("Parsing Cucumber JSON File...");
-            var testExecutionContext = new TestExecutionContext();
-            testExecutionContext.Title = "Cucumber";
+            var testExecutionProject = new TestExecutionProject();
+            testExecutionProject.Title = "Cucumber";
 
-            var cucumberContext = CucumberUtilities.DeserializeAsJson<CucumberContext>(inputFileName);
+            var cucumberContext = CucumberUtilities.DeserializeAsJson<CucumberProject>(inputFileName);
 
             foreach (var feature in cucumberContext.objects)
             {
@@ -20,7 +19,7 @@ namespace Cucumber.TestExecution
                 testExecutionFeature.Tags = feature.id.ToString();
                 testExecutionFeature.Title = feature.name.ToString();
                 testExecutionFeature.Description = feature.description.ToString();
-                testExecutionContext.Features.Add(testExecutionFeature);
+                testExecutionProject.Features.Add(testExecutionFeature);
 
                 foreach (var scenario in feature.elements)
                 {
@@ -39,13 +38,12 @@ namespace Cucumber.TestExecution
                         testExecutionStep.Text = step.name.ToString();
                         testExecutionStep.Type = step.keyword.Trim().ToString();
                         testExecutionStep.Status = step.result.status.ToString().CapitalizeWords();
-                        testExecutionStep.Duration = new TimeSpan(0, 0, 0, 0, step.result.duration);
                         testExecutionExample.Steps.Add(testExecutionStep);
                     }
                 }
             }
 
-            foreach (var feature in testExecutionContext.Features)
+            foreach (var feature in testExecutionProject.Features)
             {
                 foreach (var scenario in feature.Scenarios)
                 {
@@ -71,7 +69,7 @@ namespace Cucumber.TestExecution
                 }
             }
 
-            CucumberUtilities.SerializeAsJson(outputFileName, testExecutionContext);
+            CucumberUtilities.SerializeAsJson(outputFileName, testExecutionProject);
         }
     }
 }

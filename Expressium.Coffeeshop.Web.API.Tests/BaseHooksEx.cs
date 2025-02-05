@@ -6,35 +6,35 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 {
     public partial class BaseHooks
     {
-        private static TestExecutionContext testExecutionContext;
+        private static TestExecutionProject testExecutionProject;
         private static string outputFileName = "TestExecution.json";
 
         private TestExecutionScenario testExecutionScenario;
 
         private static void InitializeTestExecution()
         {
-            testExecutionContext = new TestExecutionContext();
-            testExecutionContext.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            testExecutionContext.ExecutionTime = DateTime.UtcNow.ToLocalTime();
-            testExecutionContext.StartTime = DateTime.Now;
-            testExecutionContext.EndTime = DateTime.Now;
-            testExecutionContext.Environment = "Development";
+            testExecutionProject = new TestExecutionProject();
+            testExecutionProject.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            testExecutionProject.ExecutionTime = DateTime.UtcNow.ToLocalTime();
+            testExecutionProject.StartTime = DateTime.Now;
+            testExecutionProject.EndTime = DateTime.Now;
+            testExecutionProject.Environment = "Development";
 
             System.Threading.Thread.Sleep(1000);
         }
 
         private static void FinalizeTestExecution()
         {
-            testExecutionContext.EndTime = DateTime.Now;
+            testExecutionProject.EndTime = DateTime.Now;
 
-            TestExecutionUtilities.SerializeAsJson(Path.Combine(Directory.GetCurrentDirectory(), outputFileName), testExecutionContext);
+            TestExecutionUtilities.SerializeAsJson(Path.Combine(Directory.GetCurrentDirectory(), outputFileName), testExecutionProject);
         }
 
         private void AddTestExecutionBeforeScenario()
         {
-            if (!testExecutionContext.IsFeatureAdded(featureContext.FeatureInfo.Title))
+            if (!testExecutionProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
             {
-                testExecutionContext.Features.Add(new TestExecutionFeature()
+                testExecutionProject.Features.Add(new TestExecutionFeature()
                 {
                     Tags = string.Join(" ", featureContext.FeatureInfo.Tags),
                     Title = featureContext.FeatureInfo.Title,
@@ -43,7 +43,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 });
             }
 
-            if (testExecutionContext.IsFeatureAdded(featureContext.FeatureInfo.Title))
+            if (testExecutionProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
             {
                 testExecutionScenario = (new TestExecutionScenario()
                 {
@@ -90,9 +90,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 testExecutionScenario.Examples[0].Stacktrace = scenarioContext.TestError?.StackTrace;
                 testExecutionScenario.Examples[0].EndTime = DateTime.Now;
 
-                if (testExecutionContext.IsFeatureAdded(featureContext.FeatureInfo.Title))
+                if (testExecutionProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
                 {
-                    var testExecutionFeature = testExecutionContext.GetFeature(featureContext.FeatureInfo.Title);
+                    var testExecutionFeature = testExecutionProject.GetFeature(featureContext.FeatureInfo.Title);
 
                     if (testExecutionFeature.IsScenarioAdded(scenarioContext.ScenarioInfo.Title))
                     {

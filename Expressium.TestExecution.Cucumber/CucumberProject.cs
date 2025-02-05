@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Cucumber.TestExecution
+namespace Expressium.TestExecution.Cucumber
 {
-    public class CucumberContext
+    public class CucumberProject
     {
         public Feature[] objects { get; set; }
     }

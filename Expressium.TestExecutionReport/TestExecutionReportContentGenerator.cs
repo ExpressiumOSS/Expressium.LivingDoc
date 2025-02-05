@@ -8,7 +8,7 @@ namespace Expressium.TestExecutionReport
     {
         private bool includeTreeview = false;
 
-        internal List<string> GenerateScenarioPreFilters(TestExecutionContext executionContext)
+        internal List<string> GenerateScenarioPreFilters(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -24,7 +24,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal IEnumerable<string> GenerateScenarioFilter(TestExecutionContext executionContext)
+        internal IEnumerable<string> GenerateScenarioFilter(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -36,7 +36,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioList(TestExecutionContext executionContext)
+        internal List<string> GenerateScenarioList(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -57,7 +57,7 @@ namespace Expressium.TestExecutionReport
 
             listOfLines.Add("<tbody id='scenario-list'>");
 
-            foreach (var feature in executionContext.Features)
+            foreach (var feature in project.Features)
             {
                 if (includeTreeview)
                 {

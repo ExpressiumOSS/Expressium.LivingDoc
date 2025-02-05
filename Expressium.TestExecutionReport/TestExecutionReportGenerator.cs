@@ -32,7 +32,7 @@ namespace Expressium.TestExecutionReport
             Console.WriteLine("");
 
             Console.WriteLine("Parsing Test Execution JSON File...");
-            var executionContext = TestExecutionUtilities.DeserializeAsJson<TestExecutionContext>(filePath);
+            var project = TestExecutionUtilities.DeserializeAsJson<TestExecutionProject>(filePath);
 
             Console.WriteLine("Creating Test Execution Output Directories...");
             if (Directory.Exists(outputPath))
@@ -41,10 +41,10 @@ namespace Expressium.TestExecutionReport
             Directory.CreateDirectory(Path.Combine(outputPath, "Attachments"));
 
             // Sort list of Features by Tags...
-            executionContext.OrderByTags();
+            project.OrderByTags();
 
             // Assign Unique Identifier to all Scenarios...
-            foreach (var feature in executionContext.Features)
+            foreach (var feature in project.Features)
             {
                 feature.Id = Guid.NewGuid().ToString();
 
@@ -53,7 +53,7 @@ namespace Expressium.TestExecutionReport
             }
 
             // Copy Attachments to Output Directory...
-            foreach (var feature in executionContext.Features)
+            foreach (var feature in project.Features)
             {
                 foreach (var scenario in feature.Scenarios)
                 {
@@ -69,24 +69,24 @@ namespace Expressium.TestExecutionReport
             }
 
             Console.WriteLine("Generating Test Execution HTML Report...");
-            GenerateTestExecutionReport(executionContext);
+            GenerateTestExecutionReport(project);
 
             Console.WriteLine("Generating Test Execution Report Completed");
             Console.WriteLine("");
         }
 
-        internal void GenerateTestExecutionReport(TestExecutionContext executionContext)
+        internal void GenerateTestExecutionReport(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
             listOfLines.AddRange(GenerateHtmlHeader());
             listOfLines.AddRange(GenerateHead());
             listOfLines.AddRange(GenerateBodyHeader());
-            listOfLines.AddRange(GenerateHeader(executionContext));
-            listOfLines.AddRange(GenerateNavigation(executionContext));
-            listOfLines.AddRange(GenerateContent(executionContext));
-            listOfLines.AddRange(GenerateFooter(executionContext));
-            listOfLines.AddRange(GenerateData(executionContext));
+            listOfLines.AddRange(GenerateHeader(project));
+            listOfLines.AddRange(GenerateNavigation(project));
+            listOfLines.AddRange(GenerateContent(project));
+            listOfLines.AddRange(GenerateFooter(project));
+            listOfLines.AddRange(GenerateData(project));
             listOfLines.AddRange(GenerateBodyFooter());
             listOfLines.AddRange(GenerateHtmlFooter());
 
@@ -180,20 +180,20 @@ namespace Expressium.TestExecutionReport
             return Resources.Scripts.Split(Environment.NewLine).ToList();
         }
 
-        internal List<string> GenerateHeader(TestExecutionContext executionContext)
+        internal List<string> GenerateHeader(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Header Section -->");
             listOfLines.Add("<header>");
-            listOfLines.Add("<span class='project-name'>" + executionContext.Title + "</span><br />");
-            listOfLines.Add("<span class='project-date'>generated " + executionContext.GetExecutionTime() + "</span>");
+            listOfLines.Add("<span class='project-name'>" + project.Title + "</span><br />");
+            listOfLines.Add("<span class='project-date'>generated " + project.GetExecutionTime() + "</span>");
             listOfLines.Add("</header>");
 
             return listOfLines;
         }
 
-        internal List<string> GenerateNavigation(TestExecutionContext executionContext)
+        internal List<string> GenerateNavigation(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -210,7 +210,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateContent(TestExecutionContext executionContext)
+        internal List<string> GenerateContent(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -219,7 +219,7 @@ namespace Expressium.TestExecutionReport
 
             listOfLines.Add("<!-- Left Content Section -->");
             listOfLines.Add("<div id='left-section' class='bg-light p-3'>");
-            listOfLines.AddRange(GenerateContentOverview(executionContext));
+            listOfLines.AddRange(GenerateContentOverview(project));
             listOfLines.Add("</div>");
 
             listOfLines.Add("<!-- Splitter Content Section -->");
@@ -237,20 +237,20 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateContentOverview(TestExecutionContext executionContext)
+        internal List<string> GenerateContentOverview(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
             var contentGenerator = new TestExecutionReportContentGenerator();
 
-            listOfLines.AddRange(contentGenerator.GenerateScenarioPreFilters(executionContext));
-            listOfLines.AddRange(contentGenerator.GenerateScenarioFilter(executionContext));
-            listOfLines.AddRange(contentGenerator.GenerateScenarioList(executionContext));
+            listOfLines.AddRange(contentGenerator.GenerateScenarioPreFilters(project));
+            listOfLines.AddRange(contentGenerator.GenerateScenarioFilter(project));
+            listOfLines.AddRange(contentGenerator.GenerateScenarioList(project));
 
             return listOfLines;
         }
 
-        internal List<string> GenerateFooter(TestExecutionContext executionContext)
+        internal List<string> GenerateFooter(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -262,15 +262,15 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateData(TestExecutionContext executionContext)
+        internal List<string> GenerateData(TestExecutionProject project)
         {
             var listOfLines = new List<string>();
 
             var dataGenerator = new TestExecutionReportDataGenerator();
 
-            listOfLines.AddRange(dataGenerator.GenerateFeatureDataSections(executionContext));
-            listOfLines.AddRange(dataGenerator.GenerateScenarioDataSections(executionContext));
-            listOfLines.AddRange(dataGenerator.GenerateAnalyticsSection(executionContext));
+            listOfLines.AddRange(dataGenerator.GenerateFeatureDataSections(project));
+            listOfLines.AddRange(dataGenerator.GenerateScenarioDataSections(project));
+            listOfLines.AddRange(dataGenerator.GenerateAnalyticsSection(project));
 
             return listOfLines;
         }

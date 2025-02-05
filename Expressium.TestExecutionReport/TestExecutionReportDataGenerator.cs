@@ -8,11 +8,11 @@ namespace Expressium.TestExecutionReport
 {
     internal class TestExecutionReportDataGenerator
     {
-        internal List<string> GenerateFeatureDataSections(TestExecutionContext executionContext)
+        internal List<string> GenerateFeatureDataSections(TestExecutionProject project)
         {
             var listOfLines = new List<string>();
 
-            foreach (var feature in executionContext.Features)
+            foreach (var feature in project.Features)
             {
                 listOfLines.Add("<!-- Feature Data Section -->");
                 listOfLines.Add($"<div class='data-item' id='{feature.Id}'>");
@@ -69,11 +69,11 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataSections(TestExecutionContext executionContext)
+        internal List<string> GenerateScenarioDataSections(TestExecutionProject project)
         {
             var listOfLines = new List<string>();
 
-            foreach (var feature in executionContext.Features)
+            foreach (var feature in project.Features)
             {
                 foreach (var scenario in feature.Scenarios)
                 {
@@ -298,7 +298,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateAnalyticsSection(TestExecutionContext executionContext)
+        internal List<string> GenerateAnalyticsSection(TestExecutionProject project)
         {
             var listOfLines = new List<string>();
 
@@ -309,26 +309,26 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<span class='project-name'>Analytics</span>");
             listOfLines.Add("</div>");
 
-            listOfLines.AddRange(GenerateScenariosStatusChart(executionContext));
+            listOfLines.AddRange(GenerateScenariosStatusChart(project));
             listOfLines.Add("<p></p>");
-            listOfLines.AddRange(GenerateFeaturesStatusSection(executionContext));
+            listOfLines.AddRange(GenerateFeaturesStatusSection(project));
             listOfLines.Add("<p></p>");
-            //listOfLines.AddRange(GenerateProjectStatusProperties(executionContext));
+            //listOfLines.AddRange(GenerateProjectStatusProperties(project));
 
             listOfLines.Add("</div>");
 
             return listOfLines;
         }
 
-        internal List<string> GenerateScenariosStatusChart(TestExecutionContext executionContext)
+        internal List<string> GenerateScenariosStatusChart(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
-            var numberOfPassed = executionContext.GetNumberOfPassed();
-            var numberOfIncomplete = executionContext.GetNumberOfIncomplete();
-            var numberOfFailed = executionContext.GetNumberOfFailed();
-            var numberOfSkipped = executionContext.GetNumberOfSkipped();
-            var numberOfTests = executionContext.GetNumberOfTests();
+            var numberOfPassed = project.GetNumberOfPassed();
+            var numberOfIncomplete = project.GetNumberOfIncomplete();
+            var numberOfFailed = project.GetNumberOfFailed();
+            var numberOfSkipped = project.GetNumberOfSkipped();
+            var numberOfTests = project.GetNumberOfTests();
 
             var numberOfPercentPassed = (int)Math.Round(100.0f / numberOfTests * numberOfPassed);
             var numberOfPercentIncomplete = (int)Math.Round(100.0f / numberOfTests * numberOfIncomplete);
@@ -420,7 +420,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeaturesStatusSection(TestExecutionContext executionContext)
+        internal List<string> GenerateFeaturesStatusSection(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -439,7 +439,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody>");
 
-            foreach (var feature in executionContext.Features)
+            foreach (var feature in project.Features)
             {
                 var percentOfPassed = (int)Math.Round(100.0f / feature.GetNumberOfTests() * feature.GetNumberOfPassed());
 
@@ -459,7 +459,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectStatusProperties(TestExecutionContext executionContext)
+        internal List<string> GenerateProjectStatusProperties(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -471,10 +471,10 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<tr><th>Name</th><th>Value</th></tr>");
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody>");
-            listOfLines.Add($"<tr><td><b>Project: </b></td><td>{executionContext.Title}</td></tr>");
-            listOfLines.Add($"<tr><td><b>Execution Time: </b></td><td>{executionContext.GetExecutionTime()}</td></tr>");
-            listOfLines.Add($"<tr><td><b>Duration: </b></td><td>{executionContext.GetDuration()}</td></tr>");
-            listOfLines.Add($"<tr><td><b>Environment: </b></td><td>{executionContext.Environment}</td></tr>");
+            listOfLines.Add($"<tr><td><b>Project: </b></td><td>{project.Title}</td></tr>");
+            listOfLines.Add($"<tr><td><b>Execution Time: </b></td><td>{project.GetExecutionTime()}</td></tr>");
+            listOfLines.Add($"<tr><td><b>Duration: </b></td><td>{project.GetDuration()}</td></tr>");
+            listOfLines.Add($"<tr><td><b>Environment: </b></td><td>{project.Environment}</td></tr>");
             listOfLines.Add("</tbody>");
             listOfLines.Add("</table>");
             listOfLines.Add("</div>");
