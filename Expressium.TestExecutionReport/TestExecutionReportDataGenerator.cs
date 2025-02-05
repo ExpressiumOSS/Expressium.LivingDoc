@@ -8,6 +8,105 @@ namespace Expressium.TestExecutionReport
 {
     internal class TestExecutionReportDataGenerator
     {
+        internal List<string> GenerateProjectDataListViewSections(TestExecutionProject project)
+        {
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Project Data ListView Section -->");
+            listOfLines.Add($"<div class='data-item' id='listview'>");
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<table id='scenariolist' class='grid'>");
+
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr role='header'>");
+            listOfLines.Add("<th onClick='sortTableByColumn(0)'>Feature<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(2)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+
+            listOfLines.Add("<tbody id='scenario-list'>");
+
+            foreach (var feature in project.Features)
+            {
+                foreach (var scenario in feature.Scenarios)
+                {
+                    listOfLines.Add($"<tr tags='{feature.Title} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
+                    listOfLines.Add($"<td>{feature.Title}</td>");
+                    listOfLines.Add($"<td><a href='#'><span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span><span>{scenario.Title}</span></a></td>");
+                    listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
+                    listOfLines.Add($"</tr>");
+                }
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateProjectDataTreeViewSections(TestExecutionProject project)
+        {
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Project Data TreeView Section -->");
+            listOfLines.Add($"<div class='data-item' id='treeview'>");
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<table id='scenariolist' class='grid'>");
+
+            listOfLines.Add("<tbody id='scenario-list'>");
+
+            foreach (var feature in project.Features)
+            {
+                listOfLines.Add($"<tr role='feature' style='color: dimgray;'>");
+                listOfLines.Add($"<td style='width: 8px;'><b>&#10011;<b></td>");
+                listOfLines.Add($"<td colspan='2' style='border-bottom: 1px solid lightgray;'>");
+
+                //listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
+                listOfLines.Add($"<span><b>{feature.Title}</b></span>");
+
+                //if (feature.GetNumberOfPassed() > 0)
+                //    listOfLines.Add($"<span class='status-dot bgcolor-passed'></span>");
+
+                //if (feature.GetNumberOfIncomplete() > 0)
+                //    listOfLines.Add($"<span class='status-dot bgcolor-incomplete'></span>");
+
+                //if (feature.GetNumberOfFailed() > 0)
+                //    listOfLines.Add($"<span class='status-dot bgcolor-failed'></span>");
+
+                //if (feature.GetNumberOfSkipped() > 0)
+                //    listOfLines.Add($"<span class='status-dot bgcolor-skipped'></span>");
+
+                listOfLines.Add($"</td>");
+                listOfLines.Add($"</tr>");
+
+                foreach (var scenario in feature.Scenarios)
+                {
+                    listOfLines.Add($"<tr role='scenario' tags='{feature.Title} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
+                    listOfLines.Add($"<td style='width: 8px;'></td>");
+                    listOfLines.Add($"<td style='width: 24px;'></td>");
+                    listOfLines.Add($"<td style='border-bottom: 1px solid lightgray;'>");
+                    listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
+                    listOfLines.Add($"<a href='#'>{scenario.Title}</a>");
+                    listOfLines.Add($"</td>");
+                    listOfLines.Add($"</tr>");
+                }
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
         internal List<string> GenerateFeatureDataSections(TestExecutionProject project)
         {
             var listOfLines = new List<string>();
@@ -18,9 +117,9 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add($"<div class='data-item' id='{feature.Id}'>");
 
                 listOfLines.Add("<div class='section'>");
-                listOfLines.AddRange(GenerateFeatureTagSection(feature));
-                listOfLines.AddRange(GenerateFeatureNameSection(feature));
-                listOfLines.AddRange(GenerateFeatureDescriptionSection(feature));
+                listOfLines.AddRange(GenerateFeatureDataTagSection(feature));
+                listOfLines.AddRange(GenerateFeatureDataNameSection(feature));
+                listOfLines.AddRange(GenerateFeatureDataDescriptionSection(feature));
                 listOfLines.Add("</div>");
 
                 listOfLines.Add("</div>");
@@ -29,11 +128,11 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureTagSection(TestExecutionFeature feature)
+        internal List<string> GenerateFeatureDataTagSection(TestExecutionFeature feature)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Feature Tag Section -->");
+            listOfLines.Add("<!-- Feature Data Tag Section -->");
             listOfLines.Add("<div>");
             listOfLines.Add("<span class='tag-names'>" + feature.GetTags() + "</span>");
             listOfLines.Add("</div>");
@@ -41,11 +140,11 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureNameSection(TestExecutionFeature feature)
+        internal List<string> GenerateFeatureDataNameSection(TestExecutionFeature feature)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Feature Name Section -->");
+            listOfLines.Add("<!-- Feature Data Name Section -->");
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<span class='feature-name'>Feature: {feature.Title}</span>");
@@ -54,11 +153,11 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDescriptionSection(TestExecutionFeature feature)
+        internal List<string> GenerateFeatureDataDescriptionSection(TestExecutionFeature feature)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Feature Description Section -->");
+            listOfLines.Add("<!-- Feature Data Description Section -->");
             listOfLines.Add("<div class='feature-description'>");
             var listOfDescription = feature.Description.Trim().Split("\n");
             foreach (var line in listOfDescription)
@@ -90,19 +189,19 @@ namespace Expressium.TestExecutionReport
                         listOfLines.Add("<!-- Scenario Outline Section -->");
                         listOfLines.Add("<div class='section'>");
 
-                        listOfLines.AddRange(GenerateScenarioTagSection(scenario));
+                        listOfLines.AddRange(GenerateScenarioDataTagSection(scenario));
 
                         listOfLines.Add("<table>");
                         listOfLines.Add("<tbody>");
-                        listOfLines.AddRange(GenerateScenarioTitleSection(scenario, example));
-                        listOfLines.AddRange(GenerateScenarioStepSection(example));
-                        listOfLines.AddRange(GenerateScenarioExamplesSection(example));
-                        listOfLines.AddRange(GenerateScenarioMessageSection(example));
+                        listOfLines.AddRange(GenerateScenarioDataTitleSection(scenario, example));
+                        listOfLines.AddRange(GenerateScenarioDataStepsSection(example));
+                        listOfLines.AddRange(GenerateScenarioDataExamplesSection(example));
+                        listOfLines.AddRange(GenerateScenarioDataMessageSection(example));
                         listOfLines.Add("</tbody>");
                         listOfLines.Add("</table>");
                         listOfLines.Add("</div>");
 
-                        listOfLines.AddRange(GenerateScenarioAttachments(example));
+                        listOfLines.AddRange(GenerateScenarioDataAttachments(example));
                     }
 
                     listOfLines.Add("</div>");
@@ -112,11 +211,11 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioTagSection(TestExecutionScenario scenario)
+        internal List<string> GenerateScenarioDataTagSection(TestExecutionScenario scenario)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Scenario Tag Section -->");
+            listOfLines.Add("<!-- Scenario Data Tag Section -->");
             listOfLines.Add("<div>");
             listOfLines.Add("<span class='tag-names'>" + scenario.GetTags() + "</span>");
             listOfLines.Add("</div>");
@@ -124,7 +223,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioTitleSection(TestExecutionScenario scenario, TestExecutionExample example)
+        internal List<string> GenerateScenarioDataTitleSection(TestExecutionScenario scenario, TestExecutionExample example)
         {
             var scenarioKeyword = "Scenario:";
             if (example.Arguments.Count > 0)
@@ -132,7 +231,7 @@ namespace Expressium.TestExecutionReport
 
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Scenario Title Section -->");
+            listOfLines.Add("<!-- Scenario Data Title Section -->");
             listOfLines.Add("<tr>");
             listOfLines.Add("<td style='padding-left: 0px;' colspan='2'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
@@ -144,11 +243,11 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioStepSection(TestExecutionExample example)
+        internal List<string> GenerateScenarioDataStepsSection(TestExecutionExample example)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Scenario Steps Section -->");
+            listOfLines.Add("<!-- Scenario Data Steps Section -->");
 
             foreach (var step in example.Steps)
             {
@@ -200,7 +299,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioExamplesSection(TestExecutionExample example)
+        internal List<string> GenerateScenarioDataExamplesSection(TestExecutionExample example)
         {
             var listOfLines = new List<string>();
 
@@ -239,7 +338,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioMessageSection(TestExecutionExample example)
+        internal List<string> GenerateScenarioDataMessageSection(TestExecutionExample example)
         {
             var listOfLines = new List<string>();
 
@@ -260,7 +359,7 @@ namespace Expressium.TestExecutionReport
 
             if (message != null)
             {
-                listOfLines.Add("<!-- Scenario Message Section -->");
+                listOfLines.Add("<!-- Scenario Data Message Section -->");
                 listOfLines.Add($"<tr><td></td></tr>");
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td style='padding-left: 0px;' colspan='2'>");
@@ -272,13 +371,13 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioAttachments(TestExecutionExample example)
+        internal List<string> GenerateScenarioDataAttachments(TestExecutionExample example)
         {
             var listOfLines = new List<string>();
 
             if (example.Attachments.Count > 0)
             {
-                listOfLines.Add("<!-- Scenario Attachments Section -->");
+                listOfLines.Add("<!-- Scenario Data Attachments Section -->");
                 listOfLines.Add("<div class='section' style='padding-top: 2px; padding-bottom: 0px;'>");
 
                 listOfLines.Add("<span class='scenario-name'>Attachments:</span>");
@@ -298,20 +397,20 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateAnalyticsSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataAnalyticsSection(TestExecutionProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Analytics Data Section -->");
+            listOfLines.Add("<!-- Project Data Analytics Section -->");
             listOfLines.Add($"<div class='data-item' id='analytics'>");
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<span class='project-name'>Analytics</span>");
             listOfLines.Add("</div>");
 
-            listOfLines.AddRange(GenerateScenariosStatusChart(project));
+            listOfLines.AddRange(GenerateProjectDataAnalyticsStatusChartSection(project));
             listOfLines.Add("<p></p>");
-            listOfLines.AddRange(GenerateFeaturesStatusSection(project));
+            listOfLines.AddRange(GenerateProjectDataAnalyticsCoverageSection(project));
             listOfLines.Add("<p></p>");
             //listOfLines.AddRange(GenerateProjectStatusProperties(project));
 
@@ -320,7 +419,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenariosStatusChart(TestExecutionProject project)
+        internal List<string> GenerateProjectDataAnalyticsStatusChartSection(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -352,7 +451,7 @@ namespace Expressium.TestExecutionReport
             }
 
             {
-                listOfLines.Add("<!-- Status Master Chart Section -->");
+                listOfLines.Add("<!-- Project Data Analytics Status Chart Section -->");
                 listOfLines.Add("<div class='section' style='text-align: center; max-width: 500px; margin: auto;'>");
                 listOfLines.Add($"<span class='chart-percentage'>{numberOfPercentPassed.ToString("0")}%</span><br />");
                 listOfLines.Add("<span class='chart-status'>Passed</span><br />");
@@ -420,11 +519,11 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeaturesStatusSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataAnalyticsCoverageSection(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Status Feature Section -->");
+            listOfLines.Add("<!-- Project Data Analytics Coverage Section -->");
             listOfLines.Add("<div class='section' style='max-width: 600px; margin: auto;'>");
             listOfLines.Add("<span class='feature-name'>Features</span><br />");
             listOfLines.Add("<table class='grid' width='100%' align='center'>");
@@ -459,11 +558,11 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectStatusProperties(TestExecutionProject project)
+        internal List<string> GenerateProjectDataStatusProperties(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Status Project Properties Section -->");
+            listOfLines.Add("<!-- Status Project Data Properties Section -->");
             listOfLines.Add("<div class='section' style='max-width: 600px; margin: auto;'>");
             listOfLines.Add("<span class='feature-name'>Properties</span><br />");
             listOfLines.Add("<table width='100%' align='center' border='1'>");

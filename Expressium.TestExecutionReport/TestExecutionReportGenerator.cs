@@ -117,7 +117,7 @@ namespace Expressium.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<body onload=\"loadAnalytics('analytics');\">");
+            listOfLines.Add("<body onload=\"loadAnalytics('analytics'); loadViewmode('treeview');\">");
 
             return listOfLines;
         }
@@ -219,7 +219,9 @@ namespace Expressium.TestExecutionReport
 
             listOfLines.Add("<!-- Left Content Section -->");
             listOfLines.Add("<div id='left-section' class='bg-light p-3'>");
-            listOfLines.AddRange(GenerateContentOverview(project));
+            listOfLines.AddRange(GenerateScenarioPreFilters(project));
+            listOfLines.AddRange(GenerateScenarioFilter(project));
+            listOfLines.Add("<div id='scenario-view'></div>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<!-- Splitter Content Section -->");
@@ -237,15 +239,33 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateContentOverview(TestExecutionProject project)
+        internal List<string> GenerateScenarioPreFilters(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
-            var contentGenerator = new TestExecutionReportContentGenerator();
+            listOfLines.Add("<!-- Features PreFilters Section -->");
+            listOfLines.Add("<div class='section prefilters'>");
 
-            listOfLines.AddRange(contentGenerator.GenerateScenarioPreFilters(project));
-            listOfLines.AddRange(contentGenerator.GenerateScenarioFilter(project));
-            listOfLines.AddRange(contentGenerator.GenerateScenarioList(project));
+            listOfLines.Add("<button title='Preset Filter with Passed' class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
+            listOfLines.Add("<button title='Preset Filter with Incomplete' class='color-incomplete' onclick='presetScenarios(\"incomplete\")'>Incomplete</button>");
+            listOfLines.Add("<button title='Preset Filter with Failed' class='color-failed' onclick='presetScenarios(\"failed\")'>Failed</button>");
+            listOfLines.Add("<button title='Preset Filter with Skipped' class='color-skipped' onclick='presetScenarios(\"skipped\")'>Skipped</button>");
+            listOfLines.Add("<button title='Clear Filter' onclick='presetScenarios(\"\")'>Clear</button>");
+            listOfLines.Add("<button id='viewmode' name='treeview' title='Toggle View Mode' onclick='toggleViewmode()'>&#9783;</button>");
+            
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateScenarioFilter(TestExecutionProject project)
+        {
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Features Filter Section -->");
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<input class='filter' onkeyup='filterScenarios()' id='scenario-filter' type='text' placeholder='Filter by Keywords'>");
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }
@@ -268,9 +288,11 @@ namespace Expressium.TestExecutionReport
 
             var dataGenerator = new TestExecutionReportDataGenerator();
 
+            listOfLines.AddRange(dataGenerator.GenerateProjectDataListViewSections(project));
+            listOfLines.AddRange(dataGenerator.GenerateProjectDataTreeViewSections(project));
             listOfLines.AddRange(dataGenerator.GenerateFeatureDataSections(project));
             listOfLines.AddRange(dataGenerator.GenerateScenarioDataSections(project));
-            listOfLines.AddRange(dataGenerator.GenerateAnalyticsSection(project));
+            listOfLines.AddRange(dataGenerator.GenerateProjectDataAnalyticsSection(project));
 
             return listOfLines;
         }
