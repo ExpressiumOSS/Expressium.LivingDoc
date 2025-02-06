@@ -10,6 +10,8 @@
             let element = document.getElementById('viewmode');
             let mode = element.getAttribute('name') === "listview" ? "treeview" : "listview";
 
+            presetScenarios("");
+
             element.setAttribute("name", mode);
             loadViewmode(mode);
         }
@@ -35,6 +37,43 @@
 		}
 	</script>
     <script>
+        function filterFeatures() {
+            var table = document.getElementById("scenario-list");
+            var tr = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "feature") {
+                    tr[i].style.display = "none";
+                }
+            }
+
+            var features = [];
+
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role != "feature") {
+                    if (tr[i].style.display == "") {
+                        var parent = tr[i].getAttribute("data-parent");
+                        features.push(parent);
+                    }
+                }
+            }
+
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "feature") {
+                    var name = tr[i].getAttribute("data-name");
+                    if (features.includes(name))
+                        tr[i].style.display = "";
+                }
+            }
+        }
+    </script>
+    <script>
         function filterScenarios() {
             var input = document.getElementById("scenario-filter");
             var filterTokens = input.value.toUpperCase().split(/\s+/);
@@ -42,8 +81,8 @@
             var tr = table.getElementsByTagName("tr");
 
             for (var i = 0; i < tr.length; i++) {
-                var role = tr[i].getAttribute("role");
-                var tags = tr[i].getAttribute("tags");
+                var role = tr[i].getAttribute("data-role");
+                var tags = tr[i].getAttribute("data-tags");
                 var td = tr[i].getElementsByTagName("td");
                 var rowText = "";
                 var found = false;
@@ -64,6 +103,8 @@
 
                 tr[i].style.display = found ? "" : "none";
             }
+
+            filterFeatures();
         }
     </script>
     <script>
@@ -82,8 +123,8 @@
                 for (i = 1; i < (rows.length - 1); i++) {
                     var Switch = false;
 
-                    x = rows[i].getElementsByTagName("TD")[n];
-                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    x = rows[i].getElementsByTagName("td")[n];
+                    y = rows[i + 1].getElementsByTagName("td")[n];
 
                     if (direction == "ascending") {
 
@@ -97,6 +138,57 @@
 
                         if (x.innerHTML.toLowerCase() <
                             y.innerHTML.toLowerCase()) {
+
+                            Switch = true;
+                            break;
+                        }
+                    }
+                }
+                if (Switch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+
+                    count++;
+                } else {
+                    if (count == 0 && direction == "ascending") {
+                        direction = "descending";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        function sortTableByColumnByAttibute(n,a) {
+            let table;
+            table = document.getElementById("scenariolist");
+            var rows, i, x, y, count = 0;
+            var switching = true;
+
+            var direction = "ascending";
+
+            while (switching) {
+                switching = false;
+                var rows = table.rows;
+
+                for (i = 1; i < (rows.length - 1); i++) {
+                    var Switch = false;
+
+                    x = rows[i].getElementsByTagName("td")[n];
+                    y = rows[i + 1].getElementsByTagName("td")[n];
+
+                    if (direction == "ascending") {
+
+                        if (x.getAttribute(a) >
+                            y.getAttribute(a)) {
+
+                            Switch = true;
+                            break;
+                        }
+                    } else if (direction == "descending") {
+
+                        if (x.getAttribute(a) <
+                            y.getAttribute(a)) {
 
                             Switch = true;
                             break;

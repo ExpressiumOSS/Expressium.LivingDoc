@@ -76,6 +76,11 @@ namespace Expressium.TestExecutionReport.Extensions
             return ReportStatuses.Undefined.ToString();
         }
 
+        public static string GetIndexAsNumber(this TestExecutionScenario scenario)
+        {
+            return scenario.Index.ToString("D4");
+        }
+
         public static string GetDuration(this TestExecutionScenario scenario)
         {
             TimeSpan? duration = null;
@@ -94,6 +99,23 @@ namespace Expressium.TestExecutionReport.Extensions
                 return $"{totalDuration.Minutes}min {totalDuration.Seconds}s";
 
             return $"{totalDuration.Seconds}s {totalDuration.Milliseconds}ms";
+        }
+
+        public static string GetDurationAsNumber(this TestExecutionScenario scenario)
+        {
+            TimeSpan? duration = null;
+
+            foreach (var example in scenario.Examples)
+            {
+                if (duration == null)
+                    duration = example.EndTime - example.StartTime;
+                else
+                    duration += example.EndTime - example.StartTime;
+            }
+
+            var totalDuration = duration.GetValueOrDefault();
+
+            return $"{totalDuration.Minutes.ToString("D2")}:{totalDuration.Seconds.ToString("D2")}:{totalDuration.Milliseconds.ToString("D3")}";
         }
     }
 }

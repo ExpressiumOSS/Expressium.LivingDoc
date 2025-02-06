@@ -43,7 +43,7 @@ namespace Expressium.TestExecutionReport
             // Sort list of Features by Tags...
             project.OrderByTags();
 
-            int indexId = 0;
+            int indexId = 1;
             // Assign Unique Identifier to all Scenarios...
             foreach (var feature in project.Features)
             {
