@@ -16,7 +16,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add($"<div class='data-item' id='listview'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='scenariolist' class='grid'>");
+            listOfLines.Add("<table id='scenarioview' class='grid'>");
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
@@ -71,7 +71,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add($"<div class='data-item' id='treeview'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='scenariolist' class='grid'>");
+            listOfLines.Add("<table id='scenarioview' class='grid'>");
 
             listOfLines.Add("<tbody id='scenario-list'>");
 
@@ -406,6 +406,51 @@ namespace Expressium.TestExecutionReport
 
                 listOfLines.Add("</div>");
             }
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateProjectDataEditSection(TestExecutionProject project)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Project Data Editor Section -->");
+            listOfLines.Add($"<div class='data-item' id='editor'>");
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<span class='project-name'>Gherkin Editor</span>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<table>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<td>");
+            listOfLines.Add("<label for='ftags'>Tags:</label>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("<td>");
+            listOfLines.Add("<input type='text' id='ftags' name='ftags'>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("</tr>");
+
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<td>");
+            listOfLines.Add("<label for='fscenario'>Scenario:</label>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("<td>");
+            listOfLines.Add("<input type='text' id='fscenario' name='fscenario'>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("</tr>");
+
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<td>");
+            listOfLines.Add("<label for='fsteps'>Steps:</label>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("<td>");
+            listOfLines.Add("<textarea id='fsteps' name='fsteps' rows='10' cols='50'></textarea>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</table>");
+
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }

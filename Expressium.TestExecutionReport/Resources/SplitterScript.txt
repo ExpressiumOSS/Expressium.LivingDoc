@@ -13,6 +13,8 @@
         document.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
 
+            document.body.style.userSelect = 'none';
+
             const totalWidth = leftSection.offsetWidth + rightSection.offsetWidth + splitter.offsetWidth;
             const leftWidth = e.clientX - leftSection.getBoundingClientRect().left;
 
@@ -25,5 +27,6 @@
         document.addEventListener('mouseup', () => {
             isDragging = false;
             document.body.style.cursor = 'default';
+            document.body.style.userSelect = '';
         });
     </script>

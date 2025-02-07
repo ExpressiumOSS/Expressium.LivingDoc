@@ -110,7 +110,7 @@
     <script>
         function sortTableByColumn(n) {
             let table;
-            table = document.getElementById("scenariolist");
+            table = document.getElementById("scenarioview");
             var rows, i, x, y, count = 0;
             var switching = true;
 
@@ -161,7 +161,7 @@
     <script>
         function sortTableByColumnByAttibute(n,a) {
             let table;
-            table = document.getElementById("scenariolist");
+            table = document.getElementById("scenarioview");
             var rows, i, x, y, count = 0;
             var switching = true;
 
