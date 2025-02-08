@@ -55,11 +55,9 @@ namespace Expressium.TestExecutionReport
             if (includeNavigation)
             {
                 listOfLines.Add("<!-- Project Navigation Section -->");
-                listOfLines.Add("<div class='bg-light'>");
-                listOfLines.Add("<nav style='background-color: darkgray; padding: 8px; padding-left: 24px; padding-right: 24px;'>");
+                listOfLines.Add("<nav class='navigation'>");
                 listOfLines.Add("<a href='#' style='color: white;' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
                 listOfLines.Add("</nav>");
-                listOfLines.Add("</div>");
             }
 
             return listOfLines;
