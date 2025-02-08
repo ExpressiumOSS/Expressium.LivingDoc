@@ -68,6 +68,40 @@
 		}
 	</script>
     <script>
+        function filterScenarios() {
+            var input = document.getElementById("scenario-filter");
+            var filterTokens = input.value.toUpperCase().split(/\s+/);
+            var table = document.getElementById("scenario-list");
+            var tr = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+                var tags = tr[i].getAttribute("data-tags");
+                var td = tr[i].getElementsByTagName("td");
+                var rowText = "";
+                var found = false;
+
+                if (role == "feature")
+				    continue;
+
+                for (var j = 0; j < td.length; j++) {
+                    rowText += td[j].textContent.toUpperCase() + " ";
+                }
+                
+                var tagTokens = tags.toUpperCase().split(/\s+/);
+                for (var t = 0; t < tagTokens.length; t++) {
+                    rowText += tagTokens[t].toUpperCase() + " ";
+                }
+
+                found = filterTokens.every(token => rowText.includes(token));
+
+                tr[i].style.display = found ? "" : "none";
+            }
+
+            filterFeatures();
+        }
+    </script>
+    <script>
         function filterFeatures() {
             var table = document.getElementById("scenario-list");
             var tr = table.getElementsByTagName("tr");
@@ -102,40 +136,6 @@
                         tr[i].style.display = "";
                 }
             }
-        }
-    </script>
-    <script>
-        function filterScenarios() {
-            var input = document.getElementById("scenario-filter");
-            var filterTokens = input.value.toUpperCase().split(/\s+/);
-            var table = document.getElementById("scenario-list");
-            var tr = table.getElementsByTagName("tr");
-
-            for (var i = 0; i < tr.length; i++) {
-                var role = tr[i].getAttribute("data-role");
-                var tags = tr[i].getAttribute("data-tags");
-                var td = tr[i].getElementsByTagName("td");
-                var rowText = "";
-                var found = false;
-
-                if (role == "feature")
-				    continue;
-
-                for (var j = 0; j < td.length; j++) {
-                    rowText += td[j].textContent.toUpperCase() + " ";
-                }
-                
-                var tagTokens = tags.toUpperCase().split(/\s+/);
-                for (var t = 0; t < tagTokens.length; t++) {
-                    rowText += tagTokens[t].toUpperCase() + " ";
-                }
-
-                found = filterTokens.every(token => rowText.includes(token));
-
-                tr[i].style.display = found ? "" : "none";
-            }
-
-            filterFeatures();
         }
     </script>
     <script>
