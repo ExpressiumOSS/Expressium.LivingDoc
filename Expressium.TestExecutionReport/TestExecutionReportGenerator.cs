@@ -38,23 +38,7 @@ namespace Expressium.TestExecutionReport
             Directory.CreateDirectory(outputPath);
             Directory.CreateDirectory(Path.Combine(outputPath, "Attachments"));
 
-            // Sort list of Features by Tags...
-            project.OrderByTags();
-
-            int indexId = 1;
-            // Assign Unique Identifier to all Scenarios...
-            foreach (var feature in project.Features)
-            {
-                feature.Id = Guid.NewGuid().ToString();
-
-                foreach (var scenario in feature.Scenarios)
-                {
-                    scenario.Id = Guid.NewGuid().ToString();
-                    scenario.Index = indexId++;
-                }
-            }
-
-            // Copy Attachments to Output Directory...
+            Console.WriteLine("Copy Attachments to Output Directory...");
             foreach (var feature in project.Features)
             {
                 foreach (var scenario in feature.Scenarios)
@@ -69,6 +53,22 @@ namespace Expressium.TestExecutionReport
                     }
                 }
             }
+
+            Console.WriteLine("Assign Unique Identifier to Features & Scenarios...");
+            int indexId = 1;
+            foreach (var feature in project.Features)
+            {
+                feature.Id = Guid.NewGuid().ToString();
+
+                foreach (var scenario in feature.Scenarios)
+                {
+                    scenario.Id = Guid.NewGuid().ToString();
+                    scenario.Index = indexId++;
+                }
+            }
+
+            Console.WriteLine("Sort Features & Scenarios by Tags...");
+            project.OrderByTags();
 
             Console.WriteLine("Generating Test Execution HTML Report...");
             GenerateTestExecutionReport(project);

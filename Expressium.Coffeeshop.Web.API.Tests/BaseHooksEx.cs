@@ -18,7 +18,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             testExecutionProject.ExecutionTime = DateTime.UtcNow.ToLocalTime();
             testExecutionProject.StartTime = DateTime.Now;
             testExecutionProject.EndTime = DateTime.Now;
-            testExecutionProject.Environment = "Development";
 
             System.Threading.Thread.Sleep(1000);
         }

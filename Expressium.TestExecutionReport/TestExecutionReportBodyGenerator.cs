@@ -13,6 +13,8 @@ namespace Expressium.TestExecutionReport
 
         internal List<string> GenerateBody(TestExecutionProject project)
         {
+            var dataGenerator = new TestExecutionReportDataGenerator();
+
             List<string> listOfLines = new List<string>();
 
             listOfLines.AddRange(GenerateBodyHeader());
@@ -20,7 +22,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.AddRange(GenerateNavigation(project));
             listOfLines.AddRange(GenerateContent(project));
             listOfLines.AddRange(GenerateFooter(project));
-            listOfLines.AddRange(GenerateData(project));
+            listOfLines.AddRange(dataGenerator.GenerateData(project));
             listOfLines.AddRange(GenerateBodyFooter());
 
             return listOfLines;
@@ -139,21 +141,6 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<footer>");
             listOfLines.Add("©2025 Expressium All Rights Reserved");
             listOfLines.Add("</footer>");
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateData(TestExecutionProject project)
-        {
-            var listOfLines = new List<string>();
-
-            var dataGenerator = new TestExecutionReportDataGenerator();
-
-            listOfLines.AddRange(dataGenerator.GenerateProjectDataListViewSections(project));
-            listOfLines.AddRange(dataGenerator.GenerateProjectDataTreeViewSections(project));
-            listOfLines.AddRange(dataGenerator.GenerateFeatureDataSections(project));
-            listOfLines.AddRange(dataGenerator.GenerateScenarioDataSections(project));
-            listOfLines.AddRange(dataGenerator.GenerateProjectDataAnalyticsSection(project));
 
             return listOfLines;
         }

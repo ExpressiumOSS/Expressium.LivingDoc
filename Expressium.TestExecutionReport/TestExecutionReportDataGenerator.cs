@@ -8,6 +8,19 @@ namespace Expressium.TestExecutionReport
 {
     internal class TestExecutionReportDataGenerator
     {
+        internal List<string> GenerateData(TestExecutionProject project)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.AddRange(GenerateProjectDataListViewSections(project));
+            listOfLines.AddRange(GenerateProjectDataTreeViewSections(project));
+            listOfLines.AddRange(GenerateFeatureDataSections(project));
+            listOfLines.AddRange(GenerateScenarioDataSections(project));
+            listOfLines.AddRange(GenerateProjectDataAnalyticsSection(project));
+
+            return listOfLines;
+        }
+
         internal List<string> GenerateProjectDataListViewSections(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
@@ -624,29 +637,6 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add($"</tr>");
             }
 
-            listOfLines.Add("</tbody>");
-            listOfLines.Add("</table>");
-            listOfLines.Add("</div>");
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateProjectDataStatusProperties(TestExecutionProject project)
-        {
-            List<string> listOfLines = new List<string>();
-
-            listOfLines.Add("<!-- Status Project Data Properties Section -->");
-            listOfLines.Add("<div class='section' style='max-width: 600px; margin: auto;'>");
-            listOfLines.Add("<span class='feature-name'>Properties</span><br />");
-            listOfLines.Add("<table width='100%' align='center' border='1'>");
-            listOfLines.Add("<thead>");
-            listOfLines.Add("<tr><th>Name</th><th>Value</th></tr>");
-            listOfLines.Add("</thead>");
-            listOfLines.Add("<tbody>");
-            listOfLines.Add($"<tr><td><b>Project: </b></td><td>{project.Title}</td></tr>");
-            listOfLines.Add($"<tr><td><b>Execution Time: </b></td><td>{project.GetExecutionTime()}</td></tr>");
-            listOfLines.Add($"<tr><td><b>Duration: </b></td><td>{project.GetDuration()}</td></tr>");
-            listOfLines.Add($"<tr><td><b>Environment: </b></td><td>{project.Environment}</td></tr>");
             listOfLines.Add("</tbody>");
             listOfLines.Add("</table>");
             listOfLines.Add("</div>");
