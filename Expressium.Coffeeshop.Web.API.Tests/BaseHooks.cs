@@ -53,7 +53,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
             InitializeFixture();
 
-            InitializeBrowser();
             InitializeDependencyInjection();
         }
 
