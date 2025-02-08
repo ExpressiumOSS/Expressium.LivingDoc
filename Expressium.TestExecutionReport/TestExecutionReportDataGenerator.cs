@@ -47,7 +47,7 @@ namespace Expressium.TestExecutionReport
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr class='gridlines' data-tags='{scenario.GetStatus()} {feature.Title} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
+                    listOfLines.Add($"<tr class='gridlines' data-tags='{scenario.GetStatus()} {feature.Title} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
                     listOfLines.Add($"<td align='center'>");
                     listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
@@ -90,7 +90,7 @@ namespace Expressium.TestExecutionReport
 
             foreach (var feature in project.Features)
             {
-                listOfLines.Add($"<tr data-name='{feature.Title}' data-role='feature' style='color: dimgray; font-weight: bold;'>");
+                listOfLines.Add($"<tr data-name='{feature.Title}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\" style='color: dimgray; font-weight: bold;'>");
                 listOfLines.Add($"<td width='8px'>&#10011;</td>");
                 listOfLines.Add($"<td colspan='2' class='gridlines'>{feature.Title}</td>");
 
@@ -112,7 +112,7 @@ namespace Expressium.TestExecutionReport
 
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr data-parent='{feature.Title}' data-role='scenario' data-tags='{feature.Title} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' onclick=\"loadScenario('{feature.Id}','{scenario.Id}');\">");
+                    listOfLines.Add($"<tr data-parent='{feature.Title}' data-role='scenario' data-tags='{feature.Title} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                     listOfLines.Add($"<td width='8px'></td>");
                     listOfLines.Add($"<td width='24px'></td>");
                     listOfLines.Add($"<td class='gridlines'>");

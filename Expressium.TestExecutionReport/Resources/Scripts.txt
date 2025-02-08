@@ -1,8 +1,39 @@
 ﻿    <script>
-        function loadScenario(x,y) {
-            let feature = document.getElementById(x).innerHTML;
-            let scenario = document.getElementById(y).innerHTML;
+        function loadScenario(x) {
+            let featureId = x.getAttribute('data-featureid');
+            let scenarioId = x.getAttribute('data-scenarioid');
+            let feature = document.getElementById(featureId).innerHTML;
+            let scenario = document.getElementById(scenarioId).innerHTML;
             document.getElementById('right-section').innerHTML = feature + scenario;
+        }
+    </script>
+    <script>
+        function loadFeature(x) {
+            let featureId = x.getAttribute('data-featureid');
+            let feature = document.getElementById(featureId).innerHTML;
+
+            var table = document.getElementById("scenario-list");
+            var tr = table.getElementsByTagName("tr");
+
+            var previous = false;
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "scenario") {
+                    var parentId = tr[i].getAttribute('data-featureid');
+                    if (featureId == parentId) {
+                        var scenarioId = tr[i].getAttribute('data-scenarioid');
+                        if (previous) {
+                            feature = feature.concat("<hr>");
+                        }
+
+                        feature = feature.concat(document.getElementById(scenarioId).innerHTML);
+                        previous = true;
+                    }
+                }
+            }
+
+            document.getElementById('right-section').innerHTML = feature;
         }
     </script>
     <script>
