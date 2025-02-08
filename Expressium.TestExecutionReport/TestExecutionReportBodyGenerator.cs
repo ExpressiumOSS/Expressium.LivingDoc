@@ -109,11 +109,11 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='layout-column align-right'>");
-            listOfLines.Add("<button title='Preset Filter with Passed' class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
-            listOfLines.Add("<button title='Preset Filter with Incomplete' class='color-incomplete' onclick='presetScenarios(\"incomplete\")'>Incomplete</button>");
-            listOfLines.Add("<button title='Preset Filter with Failed' class='color-failed' onclick='presetScenarios(\"failed\")'>Failed</button>");
-            listOfLines.Add("<button title='Preset Filter with Skipped' class='color-skipped' onclick='presetScenarios(\"skipped\")'>Skipped</button>");
-            listOfLines.Add("<button title='Clear Filter' onclick='presetScenarios(\"\")'>Clear</button>");
+            listOfLines.Add("<button title='Preset Filter with Passed' class='color-passed' onclick='presetFilter(\"passed\")'>Passed</button>");
+            listOfLines.Add("<button title='Preset Filter with Incomplete' class='color-incomplete' onclick='presetFilter(\"incomplete\")'>Incomplete</button>");
+            listOfLines.Add("<button title='Preset Filter with Failed' class='color-failed' onclick='presetFilter(\"failed\")'>Failed</button>");
+            listOfLines.Add("<button title='Preset Filter with Skipped' class='color-skipped' onclick='presetFilter(\"skipped\")'>Skipped</button>");
+            listOfLines.Add("<button title='Clear Filter' onclick='presetFilter(\"\")'>Clear</button>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");

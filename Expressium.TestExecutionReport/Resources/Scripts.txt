@@ -41,7 +41,7 @@
             let element = document.getElementById('viewmode');
             let mode = element.getAttribute('name') === "listview" ? "treeview" : "listview";
 
-            presetScenarios("");
+            presetFilter("");
 
             element.setAttribute("name", mode);
             loadViewmode(mode);
@@ -60,7 +60,7 @@
         }
     </script>
 	<script>
-		function presetScenarios(x) {
+		function presetFilter(x) {
 			let input = document.getElementById("scenario-filter");
             input.value = x;
 

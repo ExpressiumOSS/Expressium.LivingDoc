@@ -628,7 +628,7 @@ namespace Expressium.TestExecutionReport
             {
                 var percentageOfPassed = (int)Math.Round(100.0f / feature.GetNumberOfTests() * feature.GetNumberOfPassed());
 
-                listOfLines.Add($"<tr class='gridlines' onclick=\"presetScenarios('{feature.GetStatus().ToLower()}')\">");
+                listOfLines.Add($"<tr class='gridlines' onclick=\"presetFilter('{feature.GetStatus().ToLower()}')\">");
                 listOfLines.Add($"<td class='align-center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
                 listOfLines.Add($"<td>{feature.Title}</td>");
                 listOfLines.Add($"<td class='align-center'>{feature.GetNumberOfTests()}</td>");
