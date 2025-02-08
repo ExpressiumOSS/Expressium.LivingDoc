@@ -334,6 +334,8 @@
             width: 10px;
             border-radius: 50%;
             display: inline-block;
+            margin-left: 2px;
+            margin-right: 2px;
         }
 
         button {

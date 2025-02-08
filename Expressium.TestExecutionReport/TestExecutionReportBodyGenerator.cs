@@ -105,7 +105,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<button id='viewmode' name='treeview' title='Toggle View Mode' onclick='toggleViewmode()'>&#9783;</button>");
             //listOfLines.Add("<button title='Tree View Mode' onclick=\"loadViewmode('treeview');\">&#9782;</button>");
             //listOfLines.Add("<button title='List View Mode' onclick=\"loadViewmode('listview');\">&#9783;</button>");
-            //listOfLines.Add("<button title='Analytics' onclick=\"loadAnalytics('analytics');\">&#8721;</button>");
+            listOfLines.Add("<button title='Analytics' onclick=\"loadAnalytics('analytics');\">&#425;</button>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='layout-column align-right'>");

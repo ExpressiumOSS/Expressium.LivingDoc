@@ -33,7 +33,7 @@ namespace Expressium.TestExecutionReport
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
-            listOfLines.Add("<th align='center' onClick='sortTableByColumn(0)'>&nbsp;#&nbsp;</th>");
+            listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'>#</th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Feature<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(2)'>Scenario<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th onClick='sortTableByColumnByAttibute(3, \"data-index\")'>Sequence<span class='sort-column'>&udarr;</span></th>");
@@ -92,20 +92,23 @@ namespace Expressium.TestExecutionReport
             {
                 listOfLines.Add($"<tr data-name='{feature.Title}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\" style='color: dimgray; font-weight: bold;'>");
                 listOfLines.Add($"<td width='8px'>&#10011;</td>");
-                listOfLines.Add($"<td colspan='2' class='gridlines'>{feature.Title}</td>");
 
+                listOfLines.Add($"<td colspan='2' class='gridlines'>");
+                listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
+                listOfLines.Add($"<span>{feature.Title}</span></td>");
                 listOfLines.Add($"<td class='gridlines' align='right'>");
-                if (feature.GetNumberOfPassed() > 0)
-                    listOfLines.Add($"<span class='status-dot bgcolor-passed'></span>");
 
-                if (feature.GetNumberOfIncomplete() > 0)
-                    listOfLines.Add($"<span class='status-dot bgcolor-incomplete'></span>");
+                //if (feature.GetNumberOfPassed() > 0)
+                //    listOfLines.Add($"<span class='status-dot bgcolor-passed'></span>");
 
-                if (feature.GetNumberOfFailed() > 0)
-                    listOfLines.Add($"<span class='status-dot bgcolor-failed'></span>");
+                //if (feature.GetNumberOfIncomplete() > 0)
+                //    listOfLines.Add($"<span class='status-dot bgcolor-incomplete'></span>");
 
-                if (feature.GetNumberOfSkipped() > 0)
-                    listOfLines.Add($"<span class='status-dot bgcolor-skipped'></span>");
+                //if (feature.GetNumberOfFailed() > 0)
+                //    listOfLines.Add($"<span class='status-dot bgcolor-failed'></span>");
+
+                //if (feature.GetNumberOfSkipped() > 0)
+                //    listOfLines.Add($"<span class='status-dot bgcolor-skipped'></span>");
 
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
@@ -261,7 +264,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<tr>");
             listOfLines.Add("<td colspan='2'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
-            listOfLines.Add("<span class='scenario-name'>" + scenarioKeyword + " " + scenario.Title + " </span>");
+            listOfLines.Add("<span class='scenario-name'>" + scenarioKeyword + " " + scenario.Title + "</span>");
             listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
             listOfLines.Add("</td>");
             listOfLines.Add("</tr>");
@@ -282,16 +285,31 @@ namespace Expressium.TestExecutionReport
                 var stepMarker = "";
                 if (step.IsPassed())
                     stepMarker = "&check;";
+                //else if (step.IsIncomplete())
+                    //stepMarker = "&minus;";
                 else
                     stepMarker = "&cross;";
 
-                listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='2'>");
-                listOfLines.Add($"<span class='step-indent color-{status}'><b>{stepMarker}</b></span>");
-                listOfLines.Add($"<span class='step-keyword'> " + step.Type + "</span> ");
-                listOfLines.Add($"<span>" + step.Text + "</span>");
-                listOfLines.Add($"</td>");
-                listOfLines.Add($"</tr>");
+                //if (step.IsPassed() || step.IsFailed())
+                {
+                    listOfLines.Add($"<tr>");
+                    listOfLines.Add($"<td colspan='2'>");
+                    listOfLines.Add($"<span style='margin-right: 1px;' class='step-indent color-{status}'><b>{stepMarker}</b></span>");
+                    listOfLines.Add($"<span class='step-keyword'> " + step.Type + "</span> ");
+                    listOfLines.Add($"<span>" + step.Text + "</span>");
+                    listOfLines.Add($"</td>");
+                    listOfLines.Add($"</tr>");
+                }
+                //else
+                //{
+                //    listOfLines.Add($"<tr>");
+                //    listOfLines.Add($"<td colspan='2'>");
+                //    listOfLines.Add($"<span class='step-indent color-skipped'><b>{stepMarker}</b></span>");
+                //    listOfLines.Add($"<span class='step-keyword color-skipped'><i> " + step.Type + "</i></span> ");
+                //    listOfLines.Add($"<span class='color-skipped'><i>" + step.Text + "</i></span>");
+                //    listOfLines.Add($"</td>");
+                //    listOfLines.Add($"</tr>");
+                //}
 
                 if (step.Arguments.Count > 0)
                 {
@@ -615,7 +633,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<table class='grid' width='100%' align='center'>");
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
-            listOfLines.Add("<th class='align-center'></th>");
+            listOfLines.Add("<th width='20px;' class='align-center'>#</th>");
             listOfLines.Add("<th>Name</th>");
             listOfLines.Add("<th class='align-center'>Total</th>");
             listOfLines.Add("<th class='align-center'>Coverage</th>");
