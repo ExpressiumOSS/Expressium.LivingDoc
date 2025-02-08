@@ -93,7 +93,24 @@
             padding-bottom: 8px;
         }
 
-        .prefilters {
+        .layout-row {
+            display: flex;
+            width: 100%;
+        }
+
+        .layout-column {
+            flex: auto;
+        }
+
+        .align-left {
+            text-align: left;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        .align-right {
             text-align: right;
         }
 

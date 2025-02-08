@@ -99,14 +99,22 @@ namespace Expressium.TestExecutionReport
             List<string> listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Features PreFilters Section -->");
-            listOfLines.Add("<div class='section prefilters'>");
+            listOfLines.Add("<div class='section layout-row'>");
 
+            listOfLines.Add("<div class='layout-column align-left'>");
+            listOfLines.Add("<button id='viewmode' name='treeview' title='Toggle View Mode' onclick='toggleViewmode()'>&#9783;</button>");
+            //listOfLines.Add("<button title='Tree View Mode' onclick=\"loadViewmode('treeview');\">&#9782;</button>");
+            //listOfLines.Add("<button title='List View Mode' onclick=\"loadViewmode('listview');\">&#9783;</button>");
+            //listOfLines.Add("<button title='Analytics' onclick=\"loadAnalytics('analytics');\">&#8721;</button>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<div class='layout-column align-right'>");
             listOfLines.Add("<button title='Preset Filter with Passed' class='color-passed' onclick='presetScenarios(\"passed\")'>Passed</button>");
             listOfLines.Add("<button title='Preset Filter with Incomplete' class='color-incomplete' onclick='presetScenarios(\"incomplete\")'>Incomplete</button>");
             listOfLines.Add("<button title='Preset Filter with Failed' class='color-failed' onclick='presetScenarios(\"failed\")'>Failed</button>");
             listOfLines.Add("<button title='Preset Filter with Skipped' class='color-skipped' onclick='presetScenarios(\"skipped\")'>Skipped</button>");
             listOfLines.Add("<button title='Clear Filter' onclick='presetScenarios(\"\")'>Clear</button>");
-            listOfLines.Add("<button id='viewmode' name='treeview' title='Toggle View Mode' onclick='toggleViewmode()'>&#9783;</button>");
+            listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
 

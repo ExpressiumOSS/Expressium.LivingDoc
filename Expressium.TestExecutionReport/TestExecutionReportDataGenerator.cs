@@ -41,11 +41,11 @@ namespace Expressium.TestExecutionReport
                     listOfLines.Add("</td>");
 
                     listOfLines.Add($"<td>");
-                    listOfLines.Add($"<span><a href='#'>&nbsp;{feature.Title}</a></span>");
+                    listOfLines.Add($"<span><a href='#'>{feature.Title}</a></span>");
                     listOfLines.Add("</td>");
 
                     listOfLines.Add($"<td>");
-                    listOfLines.Add($"<span><a href='#'>&nbsp;{scenario.Title}</a></span>");
+                    listOfLines.Add($"<span><a href='#'>{scenario.Title}</a></span>");
                     listOfLines.Add("</td>");
 
                     listOfLines.Add($"<td align='right' data-index='{scenario.GetIndexAsNumber()}'>{scenario.Index}</td>");
@@ -467,9 +467,8 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("</div>");
 
             listOfLines.AddRange(GenerateProjectDataAnalyticsStatusChartSection(project));
-            listOfLines.Add("<p></p>");
-            listOfLines.AddRange(GenerateProjectDataAnalyticsCoverageSection(project));
-            listOfLines.Add("<p></p>");
+            listOfLines.AddRange(GenerateProjectDataAnalyticsDurationSection(project));
+            listOfLines.AddRange(GenerateProjectDataAnalyticsFeaturesSection(project));
             //listOfLines.AddRange(GenerateProjectStatusProperties(project));
 
             listOfLines.Add("</div>");
@@ -577,13 +576,29 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsCoverageSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataAnalyticsDurationSection(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Analytics Coverage Section -->");
-            listOfLines.Add("<div class='section' style='max-width: 600px; margin: auto;'>");
-            //listOfLines.Add("<span class='feature-name'>Features</span><br />");
+            listOfLines.Add("<!-- Project Data Analytics Duration Section -->");
+            listOfLines.Add("<div style='padding-top: 6px; text-align: center; justify-content: center; align-items: center; display: flex;'>");
+            listOfLines.Add($"<span style='font-size: 40px;'>&#9201;</span>");
+            listOfLines.Add($"<span style='font-size: 24px; padding-top: 6px;'>");
+            listOfLines.Add($"<span style='color: gray;'>Duration </span>");
+            listOfLines.Add($"<span>{project.GetDuration()}</span>");
+            listOfLines.Add("</span>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateProjectDataAnalyticsFeaturesSection(TestExecutionProject project)
+        {
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Project Data Analytics Features Section -->");
+            listOfLines.Add("<div class='section' style='padding-left: 32px; padding-right: 32px;'>");
+            listOfLines.Add("<span class='project-name'>Features</span>");
             listOfLines.Add("<table class='grid' width='100%' align='center'>");
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
