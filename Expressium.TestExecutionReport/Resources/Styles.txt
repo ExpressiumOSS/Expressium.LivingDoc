@@ -231,7 +231,7 @@
         }
 
         .chart-count-percentage {
-            font-size: 17px;
+            font-size: 18px;
             line-height: 1.0;
         }
 

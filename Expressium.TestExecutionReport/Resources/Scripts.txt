@@ -1,17 +1,17 @@
 ﻿    <script>
         function loadScenario(x) {
-            let featureId = x.getAttribute('data-featureid');
-            let scenarioId = x.getAttribute('data-scenarioid');
-            let feature = document.getElementById(featureId).innerHTML;
-            let scenario = document.getElementById(scenarioId).innerHTML;
+            var featureId = x.getAttribute('data-featureid');
+            var scenarioId = x.getAttribute('data-scenarioid');
+            var feature = document.getElementById(featureId).innerHTML;
+            var scenario = document.getElementById(scenarioId).innerHTML;
+
             document.getElementById('right-section').innerHTML = feature + scenario;
         }
     </script>
     <script>
         function loadFeature(x) {
-            let featureId = x.getAttribute('data-featureid');
-            let feature = document.getElementById(featureId).innerHTML;
-
+            var featureId = x.getAttribute('data-featureid');
+            var feature = document.getElementById(featureId).innerHTML;
             var table = document.getElementById("scenario-list");
             var tr = table.getElementsByTagName("tr");
 
@@ -38,8 +38,8 @@
     </script>
     <script>
         function toggleViewmode() {
-            let element = document.getElementById('viewmode');
-            let mode = element.getAttribute('name') === "listview" ? "treeview" : "listview";
+            var element = document.getElementById('viewmode');
+            var mode = element.getAttribute('name') === "listview" ? "treeview" : "listview";
 
             presetFilter("");
 
@@ -49,23 +49,25 @@
     </script>
     <script>
         function loadViewmode(x) {
-            let listview = document.getElementById(x).innerHTML;
+            var listview = document.getElementById(x).innerHTML;
+
             document.getElementById('scenario-view').innerHTML = listview;
         }
     </script>
     <script>
         function loadAnalytics(x) {
-            let analytics = document.getElementById(x).innerHTML;
+            var analytics = document.getElementById(x).innerHTML;
+
             document.getElementById('right-section').innerHTML = analytics;
         }
     </script>
 	<script>
-		function presetFilter(x) {
-			let input = document.getElementById("scenario-filter");
+        function presetFilter(x) {
+            var input = document.getElementById("scenario-filter");
             input.value = x;
 
             filterScenarios();
-		}
+        }
 	</script>
     <script>
         function filterScenarios() {
@@ -140,22 +142,20 @@
     </script>
     <script>
         function sortTableByColumn(n) {
-            let table;
-            table = document.getElementById("scenarioview");
-            var rows, i, x, y, count = 0;
+            var table = document.getElementById("scenarioview");
+            var count = 0;
             var switching = true;
-
             var direction = "ascending";
 
             while (switching) {
                 switching = false;
                 var rows = table.rows;
 
-                for (i = 1; i < (rows.length - 1); i++) {
+                for (var i = 1; i < (rows.length - 1); i++) {
                     var Switch = false;
 
-                    x = rows[i].getElementsByTagName("td")[n];
-                    y = rows[i + 1].getElementsByTagName("td")[n];
+                    var x = rows[i].getElementsByTagName("td")[n];
+                    var y = rows[i + 1].getElementsByTagName("td")[n];
 
                     if (direction == "ascending") {
 
@@ -191,9 +191,8 @@
     </script>
     <script>
         function sortTableByColumnByAttibute(n,a) {
-            let table;
-            table = document.getElementById("scenarioview");
-            var rows, i, x, y, count = 0;
+            var table = document.getElementById("scenarioview");
+            var count = 0;
             var switching = true;
 
             var direction = "ascending";
@@ -202,11 +201,11 @@
                 switching = false;
                 var rows = table.rows;
 
-                for (i = 1; i < (rows.length - 1); i++) {
+                for (var i = 1; i < (rows.length - 1); i++) {
                     var Switch = false;
 
-                    x = rows[i].getElementsByTagName("td")[n];
-                    y = rows[i + 1].getElementsByTagName("td")[n];
+                    var x = rows[i].getElementsByTagName("td")[n];
+                    var y = rows[i + 1].getElementsByTagName("td")[n];
 
                     if (direction == "ascending") {
 

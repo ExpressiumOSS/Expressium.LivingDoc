@@ -90,10 +90,10 @@ namespace Expressium.TestExecutionReport
 
             foreach (var feature in project.Features)
             {
-                listOfLines.Add($"<tr data-name='{feature.Title}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\" style='color: dimgray; font-weight: bold;'>");
+                listOfLines.Add($"<tr data-name='{feature.Title}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\" style='color: dimgray;'>");
                 listOfLines.Add($"<td width='8px'>&#10011;</td>");
 
-                listOfLines.Add($"<td colspan='2' class='gridlines'>");
+                listOfLines.Add($"<td colspan='2' class='gridlines' style='font-weight: bold;'>");
                 listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
                 listOfLines.Add($"<span>{feature.Title}</span></td>");
                 listOfLines.Add($"<td class='gridlines' align='right'>");
@@ -646,7 +646,7 @@ namespace Expressium.TestExecutionReport
             {
                 var percentageOfPassed = (int)Math.Round(100.0f / feature.GetNumberOfTests() * feature.GetNumberOfPassed());
 
-                listOfLines.Add($"<tr class='gridlines' onclick=\"presetFilter('{feature.GetStatus().ToLower()}')\">");
+                listOfLines.Add($"<tr class='gridlines' onclick=\"presetFilter('{feature.Title}')\">");
                 listOfLines.Add($"<td class='align-center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
                 listOfLines.Add($"<td>{feature.Title}</td>");
                 listOfLines.Add($"<td class='align-center'>{feature.GetNumberOfTests()}</td>");
