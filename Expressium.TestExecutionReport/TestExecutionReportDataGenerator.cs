@@ -47,18 +47,18 @@ namespace Expressium.TestExecutionReport
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr class='gridlines' data-tags='{scenario.GetStatus()} {feature.Title} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                    listOfLines.Add($"<tr class='gridlines' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
                     listOfLines.Add($"<td align='center'>");
                     listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
                     listOfLines.Add("</td>");
 
                     listOfLines.Add($"<td>");
-                    listOfLines.Add($"<span><a href='#'>{feature.Title}</a></span>");
+                    listOfLines.Add($"<span><a href='#'>{feature.Name}</a></span>");
                     listOfLines.Add("</td>");
 
                     listOfLines.Add($"<td>");
-                    listOfLines.Add($"<span><a href='#'>{scenario.Title}</a></span>");
+                    listOfLines.Add($"<span><a href='#'>{scenario.Name}</a></span>");
                     listOfLines.Add("</td>");
 
                     listOfLines.Add($"<td align='right' data-index='{scenario.GetIndexAsNumber()}'>{scenario.Index}</td>");
@@ -98,23 +98,23 @@ namespace Expressium.TestExecutionReport
 
             foreach (var feature in project.Features)
             {
-                listOfLines.Add($"<tr data-name='{feature.Title}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\" style='color: dimgray;'>");
+                listOfLines.Add($"<tr data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\" style='color: dimgray;'>");
                 listOfLines.Add($"<td width='8px'>&#10011;</td>");
                 listOfLines.Add($"<td colspan='2' class='gridlines' style='font-weight: bold;'>");
                 listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-                listOfLines.Add($"<span>{feature.Title}</span>");
+                listOfLines.Add($"<span>{feature.Name}</span>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"<td class='gridlines' align='right'></td>");
                 listOfLines.Add($"</tr>");
 
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr data-parent='{feature.Title}' data-role='scenario' data-tags='{feature.Title} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                    listOfLines.Add($"<tr data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                     listOfLines.Add($"<td width='8px'></td>");
                     listOfLines.Add($"<td width='16px'></td>");
                     listOfLines.Add($"<td class='gridlines'>");
                     listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
-                    listOfLines.Add($"<a href='#'>{scenario.Title}</a>");
+                    listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
                     listOfLines.Add($"</td>");
                     listOfLines.Add($"<td class='gridlines'></td>");
                     listOfLines.Add($"</tr>");
@@ -170,7 +170,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<!-- Feature Data Name Section -->");
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-            listOfLines.Add($"<span class='feature-name'>Feature: {feature.Title}</span>");
+            listOfLines.Add($"<span class='feature-name'>Feature: {feature.Name}</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -258,7 +258,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<tr>");
             listOfLines.Add("<td colspan='2'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
-            listOfLines.Add("<span class='scenario-name'>" + scenarioKeyword + " " + scenario.Title + "</span>");
+            listOfLines.Add("<span class='scenario-name'>" + scenarioKeyword + " " + scenario.Name + "</span>");
             listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
             listOfLines.Add("</td>");
             listOfLines.Add("</tr>");
@@ -289,8 +289,8 @@ namespace Expressium.TestExecutionReport
                     listOfLines.Add($"<tr>");
                     listOfLines.Add($"<td colspan='2'>");
                     listOfLines.Add($"<span style='margin-right: 1px;' class='step-indent color-{status}'><b>{stepMarker}</b></span>");
-                    listOfLines.Add($"<span class='step-keyword'> " + step.Type + "</span> ");
-                    listOfLines.Add($"<span>" + step.Text + "</span>");
+                    listOfLines.Add($"<span class='step-keyword'> " + step.Keyword + "</span> ");
+                    listOfLines.Add($"<span>" + step.Name + "</span>");
                     listOfLines.Add($"</td>");
                     listOfLines.Add($"</tr>");
                 }
@@ -640,9 +640,9 @@ namespace Expressium.TestExecutionReport
             {
                 var percentageOfPassed = (int)Math.Round(100.0f / feature.GetNumberOfTests() * feature.GetNumberOfPassed());
 
-                listOfLines.Add($"<tr class='gridlines' onclick=\"presetFilter('{feature.Title}')\">");
+                listOfLines.Add($"<tr class='gridlines' onclick=\"presetFilter('{feature.Name}')\">");
                 listOfLines.Add($"<td class='align-center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
-                listOfLines.Add($"<td>{feature.Title}</td>");
+                listOfLines.Add($"<td>{feature.Name}</td>");
                 listOfLines.Add($"<td class='align-center'>{feature.GetNumberOfTests()}</td>");
                 listOfLines.Add($"<td class='align-center'>{percentageOfPassed}%</td>");
                 listOfLines.Add($"<td>{feature.GetStatus()}</td>");

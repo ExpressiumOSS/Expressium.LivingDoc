@@ -36,9 +36,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 testExecutionProject.Features.Add(new TestExecutionFeature()
                 {
                     Tags = string.Join(" ", featureContext.FeatureInfo.Tags),
-                    Title = featureContext.FeatureInfo.Title,
+                    Name = featureContext.FeatureInfo.Title,
                     Description = featureContext.FeatureInfo.Description,
-                    FolderPath = featureContext.FeatureInfo.FolderPath
+                    Uri = featureContext.FeatureInfo.FolderPath
                 });
             }
 
@@ -47,7 +47,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 testExecutionScenario = (new TestExecutionScenario()
                 {
                     Tags = string.Join(" ", scenarioContext.ScenarioInfo.Tags),
-                    Title = scenarioContext.ScenarioInfo.Title,
+                    Name = scenarioContext.ScenarioInfo.Title,
                     Description = scenarioContext.ScenarioInfo.Description
                 });
 
@@ -119,8 +119,8 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             if (testExecutionScenario != null)
             {
                 var testExecutionStep = new TestExecutionStep();
-                testExecutionStep.Type = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString();
-                testExecutionStep.Text = scenarioContext.StepContext.StepInfo.Text;
+                testExecutionStep.Keyword = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString();
+                testExecutionStep.Name = scenarioContext.StepContext.StepInfo.Text;
                 testExecutionStep.Status = scenarioContext.StepContext.Status.ToString();
 
                 if (scenarioContext.StepContext.StepInfo.Table != null)

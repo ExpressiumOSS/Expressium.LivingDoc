@@ -114,8 +114,8 @@ namespace Expressium.TestExecutionReport.Extensions
 
             foreach (var feature in project.Features)
             {
-                if (!listOfFolders.Contains(feature.FolderPath))
-                    listOfFolders.Add(feature.FolderPath);
+                if (!listOfFolders.Contains(feature.Uri))
+                    listOfFolders.Add(feature.Uri);
             }
 
             return TestExecutionFolderExtension.BuildTree(listOfFolders);

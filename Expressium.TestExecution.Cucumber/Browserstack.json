@@ -1,0 +1,104 @@
+[
+  {
+    "id": "browserstack-test",
+    "uri": "features/sample.feature",
+    "keyword": "Feature",
+    "name": "Browserstack test",
+    "description": "",
+    "line": 1,
+    "elements": [
+      {
+        "id": "browserstack-test;can-add-the-product-in-cart",
+        "keyword": "Scenario",
+        "name": "Can add the product in cart",
+        "description": "",
+        "line": 3,
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "name": "I visit bstackdemo website",
+            "line": 4,
+            "match": {
+              "location": "features/step_definitions/sample_steps.rb:4"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4600928000
+            }
+          },
+          {
+            "keyword": "When ",
+            "name": "I click on orders",
+            "line": 5,
+            "match": {
+              "location": "features/step_definitions/sample_steps.rb:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 518495000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I should see signin page",
+            "line": 6,
+            "match": {
+              "location": "features/step_definitions/sample_steps.rb:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1031290000
+            }
+          }
+        ]
+      },
+      {
+        "id": "browserstack-test;search-wikipedia",
+        "keyword": "Scenario",
+        "name": "Search Wikipedia",
+        "description": "",
+        "line": 8,
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "name": "I visit wikipedia",
+            "line": 9,
+            "match": {
+              "location": "features/step_definitions/sample_steps.rb:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 666769000
+            }
+          },
+          {
+            "keyword": "When ",
+            "name": "I search for BrowserStack",
+            "line": 10,
+            "match": {
+              "location": "features/step_definitions/sample_steps.rb:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10150496000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I should see BrowserStack page",
+            "line": 11,
+            "match": {
+              "location": "features/step_definitions/sample_steps.rb:30"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 33933000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

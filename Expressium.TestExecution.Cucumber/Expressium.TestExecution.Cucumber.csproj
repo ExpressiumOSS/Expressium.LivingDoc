@@ -8,4 +8,13 @@
 	  <ProjectReference Include="..\Expressium.TestExecution\Expressium.TestExecution.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="Browserstack.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Cucumber.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>

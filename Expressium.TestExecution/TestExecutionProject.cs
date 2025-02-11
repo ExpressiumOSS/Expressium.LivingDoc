@@ -20,12 +20,12 @@ namespace Expressium.TestExecution
 
         public bool IsFeatureAdded(string title)
         {
-            return Features.Any(m => m.Title == title);
+            return Features.Any(m => m.Name == title);
         }
 
         public TestExecutionFeature GetFeature(string title)
         {
-            return Features.Find(x => x.Title == title);
+            return Features.Find(x => x.Name == title);
         }
     }
 }

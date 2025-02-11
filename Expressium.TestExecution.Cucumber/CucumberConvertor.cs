@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 
 namespace Expressium.TestExecution.Cucumber
 {
@@ -10,34 +13,76 @@ namespace Expressium.TestExecution.Cucumber
             var testExecutionProject = new TestExecutionProject();
             testExecutionProject.Title = "Cucumber";
 
-            var cucumberContext = CucumberUtilities.DeserializeAsJson<CucumberProject>(inputFileName);
+            var options = new JsonSerializerOptions();
+            options.PropertyNameCaseInsensitive = true;
 
-            foreach (var feature in cucumberContext.objects)
+            var json = File.ReadAllText(inputFileName);
+            var features = JsonSerializer.Deserialize<List<Feature>>(json, options);
+
+            //var features = CucumberUtilities.DeserializeAsJson<List<CucumberFeature>>(inputFileName);
+
+            foreach (var feature in features)
             {
                 var testExecutionFeature = new TestExecutionFeature();
-                testExecutionFeature.FolderPath = feature.uri.ToString();
-                testExecutionFeature.Tags = feature.id.ToString();
-                testExecutionFeature.Title = feature.name.ToString();
-                testExecutionFeature.Description = feature.description.ToString();
+
+                if (feature.Tags != null)
+                {
+                    foreach (var tag in feature.Tags)
+                        testExecutionFeature.Tags += tag.Name.Replace("@", "") + " ";
+                    testExecutionFeature.Tags.Trim();
+                }
+
+                testExecutionFeature.Id = feature.Id;
+                testExecutionFeature.Description = feature.Description;
+                testExecutionFeature.Name = feature.Name;
+                testExecutionFeature.Keyword = feature.Keyword;
+                testExecutionFeature.Line = feature.Line;
+                testExecutionFeature.Uri = feature.Uri;
                 testExecutionProject.Features.Add(testExecutionFeature);
 
-                foreach (var scenario in feature.elements)
+                foreach (var scenario in feature.Elements)
                 {
                     var testExecutionScenario = new TestExecutionScenario();
-                    testExecutionScenario.Tags = scenario.id.ToString().Replace(";", " ");
-                    testExecutionScenario.Title = scenario.name.ToString();
-                    testExecutionScenario.Description = scenario.line.ToString();
+
+                    if (scenario.Tags != null)
+                    {
+                        foreach (var tag in scenario.Tags)
+                            testExecutionScenario.Tags += tag.Name.Replace("@", "") + " ";
+                        testExecutionScenario.Tags.Trim();
+                    }
+
+                    testExecutionScenario.Id = scenario.Id;
+                    testExecutionScenario.Description = scenario.Description;
+                    testExecutionScenario.Name = scenario.Name;
+                    testExecutionScenario.Keyword = scenario.Keyword;
+                    testExecutionScenario.Line = scenario.Line;
+                    testExecutionScenario.Type = scenario.Type;
                     testExecutionFeature.Scenarios.Add(testExecutionScenario);
 
                     var testExecutionExample = new TestExecutionExample();
                     testExecutionScenario.Examples.Add(testExecutionExample);
 
-                    foreach (var step in scenario.steps)
+                    foreach (var step in scenario.Steps)
                     {
                         var testExecutionStep = new TestExecutionStep();
-                        testExecutionStep.Text = step.name.ToString();
-                        testExecutionStep.Type = step.keyword.Trim().ToString();
-                        testExecutionStep.Status = step.result.status.ToString().CapitalizeWords();
+                        testExecutionStep.Name = step.Name;
+                        testExecutionStep.Line = step.Line;
+                        testExecutionStep.Keyword = step.Keyword.Trim();
+                        if (step.Result != null)
+                        {
+                            testExecutionStep.Status = step.Result.Status.CapitalizeWords();
+                            testExecutionStep.Duration = step.Result.Duration;
+                            testExecutionStep.Error = step.Result.Error_message;
+                        }
+
+                        //foreach (var row in step.Rows)
+                        //{
+                        //    foreach (var cell in row.Cells)
+                        //    {
+                        //        //testExecutionStep.Arguments.Add();
+                        //    }
+                        //}
+
                         testExecutionExample.Steps.Add(testExecutionStep);
                     }
                 }

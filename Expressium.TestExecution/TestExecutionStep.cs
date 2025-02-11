@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Mail;
 
 namespace Expressium.TestExecution
 {
     public class TestExecutionStep
     {
-        public string Type { get; set; }
-        public string Text { get; set; }
+        public string Keyword { get; set; }
+        public string Name { get; set; }
+        public int Line { get; set; }
         public string Status { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public long Duration { get; set; }
+        public string Error { get; set; }
 
         public List<TestExecutionArgument> Arguments { get; set; }
 

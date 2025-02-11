@@ -23,22 +23,22 @@ namespace Expressium.TestExecutionReport
 
                 foreach (var feature in project.Features)
                 {
-                    if (feature.FolderPath.Contains("/" + child.Key))
+                    if (feature.Uri.Contains("/" + child.Key))
                     {
                         listOfLines.Add($"<ul>");
 
-                        listOfLines.Add($"<li style='padding: 3px; color: dimgray;' class='gridlines' data-name='{feature.Title}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+                        listOfLines.Add($"<li style='padding: 3px; color: dimgray;' class='gridlines' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
                         listOfLines.Add($"<span>&#10011;</span>");
                         listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-                        listOfLines.Add($"<span><b>{feature.Title}</b></span>");
+                        listOfLines.Add($"<span><b>{feature.Name}</b></span>");
                         listOfLines.Add($"</li>");
 
                         foreach (var scenario in feature.Scenarios)
                         {
                             listOfLines.Add($"<ul>");
-                            listOfLines.Add($"<li style='padding: 3px;' class='gridlines' data-parent='{feature.Title}' data-role='scenario' data-tags='{feature.Title} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                            listOfLines.Add($"<li style='padding: 3px;' class='gridlines' data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                             listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
-                            listOfLines.Add($"<a href='#'>{scenario.Title}</a>");
+                            listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
                             listOfLines.Add($"</li>");
                             listOfLines.Add($"</ul>");
                         }

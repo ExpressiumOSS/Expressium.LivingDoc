@@ -167,3 +167,6 @@ namespace Expressium.TestExecutionReport
 
 // HTML Symbols
 // https://www.toptal.com/designers/htmlarrows/symbols
+
+// JSON Cucumber Examples
+// https://github.com/damianszczepanik/cucumber-reporting/blob/master/src/test/resources/json/sample.json

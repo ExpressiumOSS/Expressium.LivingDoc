@@ -7,9 +7,11 @@ namespace Expressium.TestExecution
     {
         public string Id { get; set; }
         public string Tags { get; set; }
-        public string Title { get; set; }
         public string Description { get; set; }
-        public string FolderPath { get; set; }
+        public string Name { get; set; }
+        public string Keyword { get; set; }
+        public int Line { get; set; }
+        public string Uri { get; set; }
 
         public List<TestExecutionScenario> Scenarios { get; set; }
 
@@ -20,12 +22,12 @@ namespace Expressium.TestExecution
 
         public bool IsScenarioAdded(string title)
         {
-            return Scenarios.Any(m => m.Title == title);
+            return Scenarios.Any(m => m.Name == title);
         }
 
         public TestExecutionScenario GetScenario(string title)
         {
-            return Scenarios.Find(x => x.Title == title);
+            return Scenarios.Find(x => x.Name == title);
         }
     }
 }
