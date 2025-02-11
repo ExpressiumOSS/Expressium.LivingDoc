@@ -83,6 +83,9 @@
                 var rowText = "";
                 var found = false;
 
+                if (role == "folder")
+                    continue;
+
                 if (role == "feature")
 				    continue;
 
@@ -111,9 +114,8 @@
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
 
-                if (role == "feature") {
+                if (role == "feature")
                     tr[i].style.display = "none";
-                }
             }
 
             var features = [];

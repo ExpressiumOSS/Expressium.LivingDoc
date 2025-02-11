@@ -6,14 +6,14 @@ using System.IO;
 
 namespace Expressium.TestExecutionReport
 {
-    internal class TestExecutionReportDataGenerator
+    internal partial class TestExecutionReportDataGenerator
     {
         internal List<string> GenerateData(TestExecutionProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateProjectDataListViewSections(project));
-            listOfLines.AddRange(GenerateProjectDataTreeViewSections(project));
+            listOfLines.AddRange(GenerateProjectDataListViewSection(project));
+            listOfLines.AddRange(GenerateProjectDataTreeViewSection(project));
             listOfLines.AddRange(GenerateFeatureDataSections(project));
             listOfLines.AddRange(GenerateScenarioDataSections(project));
             listOfLines.AddRange(GenerateProjectDataAnalyticsSection(project));
@@ -21,7 +21,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataListViewSections(TestExecutionProject project)
+        internal List<string> GenerateProjectDataListViewSection(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -76,7 +76,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataTreeViewSections(TestExecutionProject project)
+        internal List<string> GenerateProjectDataTreeViewSection(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -88,36 +88,30 @@ namespace Expressium.TestExecutionReport
 
             listOfLines.Add("<tbody id='scenario-list'>");
 
+            //listOfLines.Add($"<tr data-role='folder' style='color: dimgray;'>");
+            //listOfLines.Add($"<td width='8px'>📂</td>");
+            //listOfLines.Add($"<td colspan='2' class='gridlines' style='font-weight: bold;'>");
+            //listOfLines.Add($"<span>{project.Title}</span>");
+            //listOfLines.Add($"</td>");
+            //listOfLines.Add($"<td class='gridlines' align='right'></td>");
+            //listOfLines.Add($"</tr>");
+
             foreach (var feature in project.Features)
             {
                 listOfLines.Add($"<tr data-name='{feature.Title}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\" style='color: dimgray;'>");
                 listOfLines.Add($"<td width='8px'>&#10011;</td>");
-
                 listOfLines.Add($"<td colspan='2' class='gridlines' style='font-weight: bold;'>");
                 listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-                listOfLines.Add($"<span>{feature.Title}</span></td>");
-                listOfLines.Add($"<td class='gridlines' align='right'>");
-
-                //if (feature.GetNumberOfPassed() > 0)
-                //    listOfLines.Add($"<span class='status-dot bgcolor-passed'></span>");
-
-                //if (feature.GetNumberOfIncomplete() > 0)
-                //    listOfLines.Add($"<span class='status-dot bgcolor-incomplete'></span>");
-
-                //if (feature.GetNumberOfFailed() > 0)
-                //    listOfLines.Add($"<span class='status-dot bgcolor-failed'></span>");
-
-                //if (feature.GetNumberOfSkipped() > 0)
-                //    listOfLines.Add($"<span class='status-dot bgcolor-skipped'></span>");
-
+                listOfLines.Add($"<span>{feature.Title}</span>");
                 listOfLines.Add($"</td>");
+                listOfLines.Add($"<td class='gridlines' align='right'></td>");
                 listOfLines.Add($"</tr>");
 
                 foreach (var scenario in feature.Scenarios)
                 {
                     listOfLines.Add($"<tr data-parent='{feature.Title}' data-role='scenario' data-tags='{feature.Title} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                     listOfLines.Add($"<td width='8px'></td>");
-                    listOfLines.Add($"<td width='24px'></td>");
+                    listOfLines.Add($"<td width='16px'></td>");
                     listOfLines.Add($"<td class='gridlines'>");
                     listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
                     listOfLines.Add($"<a href='#'>{scenario.Title}</a>");

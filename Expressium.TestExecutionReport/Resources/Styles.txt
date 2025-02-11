@@ -353,4 +353,8 @@
         .scenario-outline td:first-child {
             padding-left: 0px;
         }
+
+        ul {
+          list-style-type: none;
+        }
     </style>

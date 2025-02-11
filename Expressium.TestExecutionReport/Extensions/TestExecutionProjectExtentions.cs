@@ -1,5 +1,6 @@
 ﻿using Expressium.TestExecution;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Expressium.TestExecutionReport.Extensions
@@ -105,6 +106,19 @@ namespace Expressium.TestExecutionReport.Extensions
             }
 
             return null;
+        }
+
+        public static FolderNode GetListOfFolderNodes(this TestExecutionProject project)
+        {
+            var listOfFolders = new List<string>();
+
+            foreach (var feature in project.Features)
+            {
+                if (!listOfFolders.Contains(feature.FolderPath))
+                    listOfFolders.Add(feature.FolderPath);
+            }
+
+            return TestExecutionFolderExtension.BuildTree(listOfFolders);
         }
     }
 }
