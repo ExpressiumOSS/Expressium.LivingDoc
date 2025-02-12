@@ -12,7 +12,7 @@
         function loadFeature(x) {
             var featureId = x.getAttribute('data-featureid');
             var feature = document.getElementById(featureId).innerHTML;
-            var table = document.getElementById("scenario-list");
+            var table = document.getElementById("treeview");
             var tr = table.getElementsByTagName("tr");
 
             var previous = false;
