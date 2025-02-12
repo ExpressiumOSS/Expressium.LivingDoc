@@ -12,66 +12,12 @@ namespace Expressium.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateProjectDataListViewSection(project));
             listOfLines.AddRange(GenerateProjectDataTreeViewSection(project));
+            listOfLines.AddRange(GenerateProjectDataFeatureListViewSection(project));
+            listOfLines.AddRange(GenerateProjectDataScenarioListViewSection(project));
             listOfLines.AddRange(GenerateFeatureDataSections(project));
             listOfLines.AddRange(GenerateScenarioDataSections(project));
             listOfLines.AddRange(GenerateProjectDataAnalyticsSection(project));
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateProjectDataListViewSection(TestExecutionProject project)
-        {
-            List<string> listOfLines = new List<string>();
-
-            listOfLines.Add("<!-- Project Data ListView Section -->");
-            listOfLines.Add($"<div class='data-item' id='listview'>");
-
-            listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='scenarioview' class='grid'>");
-
-            listOfLines.Add("<thead>");
-            listOfLines.Add("<tr data-role='header'>");
-            listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'>#</th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Feature<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(2)'>Scenario<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(3, \"data-index\")'>Sequence<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(4, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("</tr>");
-            listOfLines.Add("</thead>");
-
-            listOfLines.Add("<tbody id='scenario-list'>");
-
-            foreach (var feature in project.Features)
-            {
-                foreach (var scenario in feature.Scenarios)
-                {
-                    listOfLines.Add($"<tr class='gridlines' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
-
-                    listOfLines.Add($"<td align='center'>");
-                    listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
-                    listOfLines.Add("</td>");
-
-                    listOfLines.Add($"<td>");
-                    listOfLines.Add($"<span><a href='#'>{feature.Name}</a></span>");
-                    listOfLines.Add("</td>");
-
-                    listOfLines.Add($"<td>");
-                    listOfLines.Add($"<span><a href='#'>{scenario.Name}</a></span>");
-                    listOfLines.Add("</td>");
-
-                    listOfLines.Add($"<td align='right' data-index='{scenario.GetIndexAsNumber()}'>{scenario.Index}</td>");
-                    listOfLines.Add($"<td align='right' data-duration='{scenario.GetDurationAsNumber()}'>{scenario.GetDuration()}</td>");
-                    listOfLines.Add($"</tr>");
-                }
-            }
-
-            listOfLines.Add("</tbody>");
-            listOfLines.Add("</table>");
-            listOfLines.Add("</div>");
-
-            listOfLines.Add("</div>");
 
             return listOfLines;
         }
@@ -117,6 +63,93 @@ namespace Expressium.TestExecutionReport
                     listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
                     listOfLines.Add($"</td>");
                     listOfLines.Add($"<td class='gridlines'></td>");
+                    listOfLines.Add($"</tr>");
+                }
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateProjectDataFeatureListViewSection(TestExecutionProject project)
+        {
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Project Data Feature ListView Section -->");
+            listOfLines.Add($"<div class='data-item' id='featurelistview'>");
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<table id='scenarioview' class='grid'>");
+
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr data-role='header'>");
+            listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Feature<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-scenarios\")'>Scenarios<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(3, \"data-coverage\")'>Coverage<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+
+            listOfLines.Add("<tbody id='scenario-list'>");
+
+            foreach (var feature in project.Features)
+            {
+                listOfLines.Add($"<tr class='gridlines' data-tags='{feature.Name} {feature.GetTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+                listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
+                listOfLines.Add($"<td><a href='#'>{feature.Name}</a></td>");
+                listOfLines.Add($"<td align='center' data-scenarios='{feature.GetNumberOfScenariosSortId()}'>{feature.GetNumberOfScenarios()}</td>");
+                listOfLines.Add($"<td align='center' data-coverage='{feature.GetPercentageOfPassedSortId()}'>{feature.GetPercentageOfPassed()}%</td>");
+                listOfLines.Add($"<td>{feature.GetStatus()}</td>");
+                listOfLines.Add($"</tr>");
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateProjectDataScenarioListViewSection(TestExecutionProject project)
+        {
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Project Data Scenario ListView Section -->");
+            listOfLines.Add($"<div class='data-item' id='scenariolistview'>");
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<table id='scenarioview' class='grid'>");
+
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr data-role='header'>");
+            listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-sequence\")'>Sequence<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(3, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+
+            listOfLines.Add("<tbody id='scenario-list'>");
+
+            foreach (var feature in project.Features)
+            {
+                foreach (var scenario in feature.Scenarios)
+                {
+                    listOfLines.Add($"<tr class='gridlines' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                    listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span></td>");
+                    listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
+                    listOfLines.Add($"<td align='center' data-sequence='{scenario.GetIndexSortId()}'>{scenario.Index}</td>");
+                    listOfLines.Add($"<td align='center' data-duration='{scenario.GetDurationSortId()}'>{scenario.GetDuration()}</td>");
+                    listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
                     listOfLines.Add($"</tr>");
                 }
             }
@@ -280,7 +313,7 @@ namespace Expressium.TestExecutionReport
                 if (step.IsPassed())
                     stepMarker = "&check;";
                 //else if (step.IsIncomplete())
-                    //stepMarker = "&minus;";
+                //stepMarker = "&minus;";
                 else
                     stepMarker = "&cross;";
 
@@ -400,7 +433,7 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add("<!-- Scenario Data Message Section -->");
                 listOfLines.Add($"<tr><td></td></tr>");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='2'>");
+                listOfLines.Add($"<td colspan='2' style='width: 0px; min-width: fit-content;'>");
                 listOfLines.Add($"<div class='step-{status}'>{message}</div>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
@@ -491,17 +524,31 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<span class='project-name'>Analytics</span>");
             listOfLines.Add("</div>");
 
-            listOfLines.AddRange(GenerateProjectDataAnalyticsStatusChartSection(project));
+            //listOfLines.AddRange(GenerateProjectDataAnalyticsFeaturesStatusChartSection(project));
+            listOfLines.AddRange(GenerateProjectDataAnalyticsScenariosStatusChartSection(project));
             listOfLines.AddRange(GenerateProjectDataAnalyticsDurationSection(project));
-            listOfLines.AddRange(GenerateProjectDataAnalyticsFeaturesSection(project));
-            //listOfLines.AddRange(GenerateProjectStatusProperties(project));
 
             listOfLines.Add("</div>");
 
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsStatusChartSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataAnalyticsFeaturesStatusChartSection(TestExecutionProject project)
+        {
+            List<string> listOfLines = new List<string>();
+
+            var numberOfPassed = project.GetNumberOfPassedFeatures();
+            var numberOfIncomplete = project.GetNumberOfIncompleteFeatures();
+            var numberOfFailed = project.GetNumberOfFailedFeatures();
+            var numberOfSkipped = project.GetNumberOfSkippedFeatures();
+            var numberOfTests = project.Features.Count;
+
+            listOfLines.AddRange(GenerateProjectDataAnalyticsStatusChartSection("Features", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateProjectDataAnalyticsScenariosStatusChartSection(TestExecutionProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -511,6 +558,13 @@ namespace Expressium.TestExecutionReport
             var numberOfSkipped = project.GetNumberOfSkipped();
             var numberOfTests = project.GetNumberOfTests();
 
+            listOfLines.AddRange(GenerateProjectDataAnalyticsStatusChartSection("Scenarios", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateProjectDataAnalyticsStatusChartSection(string title, int numberOfPassed, int numberOfIncomplete, int numberOfFailed, int numberOfSkipped, int numberOfTests)
+        {
             var percentageOfPassed = (int)Math.Round(100.0f / numberOfTests * numberOfPassed);
             var percentageOfIncomplete = (int)Math.Round(100.0f / numberOfTests * numberOfIncomplete);
             var percentageOfFailed = (int)Math.Round(100.0f / numberOfTests * numberOfFailed);
@@ -532,13 +586,19 @@ namespace Expressium.TestExecutionReport
                 }
             }
 
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<div class='section' style='width: fit-content; margin: auto;'>");
+            listOfLines.Add($"<span class='project-name' style='padding-left: 8px; color: dimgray;'>{title}</span>");
+            listOfLines.Add("<div class='section' style='width: fit-content; margin: auto; padding: 16px; border-radius: 16px; background-color: whitesmoke;'>");
+
             {
                 listOfLines.Add("<!-- Project Data Analytics Status Chart Section -->");
                 listOfLines.Add("<div class='section' style='text-align: center; max-width: 500px; margin: auto;'>");
                 listOfLines.Add($"<span class='chart-percentage'>{percentageOfPassed.ToString("0")}%</span><br />");
                 listOfLines.Add("<span class='chart-status'>Passed</span><br />");
 
-                listOfLines.Add("<p></p>");
+                listOfLines.Add("<div style='padding: 6px;'></div>");
 
                 listOfLines.Add($"<div class='chart-bar' style='width: 100%;'>");
                 listOfLines.Add($"<div class='chart-bar bgcolor-passed' style='width: {percentageOfPassed}%;'></div>");
@@ -547,14 +607,14 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add($"<div class='chart-bar bgcolor-skipped' style='width: {percentageOfSkipped}%;'></div>");
                 listOfLines.Add("</div>");
 
-                var message = project.GetStatusMessage((int)percentageOfPassed);
+                var message = GetStatusMessage((int)percentageOfPassed);
                 listOfLines.Add($"<span class='chart-message'>{message}</span>");
                 listOfLines.Add("</div>");
             }
 
             {
                 listOfLines.Add("<!-- Status Slave Chart Section -->");
-                listOfLines.Add("<div class='section' style='text-align: center; max-width: 600px; margin: auto;'>");
+                listOfLines.Add("<div class='section' style='text-align: center; max-width: 700px; margin: auto;'>");
                 listOfLines.Add("<table align='center'>");
                 listOfLines.Add("<tr>");
 
@@ -597,6 +657,9 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add("</table>");
                 listOfLines.Add("</div>");
             }
+
+            listOfLines.Add("</div>");
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }
@@ -654,6 +717,35 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("</div>");
 
             return listOfLines;
+        }
+
+        public static string GetStatusMessage(int percentage)
+        {
+            if (percentage >= 100)
+                return "The system is fully covered and successfully validated!";
+            else if (percentage >= 90)
+                return "The system is extensively covered with minor potential risks!";
+            //else if (percentage >= 75)
+            //    return "The system is well covered with significant potential risks!";
+            //else if (percentage >= 50)
+            //    return "The system is moderately covered with significant potential risks!";
+            //else if (percentage >= 25)
+            //    return "The system is partially covered with many potential risks!";
+            else if (percentage >= 10)
+                return "The system is partially covered with significant potential risks!";
+            //else if (percentage >= 10)
+            //    return "The system is minimally covered with many undetected risks!";
+            //else if (percentage < 10)
+            //    return "The system is not covered with a uncertainties in reliability!";
+            else if (percentage > 0)
+                return "The system is minimally covered with overwhelming potential risks!";
+            else if (percentage == 0)
+                return "The system is uncovered and unsuccessfully validated!";
+            else
+            {
+            }
+
+            return null;
         }
     }
 }

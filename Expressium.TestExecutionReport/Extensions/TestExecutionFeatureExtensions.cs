@@ -1,4 +1,6 @@
 ﻿using Expressium.TestExecution;
+using Expressium.TestExecution.Cucumber;
+using System;
 using System.Linq;
 
 namespace Expressium.TestExecutionReport.Extensions
@@ -72,6 +74,26 @@ namespace Expressium.TestExecutionReport.Extensions
         public static int GetNumberOfTests(this TestExecutionFeature feature)
         {
             return feature.Scenarios.Count();
+        }
+
+        public static int GetNumberOfScenarios(this TestExecutionFeature feature)
+        {
+            return feature.Scenarios.Count;
+        }
+
+        public static string GetNumberOfScenariosSortId(this TestExecutionFeature feature)
+        {
+            return feature.Scenarios.Count.ToString("D4");
+        }
+
+        public static int GetPercentageOfPassed(this TestExecutionFeature feature)
+        {
+            return (int)Math.Round(100.0f / feature.GetNumberOfTests() * feature.GetNumberOfPassed());
+        }
+
+        public static string GetPercentageOfPassedSortId(this TestExecutionFeature feature)
+        {
+            return feature.GetPercentageOfPassed().ToString("D4");
         }
     }
 }

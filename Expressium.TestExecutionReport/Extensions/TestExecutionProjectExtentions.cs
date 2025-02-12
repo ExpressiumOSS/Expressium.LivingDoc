@@ -15,6 +15,31 @@ namespace Expressium.TestExecutionReport.Extensions
             project.Features = project.Features.OrderBy(x => x.Tags).ToList();
         }
 
+        public static int GetNumberOfPassedFeatures(this TestExecutionProject project)
+        {
+            return project.Features.Count(feature => feature.GetStatus() == ReportStatuses.Passed.ToString());
+        }
+
+        public static int GetNumberOfIncompleteFeatures(this TestExecutionProject project)
+        {
+            return project.Features.Count(feature => feature.GetStatus() == ReportStatuses.Incomplete.ToString());
+        }
+
+        public static int GetNumberOfFailedFeatures(this TestExecutionProject project)
+        {
+            return project.Features.Count(feature => feature.GetStatus() == ReportStatuses.Failed.ToString());
+        }
+
+        public static int GetNumberOfSkippedFeatures(this TestExecutionProject project)
+        {
+            return project.Features.Count(feature => feature.GetStatus() == ReportStatuses.Skipped.ToString());
+        }
+
+        public static int GetNumberOfTestsFeature(this TestExecutionProject project)
+        {
+            return project.Features.Count;
+        }
+
         public static int GetNumberOfPassed(this TestExecutionProject project)
         {
             return project.Features
@@ -62,7 +87,7 @@ namespace Expressium.TestExecutionReport.Extensions
             if (duration.Minutes > 0)
                 return $"{duration.Minutes}min {duration.Seconds}s";
 
-            return $"{duration.Seconds}s {duration.Milliseconds}ms";
+            return $"{duration.Seconds}s {duration.Milliseconds.ToString("D3")}ms";
         }
 
         public static double GetPercentageOfPassed(this TestExecutionProject project)
@@ -83,29 +108,6 @@ namespace Expressium.TestExecutionReport.Extensions
         public static double GetPercentageOfSkipped(this TestExecutionProject project)
         {
             return Math.Round(100.0f / project.GetNumberOfTests() * project.GetNumberOfSkipped());
-        }
-
-        public static string GetStatusMessage(this TestExecutionProject project, int percentage)
-        {
-            if (percentage >= 100)
-                return "The system is fully covered and successfully validated!";
-            else if (percentage >= 90)
-                return "The system is extensively covered with minor potential risks!";
-            else if (percentage >= 75)
-                return "The system is well covered with significant potential risks!";
-            else if (percentage >= 50)
-                return "The system is moderately covered with significant potential risks!";
-            else if (percentage >= 25)
-                return "The system is partially covered with many potential risks!";
-            else if (percentage >= 10)
-                return "The system is minimally covered with many undetected risks!";
-            else if (percentage < 10)
-                return "The system is not covered with a uncertainties in reliability!";
-            else
-            {
-            }
-
-            return null;
         }
 
         public static FolderNode GetListOfFolderNodes(this TestExecutionProject project)

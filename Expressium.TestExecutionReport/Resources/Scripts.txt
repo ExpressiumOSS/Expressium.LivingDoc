@@ -37,17 +37,6 @@
         }
     </script>
     <script>
-        function toggleViewmode() {
-            var element = document.getElementById('viewmode');
-            var mode = element.getAttribute('name') === "listview" ? "treeview" : "listview";
-
-            presetFilter("");
-
-            element.setAttribute("name", mode);
-            loadViewmode(mode);
-        }
-    </script>
-    <script>
         function loadViewmode(x) {
             var listview = document.getElementById(x).innerHTML;
 

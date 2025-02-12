@@ -60,7 +60,7 @@ namespace Expressium.TestExecutionReport.Extensions
             if (duration.Minutes > 0)
                 return $"{duration.Minutes}min {duration.Seconds}s";
 
-            return $"{duration.Seconds}s {duration.Milliseconds}ms";
+            return $"{duration.Seconds}s {duration.Milliseconds.ToString("D3")}ms";
         }
     }
 }

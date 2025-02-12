@@ -76,7 +76,7 @@ namespace Expressium.TestExecutionReport.Extensions
             return ReportStatuses.Undefined.ToString();
         }
 
-        public static string GetIndexAsNumber(this TestExecutionScenario scenario)
+        public static string GetIndexSortId(this TestExecutionScenario scenario)
         {
             return scenario.Index.ToString("D4");
         }
@@ -98,10 +98,10 @@ namespace Expressium.TestExecutionReport.Extensions
             if (totalDuration.Minutes > 0)
                 return $"{totalDuration.Minutes}min {totalDuration.Seconds}s";
 
-            return $"{totalDuration.Seconds}s {totalDuration.Milliseconds}ms";
+            return $"{totalDuration.Seconds}s {totalDuration.Milliseconds.ToString("D3")}ms";
         }
 
-        public static string GetDurationAsNumber(this TestExecutionScenario scenario)
+        public static string GetDurationSortId(this TestExecutionScenario scenario)
         {
             TimeSpan? duration = null;
 
