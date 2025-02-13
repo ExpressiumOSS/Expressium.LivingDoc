@@ -524,7 +524,7 @@ namespace Expressium.TestExecutionReport
             listOfLines.Add("<span class='project-name'>Analytics</span>");
             listOfLines.Add("</div>");
 
-            //listOfLines.AddRange(GenerateProjectDataAnalyticsFeaturesStatusChartSection(project));
+            listOfLines.AddRange(GenerateProjectDataAnalyticsFeaturesStatusChartSection(project));
             listOfLines.AddRange(GenerateProjectDataAnalyticsScenariosStatusChartSection(project));
             listOfLines.AddRange(GenerateProjectDataAnalyticsDurationSection(project));
 
@@ -680,44 +680,44 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsFeaturesSection(TestExecutionProject project)
-        {
-            List<string> listOfLines = new List<string>();
+        //internal List<string> GenerateProjectDataAnalyticsFeaturesSection(TestExecutionProject project)
+        //{
+        //    List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Analytics Features Section -->");
-            listOfLines.Add("<div class='section' style='padding-left: 32px; padding-right: 32px;'>");
-            listOfLines.Add("<span class='project-name'>Features</span>");
-            listOfLines.Add("<table class='grid' width='100%' align='center'>");
-            listOfLines.Add("<thead>");
-            listOfLines.Add("<tr>");
-            listOfLines.Add("<th width='20px;' class='align-center'>#</th>");
-            listOfLines.Add("<th>Name</th>");
-            listOfLines.Add("<th class='align-center'>Total</th>");
-            listOfLines.Add("<th class='align-center'>Coverage</th>");
-            listOfLines.Add("<th>Status</th>");
-            listOfLines.Add("</tr>");
-            listOfLines.Add("</thead>");
-            listOfLines.Add("<tbody>");
+        //    listOfLines.Add("<!-- Project Data Analytics Features Section -->");
+        //    listOfLines.Add("<div class='section' style='padding-left: 32px; padding-right: 32px;'>");
+        //    listOfLines.Add("<span class='project-name'>Features</span>");
+        //    listOfLines.Add("<table class='grid' width='100%' align='center'>");
+        //    listOfLines.Add("<thead>");
+        //    listOfLines.Add("<tr>");
+        //    listOfLines.Add("<th width='20px;' class='align-center'>#</th>");
+        //    listOfLines.Add("<th>Name</th>");
+        //    listOfLines.Add("<th class='align-center'>Total</th>");
+        //    listOfLines.Add("<th class='align-center'>Coverage</th>");
+        //    listOfLines.Add("<th>Status</th>");
+        //    listOfLines.Add("</tr>");
+        //    listOfLines.Add("</thead>");
+        //    listOfLines.Add("<tbody>");
 
-            foreach (var feature in project.Features)
-            {
-                var percentageOfPassed = (int)Math.Round(100.0f / feature.GetNumberOfTests() * feature.GetNumberOfPassed());
+        //    foreach (var feature in project.Features)
+        //    {
+        //        var percentageOfPassed = (int)Math.Round(100.0f / feature.GetNumberOfTests() * feature.GetNumberOfPassed());
 
-                listOfLines.Add($"<tr class='gridlines' onclick=\"presetFilter('{feature.Name}')\">");
-                listOfLines.Add($"<td class='align-center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
-                listOfLines.Add($"<td>{feature.Name}</td>");
-                listOfLines.Add($"<td class='align-center'>{feature.GetNumberOfTests()}</td>");
-                listOfLines.Add($"<td class='align-center'>{percentageOfPassed}%</td>");
-                listOfLines.Add($"<td>{feature.GetStatus()}</td>");
-                listOfLines.Add($"</tr>");
-            }
+        //        listOfLines.Add($"<tr class='gridlines' onclick=\"presetFilter('{feature.Name}')\">");
+        //        listOfLines.Add($"<td class='align-center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
+        //        listOfLines.Add($"<td>{feature.Name}</td>");
+        //        listOfLines.Add($"<td class='align-center'>{feature.GetNumberOfTests()}</td>");
+        //        listOfLines.Add($"<td class='align-center'>{percentageOfPassed}%</td>");
+        //        listOfLines.Add($"<td>{feature.GetStatus()}</td>");
+        //        listOfLines.Add($"</tr>");
+        //    }
 
-            listOfLines.Add("</tbody>");
-            listOfLines.Add("</table>");
-            listOfLines.Add("</div>");
+        //    listOfLines.Add("</tbody>");
+        //    listOfLines.Add("</table>");
+        //    listOfLines.Add("</div>");
 
-            return listOfLines;
-        }
+        //    return listOfLines;
+        //}
 
         public static string GetStatusMessage(int percentage)
         {
