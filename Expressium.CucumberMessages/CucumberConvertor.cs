@@ -1,4 +1,5 @@
 ﻿using Expressium.TestExecution;
+using Io.Cucumber.Messages.Types;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,47 +18,49 @@ namespace Expressium.CucumberMessages
             var options = new JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;
 
-            var features = CucumberUtilities.DeserializeAsJson<List<Feature>>(inputFileName);
+            var listOfEnvelopes = CucumberUtilities.DeserializeAsJson<List<Envelope>>(inputFileName);
 
-            foreach (var feature in features)
+            foreach (var envelope in listOfEnvelopes)
             {
+                var feature = envelope.GherkinDocument.Feature;
+
                 var testExecutionFeature = new TestExecutionFeature();
 
-                if (feature.tags != null)
+                if (feature.Tags != null)
                 {
-                    foreach (var tag in feature.tags)
-                        testExecutionFeature.Tags += tag.name.Replace("@", "") + " ";
+                    foreach (var tag in feature.Tags)
+                        testExecutionFeature.Tags += tag.Name + " ";
                     testExecutionFeature.Tags.Trim();
                 }
 
                 //testExecutionFeature.Id = feature.Id;
-                testExecutionFeature.Description = feature.description;
-                testExecutionFeature.Name = feature.name;
-                testExecutionFeature.Keyword = feature.keyword;
+                testExecutionFeature.Description = feature.Description;
+                testExecutionFeature.Name = feature.Name;
+                testExecutionFeature.Keyword = feature.Keyword;
                 //testExecutionFeature.Line = feature.line;
                 //testExecutionFeature.Uri = feature.uri;
                 testExecutionProject.Features.Add(testExecutionFeature);
 
-                foreach (var child in feature.children)
+                foreach (var child in feature.Children)
                 {
                     var testExecutionScenario = new TestExecutionScenario();
 
-                    if ( child.scenario == null )
+                    if (child.Scenario == null)
                         continue;
 
-                    var scenario = child.scenario;
+                    var scenario = child.Scenario;
 
-                    if (scenario.tags != null)
+                    if (scenario.Tags != null)
                     {
-                        foreach (var tag in scenario.tags)
-                            testExecutionScenario.Tags += tag.name.Replace("@", "") + " ";
+                        foreach (var tag in scenario.Tags)
+                            testExecutionScenario.Tags += tag.Name + " ";
                         testExecutionScenario.Tags.Trim();
                     }
 
                     //testExecutionScenario.Id = scenario.Id;
-                    testExecutionScenario.Description = scenario.description;
-                    testExecutionScenario.Name = scenario.name;
-                    testExecutionScenario.Keyword = scenario.keyword;
+                    testExecutionScenario.Description = scenario.Description;
+                    testExecutionScenario.Name = scenario.Name;
+                    testExecutionScenario.Keyword = scenario.Keyword;
                     //testExecutionScenario.Line = scenario.line;
                     //testExecutionScenario.Type = scenario.type;
                     testExecutionFeature.Scenarios.Add(testExecutionScenario);
@@ -65,12 +68,13 @@ namespace Expressium.CucumberMessages
                     var testExecutionExample = new TestExecutionExample();
                     testExecutionScenario.Examples.Add(testExecutionExample);
 
-                    foreach (var step in scenario.steps)
+                    foreach (var step in scenario.Steps)
                     {
                         var testExecutionStep = new TestExecutionStep();
-                        testExecutionStep.Name = step.text;
+                        testExecutionStep.Name = step.Text;
                         //testExecutionStep.Line = step.text;
-                        testExecutionStep.Keyword = step.keyword.Trim();
+                        testExecutionStep.Keyword = step.Keyword.Trim();
+
                         //if (step.result != null)
                         //{
                         //    testExecutionStep.Status = step.Result.Status.CapitalizeWords();
@@ -91,6 +95,7 @@ namespace Expressium.CucumberMessages
                 }
             }
 
+            /*
             foreach (var feature in testExecutionProject.Features)
             {
                 foreach (var scenario in feature.Scenarios)
@@ -116,6 +121,7 @@ namespace Expressium.CucumberMessages
                     }
                 }
             }
+            */
 
             CucumberUtilities.SerializeAsJson(outputFileName, testExecutionProject);
         }

@@ -11,9 +11,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Example.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
+	  <None Update="Example.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>
