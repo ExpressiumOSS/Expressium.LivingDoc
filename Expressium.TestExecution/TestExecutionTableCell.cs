@@ -2,9 +2,8 @@
 
 namespace Expressium.TestExecution
 {
-    public class TestExecutionArgument
+    public class TestExecutionTableCell
     {
-        public string Name { get; set; }
         public string Value { get; set; }
     }
 }

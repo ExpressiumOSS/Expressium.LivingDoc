@@ -11,14 +11,16 @@ namespace Expressium.TestExecution
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
-        public List<TestExecutionArgument> Arguments { get; set; }
         public List<TestExecutionStep> Steps { get; set; }
+        public TestExecutionTableRow TableHeader { get; set; }
+        public List<TestExecutionTableRow> TableBody { get; set; }
         public List<string> Attachments { get; set; }
 
         public TestExecutionExample()
         {
-            Arguments = new List<TestExecutionArgument>();
             Steps = new List<TestExecutionStep>();
+            TableHeader = new TestExecutionTableRow();
+            TableBody = new List<TestExecutionTableRow>();
             Attachments = new List<string>();
         }
     }

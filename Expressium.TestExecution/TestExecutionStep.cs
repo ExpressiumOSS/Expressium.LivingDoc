@@ -12,11 +12,11 @@ namespace Expressium.TestExecution
         public long Duration { get; set; }
         public string Error { get; set; }
 
-        public List<TestExecutionArgument> Arguments { get; set; }
+        public TestExecutionDataTable DataTable { get; set; }
 
         public TestExecutionStep()
         {
-            Arguments = new List<TestExecutionArgument>();
+            DataTable = new TestExecutionDataTable();
         }
     }
 }

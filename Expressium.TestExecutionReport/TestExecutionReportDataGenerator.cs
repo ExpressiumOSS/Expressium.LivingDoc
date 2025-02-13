@@ -282,7 +282,7 @@ namespace Expressium.TestExecutionReport
         internal List<string> GenerateScenarioDataTitleSection(TestExecutionScenario scenario, TestExecutionExample example)
         {
             var scenarioKeyword = "Scenario:";
-            if (example.Arguments.Count > 0)
+            if (example.TableHeader.Cells.Count > 0)
                 scenarioKeyword = "Scenario Outline:";
 
             var listOfLines = new List<string>();
@@ -338,7 +338,7 @@ namespace Expressium.TestExecutionReport
                 //    listOfLines.Add($"</tr>");
                 //}
 
-                if (step.Arguments.Count > 0)
+                if (step.DataTable.Rows.Count > 0)
                 {
                     listOfLines.Add("<!-- Scenario Steps Table Section -->");
                     listOfLines.Add($"<tr>");
@@ -347,17 +347,14 @@ namespace Expressium.TestExecutionReport
                     listOfLines.Add("<table>");
                     listOfLines.Add("<tbody>");
 
-                    listOfLines.Add($"<tr>");
-                    foreach (var argument in step.Arguments)
-                        listOfLines.Add($"<td><i>| " + argument.Name + "</i></td>");
-                    listOfLines.Add($"<td>|</td>");
-                    listOfLines.Add($"</tr>");
-
-                    listOfLines.Add($"<tr>");
-                    foreach (var argument in step.Arguments)
-                        listOfLines.Add($"<td>| " + argument.Value + "</td>");
-                    listOfLines.Add($"<td>|</td>");
-                    listOfLines.Add($"</tr>");
+                    foreach (var row in step.DataTable.Rows)
+                    {
+                        listOfLines.Add($"<tr>");
+                        foreach (var cell in row.Cells)
+                            listOfLines.Add($"<td><i>| " + cell.Value + "</i></td>");
+                        listOfLines.Add($"<td>|</td>");
+                        listOfLines.Add($"</tr>");
+                    }
 
                     listOfLines.Add("</tbody>");
                     listOfLines.Add("</table>");
@@ -374,7 +371,7 @@ namespace Expressium.TestExecutionReport
         {
             var listOfLines = new List<string>();
 
-            if (example.Arguments.Count > 0)
+            if (example.TableHeader.Cells.Count > 0)
             {
                 listOfLines.Add("<!-- Scenario Examples Section -->");
                 listOfLines.Add($"<tr>");
@@ -388,14 +385,17 @@ namespace Expressium.TestExecutionReport
                 listOfLines.Add("<tbody>");
 
                 listOfLines.Add($"<tr>");
-                foreach (var argument in example.Arguments)
-                    listOfLines.Add($"<td><i>| " + argument.Name + "</i></td>");
+                foreach (var cell in example.TableHeader.Cells)
+                    listOfLines.Add($"<td><i>| " + cell.Value + "</i></td>");
                 listOfLines.Add($"<td>|</td>");
                 listOfLines.Add($"</tr>");
 
                 listOfLines.Add($"<tr>");
-                foreach (var argument in example.Arguments)
-                    listOfLines.Add($"<td>| " + argument.Value + "</td>");
+                foreach (var body in example.TableBody)
+                {
+                    foreach (var cell in body.Cells)
+                        listOfLines.Add($"<td>| " + cell.Value + "</td>");
+                }
                 listOfLines.Add($"<td>|</td>");
                 listOfLines.Add($"</tr>");
 

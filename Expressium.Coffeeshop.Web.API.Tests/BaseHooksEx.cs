@@ -60,25 +60,14 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 testExecutionScenario.Examples.Add(testExecutionExample);
 
                 if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
-                {
-                    var keyCollection = scenarioContext.ScenarioInfo.Arguments.Keys;
-                    var valueCollection = scenarioContext.ScenarioInfo.Arguments.Values;
+                {                    
+                    foreach (var key in scenarioContext.ScenarioInfo.Arguments.Keys)
+                        testExecutionScenario.Examples[0].TableHeader.Cells.Add(new TestExecutionTableCell() { Value = key.ToString() });
 
-                    var numberOfArguments = scenarioContext.ScenarioInfo.Arguments.Count;
-
-                    string[] arrayOfKeys = new string[numberOfArguments];
-                    string[] arrayOfValues = new string[numberOfArguments];
-                    keyCollection.CopyTo(arrayOfKeys, 0);
-                    valueCollection.CopyTo(arrayOfValues, 0);
-
-                    for (int i = 0; i < numberOfArguments; i++)
-                    {
-                        testExecutionScenario.Examples[0].Arguments.Add(new TestExecutionArgument()
-                        {
-                            Name = arrayOfKeys[i],
-                            Value = arrayOfValues[i]
-                        });
-                    }
+                    var testExecutionTableRow = new TestExecutionTableRow();
+                    foreach (var value in scenarioContext.ScenarioInfo.Arguments.Values)
+                        testExecutionTableRow.Cells.Add(new TestExecutionTableCell() { Value = value.ToString() });
+                    testExecutionScenario.Examples[0].TableBody.Add(testExecutionTableRow);
                 }
             }
         }
@@ -128,27 +117,18 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
                 if (scenarioContext.StepContext.StepInfo.Table != null)
                 {
+                    var testExecutionTableHeaderRow = new TestExecutionTableRow();
+                    foreach (var header in scenarioContext.StepContext.StepInfo.Table.Header)
+                        testExecutionTableHeaderRow.Cells.Add(new TestExecutionTableCell() { Value = header });
+                    testExecutionStep.DataTable.Rows.Add(testExecutionTableHeaderRow);
+
+                    var testExecutionTableRow = new TestExecutionTableRow();
                     foreach (var row in scenarioContext.StepContext.StepInfo.Table.Rows)
                     {
-                        var keyCollection = row.Keys;
-                        var valueCollection = row.Values;
-
-                        var numberOfArguments = row.Keys.Count;
-
-                        string[] arrayOfKeys = new string[numberOfArguments];
-                        string[] arrayOfValues = new string[numberOfArguments];
-                        keyCollection.CopyTo(arrayOfKeys, 0);
-                        valueCollection.CopyTo(arrayOfValues, 0);
-
-                        for (int i = 0; i < numberOfArguments; i++)
-                        {
-                            testExecutionStep.Arguments.Add(new TestExecutionArgument()
-                            {
-                                Name = arrayOfKeys[i],
-                                Value = arrayOfValues[i]
-                            });
-                        }
+                        foreach (var value in row.Values)
+                            testExecutionTableRow.Cells.Add(new TestExecutionTableCell() { Value = value });
                     }
+                    testExecutionStep.DataTable.Rows.Add(testExecutionTableRow);
                 }
 
                 testExecutionScenario.Examples[0].Steps.Add(testExecutionStep);
