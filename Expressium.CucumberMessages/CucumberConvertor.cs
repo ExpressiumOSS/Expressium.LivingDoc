@@ -29,8 +29,7 @@ namespace Expressium.CucumberMessages
                 if (feature.Tags != null)
                 {
                     foreach (var tag in feature.Tags)
-                        testExecutionFeature.Tags += tag.Name + " ";
-                    testExecutionFeature.Tags.Trim();
+                        testExecutionFeature.Tags.Add(new TestExecutionTag() { Name = tag.Name });
                 }
 
                 //testExecutionFeature.Id = feature.Id;
@@ -53,8 +52,7 @@ namespace Expressium.CucumberMessages
                     if (scenario.Tags != null)
                     {
                         foreach (var tag in scenario.Tags)
-                            testExecutionScenario.Tags += tag.Name + " ";
-                        testExecutionScenario.Tags.Trim();
+                            testExecutionScenario.Tags.Add(new TestExecutionTag() { Name = tag.Name });
                     }
 
                     //testExecutionScenario.Id = scenario.Id;

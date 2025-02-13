@@ -1,5 +1,6 @@
 ﻿using Expressium.TestExecution;
 using System;
+using System.Linq;
 
 namespace Expressium.TestExecutionReport.Extensions
 {
@@ -7,12 +8,15 @@ namespace Expressium.TestExecutionReport.Extensions
     {
         public static bool IsTagged(this TestExecutionScenario scenario)
         {
-            return !string.IsNullOrEmpty(scenario.Tags);
+            if (scenario.Tags.Count == 0)
+                return false;
+
+            return true;
         }
 
         public static string GetTags(this TestExecutionScenario scenario)
         {
-            return scenario.Tags.FormatTags();
+            return string.Join(" ", scenario.Tags.Select(tag => tag.Name));
         }
 
         public static bool IsPassed(this TestExecutionScenario scenario)

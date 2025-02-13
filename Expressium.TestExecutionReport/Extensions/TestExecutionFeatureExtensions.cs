@@ -1,5 +1,4 @@
 ﻿using Expressium.TestExecution;
-using Expressium.TestExecution.Cucumber;
 using System;
 using System.Linq;
 
@@ -9,17 +8,20 @@ namespace Expressium.TestExecutionReport.Extensions
     {
         public static bool IsTagged(this TestExecutionFeature feature)
         {
-            return !string.IsNullOrEmpty(feature.Tags);
+            if (feature.Tags.Count == 0)
+                return false;
+
+            return true;
         }
 
-        public static void OrderByTags(this TestExecutionFeature feature)
-        {
-            feature.Scenarios = feature.Scenarios.OrderBy(x => x.Tags).ToList();
-        }
+        //public static void OrderByTags(this TestExecutionFeature feature)
+        //{
+        //    feature.Scenarios = feature.Scenarios.OrderBy(x => x.Tags).ToList();
+        //}
 
         public static string GetTags(this TestExecutionFeature feature)
         {
-            return feature.Tags.FormatTags();
+            return string.Join(" ", feature.Tags.Select(tag => tag.Name));
         }
 
         public static string GetStatus(this TestExecutionFeature feature)

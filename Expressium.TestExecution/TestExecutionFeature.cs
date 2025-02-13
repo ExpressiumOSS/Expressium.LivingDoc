@@ -6,7 +6,7 @@ namespace Expressium.TestExecution
     public class TestExecutionFeature
     {
         public string Id { get; set; }
-        public string Tags { get; set; }
+        public List<TestExecutionTag> Tags { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
         public string Keyword { get; set; }
@@ -17,6 +17,7 @@ namespace Expressium.TestExecution
 
         public TestExecutionFeature()
         {
+            Tags= new List<TestExecutionTag>();
             Scenarios = new List<TestExecutionScenario>();
         }
 

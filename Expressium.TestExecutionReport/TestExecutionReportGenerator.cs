@@ -67,8 +67,8 @@ namespace Expressium.TestExecutionReport
                 }
             }
 
-            Console.WriteLine("Sort Features & Scenarios by Tags...");
-            project.OrderByTags();
+            //Console.WriteLine("Sort Features & Scenarios by Tags...");
+            //project.OrderByTags();
 
             Console.WriteLine("Generating Test Execution HTML Report...");
             GenerateTestExecutionReport(project);

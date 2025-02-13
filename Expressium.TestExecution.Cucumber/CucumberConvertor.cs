@@ -28,8 +28,7 @@ namespace Expressium.TestExecution.Cucumber
                 if (feature.Tags != null)
                 {
                     foreach (var tag in feature.Tags)
-                        testExecutionFeature.Tags += tag.Name.Replace("@", "") + " ";
-                    testExecutionFeature.Tags.Trim();
+                        testExecutionFeature.Tags.Add(new TestExecutionTag() { Name = tag.Name });
                 }
 
                 testExecutionFeature.Id = feature.Id;
@@ -47,8 +46,7 @@ namespace Expressium.TestExecution.Cucumber
                     if (scenario.Tags != null)
                     {
                         foreach (var tag in scenario.Tags)
-                            testExecutionScenario.Tags += tag.Name.Replace("@", "") + " ";
-                        testExecutionScenario.Tags.Trim();
+                            testExecutionScenario.Tags.Add(new TestExecutionTag() { Name = tag.Name });
                     }
 
                     testExecutionScenario.Id = scenario.Id;

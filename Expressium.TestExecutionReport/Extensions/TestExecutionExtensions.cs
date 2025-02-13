@@ -79,16 +79,16 @@ namespace Expressium.TestExecutionReport.Extensions
             }
         }
 
-        public static string FormatTags(this string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return string.Empty;
+        //public static string FormatTags(this string value)
+        //{
+        //    if (string.IsNullOrWhiteSpace(value))
+        //        return string.Empty;
 
-            var tags = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < tags.Length; i++)
-                tags[i] = "@" + tags[i];
+        //    var tags = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        //    for (int i = 0; i < tags.Length; i++)
+        //        tags[i] = "@" + tags[i];
 
-            return string.Join(' ', tags);
-        }
+        //    return string.Join(' ', tags);
+        //}
     }
 }

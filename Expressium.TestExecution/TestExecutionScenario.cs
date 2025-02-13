@@ -7,7 +7,7 @@ namespace Expressium.TestExecution
     {
         public int Index { get; set; }
         public string Id { get; set; }
-        public string Tags { get; set; }
+        public List<TestExecutionTag> Tags { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
         public string Keyword { get; set; }
@@ -19,6 +19,7 @@ namespace Expressium.TestExecution
         public TestExecutionScenario()
         {
             Index = 0;
+            Tags = new List<TestExecutionTag>();
             Examples = new List<TestExecutionExample>();
         }
     }

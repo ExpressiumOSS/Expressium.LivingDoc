@@ -7,13 +7,13 @@ namespace Expressium.TestExecutionReport.Extensions
 {
     public static class TestExecutionProjectExtentions
     {
-        public static void OrderByTags(this TestExecutionProject project)
-        {
-            foreach (var feature in project.Features)
-                feature.OrderByTags();
+        //public static void OrderByTags(this TestExecutionProject project)
+        //{
+        //    foreach (var feature in project.Features)
+        //        feature.OrderByTags();
 
-            project.Features = project.Features.OrderBy(x => x.Tags).ToList();
-        }
+        //    project.Features = project.Features.OrderBy(x => x.Tags).ToList();
+        //}
 
         public static int GetNumberOfPassedFeatures(this TestExecutionProject project)
         {

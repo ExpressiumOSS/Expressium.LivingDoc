@@ -33,23 +33,26 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             if (!testExecutionProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
             {
-                testExecutionProject.Features.Add(new TestExecutionFeature()
-                {
-                    Tags = string.Join(" ", featureContext.FeatureInfo.Tags),
-                    Name = featureContext.FeatureInfo.Title,
-                    Description = featureContext.FeatureInfo.Description,
-                    Uri = featureContext.FeatureInfo.FolderPath
-                });
+                var testExecutionFeature = new TestExecutionFeature();
+
+                foreach (var tag in featureContext.FeatureInfo.Tags)
+                    testExecutionFeature.Tags.Add(new TestExecutionTag() { Name = "@" + tag });
+
+                testExecutionFeature.Name = featureContext.FeatureInfo.Title;
+                testExecutionFeature.Description = featureContext.FeatureInfo.Description;
+                testExecutionFeature.Uri = featureContext.FeatureInfo.FolderPath;
+                testExecutionProject.Features.Add(testExecutionFeature);
             }
 
             if (testExecutionProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
             {
-                testExecutionScenario = (new TestExecutionScenario()
-                {
-                    Tags = string.Join(" ", scenarioContext.ScenarioInfo.Tags),
-                    Name = scenarioContext.ScenarioInfo.Title,
-                    Description = scenarioContext.ScenarioInfo.Description
-                });
+                testExecutionScenario = new TestExecutionScenario();
+
+                foreach (var tag in scenarioContext.ScenarioInfo.Tags)
+                    testExecutionScenario.Tags.Add(new TestExecutionTag() { Name = "@" + tag });
+
+                testExecutionScenario.Name = scenarioContext.ScenarioInfo.Title;
+                testExecutionScenario.Description = scenarioContext.ScenarioInfo.Description;
 
                 var testExecutionExample = new TestExecutionExample();
                 testExecutionExample.StartTime = DateTime.Now;
