@@ -29,3 +29,6 @@
 
 ### Eggplant Test Case Dashboard
 * https://docs.eggplantsoftware.com/dai/dai-dashboard-test-case/
+
+### Cucumber Messages JSON Schemas
+* https://github.com/cucumber/messages/tree/main/jsonschema
