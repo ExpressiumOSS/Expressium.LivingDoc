@@ -41,6 +41,8 @@
             var listview = document.getElementById(x).innerHTML;
 
             document.getElementById('scenario-view').innerHTML = listview;
+
+            presetFilter('');
         }
     </script>
     <script>
