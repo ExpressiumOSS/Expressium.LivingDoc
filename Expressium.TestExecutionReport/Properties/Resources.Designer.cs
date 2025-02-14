@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Expressium.TestExecutionReport.Properties {
+namespace Expressium.LivingDoc.Properties {
     using System;
     
     

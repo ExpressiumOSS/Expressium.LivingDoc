@@ -2,7 +2,7 @@
 using AngleSharp.Html.Parser;
 using Expressium.TestExecution;
 using Expressium.LivingDoc.Extensions;
-using Expressium.TestExecutionReport.Properties;
+using Expressium.LivingDoc.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -71,13 +71,13 @@ namespace Expressium.LivingDoc
             //project.OrderByTags();
 
             Console.WriteLine("Generating Test Execution HTML Report...");
-            GenerateTestExecutionReport(project);
+            GenerateHtmlReport(project);
 
             Console.WriteLine("Generating Test Execution Report Completed");
             Console.WriteLine("");
         }
 
-        internal void GenerateTestExecutionReport(LivingDocProject project)
+        internal void GenerateHtmlReport(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 

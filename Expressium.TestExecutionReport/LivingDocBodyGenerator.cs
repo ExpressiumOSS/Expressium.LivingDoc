@@ -1,6 +1,6 @@
 ﻿using Expressium.TestExecution;
 using Expressium.LivingDoc.Extensions;
-using Expressium.TestExecutionReport.Properties;
+using Expressium.LivingDoc.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
