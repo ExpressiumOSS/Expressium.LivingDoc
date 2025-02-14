@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Expressium.TestExecution
 {
-    public class TestExecutionUtilities
+    public class LivingDocUtilities
     {
         public static T DeserializeAsJson<T>(string filePath)
         {

@@ -6,7 +6,7 @@ namespace Expressium.TestExecutionReport.Extensions
 {
     public static class TestExecutionScenarioExtensions
     {
-        public static bool IsTagged(this TestExecutionScenario scenario)
+        public static bool IsTagged(this LivingDocScenario scenario)
         {
             if (scenario.Tags.Count == 0)
                 return false;
@@ -14,12 +14,12 @@ namespace Expressium.TestExecutionReport.Extensions
             return true;
         }
 
-        public static string GetTags(this TestExecutionScenario scenario)
+        public static string GetTags(this LivingDocScenario scenario)
         {
             return string.Join(" ", scenario.Tags.Select(tag => tag.Name));
         }
 
-        public static bool IsPassed(this TestExecutionScenario scenario)
+        public static bool IsPassed(this LivingDocScenario scenario)
         {
             if (GetStatus(scenario) == ReportStatuses.Passed.ToString())
                 return true;
@@ -27,7 +27,7 @@ namespace Expressium.TestExecutionReport.Extensions
             return false;
         }
 
-        public static bool IsIncomplete(this TestExecutionScenario scenario)
+        public static bool IsIncomplete(this LivingDocScenario scenario)
         {
             if (GetStatus(scenario) == ReportStatuses.Incomplete.ToString())
                 return true;
@@ -35,7 +35,7 @@ namespace Expressium.TestExecutionReport.Extensions
             return false;
         }
 
-        public static bool IsFailed(this TestExecutionScenario scenario)
+        public static bool IsFailed(this LivingDocScenario scenario)
         {
             if (GetStatus(scenario) == ReportStatuses.Failed.ToString())
                 return true;
@@ -43,7 +43,7 @@ namespace Expressium.TestExecutionReport.Extensions
             return false;
         }
 
-        public static bool IsSkipped(this TestExecutionScenario scenario)
+        public static bool IsSkipped(this LivingDocScenario scenario)
         {
             if (GetStatus(scenario) == ReportStatuses.Skipped.ToString())
                 return true;
@@ -51,7 +51,7 @@ namespace Expressium.TestExecutionReport.Extensions
             return false;
         }
 
-        public static string GetStatus(this TestExecutionScenario scenario)
+        public static string GetStatus(this LivingDocScenario scenario)
         {
             foreach (var example in scenario.Examples)
             {
@@ -80,12 +80,12 @@ namespace Expressium.TestExecutionReport.Extensions
             return ReportStatuses.Undefined.ToString();
         }
 
-        public static string GetIndexSortId(this TestExecutionScenario scenario)
+        public static string GetIndexSortId(this LivingDocScenario scenario)
         {
             return scenario.Index.ToString("D4");
         }
 
-        public static string GetDuration(this TestExecutionScenario scenario)
+        public static string GetDuration(this LivingDocScenario scenario)
         {
             TimeSpan? duration = null;
 
@@ -105,7 +105,7 @@ namespace Expressium.TestExecutionReport.Extensions
             return $"{totalDuration.Seconds}s {totalDuration.Milliseconds.ToString("D3")}ms";
         }
 
-        public static string GetDurationSortId(this TestExecutionScenario scenario)
+        public static string GetDurationSortId(this LivingDocScenario scenario)
         {
             TimeSpan? duration = null;
 

@@ -11,7 +11,7 @@ namespace Expressium.TestExecutionReport
     {
         private bool includeNavigation = false;
 
-        internal List<string> GenerateBody(TestExecutionProject project)
+        internal List<string> GenerateBody(LivingDocProject project)
         {
             var dataGenerator = new LivingDocDataGenerator();
 
@@ -37,7 +37,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateHeader(TestExecutionProject project)
+        internal List<string> GenerateHeader(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -50,7 +50,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateNavigation(TestExecutionProject project)
+        internal List<string> GenerateNavigation(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -65,7 +65,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateContent(TestExecutionProject project)
+        internal List<string> GenerateContent(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -94,7 +94,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioPreFilters(TestExecutionProject project)
+        internal List<string> GenerateScenarioPreFilters(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -121,7 +121,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioFilter(TestExecutionProject project)
+        internal List<string> GenerateScenarioFilter(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -133,7 +133,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFooter(TestExecutionProject project)
+        internal List<string> GenerateFooter(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 

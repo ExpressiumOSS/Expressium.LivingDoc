@@ -6,7 +6,7 @@ namespace Expressium.TestExecutionReport.Extensions
 {
     public static class TestExecutionFolderExtension
     {
-        public static List<string> GetListOfFolders(this TestExecutionProject project)
+        public static List<string> GetListOfFolders(this LivingDocProject project)
         {
             var listOfFolders = new List<string>();
 

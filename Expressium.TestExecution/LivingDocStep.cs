@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Expressium.TestExecution
 {
-    public class TestExecutionStep
+    public class LivingDocStep
     {
         public string Keyword { get; set; }
         public string Name { get; set; }
@@ -12,11 +12,11 @@ namespace Expressium.TestExecution
         public long Duration { get; set; }
         public string Error { get; set; }
 
-        public TestExecutionDataTable DataTable { get; set; }
+        public LivingDataTable DataTable { get; set; }
 
-        public TestExecutionStep()
+        public LivingDocStep()
         {
-            DataTable = new TestExecutionDataTable();
+            DataTable = new LivingDataTable();
         }
     }
 }

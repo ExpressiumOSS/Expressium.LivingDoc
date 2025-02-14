@@ -3,22 +3,22 @@ using System.Linq;
 
 namespace Expressium.TestExecution
 {
-    public class TestExecutionFeature
+    public class LivingDocFeature
     {
         public string Id { get; set; }
-        public List<TestExecutionTag> Tags { get; set; }
+        public List<LivingDocTag> Tags { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
         public string Keyword { get; set; }
         public int Line { get; set; }
         public string Uri { get; set; }
 
-        public List<TestExecutionScenario> Scenarios { get; set; }
+        public List<LivingDocScenario> Scenarios { get; set; }
 
-        public TestExecutionFeature()
+        public LivingDocFeature()
         {
-            Tags= new List<TestExecutionTag>();
-            Scenarios = new List<TestExecutionScenario>();
+            Tags= new List<LivingDocTag>();
+            Scenarios = new List<LivingDocScenario>();
         }
 
         public bool IsScenarioAdded(string title)
@@ -26,7 +26,7 @@ namespace Expressium.TestExecution
             return Scenarios.Any(m => m.Name == title);
         }
 
-        public TestExecutionScenario GetScenario(string title)
+        public LivingDocScenario GetScenario(string title)
         {
             return Scenarios.Find(x => x.Name == title);
         }

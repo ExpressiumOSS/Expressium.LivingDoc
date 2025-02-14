@@ -6,93 +6,93 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 {
     public partial class BaseHooks
     {
-        private static TestExecutionProject testExecutionProject;
+        private static LivingDocProject livingDocProject;
         private static string outputFileName = "TestExecution.json";
 
-        private TestExecutionScenario testExecutionScenario;
+        private LivingDocScenario livingDocScenario;
 
         private static void InitializeTestExecution()
         {
-            testExecutionProject = new TestExecutionProject();
-            testExecutionProject.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            testExecutionProject.ExecutionTime = DateTime.UtcNow.ToLocalTime();
-            testExecutionProject.StartTime = DateTime.Now;
-            testExecutionProject.EndTime = DateTime.Now;
+            livingDocProject = new LivingDocProject();
+            livingDocProject.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            livingDocProject.ExecutionTime = DateTime.UtcNow.ToLocalTime();
+            livingDocProject.StartTime = DateTime.Now;
+            livingDocProject.EndTime = DateTime.Now;
 
             System.Threading.Thread.Sleep(1000);
         }
 
         private static void FinalizeTestExecution()
         {
-            testExecutionProject.EndTime = DateTime.Now;
+            livingDocProject.EndTime = DateTime.Now;
 
-            TestExecutionUtilities.SerializeAsJson(Path.Combine(Directory.GetCurrentDirectory(), outputFileName), testExecutionProject);
+            LivingDocUtilities.SerializeAsJson(Path.Combine(Directory.GetCurrentDirectory(), outputFileName), livingDocProject);
         }
 
         private void AddTestExecutionBeforeScenario()
         {
-            if (!testExecutionProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
+            if (!livingDocProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
             {
-                var testExecutionFeature = new TestExecutionFeature();
+                var livingDocFeature = new LivingDocFeature();
 
                 foreach (var tag in featureContext.FeatureInfo.Tags)
-                    testExecutionFeature.Tags.Add(new TestExecutionTag() { Name = "@" + tag });
+                    livingDocFeature.Tags.Add(new LivingDocTag() { Name = "@" + tag });
 
-                testExecutionFeature.Name = featureContext.FeatureInfo.Title;
-                testExecutionFeature.Description = featureContext.FeatureInfo.Description;
-                testExecutionFeature.Uri = featureContext.FeatureInfo.FolderPath;
-                testExecutionProject.Features.Add(testExecutionFeature);
+                livingDocFeature.Name = featureContext.FeatureInfo.Title;
+                livingDocFeature.Description = featureContext.FeatureInfo.Description;
+                livingDocFeature.Uri = featureContext.FeatureInfo.FolderPath;
+                livingDocProject.Features.Add(livingDocFeature);
             }
 
-            if (testExecutionProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
+            if (livingDocProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
             {
-                testExecutionScenario = new TestExecutionScenario();
+                livingDocScenario = new LivingDocScenario();
 
                 foreach (var tag in scenarioContext.ScenarioInfo.Tags)
-                    testExecutionScenario.Tags.Add(new TestExecutionTag() { Name = "@" + tag });
+                    livingDocScenario.Tags.Add(new LivingDocTag() { Name = "@" + tag });
 
-                testExecutionScenario.Name = scenarioContext.ScenarioInfo.Title;
-                testExecutionScenario.Description = scenarioContext.ScenarioInfo.Description;
+                livingDocScenario.Name = scenarioContext.ScenarioInfo.Title;
+                livingDocScenario.Description = scenarioContext.ScenarioInfo.Description;
 
-                var testExecutionExample = new TestExecutionExample();
-                testExecutionExample.StartTime = DateTime.Now;
-                testExecutionExample.EndTime = DateTime.Now;
-                testExecutionScenario.Examples.Add(testExecutionExample);
+                var livingDocExample = new LivingDocExample();
+                livingDocExample.StartTime = DateTime.Now;
+                livingDocExample.EndTime = DateTime.Now;
+                livingDocScenario.Examples.Add(livingDocExample);
 
                 if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
                 {                    
                     foreach (var key in scenarioContext.ScenarioInfo.Arguments.Keys)
-                        testExecutionScenario.Examples[0].TableHeader.Cells.Add(new TestExecutionTableCell() { Value = key.ToString() });
+                        livingDocScenario.Examples[0].TableHeader.Cells.Add(new LivingDocTableCell() { Value = key.ToString() });
 
-                    var testExecutionTableRow = new TestExecutionTableRow();
+                    var livingDocTableRow = new LivingDocTableRow();
                     foreach (var value in scenarioContext.ScenarioInfo.Arguments.Values)
-                        testExecutionTableRow.Cells.Add(new TestExecutionTableCell() { Value = value.ToString() });
-                    testExecutionScenario.Examples[0].TableBody.Add(testExecutionTableRow);
+                        livingDocTableRow.Cells.Add(new LivingDocTableCell() { Value = value.ToString() });
+                    livingDocScenario.Examples[0].TableBody.Add(livingDocTableRow);
                 }
             }
         }
 
         private void AddTestExecutionAfterScenario()
         {
-            if (testExecutionScenario != null)
+            if (livingDocScenario != null)
             {
-                testExecutionScenario.Examples[0].Status = scenarioContext.ScenarioExecutionStatus.ToString();
-                testExecutionScenario.Examples[0].Error = scenarioContext.TestError?.Message;
-                testExecutionScenario.Examples[0].Stacktrace = scenarioContext.TestError?.StackTrace;
-                testExecutionScenario.Examples[0].EndTime = DateTime.Now;
+                livingDocScenario.Examples[0].Status = scenarioContext.ScenarioExecutionStatus.ToString();
+                livingDocScenario.Examples[0].Error = scenarioContext.TestError?.Message;
+                livingDocScenario.Examples[0].Stacktrace = scenarioContext.TestError?.StackTrace;
+                livingDocScenario.Examples[0].EndTime = DateTime.Now;
 
-                if (testExecutionProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
+                if (livingDocProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
                 {
-                    var testExecutionFeature = testExecutionProject.GetFeature(featureContext.FeatureInfo.Title);
+                    var livingDocFeature = livingDocProject.GetFeature(featureContext.FeatureInfo.Title);
 
-                    if (testExecutionFeature.IsScenarioAdded(scenarioContext.ScenarioInfo.Title))
+                    if (livingDocFeature.IsScenarioAdded(scenarioContext.ScenarioInfo.Title))
                     {
-                        var testExecutionScenarioParent = testExecutionFeature.GetScenario(scenarioContext.ScenarioInfo.Title);
-                        testExecutionScenarioParent.Examples.Add(testExecutionScenario.Examples[0]);
+                        var testExecutionScenarioParent = livingDocFeature.GetScenario(scenarioContext.ScenarioInfo.Title);
+                        testExecutionScenarioParent.Examples.Add(livingDocScenario.Examples[0]);
                     }
                     else
                     {
-                        testExecutionFeature.Scenarios.Add(testExecutionScenario);
+                        livingDocFeature.Scenarios.Add(livingDocScenario);
                     }
                 }
             }
@@ -100,38 +100,38 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
         private void AddTestExecutionScenarioAttachment(string filePath)
         {
-            if (testExecutionScenario != null)
+            if (livingDocScenario != null)
             {
-                testExecutionScenario.Examples[0].Attachments.Add(filePath);
+                livingDocScenario.Examples[0].Attachments.Add(filePath);
             }
         }
 
         private void AddTestExecutionAfterStep()
         {
-            if (testExecutionScenario != null)
+            if (livingDocScenario != null)
             {
-                var testExecutionStep = new TestExecutionStep();
-                testExecutionStep.Keyword = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString();
-                testExecutionStep.Name = scenarioContext.StepContext.StepInfo.Text;
-                testExecutionStep.Status = scenarioContext.StepContext.Status.ToString();
+                var livingDocStep = new LivingDocStep();
+                livingDocStep.Keyword = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString();
+                livingDocStep.Name = scenarioContext.StepContext.StepInfo.Text;
+                livingDocStep.Status = scenarioContext.StepContext.Status.ToString();
 
                 if (scenarioContext.StepContext.StepInfo.Table != null)
                 {
-                    var testExecutionTableHeaderRow = new TestExecutionTableRow();
+                    var livingDocTableHeaderRow = new LivingDocTableRow();
                     foreach (var header in scenarioContext.StepContext.StepInfo.Table.Header)
-                        testExecutionTableHeaderRow.Cells.Add(new TestExecutionTableCell() { Value = header });
-                    testExecutionStep.DataTable.Rows.Add(testExecutionTableHeaderRow);
+                        livingDocTableHeaderRow.Cells.Add(new LivingDocTableCell() { Value = header });
+                    livingDocStep.DataTable.Rows.Add(livingDocTableHeaderRow);
 
-                    var testExecutionTableRow = new TestExecutionTableRow();
+                    var testExecutionTableRow = new LivingDocTableRow();
                     foreach (var row in scenarioContext.StepContext.StepInfo.Table.Rows)
                     {
                         foreach (var value in row.Values)
-                            testExecutionTableRow.Cells.Add(new TestExecutionTableCell() { Value = value });
+                            testExecutionTableRow.Cells.Add(new LivingDocTableCell() { Value = value });
                     }
-                    testExecutionStep.DataTable.Rows.Add(testExecutionTableRow);
+                    livingDocStep.DataTable.Rows.Add(testExecutionTableRow);
                 }
 
-                testExecutionScenario.Examples[0].Steps.Add(testExecutionStep);
+                livingDocScenario.Examples[0].Steps.Add(livingDocStep);
             }
         }
     }

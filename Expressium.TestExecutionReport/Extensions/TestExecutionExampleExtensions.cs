@@ -4,42 +4,42 @@ namespace Expressium.TestExecutionReport.Extensions
 {
     public static class TestExecutionExampleExtensions
     {
-        public static bool IsPassed(this TestExecutionExample example)
+        public static bool IsPassed(this LivingDocExample example)
         {
             return example.Status.IsPassed();
         }
 
-        public static bool IsIncomplete(this TestExecutionExample example)
+        public static bool IsIncomplete(this LivingDocExample example)
         {
             return example.Status.IsIncomplete();
         }
 
-        public static bool IsFailed(this TestExecutionExample example)
+        public static bool IsFailed(this LivingDocExample example)
         {
             return example.Status.IsFailed();
         }
 
-        public static bool IsSkipped(this TestExecutionExample example)
+        public static bool IsSkipped(this LivingDocExample example)
         {
             return example.Status.IsSkipped();
         }
 
-        public static bool IsStepPending(this TestExecutionExample example)
+        public static bool IsStepPending(this LivingDocExample example)
         {
             return example.Status.IsStepPending();
         }
 
-        public static bool IsStepUndefined(this TestExecutionExample example)
+        public static bool IsStepUndefined(this LivingDocExample example)
         {
             return example.Status.IsStepUndefined();
         }
 
-        public static bool IsStepBindingError(this TestExecutionExample example)
+        public static bool IsStepBindingError(this LivingDocExample example)
         {
             return example.Status.IsStepBindingError();
         }
 
-        public static string GetStatus(this TestExecutionExample example)
+        public static string GetStatus(this LivingDocExample example)
         {
             if (example.IsFailed())
                 return ReportStatuses.Failed.ToString();
@@ -53,7 +53,7 @@ namespace Expressium.TestExecutionReport.Extensions
             return ReportStatuses.Undefined.ToString();
         }
 
-        public static string GetDuration(this TestExecutionExample example)
+        public static string GetDuration(this LivingDocExample example)
         {
             var duration = example.EndTime - example.StartTime;
 

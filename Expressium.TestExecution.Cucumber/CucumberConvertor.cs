@@ -10,8 +10,8 @@ namespace Expressium.TestExecution.Cucumber
         public static void SaveAsTestExecution(string inputFileName, string outputFileName)
         {
             Console.WriteLine("Parsing Cucumber JSON File...");
-            var testExecutionProject = new TestExecutionProject();
-            testExecutionProject.Title = "Cucumber";
+            var livingDocProject = new LivingDocProject();
+            livingDocProject.Title = "Cucumber";
 
             var options = new JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;
@@ -23,54 +23,54 @@ namespace Expressium.TestExecution.Cucumber
 
             foreach (var feature in features)
             {
-                var testExecutionFeature = new TestExecutionFeature();
+                var livingDocFeature = new LivingDocFeature();
 
                 if (feature.Tags != null)
                 {
                     foreach (var tag in feature.Tags)
-                        testExecutionFeature.Tags.Add(new TestExecutionTag() { Name = tag.Name });
+                        livingDocFeature.Tags.Add(new LivingDocTag() { Name = tag.Name });
                 }
 
-                testExecutionFeature.Id = feature.Id;
-                testExecutionFeature.Description = feature.Description;
-                testExecutionFeature.Name = feature.Name;
-                testExecutionFeature.Keyword = feature.Keyword;
-                testExecutionFeature.Line = feature.Line;
-                testExecutionFeature.Uri = feature.Uri;
-                testExecutionProject.Features.Add(testExecutionFeature);
+                livingDocFeature.Id = feature.Id;
+                livingDocFeature.Description = feature.Description;
+                livingDocFeature.Name = feature.Name;
+                livingDocFeature.Keyword = feature.Keyword;
+                livingDocFeature.Line = feature.Line;
+                livingDocFeature.Uri = feature.Uri;
+                livingDocProject.Features.Add(livingDocFeature);
 
                 foreach (var scenario in feature.Elements)
                 {
-                    var testExecutionScenario = new TestExecutionScenario();
+                    var livingDocScenario = new LivingDocScenario();
 
                     if (scenario.Tags != null)
                     {
                         foreach (var tag in scenario.Tags)
-                            testExecutionScenario.Tags.Add(new TestExecutionTag() { Name = tag.Name });
+                            livingDocScenario.Tags.Add(new LivingDocTag() { Name = tag.Name });
                     }
 
-                    testExecutionScenario.Id = scenario.Id;
-                    testExecutionScenario.Description = scenario.Description;
-                    testExecutionScenario.Name = scenario.Name;
-                    testExecutionScenario.Keyword = scenario.Keyword;
-                    testExecutionScenario.Line = scenario.Line;
-                    testExecutionScenario.Type = scenario.Type;
-                    testExecutionFeature.Scenarios.Add(testExecutionScenario);
+                    livingDocScenario.Id = scenario.Id;
+                    livingDocScenario.Description = scenario.Description;
+                    livingDocScenario.Name = scenario.Name;
+                    livingDocScenario.Keyword = scenario.Keyword;
+                    livingDocScenario.Line = scenario.Line;
+                    livingDocScenario.Type = scenario.Type;
+                    livingDocFeature.Scenarios.Add(livingDocScenario);
 
-                    var testExecutionExample = new TestExecutionExample();
-                    testExecutionScenario.Examples.Add(testExecutionExample);
+                    var livingDocExample = new LivingDocExample();
+                    livingDocScenario.Examples.Add(livingDocExample);
 
                     foreach (var step in scenario.Steps)
                     {
-                        var testExecutionStep = new TestExecutionStep();
-                        testExecutionStep.Name = step.Name;
-                        testExecutionStep.Line = step.Line;
-                        testExecutionStep.Keyword = step.Keyword.Trim();
+                        var livingDocStep = new LivingDocStep();
+                        livingDocStep.Name = step.Name;
+                        livingDocStep.Line = step.Line;
+                        livingDocStep.Keyword = step.Keyword.Trim();
                         if (step.Result != null)
                         {
-                            testExecutionStep.Status = step.Result.Status.CapitalizeWords();
-                            testExecutionStep.Duration = step.Result.Duration;
-                            testExecutionStep.Error = step.Result.Error_message;
+                            livingDocStep.Status = step.Result.Status.CapitalizeWords();
+                            livingDocStep.Duration = step.Result.Duration;
+                            livingDocStep.Error = step.Result.Error_message;
                         }
 
                         //foreach (var row in step.Rows)
@@ -81,12 +81,12 @@ namespace Expressium.TestExecution.Cucumber
                         //    }
                         //}
 
-                        testExecutionExample.Steps.Add(testExecutionStep);
+                        livingDocExample.Steps.Add(livingDocStep);
                     }
                 }
             }
 
-            foreach (var feature in testExecutionProject.Features)
+            foreach (var feature in livingDocProject.Features)
             {
                 foreach (var scenario in feature.Scenarios)
                 {
@@ -112,7 +112,7 @@ namespace Expressium.TestExecution.Cucumber
                 }
             }
 
-            CucumberUtilities.SerializeAsJson(outputFileName, testExecutionProject);
+            CucumberUtilities.SerializeAsJson(outputFileName, livingDocProject);
         }
     }
 }

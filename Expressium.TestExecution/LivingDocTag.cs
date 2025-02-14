@@ -2,7 +2,7 @@
 
 namespace Expressium.TestExecution
 {
-    public class TestExecutionTag
+    public class LivingDocTag
     {
         public string Name { get; set; }
         public string Id { get; set; }

@@ -8,7 +8,7 @@ namespace Expressium.TestExecutionReport
 {
     internal partial class LivingDocDataGenerator
     {
-        internal List<string> GenerateData(TestExecutionProject project)
+        internal List<string> GenerateData(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -22,7 +22,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataTreeViewSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataTreeViewSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -76,7 +76,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataFeatureListViewSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataFeatureListViewSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -118,7 +118,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataScenarioListViewSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataScenarioListViewSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -163,7 +163,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDataSections(TestExecutionProject project)
+        internal List<string> GenerateFeatureDataSections(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -184,7 +184,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDataTagSection(TestExecutionFeature feature)
+        internal List<string> GenerateFeatureDataTagSection(LivingDocFeature feature)
         {
             var listOfLines = new List<string>();
 
@@ -196,7 +196,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDataNameSection(TestExecutionFeature feature)
+        internal List<string> GenerateFeatureDataNameSection(LivingDocFeature feature)
         {
             var listOfLines = new List<string>();
 
@@ -209,7 +209,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDataDescriptionSection(TestExecutionFeature feature)
+        internal List<string> GenerateFeatureDataDescriptionSection(LivingDocFeature feature)
         {
             var listOfLines = new List<string>();
 
@@ -224,7 +224,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataSections(TestExecutionProject project)
+        internal List<string> GenerateScenarioDataSections(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -267,7 +267,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataTagSection(TestExecutionScenario scenario)
+        internal List<string> GenerateScenarioDataTagSection(LivingDocScenario scenario)
         {
             var listOfLines = new List<string>();
 
@@ -279,7 +279,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataTitleSection(TestExecutionScenario scenario, TestExecutionExample example)
+        internal List<string> GenerateScenarioDataTitleSection(LivingDocScenario scenario, LivingDocExample example)
         {
             var scenarioKeyword = "Scenario:";
             if (example.TableHeader.Cells.Count > 0)
@@ -299,7 +299,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataStepsSection(TestExecutionExample example)
+        internal List<string> GenerateScenarioDataStepsSection(LivingDocExample example)
         {
             var listOfLines = new List<string>();
 
@@ -367,7 +367,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataExamplesSection(TestExecutionExample example)
+        internal List<string> GenerateScenarioDataExamplesSection(LivingDocExample example)
         {
             var listOfLines = new List<string>();
 
@@ -409,7 +409,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataMessageSection(TestExecutionExample example)
+        internal List<string> GenerateScenarioDataMessageSection(LivingDocExample example)
         {
             var listOfLines = new List<string>();
 
@@ -442,7 +442,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataAttachments(TestExecutionExample example)
+        internal List<string> GenerateScenarioDataAttachments(LivingDocExample example)
         {
             var listOfLines = new List<string>();
 
@@ -468,7 +468,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataEditSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataEditSection(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -513,7 +513,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataAnalyticsSection(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -533,7 +533,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsFeaturesStatusChartSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataAnalyticsFeaturesStatusChartSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -548,7 +548,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsScenariosStatusChartSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataAnalyticsScenariosStatusChartSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
@@ -664,7 +664,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsDurationSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataAnalyticsDurationSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 

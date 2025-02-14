@@ -6,7 +6,7 @@ namespace Expressium.TestExecutionReport
 {
     internal partial class LivingDocDataGenerator
     {
-        internal List<string> GenerateProjectDataTreeListSections(TestExecutionProject project, FolderNode node)
+        internal List<string> GenerateProjectDataTreeListSections(LivingDocProject project, FolderNode node)
         {
             List<string> listOfLines = new List<string>();
 
@@ -53,7 +53,7 @@ namespace Expressium.TestExecutionReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataTreeListSection(TestExecutionProject project)
+        internal List<string> GenerateProjectDataTreeListSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 

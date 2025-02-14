@@ -2,7 +2,7 @@
 
 namespace Expressium.TestExecution
 {
-    public class TestExecutionTableCell
+    public class LivingDocTableCell
     {
         public string Value { get; set; }
     }

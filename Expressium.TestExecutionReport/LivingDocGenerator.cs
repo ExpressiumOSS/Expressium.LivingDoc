@@ -30,7 +30,7 @@ namespace Expressium.TestExecutionReport
             Console.WriteLine("");
 
             Console.WriteLine("Parsing Test Execution JSON File...");
-            var project = TestExecutionUtilities.DeserializeAsJson<TestExecutionProject>(filePath);
+            var project = LivingDocUtilities.DeserializeAsJson<LivingDocProject>(filePath);
 
             Console.WriteLine("Creating Test Execution Output Directories...");
             if (Directory.Exists(outputPath))
@@ -77,7 +77,7 @@ namespace Expressium.TestExecutionReport
             Console.WriteLine("");
         }
 
-        internal void GenerateTestExecutionReport(TestExecutionProject project)
+        internal void GenerateTestExecutionReport(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
