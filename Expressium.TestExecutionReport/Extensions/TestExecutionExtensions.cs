@@ -1,7 +1,7 @@
 ﻿using Expressium.TestExecution;
 using System;
 
-namespace Expressium.TestExecutionReport.Extensions
+namespace Expressium.LivingDoc.Extensions
 {
     public enum ReportStatuses
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Expressium.TestExecutionReport.Extensions
+namespace Expressium.LivingDoc.Extensions
 {
     public static class TestExecutionFolderExtension
     {

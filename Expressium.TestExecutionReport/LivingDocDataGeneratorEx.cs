@@ -1,8 +1,8 @@
 ﻿using Expressium.TestExecution;
-using Expressium.TestExecutionReport.Extensions;
+using Expressium.LivingDoc.Extensions;
 using System.Collections.Generic;
 
-namespace Expressium.TestExecutionReport
+namespace Expressium.LivingDoc
 {
     internal partial class LivingDocDataGenerator
     {

@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Expressium.TestExecutionReport
+namespace Expressium.LivingDoc
 {
     public class Program
     {
@@ -23,8 +23,8 @@ namespace Expressium.TestExecutionReport
             }
             else
             {
-                Console.WriteLine("Expressium.TestExecutionReport.exe [FILEPATH] [OUTPUTPATH]");
-                Console.WriteLine("Expressium.TestExecutionReport.exe C:\\SourceCode\\company-project-tests\\TestExecution.json C:\\SourceCode\\company-project-tests\\TestReport");
+                Console.WriteLine("Expressium.LivingDoc.exe [FILEPATH] [OUTPUTPATH]");
+                Console.WriteLine("Expressium.LivingDoc.exe C:\\SourceCode\\company-project-tests\\TestExecution.json C:\\SourceCode\\company-project-tests\\TestReport");
             }
         }
     }

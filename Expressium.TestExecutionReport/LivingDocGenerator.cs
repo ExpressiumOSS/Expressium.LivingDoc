@@ -1,14 +1,14 @@
 ﻿using AngleSharp.Html;
 using AngleSharp.Html.Parser;
 using Expressium.TestExecution;
-using Expressium.TestExecutionReport.Extensions;
+using Expressium.LivingDoc.Extensions;
 using Expressium.TestExecutionReport.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Expressium.TestExecutionReport
+namespace Expressium.LivingDoc
 {
     public class LivingDocGenerator
     {

@@ -1,6 +1,6 @@
 ﻿using Expressium.TestExecution;
 
-namespace Expressium.TestExecutionReport.Extensions
+namespace Expressium.LivingDoc.Extensions
 {
     public static class TestExecutionStepExtensions
     {
