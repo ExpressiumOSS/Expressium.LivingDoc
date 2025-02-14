@@ -10,16 +10,16 @@ namespace Expressium.TestExecutionReport
         {
             if (args.Length == 2)
             {
-                var testReportGenerator = new TestExecutionReportGenerator(args[0], args[1]);
-                testReportGenerator.Execute();
+                var livingDocGenerator = new LivingDocGenerator(args[0], args[1]);
+                livingDocGenerator.Execute();
             }
             else if (args.Length == 3 && args[0] == "--cucumber")
             {
                 var outputFile = Path.Combine(Directory.GetCurrentDirectory(), "Intermediate.json");
                 CucumberConvertor.SaveAsTestExecution(args[1], outputFile);
 
-                var testReportGenerator = new TestExecutionReportGenerator(outputFile, args[2]);
-                testReportGenerator.Execute();
+                var livingDocGenerator = new LivingDocGenerator(outputFile, args[2]);
+                livingDocGenerator.Execute();
             }
             else
             {

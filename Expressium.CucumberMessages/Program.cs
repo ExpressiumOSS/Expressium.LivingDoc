@@ -13,8 +13,8 @@ namespace Expressium.CucumberMessages
             CucumberConvertor.SaveAsTestExecution(inputFile, outputFile);
 
             var outputPath = Path.Combine(Directory.GetCurrentDirectory(), "TestReport");
-            var testReportGenerator = new TestExecutionReportGenerator(outputFile, outputPath);
-            testReportGenerator.Execute();
+            var livingDocGenerator = new LivingDocGenerator(outputFile, outputPath);
+            livingDocGenerator.Execute();
 
             //{
             //    Console.WriteLine("Expressium.TestExecutionReport.exe [FILEPATH] [OUTPUTPATH]");

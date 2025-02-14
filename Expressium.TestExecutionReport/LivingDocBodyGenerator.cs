@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace Expressium.TestExecutionReport
 {
-    internal class TestExecutionReportBodyGenerator
+    internal class LivingDocBodyGenerator
     {
         private bool includeNavigation = false;
 
         internal List<string> GenerateBody(TestExecutionProject project)
         {
-            var dataGenerator = new TestExecutionReportDataGenerator();
+            var dataGenerator = new LivingDocDataGenerator();
 
             List<string> listOfLines = new List<string>();
 

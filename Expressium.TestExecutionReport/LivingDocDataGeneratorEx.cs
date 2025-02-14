@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Expressium.TestExecutionReport
 {
-    internal partial class TestExecutionReportDataGenerator
+    internal partial class LivingDocDataGenerator
     {
         internal List<string> GenerateProjectDataTreeListSections(TestExecutionProject project, FolderNode node)
         {

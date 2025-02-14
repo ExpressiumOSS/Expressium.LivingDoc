@@ -10,12 +10,12 @@ using System.Linq;
 
 namespace Expressium.TestExecutionReport
 {
-    public class TestExecutionReportGenerator
+    public class LivingDocGenerator
     {
         private string filePath;
         private string outputPath;
 
-        public TestExecutionReportGenerator(string filePath, string outputPath)
+        public LivingDocGenerator(string filePath, string outputPath)
         {
             this.filePath = filePath;
             this.outputPath = outputPath;
@@ -81,7 +81,7 @@ namespace Expressium.TestExecutionReport
         {
             List<string> listOfLines = new List<string>();
 
-            var bodyGenerator = new TestExecutionReportBodyGenerator();
+            var bodyGenerator = new LivingDocBodyGenerator();
 
             listOfLines.AddRange(GenerateHtmlHeader());
             listOfLines.AddRange(GenerateHead());

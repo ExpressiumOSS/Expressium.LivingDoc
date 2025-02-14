@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Expressium.TestExecutionReport
 {
-    internal partial class TestExecutionReportDataGenerator
+    internal partial class LivingDocDataGenerator
     {
         internal List<string> GenerateData(TestExecutionProject project)
         {
