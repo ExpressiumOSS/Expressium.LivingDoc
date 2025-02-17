@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Expressium.TestExecution
 {
-    public class LivingDataTable
+    public class LivingDocDataTable
     {
         public List<LivingDocTableRow> Rows { get; set; }
 
-        public LivingDataTable()
+        public LivingDocDataTable()
         {
             Rows = new List<LivingDocTableRow>();
         }

@@ -12,11 +12,11 @@ namespace Expressium.TestExecution
         public long Duration { get; set; }
         public string Error { get; set; }
 
-        public LivingDataTable DataTable { get; set; }
+        public LivingDocDataTable DataTable { get; set; }
 
         public LivingDocStep()
         {
-            DataTable = new LivingDataTable();
+            DataTable = new LivingDocDataTable();
         }
     }
 }

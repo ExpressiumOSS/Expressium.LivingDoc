@@ -390,14 +390,16 @@ namespace Expressium.LivingDoc
                 listOfLines.Add($"<td>|</td>");
                 listOfLines.Add($"</tr>");
 
-                listOfLines.Add($"<tr>");
                 foreach (var body in example.TableBody)
                 {
+                    listOfLines.Add($"<tr>");
+
                     foreach (var cell in body.Cells)
                         listOfLines.Add($"<td>| " + cell.Value + "</td>");
+
+                    listOfLines.Add($"<td>|</td>");
+                    listOfLines.Add($"</tr>");
                 }
-                listOfLines.Add($"<td>|</td>");
-                listOfLines.Add($"</tr>");
 
                 listOfLines.Add("</tbody>");
                 listOfLines.Add("</table>");

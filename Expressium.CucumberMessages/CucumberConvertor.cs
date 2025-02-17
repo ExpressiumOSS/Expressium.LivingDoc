@@ -2,7 +2,6 @@
 using Io.Cucumber.Messages.Types;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 
 namespace Expressium.CucumberMessages
@@ -65,6 +64,20 @@ namespace Expressium.CucumberMessages
 
                     var livingDocExample = new LivingDocExample();
                     livingDocScenario.Examples.Add(livingDocExample);
+
+                    foreach (var example in scenario.Examples)
+                    {
+                        foreach (var headerCell in example.TableHeader.Cells)
+                            livingDocExample.TableHeader.Cells.Add(new LivingDocTableCell() { Value = headerCell.Value });
+
+                        foreach (var tablebodyRow in example.TableBody)
+                        {
+                            var tableRow = new LivingDocTableRow();
+                            foreach (var tableBodyRowCell in tablebodyRow.Cells)
+                                tableRow.Cells.Add(new LivingDocTableCell() { Value = tableBodyRowCell.Value });
+                            livingDocExample.TableBody.Add(tableRow);
+                        }
+                    }
 
                     foreach (var step in scenario.Steps)
                     {
