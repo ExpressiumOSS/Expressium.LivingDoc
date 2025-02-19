@@ -13,11 +13,13 @@ namespace Expressium.TestExecution
         public int Line { get; set; }
         public string Uri { get; set; }
 
+        public List<LivingDocBackground> Backgrounds { get; set; }
         public List<LivingDocScenario> Scenarios { get; set; }
 
         public LivingDocFeature()
         {
-            Tags= new List<LivingDocTag>();
+            Tags = new List<LivingDocTag>();
+            Backgrounds = new List<LivingDocBackground>();
             Scenarios = new List<LivingDocScenario>();
         }
 

@@ -176,6 +176,7 @@ namespace Expressium.LivingDoc
                 listOfLines.AddRange(GenerateFeatureDataTagSection(feature));
                 listOfLines.AddRange(GenerateFeatureDataNameSection(feature));
                 listOfLines.AddRange(GenerateFeatureDataDescriptionSection(feature));
+                listOfLines.AddRange(GenerateFeatureDataBackgroundSection(feature));
                 listOfLines.Add("</div>");
 
                 listOfLines.Add("</div>");
@@ -220,6 +221,74 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<span>" + line.Trim() + "</span><br />");
             listOfLines.Add("</div>");
             listOfLines.Add("<p></p>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateFeatureDataBackgroundSection(LivingDocFeature feature)
+        {
+            var listOfLines = new List<string>();
+
+            if (feature.Backgrounds != null)
+            {
+                listOfLines.Add("<!-- Feature Data Backgrounds Steps Section -->");
+                listOfLines.Add("<div class='feature-background'>");
+                listOfLines.Add("<span class='feature-name'>Background:</span><br />");
+                foreach (var background in feature.Backgrounds)
+                {
+                    foreach (var step in background.Steps)
+                    {
+                        var status = step.GetStatus().ToLower();
+
+                        var stepMarker = "";
+                        if (step.IsPassed())
+                            stepMarker = "&check;";
+                        //else if (step.IsIncomplete())
+                        //stepMarker = "&minus;";
+                        else
+                            stepMarker = "&cross;";
+
+                        //if (step.IsPassed() || step.IsFailed())
+                        {
+                            listOfLines.Add($"<tr>");
+                            listOfLines.Add($"<td colspan='2'>");
+                            listOfLines.Add($"<span style='margin-right: 1px;' class='step-indent color-{status}'><b>{stepMarker}</b></span>");
+                            listOfLines.Add($"<span class='step-keyword'> " + step.Keyword + "</span> ");
+                            listOfLines.Add($"<span>" + step.Name + "</span>");
+                            listOfLines.Add($"</td>");
+                            listOfLines.Add($"</tr>");
+                        }
+
+                        if (step.DataTable.Rows.Count > 0)
+                        {
+                            listOfLines.Add("<!-- Scenario Steps Table Section -->");
+                            listOfLines.Add($"<tr>");
+                            listOfLines.Add($"<td colspan='2' class='examples' style='padding-left: 64px;'>");
+
+                            listOfLines.Add("<table>");
+                            listOfLines.Add("<tbody>");
+
+                            foreach (var row in step.DataTable.Rows)
+                            {
+                                listOfLines.Add($"<tr>");
+                                foreach (var cell in row.Cells)
+                                    listOfLines.Add($"<td><i>| " + cell.Value + "</i></td>");
+                                listOfLines.Add($"<td>|</td>");
+                                listOfLines.Add($"</tr>");
+                            }
+
+                            listOfLines.Add("</tbody>");
+                            listOfLines.Add("</table>");
+
+                            listOfLines.Add($"</td>");
+                            listOfLines.Add($"</tr>");
+                        }
+                    }
+                }
+
+                listOfLines.Add("</div>");
+                listOfLines.Add("<p></p>");
+            }
 
             return listOfLines;
         }

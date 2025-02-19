@@ -41,12 +41,36 @@ namespace Expressium.CucumberMessages
 
                 foreach (var child in feature.Children)
                 {
-                    var livingDocScenario = new LivingDocScenario();
+                    if (child.Background == null)
+                        continue;
 
+                    var background = child.Background;
+
+                    var livingDocBackground = new LivingDocBackground();
+
+                    livingDocBackground.Description = background.Description;
+                    livingDocBackground.Name = background.Name;
+                    livingDocBackground.Keyword = background.Keyword;
+
+                    foreach (var step in background.Steps)
+                    {
+                        var livingDocStep = new LivingDocStep();
+                        livingDocStep.Name = step.Text;
+                        livingDocStep.Keyword = step.Keyword.Trim();
+                        livingDocBackground.Steps.Add(livingDocStep);
+                    }
+
+                    livingDocFeature.Backgrounds.Add(livingDocBackground);
+                }
+
+                foreach (var child in feature.Children)
+                {
                     if (child.Scenario == null)
                         continue;
 
                     var scenario = child.Scenario;
+
+                    var livingDocScenario = new LivingDocScenario();
 
                     if (scenario.Tags != null)
                     {
@@ -54,12 +78,9 @@ namespace Expressium.CucumberMessages
                             livingDocScenario.Tags.Add(new LivingDocTag() { Name = tag.Name });
                     }
 
-                    //testExecutionScenario.Id = scenario.Id;
                     livingDocScenario.Description = scenario.Description;
                     livingDocScenario.Name = scenario.Name;
                     livingDocScenario.Keyword = scenario.Keyword;
-                    //testExecutionScenario.Line = scenario.line;
-                    //testExecutionScenario.Type = scenario.type;
                     livingDocFeature.Scenarios.Add(livingDocScenario);
 
                     var livingDocExample = new LivingDocExample();
@@ -83,56 +104,11 @@ namespace Expressium.CucumberMessages
                     {
                         var livingDocStep = new LivingDocStep();
                         livingDocStep.Name = step.Text;
-                        //testExecutionStep.Line = step.text;
                         livingDocStep.Keyword = step.Keyword.Trim();
-
-                        //if (step.result != null)
-                        //{
-                        //    testExecutionStep.Status = step.Result.Status.CapitalizeWords();
-                        //    testExecutionStep.Duration = step.Result.Duration;
-                        //    testExecutionStep.Error = step.Result.Error_message;
-                        //}
-
-                        //foreach (var row in step.Rows)
-                        //{
-                        //    foreach (var cell in row.Cells)
-                        //    {
-                        //        //testExecutionStep.Arguments.Add();
-                        //    }
-                        //}
-
                         livingDocExample.Steps.Add(livingDocStep);
                     }
                 }
             }
-
-            /*
-            foreach (var feature in testExecutionProject.Features)
-            {
-                foreach (var scenario in feature.Scenarios)
-                {
-                    foreach (var example in scenario.Examples)
-                    {
-                        foreach (var step in example.Steps)
-                        {
-                            if (step.Status == "Failed")
-                            {
-                                step.Status = TestExecutionStatuses.TestError.ToString();
-                                example.Status = TestExecutionStatuses.TestError.ToString();
-                            }
-                            else if (step.Status == "Passed")
-                            {
-                                step.Status = TestExecutionStatuses.OK.ToString();
-                                example.Status = TestExecutionStatuses.OK.ToString();
-                            }
-                            else
-                            {
-                            }
-                        }
-                    }
-                }
-            }
-            */
 
             CucumberUtilities.SerializeAsJson(outputFileName, livingDocProject);
         }
