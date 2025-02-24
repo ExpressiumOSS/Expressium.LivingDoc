@@ -10,8 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.TestExecution", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.TestExecutionReport", "Expressium.TestExecutionReport\Expressium.TestExecutionReport.csproj", "{756435C3-B541-4B18-A402-D7EAB2994CF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.TestExecution.Cucumber", "Expressium.TestExecution.Cucumber\Expressium.TestExecution.Cucumber.csproj", "{5C546881-0FA8-4B0B-AF03-0AA76393026A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.CucumberMessages", "Expressium.CucumberMessages\Expressium.CucumberMessages.csproj", "{31BDD671-88D7-429F-8D8C-80307B9E98A1}"
 EndProject
 Global
@@ -36,10 +34,6 @@ Global
 		{756435C3-B541-4B18-A402-D7EAB2994CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{756435C3-B541-4B18-A402-D7EAB2994CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{756435C3-B541-4B18-A402-D7EAB2994CF0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C546881-0FA8-4B0B-AF03-0AA76393026A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C546881-0FA8-4B0B-AF03-0AA76393026A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C546881-0FA8-4B0B-AF03-0AA76393026A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C546881-0FA8-4B0B-AF03-0AA76393026A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31BDD671-88D7-429F-8D8C-80307B9E98A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31BDD671-88D7-429F-8D8C-80307B9E98A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31BDD671-88D7-429F-8D8C-80307B9E98A1}.Release|Any CPU.ActiveCfg = Release|Any CPU

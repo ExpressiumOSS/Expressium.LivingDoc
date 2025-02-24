@@ -1,7 +1,6 @@
 ﻿using AngleSharp.Html;
 using AngleSharp.Html.Parser;
 using Expressium.TestExecution;
-using Expressium.LivingDoc.Extensions;
 using Expressium.LivingDoc.Properties;
 using System;
 using System.Collections.Generic;

@@ -8,6 +8,15 @@
 * Gray Color of checkmark and messagebox at not failed / passed...
 * Tryout Chart Pie view in Analytics...
 
+## Cucumber Messages Converter
+* Step Error message missing...?
+* Background and Scenario in on structure...?
+* Example Table Rows & Columns...?
+* Step Argument table...?
+* Calculation of Duration for Scenarios...?
+* Calculation of Status for Scenrios...?
+* Handling Serializing of JSON Enums Status...?
+
 ### HTML Colors
 * https://www.computerhope.com/cgi-bin/htmlcolor.pl?c=4682B4
 
@@ -31,3 +40,6 @@
 
 ### Cucumber Messages JSON Schemas
 * https://github.com/cucumber/messages/tree/main/jsonschema
+
+### Cucumber Messages devkit
+https://github.com/cucumber/compatibility-kit/tree/main/devkit

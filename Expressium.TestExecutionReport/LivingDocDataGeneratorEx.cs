@@ -1,12 +1,11 @@
 ﻿using Expressium.TestExecution;
-using Expressium.LivingDoc.Extensions;
 using System.Collections.Generic;
 
 namespace Expressium.LivingDoc
 {
     internal partial class LivingDocDataGenerator
     {
-        internal List<string> GenerateProjectDataTreeListSections(LivingDocProject project, FolderNode node)
+        internal List<string> GenerateProjectDataTreeListSections(LivingDocProject project, LivingDocFolder node)
         {
             List<string> listOfLines = new List<string>();
 

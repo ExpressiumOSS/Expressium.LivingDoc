@@ -23,5 +23,64 @@ namespace Expressium.TestExecution
             TableBody = new List<LivingDocTableRow>();
             Attachments = new List<string>();
         }
+
+        public bool IsPassed()
+        {
+            return Status.IsPassed();
+        }
+
+        public bool IsIncomplete()
+        {
+            return Status.IsIncomplete();
+        }
+
+        public bool IsFailed()
+        {
+            return Status.IsFailed();
+        }
+
+        public bool IsSkipped()
+        {
+            return Status.IsSkipped();
+        }
+
+        public bool IsStepPending()
+        {
+            return Status.IsStepPending();
+        }
+
+        public bool IsStepUndefined()
+        {
+            return Status.IsStepUndefined();
+        }
+
+        public bool IsStepBindingError()
+        {
+            return Status.IsStepBindingError();
+        }
+
+        public string GetStatus()
+        {
+            if (IsFailed())
+                return ReportStatuses.Failed.ToString();
+            else if (IsIncomplete())
+                return ReportStatuses.Incomplete.ToString();
+            else if (IsSkipped())
+                return ReportStatuses.Skipped.ToString();
+            else if (IsPassed())
+                return ReportStatuses.Passed.ToString();
+
+            return ReportStatuses.Undefined.ToString();
+        }
+
+        public string GetDuration()
+        {
+            var duration = EndTime - StartTime;
+
+            if (duration.Minutes > 0)
+                return $"{duration.Minutes}min {duration.Seconds}s";
+
+            return $"{duration.Seconds}s {duration.Milliseconds.ToString("D3")}ms";
+        }
     }
 }

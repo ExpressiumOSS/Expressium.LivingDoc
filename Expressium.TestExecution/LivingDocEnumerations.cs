@@ -9,6 +9,22 @@ namespace Expressium.TestExecution
         UndefinedStep,
         BindingError,
         TestError,
-        Skipped
+
+        Unknown,
+        Passed,
+        Skipped,
+        Pending,
+        Undefined,
+        Ambiguous,
+        Failed
+    }
+
+    public enum ReportStatuses
+    {
+        Passed,
+        Incomplete,
+        Failed,
+        Skipped,
+        Undefined
     }
 }

@@ -1,4 +1,4 @@
-﻿using Expressium.TestExecution.Cucumber;
+﻿//using Expressium.TestExecution.Cucumber;
 using System;
 using System.IO;
 
@@ -13,14 +13,14 @@ namespace Expressium.LivingDoc
                 var livingDocGenerator = new LivingDocGenerator(args[0], args[1]);
                 livingDocGenerator.Execute();
             }
-            else if (args.Length == 3 && args[0] == "--cucumber")
-            {
-                var outputFile = Path.Combine(Directory.GetCurrentDirectory(), "Intermediate.json");
-                CucumberConvertor.SaveAsTestExecution(args[1], outputFile);
+            //else if (args.Length == 3 && args[0] == "--cucumber")
+            //{
+            //    var outputFile = Path.Combine(Directory.GetCurrentDirectory(), "Intermediate.json");
+            //    CucumberConvertor.SaveAsTestExecution(args[1], outputFile);
 
-                var livingDocGenerator = new LivingDocGenerator(outputFile, args[2]);
-                livingDocGenerator.Execute();
-            }
+            //    var livingDocGenerator = new LivingDocGenerator(outputFile, args[2]);
+            //    livingDocGenerator.Execute();
+            //}
             else
             {
                 Console.WriteLine("Expressium.LivingDoc.exe [FILEPATH] [OUTPUTPATH]");

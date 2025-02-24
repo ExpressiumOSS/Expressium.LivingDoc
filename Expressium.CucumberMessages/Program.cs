@@ -7,8 +7,7 @@ namespace Expressium.CucumberMessages
     {
         static void Main(string[] args)
         {
-
-            var inputFile = Path.Combine(Directory.GetCurrentDirectory(), "Example.json");
+            var inputFile = Path.Combine(Directory.GetCurrentDirectory(), "Small.json");
             var outputFile = Path.Combine(Directory.GetCurrentDirectory(), "ExampleOutput.json");
             CucumberConvertor.SaveAsTestExecution(inputFile, outputFile);
 

@@ -17,100 +17,174 @@ namespace Expressium.CucumberMessages
             var options = new JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;
 
-            var listOfEnvelopes = CucumberUtilities.DeserializeAsJson<List<Envelope>>(inputFileName);
+            var listOfEnvelopes = LivingDocUtilities.DeserializeAsJson<List<Envelope>>(inputFileName);
+
+            var listOfPickles = new List<Pickle>();
+            var listOfTestCases = new List<TestCase>();
+            var listOfTestStepFinished = new List<TestStepFinished>();
 
             foreach (var envelope in listOfEnvelopes)
             {
-                var feature = envelope.GherkinDocument.Feature;
+                if (envelope.GherkinDocument != null)
+                    ParsingGherkinDocument(livingDocProject, envelope);
 
-                var livingDocFeature = new LivingDocFeature();
+                if (envelope.Pickle != null)
+                    ParsingPickle(listOfPickles, envelope);
 
-                if (feature.Tags != null)
+                if (envelope.TestCase != null)
+                    ParsingTestCase(listOfTestCases, envelope);
+
+                if (envelope.TestStepFinished != null)
+                    ParsingTestStepFinished(listOfTestStepFinished, envelope);
+            }
+
+            foreach (var feature in livingDocProject.Features)
+            {
+                foreach (var scenario in feature.Scenarios)
                 {
-                    foreach (var tag in feature.Tags)
-                        livingDocFeature.Tags.Add(new LivingDocTag() { Name = tag.Name });
-                }
-
-                //testExecutionFeature.Id = feature.Id;
-                livingDocFeature.Description = feature.Description;
-                livingDocFeature.Name = feature.Name;
-                livingDocFeature.Keyword = feature.Keyword;
-                //testExecutionFeature.Line = feature.line;
-                //testExecutionFeature.Uri = feature.uri;
-                livingDocProject.Features.Add(livingDocFeature);
-
-                foreach (var child in feature.Children)
-                {
-                    if (child.Background == null)
-                        continue;
-
-                    var background = child.Background;
-
-                    var livingDocBackground = new LivingDocBackground();
-
-                    livingDocBackground.Description = background.Description;
-                    livingDocBackground.Name = background.Name;
-                    livingDocBackground.Keyword = background.Keyword;
-
-                    foreach (var step in background.Steps)
+                    var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id));
+                    if (pickle != null)
                     {
-                        var livingDocStep = new LivingDocStep();
-                        livingDocStep.Name = step.Text;
-                        livingDocStep.Keyword = step.Keyword.Trim();
-                        livingDocBackground.Steps.Add(livingDocStep);
-                    }
+                        var testCase = listOfTestCases.Find(y => y.PickleId == pickle.Id);
+                        if (testCase == null)
+                            continue;
 
-                    livingDocFeature.Backgrounds.Add(livingDocBackground);
-                }
-
-                foreach (var child in feature.Children)
-                {
-                    if (child.Scenario == null)
-                        continue;
-
-                    var scenario = child.Scenario;
-
-                    var livingDocScenario = new LivingDocScenario();
-
-                    if (scenario.Tags != null)
-                    {
-                        foreach (var tag in scenario.Tags)
-                            livingDocScenario.Tags.Add(new LivingDocTag() { Name = tag.Name });
-                    }
-
-                    livingDocScenario.Description = scenario.Description;
-                    livingDocScenario.Name = scenario.Name;
-                    livingDocScenario.Keyword = scenario.Keyword;
-                    livingDocFeature.Scenarios.Add(livingDocScenario);
-
-                    var livingDocExample = new LivingDocExample();
-                    livingDocScenario.Examples.Add(livingDocExample);
-
-                    foreach (var example in scenario.Examples)
-                    {
-                        foreach (var headerCell in example.TableHeader.Cells)
-                            livingDocExample.TableHeader.Cells.Add(new LivingDocTableCell() { Value = headerCell.Value });
-
-                        foreach (var tablebodyRow in example.TableBody)
+                        foreach (var example in scenario.Examples)
                         {
-                            var tableRow = new LivingDocTableRow();
-                            foreach (var tableBodyRowCell in tablebodyRow.Cells)
-                                tableRow.Cells.Add(new LivingDocTableCell() { Value = tableBodyRowCell.Value });
-                            livingDocExample.TableBody.Add(tableRow);
-                        }
-                    }
+                            foreach (var step in example.Steps)
+                            {
+                                var pickleStep = pickle.Steps.Find(x => x.AstNodeIds.Contains(step.Id));
+                                if (pickleStep == null)
+                                    continue;
 
-                    foreach (var step in scenario.Steps)
-                    {
-                        var livingDocStep = new LivingDocStep();
-                        livingDocStep.Name = step.Text;
-                        livingDocStep.Keyword = step.Keyword.Trim();
-                        livingDocExample.Steps.Add(livingDocStep);
+                                var testCaseStep = testCase.TestSteps.Find(z => z.PickleStepId == pickleStep.Id);
+                                if (testCaseStep == null)
+                                    continue;
+
+                                var testStepFinished = listOfTestStepFinished.Find(f => f.TestStepId == testCaseStep.Id);
+                                if (testStepFinished == null)
+                                    continue;
+
+                                step.Status = testStepFinished.TestStepResult.Status.ToString();
+                                step.Message = testStepFinished.TestStepResult.Message;
+                            }
+                        }
                     }
                 }
             }
 
-            CucumberUtilities.SerializeAsJson(outputFileName, livingDocProject);
+            LivingDocUtilities.SerializeAsJson(outputFileName, livingDocProject);
+        }
+
+        public static void ParsingGherkinDocument(LivingDocProject livingDocProject, Envelope envelope)
+        {
+            var feature = envelope.GherkinDocument.Feature;
+
+            var livingDocFeature = new LivingDocFeature();
+
+            if (feature.Tags != null)
+            {
+                foreach (var tag in feature.Tags)
+                    livingDocFeature.Tags.Add(new LivingDocTag() { Name = tag.Name });
+            }
+
+            //testExecutionFeature.Id = feature.Id;
+            livingDocFeature.Description = feature.Description;
+            livingDocFeature.Name = feature.Name;
+            livingDocFeature.Keyword = feature.Keyword;
+            //testExecutionFeature.Line = feature.line;
+            //testExecutionFeature.Uri = feature.uri;
+            livingDocProject.Features.Add(livingDocFeature);
+
+            // Background
+            foreach (var child in feature.Children)
+            {
+                if (child.Background == null)
+                    continue;
+
+                var background = child.Background;
+
+                var livingDocBackground = new LivingDocBackground();
+
+                livingDocBackground.Id = background.Id;
+                livingDocBackground.Description = background.Description;
+                livingDocBackground.Name = background.Name;
+                livingDocBackground.Keyword = background.Keyword;
+
+                foreach (var step in background.Steps)
+                {
+                    var livingDocStep = new LivingDocStep();
+                    livingDocStep.Name = step.Text;
+                    livingDocStep.Keyword = step.Keyword.Trim();
+                    livingDocBackground.Steps.Add(livingDocStep);
+                }
+
+                livingDocFeature.Backgrounds.Add(livingDocBackground);
+            }
+
+            // Scenario
+            foreach (var child in feature.Children)
+            {
+                if (child.Scenario == null)
+                    continue;
+
+                var scenario = child.Scenario;
+
+                var livingDocScenario = new LivingDocScenario();
+
+                if (scenario.Tags != null)
+                {
+                    foreach (var tag in scenario.Tags)
+                        livingDocScenario.Tags.Add(new LivingDocTag() { Name = tag.Name });
+                }
+
+                livingDocScenario.Id = scenario.Id;
+                livingDocScenario.Description = scenario.Description;
+                livingDocScenario.Name = scenario.Name;
+                livingDocScenario.Keyword = scenario.Keyword;
+                livingDocFeature.Scenarios.Add(livingDocScenario);
+
+                var livingDocExample = new LivingDocExample();
+                livingDocScenario.Examples.Add(livingDocExample);
+
+                foreach (var example in scenario.Examples)
+                {
+                    foreach (var headerCell in example.TableHeader.Cells)
+                        livingDocExample.TableHeader.Cells.Add(new LivingDocTableCell() { Value = headerCell.Value });
+
+                    foreach (var tablebodyRow in example.TableBody)
+                    {
+                        var tableRow = new LivingDocTableRow();
+                        foreach (var tableBodyRowCell in tablebodyRow.Cells)
+                            tableRow.Cells.Add(new LivingDocTableCell() { Value = tableBodyRowCell.Value });
+                        livingDocExample.TableBody.Add(tableRow);
+                    }
+                }
+
+                foreach (var step in scenario.Steps)
+                {
+                    var livingDocStep = new LivingDocStep();
+                    livingDocStep.Id = step.Id;
+                    livingDocStep.Name = step.Text;
+                    livingDocStep.Keyword = step.Keyword.Trim();
+                    livingDocExample.Steps.Add(livingDocStep);
+                }
+            }
+        }
+
+        public static void ParsingPickle(List<Pickle> listOfPickles, Envelope envelope)
+        {
+            listOfPickles.Add(envelope.Pickle);
+        }
+
+        public static void ParsingTestCase(List<TestCase> listOfTestcases, Envelope envelope)
+        {
+            listOfTestcases.Add(envelope.TestCase);
+        }
+
+        private static void ParsingTestStepFinished(List<TestStepFinished> listOfTestStepFinished, Envelope envelope)
+        {
+            listOfTestStepFinished.Add(envelope.TestStepFinished);
         }
     }
 }

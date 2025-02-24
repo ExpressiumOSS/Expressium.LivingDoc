@@ -1,5 +1,4 @@
 ﻿using Expressium.TestExecution;
-using Expressium.LivingDoc.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -229,7 +228,7 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
-            if (feature.Backgrounds != null)
+            if (feature.Backgrounds != null && feature.Backgrounds.Count > 0)
             {
                 listOfLines.Add("<!-- Feature Data Backgrounds Steps Section -->");
                 listOfLines.Add("<div class='feature-background'>");

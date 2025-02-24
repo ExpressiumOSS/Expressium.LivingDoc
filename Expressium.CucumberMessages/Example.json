@@ -308,60 +308,6 @@
         ]
       },
       "comments": []
-    },
-    "testCase": {
-      "id": "tc-1",
-      "pickleId": "pickle-1",
-      "testSteps": [
-        {
-          "id": "ts-1",
-          "pickleStepId": "2",
-          "stepDefinitionIds": [ "sd-1" ],
-          "stepMatchArgumentsLists": []
-        },
-        {
-          "id": "ts-2",
-          "pickleStepId": "3",
-          "stepDefinitionIds": [ "sd-2" ],
-          "stepMatchArgumentsLists": []
-        },
-        {
-          "id": "ts-3",
-          "pickleStepId": "4",
-          "stepDefinitionIds": [ "sd-3" ],
-          "stepMatchArgumentsLists": []
-        }
-      ],
-      "testRunStartedId": "run-1"
-    },
-    "testStepResults": [
-      {
-        "duration": {
-          "seconds": 1,
-          "nanos": 500000000
-        },
-        "status": "PASSED"
-      },
-      {
-        "duration": {
-          "seconds": 2,
-          "nanos": 0
-        },
-        "status": "PASSED"
-      },
-      {
-        "duration": {
-          "seconds": 0,
-          "nanos": 800000000
-        },
-        "status": "FAILED",
-        "message": "Expected dashboard to be displayed",
-        "exception": {
-          "type": "AssertionError",
-          "message": "Dashboard not displayed",
-          "stackTrace": "at StepDefinitions.LoginSteps.the_dashboard_should_be_displayed(LoginSteps.java:45)"
-        }
-      }
-    ]
+    }
   }
 ]
