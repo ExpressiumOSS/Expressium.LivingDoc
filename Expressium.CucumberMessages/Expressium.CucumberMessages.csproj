@@ -11,6 +11,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="DataTable.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Example.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

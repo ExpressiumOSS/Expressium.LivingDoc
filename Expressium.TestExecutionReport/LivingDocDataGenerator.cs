@@ -415,13 +415,30 @@ namespace Expressium.LivingDoc
                     listOfLines.Add("<table>");
                     listOfLines.Add("<tbody>");
 
+                    int rowNumber = 1;
                     foreach (var row in step.DataTable.Rows)
                     {
+                        var numberOfCells = row.Cells.Count;
+                        int i = 1;
                         listOfLines.Add($"<tr>");
+
                         foreach (var cell in row.Cells)
-                            listOfLines.Add($"<td><i>| " + cell.Value + "</i></td>");
-                        listOfLines.Add($"<td>|</td>");
+                        {
+                            listOfLines.Add($"<td>|</td>");
+
+                            if (rowNumber == 1)
+                                listOfLines.Add($"<td><i>" + cell.Value + "</i></td>");
+                            else
+                                listOfLines.Add($"<td>" + cell.Value + "</td>");
+
+                            if (i == numberOfCells)
+                                listOfLines.Add($"<td>|</td>");
+
+                            i++;
+                        }
                         listOfLines.Add($"</tr>");
+
+                        rowNumber++;
                     }
 
                     listOfLines.Add("</tbody>");
@@ -452,20 +469,38 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<table>");
                 listOfLines.Add("<tbody>");
 
+                var numberOfCells = example.TableHeader.Cells.Count;
+                int i = 1;
                 listOfLines.Add($"<tr>");
                 foreach (var cell in example.TableHeader.Cells)
-                    listOfLines.Add($"<td><i>| " + cell.Value + "</i></td>");
-                listOfLines.Add($"<td>|</td>");
+                {
+                    listOfLines.Add($"<td>|</td>");
+                    listOfLines.Add($"<td><i>" + cell.Value + "</i></td>");
+
+                    if (i == numberOfCells)
+                        listOfLines.Add($"<td>|</td>");
+
+                    i++;
+                }
                 listOfLines.Add($"</tr>");
 
                 foreach (var body in example.TableBody)
                 {
+                    numberOfCells = body.Cells.Count;
+                    i = 1;
                     listOfLines.Add($"<tr>");
 
                     foreach (var cell in body.Cells)
-                        listOfLines.Add($"<td>| " + cell.Value + "</td>");
+                    {
+                        listOfLines.Add($"<td>|</td>");
+                        listOfLines.Add($"<td>" + cell.Value + "</td>");
 
-                    listOfLines.Add($"<td>|</td>");
+                        if (i == numberOfCells)
+                            listOfLines.Add($"<td>|</td>");
+
+                        i++;
+                    }
+
                     listOfLines.Add($"</tr>");
                 }
 

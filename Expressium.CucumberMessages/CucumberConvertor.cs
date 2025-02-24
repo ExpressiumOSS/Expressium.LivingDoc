@@ -194,6 +194,18 @@ namespace Expressium.CucumberMessages
                     livingDocStep.Id = step.Id;
                     livingDocStep.Name = step.Text;
                     livingDocStep.Keyword = step.Keyword.Trim();
+
+                    if (step.DataTable != null)
+                    {
+                        foreach (var row in step.DataTable.Rows)
+                        {
+                            var tableRow = new LivingDocTableRow();
+                            foreach (var cell in row.Cells)
+                                tableRow.Cells.Add(new LivingDocTableCell() { Value = cell.Value });
+                            livingDocStep.DataTable.Rows.Add(tableRow);
+                        }
+                    }
+
                     livingDocExample.Steps.Add(livingDocStep);
                 }
             }
