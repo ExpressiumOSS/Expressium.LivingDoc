@@ -7,8 +7,7 @@ namespace Expressium.TestExecution
     public class LivingDocExample
     {
         public string Stacktrace { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public TimeSpan Duration { get; set; }
 
         public List<LivingDocStep> Steps { get; set; }
         public LivingDocTableRow TableHeader { get; set; }
@@ -17,6 +16,7 @@ namespace Expressium.TestExecution
 
         public LivingDocExample()
         {
+            Duration = new TimeSpan();
             Steps = new List<LivingDocStep>();
             TableHeader = new LivingDocTableRow();
             TableBody = new List<LivingDocTableRow>();
@@ -46,15 +46,15 @@ namespace Expressium.TestExecution
         public string GetStatus()
         {
             if (IsFailed())
-                return TestExecutionStatuses.Failed.ToString();
+                return LivingDocStatuses.Failed.ToString();
             else if (IsIncomplete())
-                return TestExecutionStatuses.Incomplete.ToString();
+                return LivingDocStatuses.Incomplete.ToString();
             else if (IsSkipped())
-                return TestExecutionStatuses.Skipped.ToString();
+                return LivingDocStatuses.Skipped.ToString();
             else if (IsPassed())
-                return TestExecutionStatuses.Passed.ToString();
+                return LivingDocStatuses.Passed.ToString();
 
-            return TestExecutionStatuses.Undefined.ToString();
+            return LivingDocStatuses.Undefined.ToString();
         }
 
         public string GetMessage()
@@ -67,12 +67,10 @@ namespace Expressium.TestExecution
 
         public string GetDuration()
         {
-            var duration = EndTime - StartTime;
+            if (Duration.Minutes > 0)
+                return $"{Duration.Minutes}min {Duration.Seconds}s";
 
-            if (duration.Minutes > 0)
-                return $"{duration.Minutes}min {duration.Seconds}s";
-
-            return $"{duration.Seconds}s {duration.Milliseconds.ToString("D3")}ms";
+            return $"{Duration.Seconds}s {Duration.Milliseconds.ToString("D3")}ms";
         }
     }
 }

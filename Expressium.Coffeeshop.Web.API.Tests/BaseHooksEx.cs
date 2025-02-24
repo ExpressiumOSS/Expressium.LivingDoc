@@ -11,21 +11,22 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         private static string outputFileName = "TestExecution.json";
 
         private LivingDocScenario livingDocScenario;
+        private static DateTime projectStartTime;
+        private static DateTime exampleStartTime;
 
         private static void InitializeTestExecution()
         {
             livingDocProject = new LivingDocProject();
             livingDocProject.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
             livingDocProject.ExecutionTime = DateTime.UtcNow.ToLocalTime();
-            livingDocProject.StartTime = DateTime.Now;
-            livingDocProject.EndTime = DateTime.Now;
+            projectStartTime = DateTime.Now;
 
             System.Threading.Thread.Sleep(1000);
         }
 
         private static void FinalizeTestExecution()
         {
-            livingDocProject.EndTime = DateTime.Now;
+            livingDocProject.Duration = DateTime.Now - projectStartTime;
 
             LivingDocUtilities.SerializeAsJson(Path.Combine(Directory.GetCurrentDirectory(), outputFileName), livingDocProject);
         }
@@ -56,8 +57,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 livingDocScenario.Description = scenarioContext.ScenarioInfo.Description;
 
                 var livingDocExample = new LivingDocExample();
-                livingDocExample.StartTime = DateTime.Now;
-                livingDocExample.EndTime = DateTime.Now;
+                exampleStartTime = DateTime.Now;
                 livingDocScenario.Examples.Add(livingDocExample);
 
                 if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
@@ -78,7 +78,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             if (livingDocScenario != null)
             {
                 livingDocScenario.Examples[0].Stacktrace = scenarioContext.TestError?.StackTrace;
-                livingDocScenario.Examples[0].EndTime = DateTime.Now;
+                livingDocScenario.Examples[0].Duration = DateTime.Now - exampleStartTime;
 
                 if (livingDocProject.IsFeatureAdded(featureContext.FeatureInfo.Title))
                 {
@@ -120,17 +120,17 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
                 // Mapping to LivingDoc status
                 if (livingDocStep.Status == ScenarioExecutionStatus.OK.ToString())
-                    livingDocStep.Status = TestExecutionStatuses.Passed.ToString();
+                    livingDocStep.Status = LivingDocStatuses.Passed.ToString();
                 else if (livingDocStep.Status == ScenarioExecutionStatus.StepDefinitionPending.ToString())
-                    livingDocStep.Status = TestExecutionStatuses.Pending.ToString();
+                    livingDocStep.Status = LivingDocStatuses.Pending.ToString();
                 else if (livingDocStep.Status == ScenarioExecutionStatus.UndefinedStep.ToString())
-                    livingDocStep.Status = TestExecutionStatuses.Undefined.ToString();
+                    livingDocStep.Status = LivingDocStatuses.Undefined.ToString();
                 else if (livingDocStep.Status == ScenarioExecutionStatus.BindingError.ToString())
-                    livingDocStep.Status = TestExecutionStatuses.Ambiguous.ToString();
+                    livingDocStep.Status = LivingDocStatuses.Ambiguous.ToString();
                 else if (livingDocStep.Status == ScenarioExecutionStatus.TestError.ToString())
-                    livingDocStep.Status = TestExecutionStatuses.Failed.ToString();
+                    livingDocStep.Status = LivingDocStatuses.Failed.ToString();
                 else if (livingDocStep.Status == ScenarioExecutionStatus.Skipped.ToString())
-                    livingDocStep.Status = TestExecutionStatuses.Skipped.ToString();
+                    livingDocStep.Status = LivingDocStatuses.Skipped.ToString();
                 else
                 {
                 }

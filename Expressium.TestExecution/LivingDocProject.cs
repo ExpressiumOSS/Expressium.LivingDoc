@@ -8,13 +8,13 @@ namespace Expressium.TestExecution
     {
         public string Title { get; set; }
         public DateTime ExecutionTime { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public TimeSpan Duration { get; set; }
 
         public List<LivingDocFeature> Features { get; set; }
 
         public LivingDocProject()
         {
+            Duration = new TimeSpan();
             Features = new List<LivingDocFeature>();
         }
 
@@ -30,22 +30,22 @@ namespace Expressium.TestExecution
 
         public int GetNumberOfPassedFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == TestExecutionStatuses.Passed.ToString());
+            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Passed.ToString());
         }
 
         public int GetNumberOfIncompleteFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == TestExecutionStatuses.Incomplete.ToString());
+            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Incomplete.ToString());
         }
 
         public int GetNumberOfFailedFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == TestExecutionStatuses.Failed.ToString());
+            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Failed.ToString());
         }
 
         public int GetNumberOfSkippedFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == TestExecutionStatuses.Skipped.ToString());
+            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Skipped.ToString());
         }
 
         public int GetNumberOfTestsFeature()
@@ -95,12 +95,10 @@ namespace Expressium.TestExecution
 
         public string GetDuration()
         {
-            var duration = EndTime - StartTime;
+            if (Duration.Minutes > 0)
+                return $"{Duration.Minutes}min {Duration.Seconds}s";
 
-            if (duration.Minutes > 0)
-                return $"{duration.Minutes}min {duration.Seconds}s";
-
-            return $"{duration.Seconds}s {duration.Milliseconds.ToString("D3")}ms";
+            return $"{Duration.Seconds}s {Duration.Milliseconds.ToString("D3")}ms";
         }
 
         public double GetPercentageOfPassed()

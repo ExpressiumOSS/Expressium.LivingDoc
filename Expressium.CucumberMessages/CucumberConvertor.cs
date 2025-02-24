@@ -22,6 +22,9 @@ namespace Expressium.CucumberMessages
             var listOfPickles = new List<Pickle>();
             var listOfTestCases = new List<TestCase>();
             var listOfTestStepFinished = new List<TestStepFinished>();
+            var listOfTestCaseStarted = new List<TestCaseStarted>();
+            var listOfTestCaseFinished = new List<TestCaseFinished>();
+            var listOfTestRunFinished = new List<TestRunFinished>();
 
             foreach (var envelope in listOfEnvelopes)
             {
@@ -29,14 +32,28 @@ namespace Expressium.CucumberMessages
                     ParsingGherkinDocument(livingDocProject, envelope);
 
                 if (envelope.Pickle != null)
-                    ParsingPickle(listOfPickles, envelope);
+                    listOfPickles.Add(envelope.Pickle);
 
                 if (envelope.TestCase != null)
-                    ParsingTestCase(listOfTestCases, envelope);
+                    listOfTestCases.Add(envelope.TestCase);
 
                 if (envelope.TestStepFinished != null)
-                    ParsingTestStepFinished(listOfTestStepFinished, envelope);
+                    listOfTestStepFinished.Add(envelope.TestStepFinished);
+
+                if (envelope.TestCaseStarted != null)
+                    listOfTestCaseStarted.Add(envelope.TestCaseStarted);
+
+                if (envelope.TestCaseFinished != null)
+                    listOfTestCaseFinished.Add(envelope.TestCaseFinished);
+
+                if (envelope.TestRunFinished != null)
+                    listOfTestRunFinished.Add(envelope.TestRunFinished);
             }
+
+            var duration = new TimeSpan(0, 0, 0, 0, 0);
+            foreach (var testRunStarted in listOfTestRunFinished)
+                duration += new TimeSpan(0, 0, 0, (int)testRunStarted.Timestamp.Seconds, 0, (int)testRunStarted.Timestamp.Nanos);
+            livingDocProject.Duration = duration;
 
             foreach (var feature in livingDocProject.Features)
             {
@@ -65,9 +82,19 @@ namespace Expressium.CucumberMessages
                                 if (testStepFinished == null)
                                     continue;
 
-                                step.Status = testStepFinished.TestStepResult.Status.ToString();
+                                step.Status = testStepFinished.TestStepResult.Status.ToLower().CapitalizeWords();
                                 step.Message = testStepFinished.TestStepResult.Message;
                             }
+
+                            var testCaseStarted = listOfTestCaseStarted.Find(g => g.TestCaseId == testCase.Id);
+                            if (testCaseStarted == null)
+                                continue;
+
+                            var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
+                            if (testCaseFinished == null)
+                                continue;
+
+                            example.Duration = new TimeSpan(0, 0, 0, (int)testCaseFinished.Timestamp.Seconds, 0, (int)testCaseFinished.Timestamp.Nanos);
                         }
                     }
                 }
@@ -170,21 +197,6 @@ namespace Expressium.CucumberMessages
                     livingDocExample.Steps.Add(livingDocStep);
                 }
             }
-        }
-
-        public static void ParsingPickle(List<Pickle> listOfPickles, Envelope envelope)
-        {
-            listOfPickles.Add(envelope.Pickle);
-        }
-
-        public static void ParsingTestCase(List<TestCase> listOfTestcases, Envelope envelope)
-        {
-            listOfTestcases.Add(envelope.TestCase);
-        }
-
-        private static void ParsingTestStepFinished(List<TestStepFinished> listOfTestStepFinished, Envelope envelope)
-        {
-            listOfTestStepFinished.Add(envelope.TestStepFinished);
         }
     }
 }

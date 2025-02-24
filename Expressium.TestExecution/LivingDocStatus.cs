@@ -2,14 +2,31 @@
 
 namespace Expressium.TestExecution
 {
+    public enum LivingDocStatuses
+    {
+        Unknown,     // Is?
+        Passed,      // IsPassed
+        Incomplete,  // IsIncomplete
+        Skipped,     // IsSkipped
+        Pending,     // IsIncomplete
+        Undefined,   // IsIncomplete
+        Ambiguous,   // IsIncomplete
+        Failed       // IsFailed
+    }
+
     internal static class LivingDocStatus
     {
+        public static bool IsUnknown(this string value)
+        {
+            if (value != null && value == LivingDocStatuses.Unknown.ToString())
+                return true;
+
+            return false;
+        }
+
         public static bool IsPassed(this string value)
         {
-            if (value == null)
-                return false;
-
-            if (value.ToLower() == TestExecutionStatuses.Passed.ToString().ToLower())
+            if (value != null && value == LivingDocStatuses.Passed.ToString())
                 return true;
 
             return false;
@@ -17,6 +34,9 @@ namespace Expressium.TestExecution
 
         public static bool IsIncomplete(this string value)
         {
+            if (value != null && value == LivingDocStatuses.Incomplete.ToString())
+                return true;
+
             if (value.IsPending() || value.IsUndefined() || value.IsAmbiguous())
                 return true;
 
@@ -25,10 +45,7 @@ namespace Expressium.TestExecution
 
         public static bool IsFailed(this string value)
         {
-            if (value == null)
-                return false;
-
-            if (value.ToLower() == TestExecutionStatuses.Failed.ToString().ToLower())
+            if (value != null && value == LivingDocStatuses.Failed.ToString())
                 return true;
 
             return false;
@@ -36,10 +53,7 @@ namespace Expressium.TestExecution
 
         public static bool IsSkipped(this string value)
         {
-            if (value == null)
-                return false;
-
-            if (value.ToLower() == TestExecutionStatuses.Skipped.ToString().ToLower())
+            if (value != null && value == LivingDocStatuses.Skipped.ToString())
                 return true;
 
             return false;
@@ -47,10 +61,7 @@ namespace Expressium.TestExecution
 
         public static bool IsPending(this string value)
         {
-            if (value == null)
-                return false;
-
-            if (value.ToLower() == TestExecutionStatuses.Pending.ToString().ToLower())
+            if (value != null && value == LivingDocStatuses.Pending.ToString())
                 return true;
 
             return false;
@@ -58,10 +69,7 @@ namespace Expressium.TestExecution
 
         public static bool IsUndefined(this string value)
         {
-            if (value == null)
-                return false;
-
-            if (value.ToLower() == TestExecutionStatuses.Undefined.ToString().ToLower())
+            if (value != null && value == LivingDocStatuses.Undefined.ToString())
                 return true;
 
             return false;
@@ -69,10 +77,7 @@ namespace Expressium.TestExecution
 
         public static bool IsAmbiguous(this string value)
         {
-            if (value == null)
-                return false;
-
-            if (value.ToLower() == TestExecutionStatuses.Ambiguous.ToString().ToLower())
+            if (value != null && value == LivingDocStatuses.Ambiguous.ToString())
                 return true;
 
             return false;
@@ -81,16 +86,16 @@ namespace Expressium.TestExecution
         public static string GetStatus(this string value)
         {
             if (value.IsPassed())
-                return TestExecutionStatuses.Passed.ToString();
+                return LivingDocStatuses.Passed.ToString();
             else if (value.IsIncomplete())
-                return TestExecutionStatuses.Incomplete.ToString();
+                return LivingDocStatuses.Incomplete.ToString();
             else if (value.IsFailed())
-                return TestExecutionStatuses.Failed.ToString();
+                return LivingDocStatuses.Failed.ToString();
             else if (value.IsSkipped())
-                return TestExecutionStatuses.Skipped.ToString();
+                return LivingDocStatuses.Skipped.ToString();
             else
             {
-                return TestExecutionStatuses.Undefined.ToString();
+                return LivingDocStatuses.Undefined.ToString();
             }
         }
     }

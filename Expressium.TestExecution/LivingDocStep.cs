@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Expressium.TestExecution
 {
@@ -8,7 +7,7 @@ namespace Expressium.TestExecution
         public string Id { get; set; }
         public string Keyword { get; set; }
         public string Name { get; set; }
-        public int Line { get; set; }
+        //public int Line { get; set; }
         public string Status { get; set; }
         public long Duration { get; set; }
         public string Message { get; set; }

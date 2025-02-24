@@ -39,7 +39,7 @@ namespace Expressium.TestExecution
 
         public bool IsPassed()
         {
-            if (GetStatus() == TestExecutionStatuses.Passed.ToString())
+            if (GetStatus() == LivingDocStatuses.Passed.ToString())
                 return true;
 
             return false;
@@ -47,7 +47,7 @@ namespace Expressium.TestExecution
 
         public bool IsIncomplete()
         {
-            if (GetStatus() == TestExecutionStatuses.Incomplete.ToString())
+            if (GetStatus() == LivingDocStatuses.Incomplete.ToString())
                 return true;
 
             return false;
@@ -55,7 +55,7 @@ namespace Expressium.TestExecution
 
         public bool IsFailed()
         {
-            if (GetStatus() == TestExecutionStatuses.Failed.ToString())
+            if (GetStatus() == LivingDocStatuses.Failed.ToString())
                 return true;
 
             return false;
@@ -63,7 +63,7 @@ namespace Expressium.TestExecution
 
         public bool IsSkipped()
         {
-            if (GetStatus() == TestExecutionStatuses.Skipped.ToString())
+            if (GetStatus() == LivingDocStatuses.Skipped.ToString())
                 return true;
 
             return false;
@@ -74,28 +74,28 @@ namespace Expressium.TestExecution
             foreach (var example in Examples)
             {
                 if (example.IsSkipped())
-                    return TestExecutionStatuses.Skipped.ToString();
+                    return LivingDocStatuses.Skipped.ToString();
             }
 
             foreach (var example in Examples)
             {
                 if (example.IsFailed())
-                    return TestExecutionStatuses.Failed.ToString();
+                    return LivingDocStatuses.Failed.ToString();
             }
 
             foreach (var example in Examples)
             {
                 if (example.IsIncomplete())
-                    return TestExecutionStatuses.Incomplete.ToString();
+                    return LivingDocStatuses.Incomplete.ToString();
             }
 
             foreach (var example in Examples)
             {
                 if (example.IsPassed())
-                    return TestExecutionStatuses.Passed.ToString();
+                    return LivingDocStatuses.Passed.ToString();
             }
 
-            return TestExecutionStatuses.Undefined.ToString();
+            return LivingDocStatuses.Undefined.ToString();
         }
 
         public string GetIndexSortId()
@@ -108,12 +108,7 @@ namespace Expressium.TestExecution
             TimeSpan? duration = null;
 
             foreach (var example in Examples)
-            {
-                if (duration == null)
-                    duration = example.EndTime - example.StartTime;
-                else
-                    duration += example.EndTime - example.StartTime;
-            }
+                duration += example.Duration;
 
             var totalDuration = duration.GetValueOrDefault();
 
@@ -128,12 +123,7 @@ namespace Expressium.TestExecution
             TimeSpan? duration = null;
 
             foreach (var example in Examples)
-            {
-                if (duration == null)
-                    duration = example.EndTime - example.StartTime;
-                else
-                    duration += example.EndTime - example.StartTime;
-            }
+                duration += example.Duration;
 
             var totalDuration = duration.GetValueOrDefault();
 

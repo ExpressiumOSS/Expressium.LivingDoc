@@ -134,6 +134,27 @@
     }
   },
   {
+    "testCaseStarted": {
+      "attempt": 0,
+      "id": "8",
+      "testCaseId": "tc-1",
+      "timestamp": {
+        "nanos": 1000000,
+        "seconds": 0
+      }
+    }
+  },
+  {
+    "testCaseFinished": {
+      "testCaseStartedId": "8",
+      "timestamp": {
+        "nanos": 4000000,
+        "seconds": 0
+      },
+      "willBeRetried": false
+    }
+  },
+  {
     "testStepFinished": {
       "testCaseStartedId": "run-1",
       "testStepId": "ts-1",
@@ -181,6 +202,16 @@
       },
       "timestamp": {
         "nanos": 3000000,
+        "seconds": 0
+      }
+    }
+  },
+  {
+    "testRunFinished": {
+      "success": true,
+      "testRunStartedId": "5",
+      "timestamp": {
+        "nanos": 5000000,
         "seconds": 0
       }
     }

@@ -9,12 +9,9 @@
 * Tryout Chart Pie view in Analytics...
 
 ## Cucumber Messages Converter
-* Step Error message missing...?
 * Background and Scenario in on structure...?
 * Example Table Rows & Columns...?
 * Step Argument table...?
-* Calculation of Duration for Scenarios...?
-* Calculation of Status for Scenrios...?
 * Handling Serializing of JSON Enums Status...?
 
 ### HTML Colors
