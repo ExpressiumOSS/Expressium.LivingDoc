@@ -485,19 +485,7 @@ namespace Expressium.LivingDoc
 
             var status = example.GetStatus().ToLower();
 
-            string message = null;
-            if (example.Error != null)
-                message = example.Error;
-            else if (example.IsStepPending())
-                message = "Pending Step Definition";
-            else if (example.IsStepUndefined())
-                message = "Undefined Step Definition";
-            else if (example.IsStepBindingError())
-                message = "Binding Error Step Definition";
-            else
-            {
-            }
-
+            string message = example.GetMessage();
             if (message != null)
             {
                 listOfLines.Add("<!-- Scenario Data Message Section -->");

@@ -30,9 +30,24 @@ namespace Expressium.TestExecution
             return Status.IsFailed();
         }
 
+        public bool IsPending()
+        {
+            return Status.IsPending();
+        }       
+
         public bool IsIncomplete()
         {
             return Status.IsIncomplete();
+        }
+
+        public bool IsUndefined()
+        {
+            return Status.IsUndefined();
+        }
+
+        public bool IsAmbiguous()
+        {
+            return Status.IsAmbiguous();
         }
 
         public bool IsSkipped()

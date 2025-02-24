@@ -39,7 +39,7 @@ namespace Expressium.TestExecution
 
         public bool IsPassed()
         {
-            if (GetStatus() == ReportStatuses.Passed.ToString())
+            if (GetStatus() == TestExecutionStatuses.Passed.ToString())
                 return true;
 
             return false;
@@ -47,7 +47,7 @@ namespace Expressium.TestExecution
 
         public bool IsIncomplete()
         {
-            if (GetStatus() == ReportStatuses.Incomplete.ToString())
+            if (GetStatus() == TestExecutionStatuses.Incomplete.ToString())
                 return true;
 
             return false;
@@ -55,7 +55,7 @@ namespace Expressium.TestExecution
 
         public bool IsFailed()
         {
-            if (GetStatus() == ReportStatuses.Failed.ToString())
+            if (GetStatus() == TestExecutionStatuses.Failed.ToString())
                 return true;
 
             return false;
@@ -63,7 +63,7 @@ namespace Expressium.TestExecution
 
         public bool IsSkipped()
         {
-            if (GetStatus() == ReportStatuses.Skipped.ToString())
+            if (GetStatus() == TestExecutionStatuses.Skipped.ToString())
                 return true;
 
             return false;
@@ -74,28 +74,28 @@ namespace Expressium.TestExecution
             foreach (var example in Examples)
             {
                 if (example.IsSkipped())
-                    return ReportStatuses.Skipped.ToString();
+                    return TestExecutionStatuses.Skipped.ToString();
             }
 
             foreach (var example in Examples)
             {
                 if (example.IsFailed())
-                    return ReportStatuses.Failed.ToString();
+                    return TestExecutionStatuses.Failed.ToString();
             }
 
             foreach (var example in Examples)
             {
                 if (example.IsIncomplete())
-                    return ReportStatuses.Incomplete.ToString();
+                    return TestExecutionStatuses.Incomplete.ToString();
             }
 
             foreach (var example in Examples)
             {
                 if (example.IsPassed())
-                    return ReportStatuses.Passed.ToString();
+                    return TestExecutionStatuses.Passed.ToString();
             }
 
-            return ReportStatuses.Undefined.ToString();
+            return TestExecutionStatuses.Undefined.ToString();
         }
 
         public string GetIndexSortId()

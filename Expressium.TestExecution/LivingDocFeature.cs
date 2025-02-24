@@ -52,28 +52,28 @@ namespace Expressium.TestExecution
             foreach (var scenario in Scenarios)
             {
                 if (scenario.IsSkipped())
-                    return ReportStatuses.Skipped.ToString();
+                    return TestExecutionStatuses.Skipped.ToString();
             }
 
             foreach (var scenario in Scenarios)
             {
                 if (scenario.IsFailed())
-                    return ReportStatuses.Failed.ToString();
+                    return TestExecutionStatuses.Failed.ToString();
             }
 
             foreach (var scenario in Scenarios)
             {
                 if (scenario.IsIncomplete())
-                    return ReportStatuses.Incomplete.ToString();
+                    return TestExecutionStatuses.Incomplete.ToString();
             }
 
             foreach (var scenario in Scenarios)
             {
                 if (scenario.IsPassed())
-                    return ReportStatuses.Passed.ToString();
+                    return TestExecutionStatuses.Passed.ToString();
             }
 
-            return ReportStatuses.Undefined.ToString();
+            return TestExecutionStatuses.Undefined.ToString();
         }
 
         public int GetNumberOfPassed()

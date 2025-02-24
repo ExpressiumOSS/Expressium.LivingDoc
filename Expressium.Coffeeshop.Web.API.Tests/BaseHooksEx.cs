@@ -1,4 +1,5 @@
 ﻿using Expressium.TestExecution;
+using Reqnroll;
 using System;
 using System.IO;
 
@@ -60,7 +61,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 livingDocScenario.Examples.Add(livingDocExample);
 
                 if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
-                {                    
+                {
                     foreach (var key in scenarioContext.ScenarioInfo.Arguments.Keys)
                         livingDocScenario.Examples[0].TableHeader.Cells.Add(new LivingDocTableCell() { Value = key.ToString() });
 
@@ -76,8 +77,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             if (livingDocScenario != null)
             {
-                livingDocScenario.Examples[0].Status = scenarioContext.ScenarioExecutionStatus.ToString();
-                livingDocScenario.Examples[0].Error = scenarioContext.TestError?.Message;
                 livingDocScenario.Examples[0].Stacktrace = scenarioContext.TestError?.StackTrace;
                 livingDocScenario.Examples[0].EndTime = DateTime.Now;
 
@@ -114,6 +113,40 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 livingDocStep.Keyword = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString();
                 livingDocStep.Name = scenarioContext.StepContext.StepInfo.Text;
                 livingDocStep.Status = scenarioContext.StepContext.Status.ToString();
+                livingDocStep.Message = scenarioContext.StepContext.TestError?.ToString();
+
+                if (livingDocStep.Message == null)
+                    livingDocStep.Message = scenarioContext.TestError?.Message;
+
+                // Mapping to LivingDoc status
+                if (livingDocStep.Status == ScenarioExecutionStatus.OK.ToString())
+                    livingDocStep.Status = TestExecutionStatuses.Passed.ToString();
+                else if (livingDocStep.Status == ScenarioExecutionStatus.StepDefinitionPending.ToString())
+                    livingDocStep.Status = TestExecutionStatuses.Pending.ToString();
+                else if (livingDocStep.Status == ScenarioExecutionStatus.UndefinedStep.ToString())
+                    livingDocStep.Status = TestExecutionStatuses.Undefined.ToString();
+                else if (livingDocStep.Status == ScenarioExecutionStatus.BindingError.ToString())
+                    livingDocStep.Status = TestExecutionStatuses.Ambiguous.ToString();
+                else if (livingDocStep.Status == ScenarioExecutionStatus.TestError.ToString())
+                    livingDocStep.Status = TestExecutionStatuses.Failed.ToString();
+                else if (livingDocStep.Status == ScenarioExecutionStatus.Skipped.ToString())
+                    livingDocStep.Status = TestExecutionStatuses.Skipped.ToString();
+                else
+                {
+                }
+
+                if (livingDocStep.Message == null)
+                {
+                    if (livingDocStep.IsPending())
+                        livingDocStep.Message = "Pending Step Definition";
+                    else if (livingDocStep.IsUndefined())
+                        livingDocStep.Message = "Undefined Step Definition";
+                    else if (livingDocStep.IsAmbiguous())
+                        livingDocStep.Message = "Ambiguous Step Definition";
+                    else
+                    {
+                    }
+                }
 
                 if (scenarioContext.StepContext.StepInfo.Table != null)
                 {

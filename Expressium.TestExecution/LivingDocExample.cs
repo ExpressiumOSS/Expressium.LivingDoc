@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Expressium.TestExecution
 {
     public class LivingDocExample
     {
-        public string Status { get; set; }
-        public string Error { get; set; }
         public string Stacktrace { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
@@ -26,51 +25,44 @@ namespace Expressium.TestExecution
 
         public bool IsPassed()
         {
-            return Status.IsPassed();
+            return Steps.TrueForAll(step => step.IsPassed());
         }
 
         public bool IsIncomplete()
         {
-            return Status.IsIncomplete();
+            return Steps.Any(step => step.IsIncomplete());
         }
 
         public bool IsFailed()
         {
-            return Status.IsFailed();
+            return Steps.Any(step => step.IsFailed());
         }
 
         public bool IsSkipped()
         {
-            return Status.IsSkipped();
-        }
-
-        public bool IsStepPending()
-        {
-            return Status.IsStepPending();
-        }
-
-        public bool IsStepUndefined()
-        {
-            return Status.IsStepUndefined();
-        }
-
-        public bool IsStepBindingError()
-        {
-            return Status.IsStepBindingError();
+            return Steps.Any(step => step.IsSkipped());
         }
 
         public string GetStatus()
         {
             if (IsFailed())
-                return ReportStatuses.Failed.ToString();
+                return TestExecutionStatuses.Failed.ToString();
             else if (IsIncomplete())
-                return ReportStatuses.Incomplete.ToString();
+                return TestExecutionStatuses.Incomplete.ToString();
             else if (IsSkipped())
-                return ReportStatuses.Skipped.ToString();
+                return TestExecutionStatuses.Skipped.ToString();
             else if (IsPassed())
-                return ReportStatuses.Passed.ToString();
+                return TestExecutionStatuses.Passed.ToString();
 
-            return ReportStatuses.Undefined.ToString();
+            return TestExecutionStatuses.Undefined.ToString();
+        }
+
+        public string GetMessage()
+        {
+            if (Steps.Any(step => step.Message != null))
+                return Steps.First(step => step.Message != null).Message;
+
+            return null;
         }
 
         public string GetDuration()

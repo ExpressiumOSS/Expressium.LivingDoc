@@ -30,22 +30,22 @@ namespace Expressium.TestExecution
 
         public int GetNumberOfPassedFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == ReportStatuses.Passed.ToString());
+            return Features.Count(feature => feature.GetStatus() == TestExecutionStatuses.Passed.ToString());
         }
 
         public int GetNumberOfIncompleteFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == ReportStatuses.Incomplete.ToString());
+            return Features.Count(feature => feature.GetStatus() == TestExecutionStatuses.Incomplete.ToString());
         }
 
         public int GetNumberOfFailedFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == ReportStatuses.Failed.ToString());
+            return Features.Count(feature => feature.GetStatus() == TestExecutionStatuses.Failed.ToString());
         }
 
         public int GetNumberOfSkippedFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == ReportStatuses.Skipped.ToString());
+            return Features.Count(feature => feature.GetStatus() == TestExecutionStatuses.Skipped.ToString());
         }
 
         public int GetNumberOfTestsFeature()

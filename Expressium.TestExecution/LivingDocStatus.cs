@@ -12,15 +12,12 @@ namespace Expressium.TestExecution
             if (value.ToLower() == TestExecutionStatuses.Passed.ToString().ToLower())
                 return true;
 
-            if (value == TestExecutionStatuses.OK.ToString())
-                return true;
-
             return false;
         }
 
         public static bool IsIncomplete(this string value)
         {
-            if (value.IsStepPending() || value.IsStepUndefined() || value.IsStepBindingError())
+            if (value.IsPending() || value.IsUndefined() || value.IsAmbiguous())
                 return true;
 
             return false;
@@ -34,9 +31,6 @@ namespace Expressium.TestExecution
             if (value.ToLower() == TestExecutionStatuses.Failed.ToString().ToLower())
                 return true;
 
-            if (value == TestExecutionStatuses.TestError.ToString())
-                return true;
-
             return false;
         }
 
@@ -48,13 +42,10 @@ namespace Expressium.TestExecution
             if (value.ToLower() == TestExecutionStatuses.Skipped.ToString().ToLower())
                 return true;
 
-            if (value == TestExecutionStatuses.Skipped.ToString())
-                return true;
-
             return false;
         }
 
-        public static bool IsStepPending(this string value)
+        public static bool IsPending(this string value)
         {
             if (value == null)
                 return false;
@@ -62,13 +53,10 @@ namespace Expressium.TestExecution
             if (value.ToLower() == TestExecutionStatuses.Pending.ToString().ToLower())
                 return true;
 
-            if (value == TestExecutionStatuses.StepDefinitionPending.ToString())
-                return true;
-
             return false;
         }
 
-        public static bool IsStepUndefined(this string value)
+        public static bool IsUndefined(this string value)
         {
             if (value == null)
                 return false;
@@ -76,18 +64,15 @@ namespace Expressium.TestExecution
             if (value.ToLower() == TestExecutionStatuses.Undefined.ToString().ToLower())
                 return true;
 
-            if (value == TestExecutionStatuses.UndefinedStep.ToString())
-                return true;
-
             return false;
         }
 
-        public static bool IsStepBindingError(this string value)
+        public static bool IsAmbiguous(this string value)
         {
             if (value == null)
                 return false;
 
-            if (value == TestExecutionStatuses.BindingError.ToString())
+            if (value.ToLower() == TestExecutionStatuses.Ambiguous.ToString().ToLower())
                 return true;
 
             return false;
@@ -96,16 +81,16 @@ namespace Expressium.TestExecution
         public static string GetStatus(this string value)
         {
             if (value.IsPassed())
-                return ReportStatuses.Passed.ToString();
+                return TestExecutionStatuses.Passed.ToString();
             else if (value.IsIncomplete())
-                return ReportStatuses.Incomplete.ToString();
+                return TestExecutionStatuses.Incomplete.ToString();
             else if (value.IsFailed())
-                return ReportStatuses.Failed.ToString();
+                return TestExecutionStatuses.Failed.ToString();
             else if (value.IsSkipped())
-                return ReportStatuses.Skipped.ToString();
+                return TestExecutionStatuses.Skipped.ToString();
             else
             {
-                return ReportStatuses.Undefined.ToString();
+                return TestExecutionStatuses.Undefined.ToString();
             }
         }
     }
