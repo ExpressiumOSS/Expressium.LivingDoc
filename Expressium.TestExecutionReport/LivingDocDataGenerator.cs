@@ -11,9 +11,10 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateProjectDataTreeViewSection(project));
-            listOfLines.AddRange(GenerateProjectDataFeatureListViewSection(project));
-            listOfLines.AddRange(GenerateProjectDataScenarioListViewSection(project));
+            listOfLines.AddRange(GenerateProjectDataProjectViewSection(project));
+            listOfLines.AddRange(GenerateProjectDataFeaturesViewSection(project));
+            listOfLines.AddRange(GenerateProjectDataScenariosViewSection(project));
+            listOfLines.AddRange(GenerateProjectDataStepsViewSection(project));
             listOfLines.AddRange(GenerateFeatureDataSections(project));
             listOfLines.AddRange(GenerateScenarioDataSections(project));
             listOfLines.AddRange(GenerateProjectDataAnalyticsSection(project));
@@ -21,17 +22,17 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataTreeViewSection(LivingDocProject project)
+        internal List<string> GenerateProjectDataProjectViewSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data TreeView Section -->");
-            listOfLines.Add($"<div class='data-item' id='treeview'>");
+            listOfLines.Add("<!-- Project Data Project View Section -->");
+            listOfLines.Add($"<div class='data-item' id='project-view'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='scenarioview' class='grid'>");
+            listOfLines.Add("<table id='table-grid' class='grid'>");
 
-            listOfLines.Add("<tbody id='scenario-list'>");
+            listOfLines.Add("<tbody id='table-list'>");
 
             //listOfLines.Add($"<tr data-role='folder' style='color: dimgray;'>");
             //listOfLines.Add($"<td width='8px'>📂</td>");
@@ -75,15 +76,15 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataFeatureListViewSection(LivingDocProject project)
+        internal List<string> GenerateProjectDataFeaturesViewSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Feature ListView Section -->");
-            listOfLines.Add($"<div class='data-item' id='featurelistview'>");
+            listOfLines.Add("<!-- Project Data Features View Section -->");
+            listOfLines.Add($"<div class='data-item' id='features-view'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='scenarioview' class='grid'>");
+            listOfLines.Add("<table id='table-grid' class='grid'>");
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
@@ -96,7 +97,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
-            listOfLines.Add("<tbody id='scenario-list'>");
+            listOfLines.Add("<tbody id='table-list'>");
 
             foreach (var feature in project.Features)
             {
@@ -119,15 +120,15 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataScenarioListViewSection(LivingDocProject project)
+        internal List<string> GenerateProjectDataScenariosViewSection(LivingDocProject project)
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Scenario ListView Section -->");
-            listOfLines.Add($"<div class='data-item' id='scenariolistview'>");
+            listOfLines.Add("<!-- Project Data Scenarios View Section -->");
+            listOfLines.Add($"<div class='data-item' id='scenarios-view'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='scenarioview' class='grid'>");
+            listOfLines.Add("<table id='table-grid' class='grid'>");
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
@@ -140,7 +141,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
-            listOfLines.Add("<tbody id='scenario-list'>");
+            listOfLines.Add("<tbody id='table-list'>");
 
             foreach (var feature in project.Features)
             {
@@ -154,6 +155,68 @@ namespace Expressium.LivingDoc
                     listOfLines.Add($"<td align='center' data-duration='{scenario.GetDurationSortId()}'>{scenario.GetDuration()}</td>");
                     listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
                     listOfLines.Add($"</tr>");
+                }
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateProjectDataStepsViewSection(LivingDocProject project)
+        {
+            List<string> listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Project Data Steps View Section -->");
+            listOfLines.Add($"<div class='data-item' id='steps-view'>");
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<table id='table-grid' class='grid'>");
+
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr data-role='header'>");
+            listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Step Definition<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(2)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+
+            listOfLines.Add("<tbody id='table-list'>");
+
+            var mapOfSteps = new Dictionary<string, string>();
+
+            var listOfStatuses = new List<string> { "Failed", "Incomplete", "Skipped", "Passed", "All" };
+            foreach (var status in listOfStatuses)
+            {
+                foreach (var feature in project.Features)
+                {
+                    foreach (var scenario in feature.Scenarios)
+                    {
+                        foreach (var example in scenario.Examples)
+                        {
+                            foreach (var step in example.Steps)
+                            {
+                                if (status != "All" && status != step.GetStatus())
+                                    continue;
+
+                                var fullName = step.Keyword + " " + step.Name;
+                                if (!mapOfSteps.ContainsKey(fullName))
+                                {
+                                    listOfLines.Add($"<tr class='gridlines' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                                    listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{step.GetStatus().ToLower()}'></span></td>");
+                                    listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
+                                    listOfLines.Add($"<td>{step.GetStatus()}</td>");
+                                    listOfLines.Add($"</tr>");
+
+                                    mapOfSteps.Add(fullName, step.GetStatus());
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

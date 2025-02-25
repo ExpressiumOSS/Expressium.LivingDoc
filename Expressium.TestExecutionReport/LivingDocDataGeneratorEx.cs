@@ -57,7 +57,7 @@ namespace Expressium.LivingDoc
             List<string> listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Project Data TreeList Section -->");
-            listOfLines.Add($"<div class='data-item' id='treeview'>");
+            listOfLines.Add($"<div class='data-item' id='project-view'>");
 
             listOfLines.Add("<div class='section'>");
 

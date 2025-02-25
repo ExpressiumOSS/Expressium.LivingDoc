@@ -8,7 +8,7 @@ namespace Expressium.LivingDoc
 {
     internal class LivingDocBodyGenerator
     {
-        private bool includeNavigation = false;
+        private bool includeNavigation = true;
 
         internal List<string> GenerateBody(LivingDocProject project)
         {
@@ -31,7 +31,7 @@ namespace Expressium.LivingDoc
         {
             List<string> listOfLines = new List<string>();
 
-            listOfLines.Add("<body onload=\"loadAnalytics('analytics'); loadViewmode('treeview');\">");
+            listOfLines.Add("<body onload=\"loadAnalytics('analytics'); loadViewmode('project-view');\">");
 
             return listOfLines;
         }
@@ -43,7 +43,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<!-- Header Section -->");
             listOfLines.Add("<header>");
             listOfLines.Add("<span class='project-name'>" + project.Title + "</span><br />");
-            listOfLines.Add("<span class='project-date'>generated " + project.GetExecutionTime() + "</span>");
+            listOfLines.Add("<span class='project-date'>Generated " + project.GetExecutionTime() + "</span>");
             listOfLines.Add("</header>");
 
             return listOfLines;
@@ -56,8 +56,18 @@ namespace Expressium.LivingDoc
             if (includeNavigation)
             {
                 listOfLines.Add("<!-- Project Navigation Section -->");
-                listOfLines.Add("<nav class='navigation'>");
-                listOfLines.Add("<a href='#' style='color: white;' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
+                listOfLines.Add("<nav class='navigation' style='color: white;'>");
+                listOfLines.Add("<span>|</span>");
+                listOfLines.Add("<a title='Overview' style='color: white;' href='#' onclick=\"loadViewmode('project-view');\">Overview</a>");
+                listOfLines.Add("<span>|</span>");
+                listOfLines.Add("<a title='Features List View' style='color: white;' href='#' onclick=\"loadViewmode('features-view');\">Features</a>");
+                listOfLines.Add("<span>|</span>");
+                listOfLines.Add("<a title='Scenarios List View' style='color: white;' href='#' onclick=\"loadViewmode('scenarios-view');\">Scenarios</a>");
+                listOfLines.Add("<span>|</span>");
+                listOfLines.Add("<a title='Steps List View' style='color: white;' href='#' onclick=\"loadViewmode('steps-view');\">Steps</a>");
+                listOfLines.Add("<span>|</span>");
+                listOfLines.Add("<a title='Analytics' style='color: white;' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
+                listOfLines.Add("<span>|</span>");
                 listOfLines.Add("</nav>");
             }
 
@@ -100,12 +110,15 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<!-- Features PreFilters Section -->");
             listOfLines.Add("<div class='section layout-row'>");
 
-            listOfLines.Add("<div class='layout-column align-left'>");
-            listOfLines.Add("<button title='Project Tree View' onclick=\"loadViewmode('treeview');\">&#9776;</button>");
-            listOfLines.Add("<button title='Feature List View' onclick=\"loadViewmode('featurelistview');\">&#9782;</button>");
-            listOfLines.Add("<button title='Scenario List View' onclick=\"loadViewmode('scenariolistview');\">&#9783;</button>");
-            listOfLines.Add("<button title='Analytics' onclick=\"loadAnalytics('analytics');\">&#425;</button>");
-            listOfLines.Add("</div>");
+            if (!includeNavigation)
+            {
+                listOfLines.Add("<div class='layout-column align-left'>");
+                listOfLines.Add("<button title='Overview' onclick=\"loadViewmode('project-view');\">&#9776;</button>");
+                listOfLines.Add("<button title='Features List View' onclick=\"loadViewmode('features-view');\">&#9782;</button>");
+                listOfLines.Add("<button title='Scenarios List View' onclick=\"loadViewmode('scenarios-view');\">&#9783;</button>");
+                listOfLines.Add("<button title='Analytics' onclick=\"loadAnalytics('analytics');\">&#425;</button>");
+                listOfLines.Add("</div>");
+            }
 
             listOfLines.Add("<div class='layout-column align-right'>");
             listOfLines.Add("<button title='Preset Filter with Passed' class='color-passed' onclick='presetFilter(\"passed\")'>Passed</button>");

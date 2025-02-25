@@ -12,7 +12,7 @@
         function loadFeature(x) {
             var featureId = x.getAttribute('data-featureid');
             var feature = document.getElementById(featureId).innerHTML;
-            var table = document.getElementById("treeview");
+            var table = document.getElementById("project-view");
             var tr = table.getElementsByTagName("tr");
 
             var previous = false;
@@ -64,7 +64,7 @@
         function filterScenarios() {
             var input = document.getElementById("scenario-filter");
             var filterTokens = input.value.toUpperCase().split(/\s+/);
-            var table = document.getElementById("scenario-list");
+            var table = document.getElementById("table-list");
             var tr = table.getElementsByTagName("tr");
 
             for (var i = 0; i < tr.length; i++) {
@@ -99,7 +99,7 @@
     </script>
     <script>
         function filterFeatures() {
-            var table = document.getElementById("scenario-list");
+            var table = document.getElementById("table-list");
             var tr = table.getElementsByTagName("tr");
 
             for (var i = 0; i < tr.length; i++) {
@@ -135,7 +135,7 @@
     </script>
     <script>
         function sortTableByColumn(n) {
-            var table = document.getElementById("scenarioview");
+            var table = document.getElementById("table-grid");
             var count = 0;
             var switching = true;
             var direction = "ascending";
@@ -184,7 +184,7 @@
     </script>
     <script>
         function sortTableByColumnByAttibute(n,a) {
-            var table = document.getElementById("scenarioview");
+            var table = document.getElementById("table-grid");
             var count = 0;
             var switching = true;
 

@@ -59,7 +59,7 @@
 
         #content-wrapper {
             display: flex;
-            height: calc(100% - 118px); /* Adjust for header and footer height */
+            height: calc(100% - 156px); /* Adjust for header and footer height */
             flex-direction: row; /* Change to row for vertical splitter */
         }
 
@@ -77,7 +77,7 @@
         header {
             padding: 8px;
             padding-left: 16px;
-            border-bottom: 1px solid #ddd;
+            /* border-bottom: 1px solid #ddd; */
             background-color: var(--secondary-color);
         }
 
