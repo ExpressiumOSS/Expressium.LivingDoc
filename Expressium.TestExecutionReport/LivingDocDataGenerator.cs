@@ -180,7 +180,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
             listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Step Definition<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Step<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(2)'>Status<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
