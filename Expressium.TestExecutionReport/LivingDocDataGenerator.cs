@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Expressium.LivingDoc
 {
@@ -181,7 +182,8 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<tr data-role='header'>");
             listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Step<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(2)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-count\")'>Count<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(3)'>Status<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
@@ -206,9 +208,17 @@ namespace Expressium.LivingDoc
                                 var fullName = step.Keyword + " " + step.Name;
                                 if (!mapOfSteps.ContainsKey(fullName))
                                 {
+                                    var count = project.Features
+                                        .SelectMany(feature => feature.Scenarios)
+                                        .SelectMany(scenario => scenario.Examples)
+                                        .SelectMany(example => example.Steps)
+                                        .Where(x => x.Keyword + " " + x.Name == fullName)
+                                        .Count();
+
                                     listOfLines.Add($"<tr class='gridlines' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                                     listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{step.GetStatus().ToLower()}'></span></td>");
                                     listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
+                                    listOfLines.Add($"<td align='center' data-count='{count.ToString("D4")}'>{count}</td>");
                                     listOfLines.Add($"<td>{step.GetStatus()}</td>");
                                     listOfLines.Add($"</tr>");
 
