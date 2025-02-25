@@ -125,5 +125,24 @@ namespace Expressium.TestExecution
 
             return $"{duration.Minutes.ToString("D2")}:{duration.Seconds.ToString("D2")}:{duration.Milliseconds.ToString("D3")}";
         }
+
+        public string GetPercentageOfPassedSortId()
+        {
+            return GetPercentageOfPassed().ToString("D4");
+        }
+
+        public int GetPercentageOfPassed()
+        {
+            var numberOfSteps = 0;
+            var numberOfPassedSteps = 0;
+
+            foreach (var example in Examples)
+            {
+                numberOfSteps += example.Steps.Count;
+                numberOfPassedSteps += example.Steps.Count(step => step.IsPassed());
+            }
+
+            return (int)Math.Round(100.0f / numberOfSteps * numberOfPassedSteps);
+        }
     }
 }
