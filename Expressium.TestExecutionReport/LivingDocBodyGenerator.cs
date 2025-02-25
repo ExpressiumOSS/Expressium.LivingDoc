@@ -98,7 +98,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("</div>");
 
             listOfLines.Add("<!-- Content Splitter Script -->");
-            listOfLines.AddRange(Resources.SplitterScript.Split(Environment.NewLine).ToList());
+            listOfLines.AddRange(Resources.Splitter.Split(Environment.NewLine).ToList());
 
             return listOfLines;
         }

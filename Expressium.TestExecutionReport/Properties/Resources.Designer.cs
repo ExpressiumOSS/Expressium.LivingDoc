@@ -115,9 +115,9 @@ namespace Expressium.LivingDoc.Properties {
         ///
         /// [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string SplitterScript {
+        internal static string Splitter {
             get {
-                return ResourceManager.GetString("SplitterScript", resourceCulture);
+                return ResourceManager.GetString("Splitter", resourceCulture);
             }
         }
         
