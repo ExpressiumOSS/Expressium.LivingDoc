@@ -120,5 +120,34 @@ namespace Expressium.TestExecution
         {
             return GetPercentageOfPassed().ToString("D4");
         }
+
+        public string GetDuration()
+        {
+            var duration = new TimeSpan();
+
+            foreach (var scenario in Scenarios)
+            {
+                foreach (var example in scenario.Examples)
+                    duration += example.Duration;
+            }
+
+            if (duration.Minutes > 0)
+                return $"{duration.Minutes}min {duration.Seconds}s";
+
+            return $"{duration.Seconds}s {duration.Milliseconds.ToString("D3")}ms";
+        }
+
+        public string GetDurationSortId()
+        {
+            var duration = new TimeSpan();
+
+            foreach (var scenario in Scenarios)
+            {
+                foreach (var example in scenario.Examples)
+                    duration += example.Duration;
+            }
+
+            return $"{duration.Minutes.ToString("D2")}:{duration.Seconds.ToString("D2")}:{duration.Milliseconds.ToString("D3")}";
+        }
     }
 }

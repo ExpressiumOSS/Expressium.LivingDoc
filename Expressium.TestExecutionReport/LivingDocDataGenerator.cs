@@ -91,7 +91,8 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Feature<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-scenarios\")'>Scenarios<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th onClick='sortTableByColumnByAttibute(3, \"data-coverage\")'>Coverage<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(4, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(5)'>Status<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
@@ -104,6 +105,7 @@ namespace Expressium.LivingDoc
                 listOfLines.Add($"<td><a href='#'>{feature.Name}</a></td>");
                 listOfLines.Add($"<td align='center' data-scenarios='{feature.GetNumberOfScenariosSortId()}'>{feature.GetNumberOfScenarios()}</td>");
                 listOfLines.Add($"<td align='center' data-coverage='{feature.GetPercentageOfPassedSortId()}'>{feature.GetPercentageOfPassed()}%</td>");
+                listOfLines.Add($"<td align='center' data-duration='{feature.GetDurationSortId()}'>{feature.GetDuration()}</td>");
                 listOfLines.Add($"<td>{feature.GetStatus()}</td>");
                 listOfLines.Add($"</tr>");
             }
