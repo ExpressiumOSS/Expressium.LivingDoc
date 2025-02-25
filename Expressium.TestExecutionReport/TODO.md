@@ -10,8 +10,6 @@
 
 ## Cucumber Messages Converter
 * Background and Scenario in on structure...?
-* Example Table Rows & Columns...?
-* Step Argument table...?
 * Handling Serializing of JSON Enums Status...?
 
 ### HTML Colors

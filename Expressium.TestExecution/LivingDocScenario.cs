@@ -105,29 +105,25 @@ namespace Expressium.TestExecution
 
         public string GetDuration()
         {
-            TimeSpan? duration = null;
+            var duration = new TimeSpan();
 
             foreach (var example in Examples)
                 duration += example.Duration;
 
-            var totalDuration = duration.GetValueOrDefault();
+            if (duration.Minutes > 0)
+                return $"{duration.Minutes}min {duration.Seconds}s";
 
-            if (totalDuration.Minutes > 0)
-                return $"{totalDuration.Minutes}min {totalDuration.Seconds}s";
-
-            return $"{totalDuration.Seconds}s {totalDuration.Milliseconds.ToString("D3")}ms";
+            return $"{duration.Seconds}s {duration.Milliseconds.ToString("D3")}ms";
         }
 
         public string GetDurationSortId()
         {
-            TimeSpan? duration = null;
+            var duration = new TimeSpan();
 
             foreach (var example in Examples)
                 duration += example.Duration;
 
-            var totalDuration = duration.GetValueOrDefault();
-
-            return $"{totalDuration.Minutes.ToString("D2")}:{totalDuration.Seconds.ToString("D2")}:{totalDuration.Milliseconds.ToString("D3")}";
+            return $"{duration.Minutes.ToString("D2")}:{duration.Seconds.ToString("D2")}:{duration.Milliseconds.ToString("D3")}";
         }
     }
 }
