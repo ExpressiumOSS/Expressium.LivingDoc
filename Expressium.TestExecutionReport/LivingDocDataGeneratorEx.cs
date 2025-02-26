@@ -7,7 +7,7 @@ namespace Expressium.LivingDoc
     {
         internal List<string> GenerateProjectDataTreeListSections(LivingDocProject project, LivingDocFolder node)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             foreach (var child in node.Children)
             {
@@ -54,7 +54,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateProjectDataTreeListSection(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Project Data TreeList Section -->");
             listOfLines.Add($"<div class='data-item' id='project-view'>");

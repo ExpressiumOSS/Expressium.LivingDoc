@@ -25,7 +25,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateProjectDataProjectViewSection(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Project Data Project View Section -->");
             listOfLines.Add($"<div class='data-item' id='project-view'>");
@@ -79,7 +79,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateProjectDataFeaturesViewSection(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Project Data Features View Section -->");
             listOfLines.Add($"<div class='data-item' id='features-view'>");
@@ -123,7 +123,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateProjectDataScenariosViewSection(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Project Data Scenarios View Section -->");
             listOfLines.Add($"<div class='data-item' id='scenarios-view'>");
@@ -170,7 +170,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateProjectDataStepsViewSection(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Project Data Steps View Section -->");
             listOfLines.Add($"<div class='data-item' id='steps-view'>");
@@ -694,6 +694,9 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<span class='project-name'>Analytics</span>");
             listOfLines.Add("</div>");
 
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("</div>");
+
             listOfLines.AddRange(GenerateProjectDataAnalyticsFeaturesStatusChartSection(project));
             listOfLines.AddRange(GenerateProjectDataAnalyticsScenariosStatusChartSection(project));
             listOfLines.AddRange(GenerateProjectDataAnalyticsDurationSection(project));
@@ -705,7 +708,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateProjectDataAnalyticsFeaturesStatusChartSection(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             var numberOfPassed = project.GetNumberOfPassedFeatures();
             var numberOfIncomplete = project.GetNumberOfIncompleteFeatures();
@@ -720,7 +723,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateProjectDataAnalyticsScenariosStatusChartSection(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             var numberOfPassed = project.GetNumberOfPassed();
             var numberOfIncomplete = project.GetNumberOfIncomplete();
@@ -740,23 +743,26 @@ namespace Expressium.LivingDoc
             var percentageOfFailed = (int)Math.Round(100.0f / numberOfTests * numberOfFailed);
             var percentageOfSkipped = (int)Math.Round(100.0f / numberOfTests * numberOfSkipped);
 
-            var sumOfPercentage = percentageOfPassed + percentageOfIncomplete + percentageOfFailed + percentageOfSkipped;
-            if (sumOfPercentage > 100)
+            var totalPercentage = percentageOfPassed + percentageOfIncomplete + percentageOfFailed + percentageOfSkipped;
+
+            // Adjust the largest category if there's a discrepancy
+            int difference = 100 - totalPercentage;
+            if (difference != 0)
             {
-                if (percentageOfPassed > 1)
-                    percentageOfPassed -= 1;
-                else if (percentageOfIncomplete > 1)
-                    percentageOfIncomplete -= 1;
-                else if (percentageOfFailed > 1)
-                    percentageOfFailed -= 1;
-                else if (percentageOfSkipped > 1)
-                    percentageOfSkipped -= 1;
-                else
+                var percentages = new List<(int value, Action<int> setter)>
                 {
-                }
+                    (percentageOfPassed, val => percentageOfPassed = val),
+                    (percentageOfIncomplete, val => percentageOfIncomplete = val),
+                    (percentageOfFailed, val => percentageOfFailed = val),
+                    (percentageOfSkipped, val => percentageOfSkipped = val)
+                };
+
+                // Find the category with the largest percentage and adjust it
+                var maxCategory = percentages.OrderByDescending(p => p.value).First();
+                maxCategory.setter(maxCategory.value + difference);
             }
 
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<div class='section' style='width: fit-content; margin: auto;'>");
             listOfLines.Add($"<span class='project-name' style='padding-left: 8px; color: dimgray;'>{title}</span>");
@@ -764,22 +770,20 @@ namespace Expressium.LivingDoc
 
             {
                 listOfLines.Add("<!-- Project Data Analytics Status Chart Section -->");
-                listOfLines.Add("<div class='section' style='text-align: center; max-width: 500px; margin: auto;'>");
-                listOfLines.Add($"<span class='chart-percentage'>{percentageOfPassed.ToString("0")}%</span><br />");
-                listOfLines.Add("<span class='chart-status'>Passed</span><br />");
-
-                listOfLines.Add("<div style='padding: 6px;'></div>");
-
-                listOfLines.Add($"<div class='chart-bar' style='width: 100%;'>");
-                listOfLines.Add($"<div class='chart-bar bgcolor-passed' style='width: {percentageOfPassed}%;'></div>");
-                listOfLines.Add($"<div class='chart-bar bgcolor-incomplete' style='width: {percentageOfIncomplete}%;'></div>");
-                listOfLines.Add($"<div class='chart-bar bgcolor-failed' style='width: {percentageOfFailed}%;'></div>");
-                listOfLines.Add($"<div class='chart-bar bgcolor-skipped' style='width: {percentageOfSkipped}%;'></div>");
-                listOfLines.Add("</div>");
-
-                var message = GetStatusMessage((int)percentageOfPassed);
-                listOfLines.Add($"<span class='chart-message'>{message}</span>");
-                listOfLines.Add("</div>");
+                listOfLines.Add($"<div class='section' style='text-align: center; max-width: 500px; margin: auto;'>");
+                listOfLines.Add($"    <svg width='180px' height='180px' viewBox='0 0 42 42'>");
+                listOfLines.Add($"        <g transform='rotate(-90, 21, 21)'>");
+                listOfLines.Add($"            <circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155'></circle>");
+                listOfLines.Add($"            <circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfPassed} {100 - percentageOfPassed}' stroke-dashoffset='0'></circle>");
+                listOfLines.Add($"            <circle class='donut-segment-incomplete' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfIncomplete} {100 - percentageOfIncomplete}' stroke-dashoffset='-{percentageOfPassed}'></circle>");
+                listOfLines.Add($"            <circle class='donut-segment-failed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfFailed} {100 - percentageOfFailed}' stroke-dashoffset='-{percentageOfPassed + percentageOfIncomplete}'></circle>");
+                listOfLines.Add($"        </g>");
+                listOfLines.Add($"        <g class='chart-text'>");
+                listOfLines.Add($"            <text x='50%' y='50%' class='chart-number'>{percentageOfPassed}%</text>");
+                listOfLines.Add($"            <text x='50%' y='50%' class='chart-label'>Passed</text>");
+                listOfLines.Add($"        </g>");
+                listOfLines.Add($"    </svg>");
+                listOfLines.Add($"</div>");
             }
 
             {
@@ -836,7 +840,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateProjectDataAnalyticsDurationSection(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Project Data Analytics Duration Section -->");
             listOfLines.Add("<div style='padding-top: 6px; text-align: center; justify-content: center; align-items: center; display: flex;'>");
@@ -850,72 +854,25 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        //internal List<string> GenerateProjectDataAnalyticsFeaturesSection(TestExecutionProject project)
-        //{
-        //    List<string> listOfLines = new List<string>();
-
-        //    listOfLines.Add("<!-- Project Data Analytics Features Section -->");
-        //    listOfLines.Add("<div class='section' style='padding-left: 32px; padding-right: 32px;'>");
-        //    listOfLines.Add("<span class='project-name'>Features</span>");
-        //    listOfLines.Add("<table class='grid' width='100%' align='center'>");
-        //    listOfLines.Add("<thead>");
-        //    listOfLines.Add("<tr>");
-        //    listOfLines.Add("<th width='20px;' class='align-center'>#</th>");
-        //    listOfLines.Add("<th>Name</th>");
-        //    listOfLines.Add("<th class='align-center'>Total</th>");
-        //    listOfLines.Add("<th class='align-center'>Coverage</th>");
-        //    listOfLines.Add("<th>Status</th>");
-        //    listOfLines.Add("</tr>");
-        //    listOfLines.Add("</thead>");
-        //    listOfLines.Add("<tbody>");
-
-        //    foreach (var feature in project.Features)
+        // Old Status Chart Visualization...
         //    {
-        //        var percentageOfPassed = (int)Math.Round(100.0f / feature.GetNumberOfTests() * feature.GetNumberOfPassed());
+        //    listOfLines.Add("<!-- Project Data Analytics Status Chart Section -->");
+        //    listOfLines.Add("<div class='section' style='text-align: center; max-width: 500px; margin: auto;'>");
+        //    listOfLines.Add($"<span class='chart-percentage'>{percentageOfPassed.ToString("0")}%</span><br />");
+        //    listOfLines.Add("<span class='chart-status'>Passed</span><br />");
 
-        //        listOfLines.Add($"<tr class='gridlines' onclick=\"presetFilter('{feature.Name}')\">");
-        //        listOfLines.Add($"<td class='align-center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
-        //        listOfLines.Add($"<td>{feature.Name}</td>");
-        //        listOfLines.Add($"<td class='align-center'>{feature.GetNumberOfTests()}</td>");
-        //        listOfLines.Add($"<td class='align-center'>{percentageOfPassed}%</td>");
-        //        listOfLines.Add($"<td>{feature.GetStatus()}</td>");
-        //        listOfLines.Add($"</tr>");
-        //    }
+        //    listOfLines.Add("<div style='padding: 6px;'></div>");
 
-        //    listOfLines.Add("</tbody>");
-        //    listOfLines.Add("</table>");
+        //    listOfLines.Add($"<div class='chart-bar' style='width: 100%;'>");
+        //    listOfLines.Add($"<div class='chart-bar bgcolor-passed' style='width: {percentageOfPassed}%;'></div>");
+        //    listOfLines.Add($"<div class='chart-bar bgcolor-incomplete' style='width: {percentageOfIncomplete}%;'></div>");
+        //    listOfLines.Add($"<div class='chart-bar bgcolor-failed' style='width: {percentageOfFailed}%;'></div>");
+        //    listOfLines.Add($"<div class='chart-bar bgcolor-skipped' style='width: {percentageOfSkipped}%;'></div>");
         //    listOfLines.Add("</div>");
 
-        //    return listOfLines;
+        //    var message = GetStatusMessage((int)percentageOfPassed);
+        //    listOfLines.Add($"<span class='chart-message'>{message}</span>");
+        //    listOfLines.Add("</div>");
         //}
-
-        public static string GetStatusMessage(int percentage)
-        {
-            if (percentage >= 100)
-                return "The system is fully covered and successfully validated!";
-            else if (percentage >= 90)
-                return "The system is extensively covered with minor potential risks!";
-            //else if (percentage >= 75)
-            //    return "The system is well covered with significant potential risks!";
-            //else if (percentage >= 50)
-            //    return "The system is moderately covered with significant potential risks!";
-            //else if (percentage >= 25)
-            //    return "The system is partially covered with many potential risks!";
-            else if (percentage >= 10)
-                return "The system is partially covered with significant potential risks!";
-            //else if (percentage >= 10)
-            //    return "The system is minimally covered with many undetected risks!";
-            //else if (percentage < 10)
-            //    return "The system is not covered with a uncertainties in reliability!";
-            else if (percentage > 0)
-                return "The system is minimally covered with overwhelming potential risks!";
-            else if (percentage == 0)
-                return "The system is uncovered and unsuccessfully validated!";
-            else
-            {
-            }
-
-            return null;
-        }
     }
 }

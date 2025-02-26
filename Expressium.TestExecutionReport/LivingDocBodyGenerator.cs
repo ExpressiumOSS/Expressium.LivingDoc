@@ -14,7 +14,7 @@ namespace Expressium.LivingDoc
         {
             var dataGenerator = new LivingDocDataGenerator();
 
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.AddRange(GenerateBodyHeader());
             listOfLines.AddRange(GenerateHeader(project));
@@ -29,7 +29,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateBodyHeader()
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<body onload=\"loadAnalytics('analytics'); loadViewmode('project-view');\">");
 
@@ -38,7 +38,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateHeader(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Header Section -->");
             listOfLines.Add("<header>");
@@ -51,7 +51,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateNavigation(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             if (includeNavigation)
             {
@@ -76,7 +76,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateContent(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Content Wrapper Section -->");
             listOfLines.Add("<div id='content-wrapper'>");
@@ -105,7 +105,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateScenarioPreFilters(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Features PreFilters Section -->");
             listOfLines.Add("<div class='section layout-row'>");
@@ -121,11 +121,11 @@ namespace Expressium.LivingDoc
             }
 
             listOfLines.Add("<div class='layout-column align-right'>");
-            listOfLines.Add("<button title='Preset Filter with Passed' class='color-passed' onclick='presetFilter(\"passed\")'>Passed</button>");
-            listOfLines.Add("<button title='Preset Filter with Incomplete' class='color-incomplete' onclick='presetFilter(\"incomplete\")'>Incomplete</button>");
-            listOfLines.Add("<button title='Preset Filter with Failed' class='color-failed' onclick='presetFilter(\"failed\")'>Failed</button>");
-            listOfLines.Add("<button title='Preset Filter with Skipped' class='color-skipped' onclick='presetFilter(\"skipped\")'>Skipped</button>");
-            listOfLines.Add("<button title='Clear Filter' onclick='presetFilter(\"\")'>Clear</button>");
+            listOfLines.Add("<button title='Preset Filter with Passed' class='color-undefined' onclick='presetFilter(\"passed\")'>Passed</button>");
+            listOfLines.Add("<button title='Preset Filter with Incomplete' class='color-undefined' onclick='presetFilter(\"incomplete\")'>Incomplete</button>");
+            listOfLines.Add("<button title='Preset Filter with Failed' class='color-undefined' onclick='presetFilter(\"failed\")'>Failed</button>");
+            listOfLines.Add("<button title='Preset Filter with Skipped' class='color-undefined' onclick='presetFilter(\"skipped\")'>Skipped</button>");
+            listOfLines.Add("<button title='Clear Filter' class='color-undefined' onclick='presetFilter(\"\")'>Clear</button>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
@@ -135,7 +135,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateScenarioFilter(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Features Filter Section -->");
             listOfLines.Add("<div class='section'>");
@@ -147,7 +147,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateFooter(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Footer Section -->");
             listOfLines.Add("<footer>");
@@ -159,7 +159,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateBodyFooter()
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("</body>");
 

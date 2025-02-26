@@ -78,7 +78,7 @@ namespace Expressium.LivingDoc
 
         internal void GenerateHtmlReport(LivingDocProject project)
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             var bodyGenerator = new LivingDocBodyGenerator();
 
@@ -93,7 +93,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateHtmlHeader()
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!DOCTYPE html>");
             listOfLines.Add("<html>");
@@ -133,7 +133,7 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateHtmlFooter()
         {
-            List<string> listOfLines = new List<string>();
+            var listOfLines = new List<string>();
 
             listOfLines.Add("</html>");
 

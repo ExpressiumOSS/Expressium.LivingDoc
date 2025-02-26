@@ -244,7 +244,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             {
                 if (message != null)
                 {
-                    List<string> listOfLines = GetStringAsListOfLines(message);
+                    var listOfLines = GetStringAsListOfLines(message);
                     foreach (var line in listOfLines)
                         logger.Error(line);
                 }
@@ -262,7 +262,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             {
                 if (message != null)
                 {
-                    List<string> listOfLines = GetStringAsListOfLines(message);
+                    var listOfLines = GetStringAsListOfLines(message);
                     foreach (var line in listOfLines)
                         logger.Debug(line);
                 }

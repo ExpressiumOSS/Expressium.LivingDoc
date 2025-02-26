@@ -162,6 +162,11 @@
             background-color: var(--secondary-color);
         }
 
+        button:hover {
+          background-color: var(--secondary-color);
+          color: black;
+        }
+
         .gridlines {
             border-bottom: 1px solid lightgray;
         }
@@ -356,5 +361,45 @@
 
         ul {
           list-style-type: none;
+        }
+
+        .chart-text {
+            transform: translateY(0.15em);
+        }
+
+        .chart-number {
+            font-size: 0.5em;
+            text-anchor: middle;
+            transform: translateY(-0.25em);
+        }
+
+        .chart-label {
+            font-size: 0.3em;
+            text-anchor: middle;
+            transform: translateY(0.7em);
+        }
+
+        .donut-segment-passed {
+            stroke: var(--passed-color);
+            fill: transparent;
+            stroke-width: 3;
+        }
+
+        .donut-segment-incomplete {
+            stroke: var(--incomplete-color);
+            fill: transparent;
+            stroke-width: 3;
+        }
+
+        .donut-segment-failed {
+            stroke: var(--failed-color);
+            fill: transparent;
+            stroke-width: 3;
+        }
+
+        .donut-segment-skipped {
+            stroke: var(--skipped-color);
+            fill: transparent;
+            stroke-width: 3;
         }
     </style>
