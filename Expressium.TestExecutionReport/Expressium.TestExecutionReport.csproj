@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Expressium.CucumberMessages\Expressium.CucumberMessages.csproj" />
     <ProjectReference Include="..\Expressium.TestExecution\Expressium.TestExecution.csproj" />
   </ItemGroup>
 
