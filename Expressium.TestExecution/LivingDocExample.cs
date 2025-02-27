@@ -33,8 +33,10 @@ namespace Expressium.TestExecution
                 return LivingDocStatuses.Skipped.ToString();
             else if (Steps.TrueForAll(step => step.IsPassed()))
                 return LivingDocStatuses.Passed.ToString();
-
-            return LivingDocStatuses.Undefined.ToString();
+            else
+            {
+                return LivingDocStatuses.Undefined.ToString();
+            }
         }
 
         public string GetMessage()

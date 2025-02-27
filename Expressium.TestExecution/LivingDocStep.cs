@@ -88,14 +88,14 @@ namespace Expressium.TestExecution
 
         public string GetStatus()
         {
-            if (IsPassed())
-                return LivingDocStatuses.Passed.ToString();
+            if (IsFailed())
+                return LivingDocStatuses.Failed.ToString();
             else if (IsIncomplete())
                 return LivingDocStatuses.Incomplete.ToString();
-            else if (IsFailed())
-                return LivingDocStatuses.Failed.ToString();
             else if (IsSkipped())
                 return LivingDocStatuses.Skipped.ToString();
+            else if (IsPassed())
+                return LivingDocStatuses.Passed.ToString();
             else
             {
                 return LivingDocStatuses.Undefined.ToString();
