@@ -12,8 +12,6 @@ namespace Expressium.TestExecution
         public string Description { get; set; }
         public string Name { get; set; }
         public string Keyword { get; set; }
-        public int Line { get; set; }
-        public string Type { get; set; }
 
         public List<LivingDocExample> Examples { get; set; }
 
@@ -24,76 +22,21 @@ namespace Expressium.TestExecution
             Examples = new List<LivingDocExample>();
         }
 
-        public bool IsTagged()
-        {
-            if (Tags.Count == 0)
-                return false;
-
-            return true;
-        }
-
         public string GetTags()
         {
             return string.Join(" ", Tags.Select(tag => tag.Name));
         }
 
-        public bool IsPassed()
-        {
-            if (GetStatus() == LivingDocStatuses.Passed.ToString())
-                return true;
-
-            return false;
-        }
-
-        public bool IsIncomplete()
-        {
-            if (GetStatus() == LivingDocStatuses.Incomplete.ToString())
-                return true;
-
-            return false;
-        }
-
-        public bool IsFailed()
-        {
-            if (GetStatus() == LivingDocStatuses.Failed.ToString())
-                return true;
-
-            return false;
-        }
-
-        public bool IsSkipped()
-        {
-            if (GetStatus() == LivingDocStatuses.Skipped.ToString())
-                return true;
-
-            return false;
-        }
-
         public string GetStatus()
         {
-            foreach (var example in Examples)
-            {
-                if (example.IsSkipped())
-                    return LivingDocStatuses.Skipped.ToString();
-            }
-
-            foreach (var example in Examples)
-            {
-                if (example.IsFailed())
-                    return LivingDocStatuses.Failed.ToString();
-            }
-
-            foreach (var example in Examples)
-            {
-                if (example.IsIncomplete())
-                    return LivingDocStatuses.Incomplete.ToString();
-            }
-
-            foreach (var example in Examples)
-            {
-                if (example.IsPassed())
-                    return LivingDocStatuses.Passed.ToString();
-            }
+            if (Examples.Any(example => example.GetStatus() == LivingDocStatuses.Failed.ToString()))
+                return LivingDocStatuses.Failed.ToString();
+            else if (Examples.Any(example => example.GetStatus() == LivingDocStatuses.Incomplete.ToString()))
+                return LivingDocStatuses.Incomplete.ToString();
+            else if (Examples.Any(example => example.GetStatus() == LivingDocStatuses.Skipped.ToString()))
+                return LivingDocStatuses.Skipped.ToString();
+            else if (Examples.TrueForAll(example => example.GetStatus() == LivingDocStatuses.Passed.ToString()))
+                return LivingDocStatuses.Passed.ToString();
 
             return LivingDocStatuses.Undefined.ToString();
         }

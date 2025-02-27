@@ -2,12 +2,23 @@
 
 namespace Expressium.TestExecution
 {
+    public enum LivingDocStatuses
+    {
+        Passed,
+        Incomplete,
+        Pending,
+        Undefined,
+        Ambiguous,
+        Failed,
+        Skipped,
+        Unknown
+    }
+
     public class LivingDocStep
     {
         public string Id { get; set; }
         public string Keyword { get; set; }
         public string Name { get; set; }
-        //public int Line { get; set; }
         public string Status { get; set; }
         public long Duration { get; set; }
         public string Message { get; set; }
@@ -21,42 +32,74 @@ namespace Expressium.TestExecution
 
         public bool IsPassed()
         {
-            return Status.IsPassed();
+            if (Status == null)
+                return false;
+
+            if (Status == LivingDocStatuses.Passed.ToString())
+                return true;
+
+            return false;
+        }
+
+        public bool IsIncomplete()
+        {
+            if (Status == null)
+                return false;
+
+            if (Status == LivingDocStatuses.Incomplete.ToString())
+                return true;
+
+            if (Status == LivingDocStatuses.Pending.ToString())
+                return true;
+
+            if (Status == LivingDocStatuses.Undefined.ToString())
+                return true;
+
+            if (Status == LivingDocStatuses.Ambiguous.ToString())
+                return true;
+
+            return false;
         }
 
         public bool IsFailed()
         {
-            return Status.IsFailed();
-        }
+            if (Status == null)
+                return false;
 
-        public bool IsPending()
-        {
-            return Status.IsPending();
-        }       
+            if (Status == LivingDocStatuses.Failed.ToString())
+                return true;
 
-        public bool IsIncomplete()
-        {
-            return Status.IsIncomplete();
-        }
-
-        public bool IsUndefined()
-        {
-            return Status.IsUndefined();
-        }
-
-        public bool IsAmbiguous()
-        {
-            return Status.IsAmbiguous();
+            return false;
         }
 
         public bool IsSkipped()
         {
-            return Status.IsSkipped();
+            if (Status == null)
+                return false;
+
+            if (Status == LivingDocStatuses.Skipped.ToString())
+                return true;
+
+            if (Status == LivingDocStatuses.Unknown.ToString())
+                return true;
+
+            return false;
         }
 
         public string GetStatus()
         {
-            return Status.GetStatus();
+            if (IsPassed())
+                return LivingDocStatuses.Passed.ToString();
+            else if (IsIncomplete())
+                return LivingDocStatuses.Incomplete.ToString();
+            else if (IsFailed())
+                return LivingDocStatuses.Failed.ToString();
+            else if (IsSkipped())
+                return LivingDocStatuses.Skipped.ToString();
+            else
+            {
+                return LivingDocStatuses.Undefined.ToString();
+            }
         }
     }
 }

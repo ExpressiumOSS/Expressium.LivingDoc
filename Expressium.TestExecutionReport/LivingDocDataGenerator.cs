@@ -725,11 +725,11 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
-            var numberOfPassed = project.GetNumberOfPassed();
-            var numberOfIncomplete = project.GetNumberOfIncomplete();
-            var numberOfFailed = project.GetNumberOfFailed();
-            var numberOfSkipped = project.GetNumberOfSkipped();
-            var numberOfTests = project.GetNumberOfTests();
+            var numberOfPassed = project.GetNumberOfPassedScenarios();
+            var numberOfIncomplete = project.GetNumberOfIncompleteScenarios();
+            var numberOfFailed = project.GetNumberOfFailedScenarios();
+            var numberOfSkipped = project.GetNumberOfSkippedScenarios();
+            var numberOfTests = project.GetNumberOfScenarios();
 
             listOfLines.AddRange(GenerateProjectDataAnalyticsStatusChartSection("Scenarios", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
 

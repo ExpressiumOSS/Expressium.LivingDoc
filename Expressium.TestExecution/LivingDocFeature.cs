@@ -11,7 +11,6 @@ namespace Expressium.TestExecution
         public string Description { get; set; }
         public string Name { get; set; }
         public string Keyword { get; set; }
-        public int Line { get; set; }
         public string Uri { get; set; }
 
         public List<LivingDocBackground> Backgrounds { get; set; }
@@ -34,14 +33,6 @@ namespace Expressium.TestExecution
             return Scenarios.Find(x => x.Name == title);
         }
 
-        public bool IsTagged()
-        {
-            if (Tags.Count == 0)
-                return false;
-
-            return true;
-        }
-
         public string GetTags()
         {
             return string.Join(" ", Tags.Select(tag => tag.Name));
@@ -49,71 +40,22 @@ namespace Expressium.TestExecution
 
         public string GetStatus()
         {
-            foreach (var scenario in Scenarios)
-            {
-                if (scenario.IsSkipped())
-                    return LivingDocStatuses.Skipped.ToString();
-            }
-
-            foreach (var scenario in Scenarios)
-            {
-                if (scenario.IsFailed())
-                    return LivingDocStatuses.Failed.ToString();
-            }
-
-            foreach (var scenario in Scenarios)
-            {
-                if (scenario.IsIncomplete())
-                    return LivingDocStatuses.Incomplete.ToString();
-            }
-
-            foreach (var scenario in Scenarios)
-            {
-                if (scenario.IsPassed())
-                    return LivingDocStatuses.Passed.ToString();
-            }
+            if (Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Failed.ToString()))
+                return LivingDocStatuses.Failed.ToString();
+            else if (Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Incomplete.ToString()))
+                return LivingDocStatuses.Incomplete.ToString();
+            else if (Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Skipped.ToString()))
+                return LivingDocStatuses.Skipped.ToString();
+            else if (Scenarios.TrueForAll(example => example.GetStatus() == LivingDocStatuses.Passed.ToString()))
+                return LivingDocStatuses.Passed.ToString();
 
             return LivingDocStatuses.Undefined.ToString();
         }
 
-        public int GetNumberOfPassed()
-        {
-            return Scenarios.Count(scenario => scenario.IsPassed());
-        }
-
-        public int GetNumberOfIncomplete()
-        {
-            return Scenarios.Count(scenario => scenario.IsIncomplete());
-        }
-
-        public int GetNumberOfFailed()
-        {
-            return Scenarios.Count(scenario => scenario.IsFailed());
-        }
-
-        public int GetNumberOfSkipped()
-        {
-            return Scenarios.Count(scenario => scenario.IsSkipped());
-        }
-
-        public int GetNumberOfTests()
-        {
-            return Scenarios.Count();
-        }
-
-        public int GetNumberOfScenarios()
-        {
-            return Scenarios.Count;
-        }
-
-        public string GetNumberOfScenariosSortId()
-        {
-            return Scenarios.Count.ToString("D4");
-        }
-
         public int GetPercentageOfPassed()
         {
-            return (int)Math.Round(100.0f / GetNumberOfTests() * GetNumberOfPassed());
+            var numberOfPassed = Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());
+            return (int)Math.Round(100.0f / Scenarios.Count * numberOfPassed);
         }
 
         public string GetPercentageOfPassedSortId()

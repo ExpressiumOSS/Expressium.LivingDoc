@@ -120,32 +120,34 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
                 // Mapping to LivingDoc status
                 if (livingDocStep.Status == ScenarioExecutionStatus.OK.ToString())
+                {
                     livingDocStep.Status = LivingDocStatuses.Passed.ToString();
+                }
                 else if (livingDocStep.Status == ScenarioExecutionStatus.StepDefinitionPending.ToString())
+                {
                     livingDocStep.Status = LivingDocStatuses.Pending.ToString();
+                    livingDocStep.Message = "Pending Step Definition";
+                }
                 else if (livingDocStep.Status == ScenarioExecutionStatus.UndefinedStep.ToString())
+                {
                     livingDocStep.Status = LivingDocStatuses.Undefined.ToString();
+                    livingDocStep.Message = "Undefined Step Definition";
+                }
                 else if (livingDocStep.Status == ScenarioExecutionStatus.BindingError.ToString())
+                {
                     livingDocStep.Status = LivingDocStatuses.Ambiguous.ToString();
+                    livingDocStep.Message = "Ambiguous Step Definition";
+                }
                 else if (livingDocStep.Status == ScenarioExecutionStatus.TestError.ToString())
+                {
                     livingDocStep.Status = LivingDocStatuses.Failed.ToString();
+                }
                 else if (livingDocStep.Status == ScenarioExecutionStatus.Skipped.ToString())
+                {
                     livingDocStep.Status = LivingDocStatuses.Skipped.ToString();
+                }
                 else
                 {
-                }
-
-                if (livingDocStep.Message == null)
-                {
-                    if (livingDocStep.IsPending())
-                        livingDocStep.Message = "Pending Step Definition";
-                    else if (livingDocStep.IsUndefined())
-                        livingDocStep.Message = "Undefined Step Definition";
-                    else if (livingDocStep.IsAmbiguous())
-                        livingDocStep.Message = "Ambiguous Step Definition";
-                    else
-                    {
-                    }
                 }
 
                 if (scenarioContext.StepContext.StepInfo.Table != null)

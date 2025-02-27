@@ -23,35 +23,15 @@ namespace Expressium.TestExecution
             Attachments = new List<string>();
         }
 
-        public bool IsPassed()
-        {
-            return Steps.TrueForAll(step => step.IsPassed());
-        }
-
-        public bool IsIncomplete()
-        {
-            return Steps.Any(step => step.IsIncomplete());
-        }
-
-        public bool IsFailed()
-        {
-            return Steps.Any(step => step.IsFailed());
-        }
-
-        public bool IsSkipped()
-        {
-            return Steps.Any(step => step.IsSkipped());
-        }
-
         public string GetStatus()
         {
-            if (IsFailed())
+            if (Steps.Any(step => step.IsFailed()))
                 return LivingDocStatuses.Failed.ToString();
-            else if (IsIncomplete())
+            else if (Steps.Any(step => step.IsIncomplete()))
                 return LivingDocStatuses.Incomplete.ToString();
-            else if (IsSkipped())
+            else if (Steps.Any(step => step.IsSkipped()))
                 return LivingDocStatuses.Skipped.ToString();
-            else if (IsPassed())
+            else if (Steps.TrueForAll(step => step.IsPassed()))
                 return LivingDocStatuses.Passed.ToString();
 
             return LivingDocStatuses.Undefined.ToString();

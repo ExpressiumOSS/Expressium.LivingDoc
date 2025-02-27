@@ -48,40 +48,35 @@ namespace Expressium.TestExecution
             return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Skipped.ToString());
         }
 
-        public int GetNumberOfTestsFeature()
-        {
-            return Features.Count;
-        }
-
-        public int GetNumberOfPassed()
+        public int GetNumberOfPassedScenarios()
         {
             return Features
                 .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.IsPassed());
+                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());
         }
 
-        public int GetNumberOfIncomplete()
+        public int GetNumberOfIncompleteScenarios()
         {
             return Features
                 .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.IsIncomplete());
+                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Incomplete.ToString());
         }
 
-        public int GetNumberOfFailed()
+        public int GetNumberOfFailedScenarios()
         {
             return Features
                 .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.IsFailed());
+                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Failed.ToString());
         }
 
-        public int GetNumberOfSkipped()
+        public int GetNumberOfSkippedScenarios()
         {
             return Features
                 .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.IsSkipped());
+                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Skipped.ToString());
         }
 
-        public int GetNumberOfTests()
+        public int GetNumberOfScenarios()
         {
             return Features
                 .SelectMany(feature => feature.Scenarios)
@@ -99,26 +94,6 @@ namespace Expressium.TestExecution
                 return $"{Duration.Minutes}min {Duration.Seconds}s";
 
             return $"{Duration.Seconds}s {Duration.Milliseconds.ToString("D3")}ms";
-        }
-
-        public double GetPercentageOfPassed()
-        {
-            return Math.Round(100.0f / GetNumberOfTests() * GetNumberOfPassed());
-        }
-
-        public double GetPercentageOfIncomplete()
-        {
-            return Math.Round(100.0f / GetNumberOfTests() * GetNumberOfIncomplete());
-        }
-
-        public double GetPercentageOfFailed()
-        {
-            return Math.Round(100.0f / GetNumberOfTests() * GetNumberOfFailed());
-        }
-
-        public double GetPercentageOfSkipped()
-        {
-            return Math.Round(100.0f / GetNumberOfTests() * GetNumberOfSkipped());
         }
 
         public LivingDocFolder GetListOfFolderNodes()
