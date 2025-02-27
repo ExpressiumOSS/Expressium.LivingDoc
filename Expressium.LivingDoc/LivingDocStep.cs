@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Expressium.TestExecution
+namespace Expressium.LivingDoc
 {
     public enum LivingDocStatuses
     {
@@ -75,7 +75,7 @@ namespace Expressium.TestExecution
         public bool IsSkipped()
         {
             if (Status == null)
-                return false;
+                return true;
 
             if (Status == LivingDocStatuses.Skipped.ToString())
                 return true;

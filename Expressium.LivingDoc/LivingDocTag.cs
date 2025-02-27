@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Expressium.TestExecution
+namespace Expressium.LivingDoc
 {
     public class LivingDocTag
     {

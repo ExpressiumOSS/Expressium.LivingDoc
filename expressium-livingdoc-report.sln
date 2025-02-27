@@ -6,11 +6,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.Coffeeshop.Web.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.Coffeeshop.Web.API.Tests", "Expressium.Coffeeshop.Web.API.Tests\Expressium.Coffeeshop.Web.API.Tests.csproj", "{90B24486-871B-4116-9219-98B24E225D28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.TestExecution", "Expressium.TestExecution\Expressium.TestExecution.csproj", "{61DD8D30-5BA4-47E9-82F5-6994CDF95520}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.TestExecutionReport", "Expressium.TestExecutionReport\Expressium.TestExecutionReport.csproj", "{756435C3-B541-4B18-A402-D7EAB2994CF0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.CucumberMessages", "Expressium.CucumberMessages\Expressium.CucumberMessages.csproj", "{31BDD671-88D7-429F-8D8C-80307B9E98A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.LivingDoc", "Expressium.LivingDoc\Expressium.LivingDoc.csproj", "{E1A94A76-6B39-4D4D-AFDB-032E2C469D73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.LivingDocReport", "Expressium.LivingDocReport\Expressium.LivingDocReport.csproj", "{D6BE76B5-C907-4B04-A2C3-03B7FA8659CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,18 +26,18 @@ Global
 		{90B24486-871B-4116-9219-98B24E225D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90B24486-871B-4116-9219-98B24E225D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90B24486-871B-4116-9219-98B24E225D28}.Release|Any CPU.Build.0 = Release|Any CPU
-		{61DD8D30-5BA4-47E9-82F5-6994CDF95520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{61DD8D30-5BA4-47E9-82F5-6994CDF95520}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{61DD8D30-5BA4-47E9-82F5-6994CDF95520}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{61DD8D30-5BA4-47E9-82F5-6994CDF95520}.Release|Any CPU.Build.0 = Release|Any CPU
-		{756435C3-B541-4B18-A402-D7EAB2994CF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{756435C3-B541-4B18-A402-D7EAB2994CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{756435C3-B541-4B18-A402-D7EAB2994CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{756435C3-B541-4B18-A402-D7EAB2994CF0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31BDD671-88D7-429F-8D8C-80307B9E98A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31BDD671-88D7-429F-8D8C-80307B9E98A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31BDD671-88D7-429F-8D8C-80307B9E98A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31BDD671-88D7-429F-8D8C-80307B9E98A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A94A76-6B39-4D4D-AFDB-032E2C469D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A94A76-6B39-4D4D-AFDB-032E2C469D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A94A76-6B39-4D4D-AFDB-032E2C469D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A94A76-6B39-4D4D-AFDB-032E2C469D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6BE76B5-C907-4B04-A2C3-03B7FA8659CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6BE76B5-C907-4B04-A2C3-03B7FA8659CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6BE76B5-C907-4B04-A2C3-03B7FA8659CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6BE76B5-C907-4B04-A2C3-03B7FA8659CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

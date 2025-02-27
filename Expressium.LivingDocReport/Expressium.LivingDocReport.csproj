@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Expressium.CucumberMessages\Expressium.CucumberMessages.csproj" />
-    <ProjectReference Include="..\Expressium.TestExecution\Expressium.TestExecution.csproj" />
+    <ProjectReference Include="..\Expressium.LivingDoc\Expressium.LivingDoc.csproj" />
   </ItemGroup>
 
   <ItemGroup>

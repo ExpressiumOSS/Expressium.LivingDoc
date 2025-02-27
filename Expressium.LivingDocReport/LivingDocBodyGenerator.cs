@@ -1,10 +1,10 @@
-﻿using Expressium.TestExecution;
-using Expressium.LivingDoc.Properties;
+﻿using Expressium.LivingDoc;
+using Expressium.LivingDocReport.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Expressium.LivingDoc
+namespace Expressium.LivingDocReport
 {
     internal class LivingDocBodyGenerator
     {

@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Expressium.LivingDoc
+namespace Expressium.LivingDocReport
 {
     public class Program
     {

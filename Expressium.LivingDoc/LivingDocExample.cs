@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Expressium.TestExecution
+namespace Expressium.LivingDoc
 {
     public class LivingDocExample
     {

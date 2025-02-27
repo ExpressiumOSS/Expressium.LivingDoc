@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Expressium.TestExecution
+namespace Expressium.LivingDoc
 {
     public class LivingDocFolder
     {

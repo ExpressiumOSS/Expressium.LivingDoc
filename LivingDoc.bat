@@ -2,6 +2,6 @@ echo off
 
 cd .\Expressium.Coffeeshop.Web.API.Tests\bin\Debug\net8.0
 
-Expressium.TestExecutionReport.exe .\TestExecution.json .\TestExecutionReport
+Expressium.LivingDocReport.exe .\TestExecution.json .\LivingDocReport
 
-start .\TestExecutionReport\LivingDoc.html
+start .\LivingDocReport\LivingDoc.html
