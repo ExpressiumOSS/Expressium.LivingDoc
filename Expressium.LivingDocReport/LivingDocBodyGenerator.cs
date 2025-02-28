@@ -68,6 +68,8 @@ namespace Expressium.LivingDocReport
                 listOfLines.Add("<span>|</span>");
                 listOfLines.Add("<a title='Analytics' style='color: white;' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
                 listOfLines.Add("<span>|</span>");
+                listOfLines.Add("<a title='Gherkin Script Editor' style='color: white;' href='#' onclick=\"loadEditor('editor'); filterStepDefinitions();\">Editor</a>");
+                listOfLines.Add("<span>|</span>");                
                 listOfLines.Add("</nav>");
             }
 

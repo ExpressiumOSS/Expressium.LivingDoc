@@ -232,3 +232,73 @@
             }
         }
     </script>
+    <script>
+        function loadEditor(x) {
+            var editor = document.getElementById(x).innerHTML;
+
+            document.getElementById('right-section').innerHTML = editor;
+
+            document.getElementById("script").value = "";
+            document.getElementById("script").value += "@TA-1 @Review";
+            document.getElementById("script").value += "\nScenario: Successfully Creating a User Account";            
+        }
+    </script>
+    <script>
+        function filterStepDefinitions() {
+			var input = document.getElementById("stepdefinition-filter"); 
+			var filterTokens = input.value.toUpperCase().split(/\s+/);
+			var table = document.getElementById("steps-table-list");
+			var tr = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < tr.length; i++) {
+                var td = tr[i].getElementsByTagName("td");
+                var rowText = "";
+                var found = false;
+
+                for (var j = 0; j < td.length; j++) {
+                    rowText += td[j].textContent.toUpperCase() + " ";
+                }
+
+				found = filterTokens.every(token => rowText.includes(token));
+
+                if (i >= 5)
+                    found = false;
+
+				tr[i].style.display = found ? "" : "none";
+            }
+        }
+    </script>
+    <script>
+        function loadStepDefinition(row) {
+            var link = row.querySelector("td a");
+            var linkText = link.textContent || link.innerText;
+
+            var script = document.getElementById("script").value;
+            if (script.endsWith("\n") || script === "") {
+                document.getElementById("script").value += "    " + linkText;
+            } else {
+                document.getElementById("script").value += "\n    " + linkText;
+            }
+        }
+    </script>
+	<script>
+		function loadStepDefinitionByEnter() {
+            var table = document.getElementById("steps-table-list");
+			var tr = table.getElementsByTagName("tr");
+
+			for (var i = 0; i < tr.length; i++) {
+				if (tr[i].style.display == "") {
+					loadStepDefinition(tr[i]);
+                    break;
+				}
+			}
+
+			document.getElementById("stepdefinition-filter").value = "";
+		}
+	</script>
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("script");
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>

@@ -402,4 +402,10 @@
             fill: transparent;
             stroke-width: 3;
         }
+
+        textarea {
+           resize: none;
+           width: 100%;
+           padding: 8px;
+        }
     </style>

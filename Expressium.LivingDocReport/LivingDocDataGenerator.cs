@@ -19,6 +19,7 @@ namespace Expressium.LivingDocReport
             listOfLines.AddRange(GenerateFeatureDataSections(project));
             listOfLines.AddRange(GenerateScenarioDataSections(project));
             listOfLines.AddRange(GenerateProjectDataAnalyticsSection(project));
+            listOfLines.AddRange(GenerateProjectDataEditorSection(project));
 
             return listOfLines;
         }
@@ -589,7 +590,7 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataEditSection(LivingDocProject project)
+        internal List<string> GenerateProjectDataEditorSection(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -597,37 +598,57 @@ namespace Expressium.LivingDocReport
             listOfLines.Add($"<div class='data-item' id='editor'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<span class='project-name'>Gherkin Editor</span>");
+            listOfLines.Add("<span class='project-name'>Gherkin Script Editor</span>");
             listOfLines.Add("</div>");
 
-            listOfLines.Add("<table>");
-            listOfLines.Add("<tr>");
-            listOfLines.Add("<td>");
-            listOfLines.Add("<label for='ftags'>Tags:</label>");
-            listOfLines.Add("</td>");
-            listOfLines.Add("<td>");
-            listOfLines.Add("<input type='text' id='ftags' name='ftags'>");
-            listOfLines.Add("</td>");
-            listOfLines.Add("</tr>");
+            listOfLines.Add("<div class='section'>");
+            //listOfLines.Add("<button onclick='copyToClipboard();'>Copy</button>");
+            //listOfLines.Add("<br />");
 
-            listOfLines.Add("<tr>");
-            listOfLines.Add("<td>");
-            listOfLines.Add("<label for='fscenario'>Scenario:</label>");
-            listOfLines.Add("</td>");
-            listOfLines.Add("<td>");
-            listOfLines.Add("<input type='text' id='fscenario' name='fscenario'>");
-            listOfLines.Add("</td>");
-            listOfLines.Add("</tr>");
+            listOfLines.Add("<span class='scenario-name'>Scenario:</span>");
+            listOfLines.Add("<br />");
+            listOfLines.Add("<textarea class='filter' id='script' rows='7'></textarea>");
+            listOfLines.Add("</div>");
 
-            listOfLines.Add("<tr>");
-            listOfLines.Add("<td>");
-            listOfLines.Add("<label for='fsteps'>Steps:</label>");
-            listOfLines.Add("</td>");
-            listOfLines.Add("<td>");
-            listOfLines.Add("<textarea id='fsteps' name='fsteps' rows='10' cols='50'></textarea>");
-            listOfLines.Add("</td>");
-            listOfLines.Add("</tr>");
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<span class='scenario-name'>Step Definitions:</span>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<input type='text' class='filter' onKeydown=\"Javascript: if (event.keyCode == 13) loadStepDefinitionByEnter();\" onkeyup='filterStepDefinitions()' id='stepdefinition-filter' placeholder='Filter by Keywords'>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<table id='steps-grid' class='grid'>");
+            listOfLines.Add("<tbody id='steps-table-list'>");
+
+            var mapOfSteps = new Dictionary<string, string>();
+
+            foreach (var feature in project.Features)
+            {
+                foreach (var scenario in feature.Scenarios)
+                {
+                    foreach (var example in scenario.Examples)
+                    {
+                        foreach (var step in example.Steps)
+                        {
+                            var fullName = step.Keyword + " " + step.Name;
+                            if (!mapOfSteps.ContainsKey(fullName))
+                            {
+                                listOfLines.Add($"<tr class='gridlines' onclick=\"loadStepDefinition(this);\">");
+                                listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
+                                listOfLines.Add($"</tr>");
+
+                                mapOfSteps.Add(fullName, step.GetStatus());
+                            }
+                        }
+                    }
+                }
+            }
+
+            listOfLines.Add("</tbody>");
             listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
 
