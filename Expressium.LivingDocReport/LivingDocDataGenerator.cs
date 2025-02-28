@@ -305,62 +305,13 @@ namespace Expressium.LivingDocReport
         {
             var listOfLines = new List<string>();
 
-            if (feature.Backgrounds != null && feature.Backgrounds.Count > 0)
+            if (feature.Background != null && feature.Background.Steps.Count > 0)
             {
                 listOfLines.Add("<!-- Feature Data Backgrounds Steps Section -->");
                 listOfLines.Add("<div class='feature-background'>");
                 listOfLines.Add("<span class='feature-name'>Background:</span><br />");
-                foreach (var background in feature.Backgrounds)
-                {
-                    foreach (var step in background.Steps)
-                    {
-                        var status = step.GetStatus().ToLower();
 
-                        var stepMarker = "";
-                        if (step.IsPassed())
-                            stepMarker = "&check;";
-                        //else if (step.IsIncomplete())
-                        //stepMarker = "&minus;";
-                        else
-                            stepMarker = "&cross;";
-
-                        //if (step.IsPassed() || step.IsFailed())
-                        {
-                            listOfLines.Add($"<tr>");
-                            listOfLines.Add($"<td colspan='2'>");
-                            listOfLines.Add($"<span style='margin-right: 1px;' class='step-indent color-{status}'><b>{stepMarker}</b></span>");
-                            listOfLines.Add($"<span class='step-keyword'> " + step.Keyword + "</span> ");
-                            listOfLines.Add($"<span>" + step.Name + "</span>");
-                            listOfLines.Add($"</td>");
-                            listOfLines.Add($"</tr>");
-                        }
-
-                        if (step.DataTable.Rows.Count > 0)
-                        {
-                            listOfLines.Add("<!-- Scenario Steps Table Section -->");
-                            listOfLines.Add($"<tr>");
-                            listOfLines.Add($"<td colspan='2' class='examples' style='padding-left: 64px;'>");
-
-                            listOfLines.Add("<table>");
-                            listOfLines.Add("<tbody>");
-
-                            foreach (var row in step.DataTable.Rows)
-                            {
-                                listOfLines.Add($"<tr>");
-                                foreach (var cell in row.Cells)
-                                    listOfLines.Add($"<td><i>| " + cell.Value + "</i></td>");
-                                listOfLines.Add($"<td>|</td>");
-                                listOfLines.Add($"</tr>");
-                            }
-
-                            listOfLines.Add("</tbody>");
-                            listOfLines.Add("</table>");
-
-                            listOfLines.Add($"</td>");
-                            listOfLines.Add($"</tr>");
-                        }
-                    }
-                }
+                listOfLines.AddRange(GenerateScenarioDataStepsSection(feature.Background.Steps, false));
 
                 listOfLines.Add("</div>");
                 listOfLines.Add("<p></p>");
@@ -395,7 +346,7 @@ namespace Expressium.LivingDocReport
                         listOfLines.Add("<table class='scenario-outline'>");
                         listOfLines.Add("<tbody>");
                         listOfLines.AddRange(GenerateScenarioDataTitleSection(scenario, example));
-                        listOfLines.AddRange(GenerateScenarioDataStepsSection(example));
+                        listOfLines.AddRange(GenerateScenarioDataStepsSection(example.Steps, true));
                         listOfLines.AddRange(GenerateScenarioDataExamplesSection(example));
                         listOfLines.AddRange(GenerateScenarioDataMessageSection(example));
                         listOfLines.Add("</tbody>");
@@ -444,13 +395,13 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataStepsSection(LivingDocExample example)
+        internal List<string> GenerateScenarioDataStepsSection(List<LivingDocStep> steps, bool isExecuted)
         {
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Scenario Data Steps Section -->");
 
-            foreach (var step in example.Steps)
+            foreach (var step in steps)
             {
                 var status = step.GetStatus().ToLower();
 
@@ -462,7 +413,7 @@ namespace Expressium.LivingDocReport
                 else
                     stepMarker = "&cross;";
 
-                //if (step.IsPassed() || step.IsFailed())
+                if (isExecuted)
                 {
                     listOfLines.Add($"<tr>");
                     listOfLines.Add($"<td colspan='2'>");
@@ -472,16 +423,16 @@ namespace Expressium.LivingDocReport
                     listOfLines.Add($"</td>");
                     listOfLines.Add($"</tr>");
                 }
-                //else
-                //{
-                //    listOfLines.Add($"<tr>");
-                //    listOfLines.Add($"<td colspan='2'>");
-                //    listOfLines.Add($"<span class='step-indent color-skipped'><b>{stepMarker}</b></span>");
-                //    listOfLines.Add($"<span class='step-keyword color-skipped'><i> " + step.Type + "</i></span> ");
-                //    listOfLines.Add($"<span class='color-skipped'><i>" + step.Text + "</i></span>");
-                //    listOfLines.Add($"</td>");
-                //    listOfLines.Add($"</tr>");
-                //}
+                else
+                {
+                    listOfLines.Add($"<tr>");
+                    listOfLines.Add($"<td colspan='2'>");
+                    listOfLines.Add($"<span class='step-indent color-skipped'></span>");
+                    listOfLines.Add($"<span class='step-keyword color-skipped'><i> " + step.Keyword + "</i></span> ");
+                    listOfLines.Add($"<span class='color-skipped'><i>" + step.Name + "</i></span>");
+                    listOfLines.Add($"</td>");
+                    listOfLines.Add($"</tr>");
+                }
 
                 if (step.DataTable.Rows.Count > 0)
                 {

@@ -146,7 +146,7 @@ namespace Expressium.CucumberMessages
                     livingDocBackground.Steps.Add(livingDocStep);
                 }
 
-                livingDocFeature.Backgrounds.Add(livingDocBackground);
+                livingDocFeature.Background = livingDocBackground;
             }
 
             // Scenario
@@ -188,6 +188,12 @@ namespace Expressium.CucumberMessages
                     }
                 }
 
+                if (livingDocFeature.Background.Steps.Count > 0)
+                {
+                    foreach (var backgroundStep in livingDocFeature.Background.Steps)
+                        livingDocExample.Steps.Add(backgroundStep.Copy(backgroundStep));
+                }
+
                 foreach (var step in scenario.Steps)
                 {
                     var livingDocStep = new LivingDocStep();
@@ -207,6 +213,26 @@ namespace Expressium.CucumberMessages
                     }
 
                     livingDocExample.Steps.Add(livingDocStep);
+                }
+            }
+
+            // Rule
+            foreach (var child in feature.Children)
+            {
+                if (child.Rule == null)
+                    continue;
+
+                var rule = child.Rule;
+
+                foreach (var ruleChild in rule.Children)
+                {
+                    if (ruleChild.Scenario == null)
+                        continue;
+
+                    var ruleScenario = ruleChild.Scenario;
+
+                    // var livingDocScenario = new LivingDocScenario();
+                    // TODO - Missing implementation of Rule Scenarios...
                 }
             }
         }

@@ -13,13 +13,12 @@ namespace Expressium.LivingDoc
         public string Keyword { get; set; }
         public string Uri { get; set; }
 
-        public List<LivingDocBackground> Backgrounds { get; set; }
+        public LivingDocBackground Background { get; set; }
         public List<LivingDocScenario> Scenarios { get; set; }
 
         public LivingDocFeature()
         {
             Tags = new List<LivingDocTag>();
-            Backgrounds = new List<LivingDocBackground>();
             Scenarios = new List<LivingDocScenario>();
         }
 

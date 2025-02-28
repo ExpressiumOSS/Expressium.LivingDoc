@@ -30,6 +30,22 @@ namespace Expressium.LivingDoc
             DataTable = new LivingDocDataTable();
         }
 
+        public LivingDocStep Copy(LivingDocStep step)
+        {
+            var copy = new LivingDocStep
+            {
+                Id = step.Id,
+                Keyword = step.Keyword,
+                Name = step.Name,
+                Status = step.Status,
+                Duration = step.Duration,
+                Message = step.Message,
+                DataTable = step.DataTable
+            };
+
+            return copy;
+        }
+
         public bool IsPassed()
         {
             if (Status == null)
