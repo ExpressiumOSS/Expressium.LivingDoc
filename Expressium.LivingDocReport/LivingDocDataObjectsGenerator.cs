@@ -10,26 +10,26 @@ namespace Expressium.LivingDocReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateFeatureDataSections(project));
-            listOfLines.AddRange(GenerateScenarioDataSections(project));
+            listOfLines.AddRange(GenerateDataFeatures(project));
+            listOfLines.AddRange(GenerateDataScenarios(project));
 
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDataSections(LivingDocProject project)
+        internal List<string> GenerateDataFeatures(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
             foreach (var feature in project.Features)
             {
-                listOfLines.Add("<!-- Feature Data Section -->");
+                listOfLines.Add("<!-- Data Feature -->");
                 listOfLines.Add($"<div class='data-item' id='{feature.Id}'>");
 
                 listOfLines.Add("<div class='section'>");
-                listOfLines.AddRange(GenerateFeatureDataTagSection(feature));
-                listOfLines.AddRange(GenerateFeatureDataNameSection(feature));
-                listOfLines.AddRange(GenerateFeatureDataDescriptionSection(feature));
-                listOfLines.AddRange(GenerateFeatureDataBackgroundSection(feature));
+                listOfLines.AddRange(GenerateDataFeaturesTags(feature));
+                listOfLines.AddRange(GenerateDataFeatureName(feature));
+                listOfLines.AddRange(GenerateDataFeatureDescription(feature));
+                listOfLines.AddRange(GenerateDataFeatureBackground(feature));
                 listOfLines.Add("</div>");
 
                 listOfLines.Add("</div>");
@@ -38,11 +38,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDataTagSection(LivingDocFeature feature)
+        internal List<string> GenerateDataFeaturesTags(LivingDocFeature feature)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Feature Data Tag Section -->");
+            listOfLines.Add("<!-- Data Feature Tags -->");
             listOfLines.Add("<div>");
             listOfLines.Add("<span class='tag-names'>" + feature.GetTags() + "</span>");
             listOfLines.Add("</div>");
@@ -50,11 +50,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDataNameSection(LivingDocFeature feature)
+        internal List<string> GenerateDataFeatureName(LivingDocFeature feature)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Feature Data Name Section -->");
+            listOfLines.Add("<!-- Data Feature Name -->");
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<span class='feature-name'>Feature: {feature.Name}</span>");
@@ -63,11 +63,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDataDescriptionSection(LivingDocFeature feature)
+        internal List<string> GenerateDataFeatureDescription(LivingDocFeature feature)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Feature Data Description Section -->");
+            listOfLines.Add("<!-- Data Feature Description -->");
             listOfLines.Add("<div class='feature-description'>");
             var listOfDescription = feature.Description.Trim().Split("\n");
             foreach (var line in listOfDescription)
@@ -78,17 +78,17 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateFeatureDataBackgroundSection(LivingDocFeature feature)
+        internal List<string> GenerateDataFeatureBackground(LivingDocFeature feature)
         {
             var listOfLines = new List<string>();
 
             if (feature.Background != null && feature.Background.Steps.Count > 0)
             {
-                listOfLines.Add("<!-- Feature Data Backgrounds Steps Section -->");
+                listOfLines.Add("<!-- Data Feature Background -->");
                 listOfLines.Add("<div class='feature-background'>");
                 listOfLines.Add("<span class='feature-name'>Background:</span><br />");
 
-                listOfLines.AddRange(GenerateScenarioDataStepsSection(feature.Background.Steps, false));
+                listOfLines.AddRange(GenerateDataScenarioSteps(feature.Background.Steps, false));
 
                 listOfLines.Add("</div>");
                 listOfLines.Add("<p></p>");
@@ -97,7 +97,7 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataSections(LivingDocProject project)
+        internal List<string> GenerateDataScenarios(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -105,7 +105,7 @@ namespace Expressium.LivingDocReport
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add("<!-- Scenario Data Section -->");
+                    listOfLines.Add("<!-- Data Scenario -->");
                     listOfLines.Add($"<div class='data-item' id='{scenario.Id}'>");
 
                     bool exampleSplitter = false;
@@ -118,19 +118,19 @@ namespace Expressium.LivingDocReport
                         listOfLines.Add("<!-- Scenario Outline Section -->");
                         listOfLines.Add("<div class='section'>");
 
-                        listOfLines.AddRange(GenerateScenarioDataTagSection(scenario));
+                        listOfLines.AddRange(GenerateDataScenarioTags(scenario));
 
                         listOfLines.Add("<table class='scenario-outline'>");
                         listOfLines.Add("<tbody>");
-                        listOfLines.AddRange(GenerateScenarioDataTitleSection(scenario, example));
-                        listOfLines.AddRange(GenerateScenarioDataStepsSection(example.Steps, true));
-                        listOfLines.AddRange(GenerateScenarioDataExamplesSection(example));
-                        listOfLines.AddRange(GenerateScenarioDataMessageSection(example));
+                        listOfLines.AddRange(GenerateDataScenarioTitle(scenario, example));
+                        listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps, true));
+                        listOfLines.AddRange(GenerateDataScenarioExamples(example));
+                        listOfLines.AddRange(GenerateDataScenarioMessage(example));
                         listOfLines.Add("</tbody>");
                         listOfLines.Add("</table>");
                         listOfLines.Add("</div>");
 
-                        listOfLines.AddRange(GenerateScenarioDataAttachments(example));
+                        listOfLines.AddRange(GenerateDataScenarioAttachments(example));
                     }
 
                     listOfLines.Add("</div>");
@@ -140,11 +140,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataTagSection(LivingDocScenario scenario)
+        internal List<string> GenerateDataScenarioTags(LivingDocScenario scenario)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Scenario Data Tag Section -->");
+            listOfLines.Add("<!-- Data Scenario Tags -->");
             listOfLines.Add("<div>");
             listOfLines.Add("<span class='tag-names'>" + scenario.GetTags() + "</span>");
             listOfLines.Add("</div>");
@@ -152,7 +152,7 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataTitleSection(LivingDocScenario scenario, LivingDocExample example)
+        internal List<string> GenerateDataScenarioTitle(LivingDocScenario scenario, LivingDocExample example)
         {
             var scenarioKeyword = "Scenario:";
             if (example.TableHeader.Cells.Count > 0)
@@ -160,7 +160,7 @@ namespace Expressium.LivingDocReport
 
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Scenario Data Title Section -->");
+            listOfLines.Add("<!-- Data Scenario Title -->");
             listOfLines.Add("<tr>");
             listOfLines.Add("<td colspan='2'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
@@ -172,11 +172,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataStepsSection(List<LivingDocStep> steps, bool isExecuted)
+        internal List<string> GenerateDataScenarioSteps(List<LivingDocStep> steps, bool isExecuted)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Scenario Data Steps Section -->");
+            listOfLines.Add("<!-- Data Scenario Steps -->");
 
             foreach (var step in steps)
             {
@@ -257,13 +257,13 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataExamplesSection(LivingDocExample example)
+        internal List<string> GenerateDataScenarioExamples(LivingDocExample example)
         {
             var listOfLines = new List<string>();
 
             if (example.TableHeader.Cells.Count > 0)
             {
-                listOfLines.Add("<!-- Scenario Examples Section -->");
+                listOfLines.Add("<!-- Data Scenario Examples -->");
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td colspan='2' class='examples'><b>Examples:</b></td>");
                 listOfLines.Add($"</tr>");
@@ -319,7 +319,7 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataMessageSection(LivingDocExample example)
+        internal List<string> GenerateDataScenarioMessage(LivingDocExample example)
         {
             var listOfLines = new List<string>();
 
@@ -328,7 +328,7 @@ namespace Expressium.LivingDocReport
             string message = example.GetMessage();
             if (message != null)
             {
-                listOfLines.Add("<!-- Scenario Data Message Section -->");
+                listOfLines.Add("<!-- Data Scenario Message -->");
                 listOfLines.Add($"<tr><td></td></tr>");
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td colspan='2' style='width: 0px; min-width: fit-content;'>");
@@ -340,13 +340,13 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioDataAttachments(LivingDocExample example)
+        internal List<string> GenerateDataScenarioAttachments(LivingDocExample example)
         {
             var listOfLines = new List<string>();
 
             if (example.Attachments.Count > 0)
             {
-                listOfLines.Add("<!-- Scenario Data Attachments Section -->");
+                listOfLines.Add("<!-- Data Scenario Attachments -->");
                 listOfLines.Add("<div class='section' style='padding-top: 2px; padding-bottom: 0px;'>");
 
                 listOfLines.Add("<span class='scenario-name'>Attachments:</span>");

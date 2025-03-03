@@ -11,16 +11,16 @@ namespace Expressium.LivingDocReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateProjectDataAnalyticsSection(project));
+            listOfLines.AddRange(GenerateDataAnalytics(project));
 
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsSection(LivingDocProject project)
+        internal List<string> GenerateDataAnalytics(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Analytics Section -->");
+            listOfLines.Add("<!-- Data Analytics -->");
             listOfLines.Add($"<div class='data-item' id='analytics'>");
 
             listOfLines.Add("<div class='section'>");
@@ -30,16 +30,16 @@ namespace Expressium.LivingDocReport
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("</div>");
 
-            listOfLines.AddRange(GenerateProjectDataAnalyticsFeaturesStatusChartSection(project));
-            listOfLines.AddRange(GenerateProjectDataAnalyticsScenariosStatusChartSection(project));
-            listOfLines.AddRange(GenerateProjectDataAnalyticsDurationSection(project));
+            listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart(project));
+            listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart(project));
+            listOfLines.AddRange(GenerateDataAnalyticsDuration(project));
 
             listOfLines.Add("</div>");
 
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsFeaturesStatusChartSection(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsFeaturesStatusChart(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -49,12 +49,12 @@ namespace Expressium.LivingDocReport
             var numberOfSkipped = project.GetNumberOfSkippedFeatures();
             var numberOfTests = project.Features.Count;
 
-            listOfLines.AddRange(GenerateProjectDataAnalyticsStatusChartSection("Features", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+            listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Features", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
 
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsScenariosStatusChartSection(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsScenariosStatusChart(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -64,12 +64,12 @@ namespace Expressium.LivingDocReport
             var numberOfSkipped = project.GetNumberOfSkippedScenarios();
             var numberOfTests = project.GetNumberOfScenarios();
 
-            listOfLines.AddRange(GenerateProjectDataAnalyticsStatusChartSection("Scenarios", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+            listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Scenarios", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
 
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsStatusChartSection(string title, int numberOfPassed, int numberOfIncomplete, int numberOfFailed, int numberOfSkipped, int numberOfTests)
+        internal List<string> GenerateDataAnalyticsStatusChart(string title, int numberOfPassed, int numberOfIncomplete, int numberOfFailed, int numberOfSkipped, int numberOfTests)
         {
             var percentageOfPassed = (int)Math.Round(100.0f / numberOfTests * numberOfPassed);
             var percentageOfIncomplete = (int)Math.Round(100.0f / numberOfTests * numberOfIncomplete);
@@ -102,7 +102,7 @@ namespace Expressium.LivingDocReport
             listOfLines.Add("<div class='section' style='width: fit-content; margin: auto; padding: 16px; border-radius: 16px; background-color: whitesmoke;'>");
 
             {
-                listOfLines.Add("<!-- Project Data Analytics Status Chart Section -->");
+                listOfLines.Add("<!-- Data Analytics Status Chart -->");
                 listOfLines.Add($"<div class='section' style='text-align: center; max-width: 500px; margin: auto;'>");
                 listOfLines.Add($"    <svg width='180px' height='180px' viewBox='0 0 42 42'>");
                 listOfLines.Add($"        <g transform='rotate(-90, 21, 21)'>");
@@ -120,7 +120,6 @@ namespace Expressium.LivingDocReport
             }
 
             {
-                listOfLines.Add("<!-- Status Slave Chart Section -->");
                 listOfLines.Add("<div class='section' style='text-align: center; max-width: 700px; margin: auto;'>");
                 listOfLines.Add("<table align='center'>");
                 listOfLines.Add("<tr>");
@@ -171,11 +170,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataAnalyticsDurationSection(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsDuration(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Analytics Duration Section -->");
+            listOfLines.Add("<!-- Data Analytics Duration -->");
             listOfLines.Add("<div style='padding-top: 6px; text-align: center; justify-content: center; align-items: center; display: flex;'>");
             listOfLines.Add($"<span style='font-size: 40px;'>&#9201;</span>");
             listOfLines.Add($"<span style='font-size: 24px; padding-top: 6px;'>");

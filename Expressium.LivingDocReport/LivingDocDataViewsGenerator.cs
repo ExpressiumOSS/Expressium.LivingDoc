@@ -11,19 +11,19 @@ namespace Expressium.LivingDocReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateProjectDataProjectViewSection(project));
-            listOfLines.AddRange(GenerateProjectDataFeaturesViewSection(project));
-            listOfLines.AddRange(GenerateProjectDataScenariosViewSection(project));
-            listOfLines.AddRange(GenerateProjectDataStepsViewSection(project));
+            listOfLines.AddRange(GenerateDataProjectView(project));
+            listOfLines.AddRange(GenerateDataFeaturesView(project));
+            listOfLines.AddRange(GenerateDataScenariosView(project));
+            listOfLines.AddRange(GenerateDataStepsView(project));
 
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataProjectViewSection(LivingDocProject project)
+        internal List<string> GenerateDataProjectView(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Project View Section -->");
+            listOfLines.Add("<!-- Data Project View -->");
             listOfLines.Add($"<div class='data-item' id='project-view'>");
 
             listOfLines.Add("<div class='section'>");
@@ -73,11 +73,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataFeaturesViewSection(LivingDocProject project)
+        internal List<string> GenerateDataFeaturesView(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Features View Section -->");
+            listOfLines.Add("<!-- Data Features View -->");
             listOfLines.Add($"<div class='data-item' id='features-view'>");
 
             listOfLines.Add("<div class='section'>");
@@ -117,11 +117,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataScenariosViewSection(LivingDocProject project)
+        internal List<string> GenerateDataScenariosView(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Scenarios View Section -->");
+            listOfLines.Add("<!-- Data Scenarios View -->");
             listOfLines.Add($"<div class='data-item' id='scenarios-view'>");
 
             listOfLines.Add("<div class='section'>");
@@ -164,11 +164,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataStepsViewSection(LivingDocProject project)
+        internal List<string> GenerateDataStepsView(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Steps View Section -->");
+            listOfLines.Add("<!-- Data Steps View -->");
             listOfLines.Add($"<div class='data-item' id='steps-view'>");
 
             listOfLines.Add("<div class='section'>");

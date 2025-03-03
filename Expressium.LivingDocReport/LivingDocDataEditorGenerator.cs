@@ -9,16 +9,16 @@ namespace Expressium.LivingDocReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateProjectDataEditorSection(project));
+            listOfLines.AddRange(GenerateDataEditor(project));
 
             return listOfLines;
         }
 
-        internal List<string> GenerateProjectDataEditorSection(LivingDocProject project)
+        internal List<string> GenerateDataEditor(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Project Data Editor Section -->");
+            listOfLines.Add("<!-- Data Editor -->");
             listOfLines.Add($"<div class='data-item' id='editor'>");
 
             listOfLines.Add("<div class='section'>");
