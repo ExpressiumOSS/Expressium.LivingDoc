@@ -53,6 +53,16 @@ namespace Expressium.LivingDoc
             }
         }
 
+        public int GetNumberOfScenarios()
+        {
+            return Scenarios.Count;
+        }
+
+        public string GetNumberOfScenariosSortId()
+        {
+            return GetNumberOfScenarios().ToString("D4");
+        }
+
         public int GetPercentageOfPassed()
         {
             var numberOfPassed = Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());

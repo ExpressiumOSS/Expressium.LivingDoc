@@ -11,7 +11,7 @@ namespace Expressium.LivingDocReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateDataProjectView(project));
+            listOfLines.AddRange(GenerateDataOverview(project));
             listOfLines.AddRange(GenerateDataFeaturesView(project));
             listOfLines.AddRange(GenerateDataScenariosView(project));
             listOfLines.AddRange(GenerateDataStepsView(project));
@@ -19,11 +19,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateDataProjectView(LivingDocProject project)
+        internal List<string> GenerateDataOverview(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Data Project View -->");
+            listOfLines.Add("<!-- Data Overview -->");
             listOfLines.Add($"<div class='data-item' id='project-view'>");
 
             listOfLines.Add("<div class='section'>");
