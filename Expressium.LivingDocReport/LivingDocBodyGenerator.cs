@@ -9,6 +9,7 @@ namespace Expressium.LivingDocReport
     internal class LivingDocBodyGenerator
     {
         private bool includeNavigation = true;
+        private bool includeEditor = false;
 
         internal List<string> GenerateBody(LivingDocProject project)
         {
@@ -69,8 +70,13 @@ namespace Expressium.LivingDocReport
                 listOfLines.Add("<span>|</span>");
                 listOfLines.Add("<a title='Analytics' style='color: white;' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
                 listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a title='Gherkin Script Editor' style='color: white;' href='#' onclick=\"loadEditor('editor'); filterStepDefinitions();\">Editor</a>");
-                listOfLines.Add("<span>|</span>");
+
+                if (includeEditor)
+                {
+                    listOfLines.Add("<a title='Gherkin Script Editor' style='color: white;' href='#' onclick=\"loadEditor('editor'); filterStepDefinitions();\">Editor</a>");
+                    listOfLines.Add("<span>|</span>");
+                }
+
                 listOfLines.Add("</nav>");
             }
 
