@@ -12,8 +12,6 @@ namespace Expressium.LivingDocReport
 
         internal List<string> GenerateBody(LivingDocProject project)
         {
-            var dataGenerator = new LivingDocDataGenerator();
-
             var listOfLines = new List<string>();
 
             listOfLines.AddRange(GenerateBodyHeader());
@@ -21,7 +19,10 @@ namespace Expressium.LivingDocReport
             listOfLines.AddRange(GenerateNavigation(project));
             listOfLines.AddRange(GenerateContent(project));
             listOfLines.AddRange(GenerateFooter(project));
-            listOfLines.AddRange(dataGenerator.GenerateData(project));
+            listOfLines.AddRange(GenerateDataViews(project));
+            listOfLines.AddRange(GenerateDataObjects(project));
+            listOfLines.AddRange(GenerateDataAnalytics(project));
+            listOfLines.AddRange(GenerateDataEditor(project));
             listOfLines.AddRange(GenerateBodyFooter());
 
             return listOfLines;
@@ -69,7 +70,7 @@ namespace Expressium.LivingDocReport
                 listOfLines.Add("<a title='Analytics' style='color: white;' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
                 listOfLines.Add("<span>|</span>");
                 listOfLines.Add("<a title='Gherkin Script Editor' style='color: white;' href='#' onclick=\"loadEditor('editor'); filterStepDefinitions();\">Editor</a>");
-                listOfLines.Add("<span>|</span>");                
+                listOfLines.Add("<span>|</span>");
                 listOfLines.Add("</nav>");
             }
 
@@ -155,6 +156,46 @@ namespace Expressium.LivingDocReport
             listOfLines.Add("<footer>");
             listOfLines.Add("©2025 Expressium All Rights Reserved");
             listOfLines.Add("</footer>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataViews(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            var dataGenerator = new LivingDocDataViewsGenerator();
+            listOfLines.AddRange(dataGenerator.Generate(project));
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataObjects(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            var dataGenerator = new LivingDocDataObjectsGenerator();
+            listOfLines.AddRange(dataGenerator.Generate(project));
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataAnalytics(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            var dataGenerator = new LivingDocDataAnalyticsGenerator();
+            listOfLines.AddRange(dataGenerator.Generate(project));
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataEditor(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            var dataGenerator = new LivingDocDataEditorGenerator();
+            listOfLines.AddRange(dataGenerator.Generate(project));
 
             return listOfLines;
         }

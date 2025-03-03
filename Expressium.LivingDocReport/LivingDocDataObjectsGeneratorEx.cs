@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Expressium.LivingDocReport
 {
-    internal partial class LivingDocDataGenerator
+    internal partial class LivingDocDataObjectsGenerator
     {
         internal List<string> GenerateProjectDataTreeListSections(LivingDocProject project, LivingDocFolder node)
         {

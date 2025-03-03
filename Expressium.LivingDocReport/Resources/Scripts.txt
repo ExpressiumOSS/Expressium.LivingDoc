@@ -239,8 +239,8 @@
             document.getElementById('right-section').innerHTML = editor;
 
             document.getElementById("script").value = "";
-            document.getElementById("script").value += "@TA-1 @Review";
-            document.getElementById("script").value += "\nScenario: Successfully Creating a User Account";            
+            document.getElementById("script").value += "@TA-??? @Review";
+            document.getElementById("script").value += "\nScenario: Successfully Creating a new Gherkin Script";            
         }
     </script>
     <script>

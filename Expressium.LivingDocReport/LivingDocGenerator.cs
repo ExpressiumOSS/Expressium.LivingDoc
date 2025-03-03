@@ -11,33 +11,53 @@ namespace Expressium.LivingDocReport
 {
     public class LivingDocGenerator
     {
-        private string filePath;
+        private string inputPath;
         private string outputPath;
 
-        public LivingDocGenerator(string filePath, string outputPath)
+        public LivingDocGenerator(string inputPath, string outputPath)
         {
-            this.filePath = filePath;
+            this.inputPath = inputPath;
             this.outputPath = outputPath;
         }
 
         public void Execute()
         {
             Console.WriteLine("");
-            Console.WriteLine("Generating Test Execution Report...");
-            Console.WriteLine("FilePath: " + filePath);
+            Console.WriteLine("Generating LivingDoc Report...");
+            Console.WriteLine("InputPath: " + inputPath);
             Console.WriteLine("OutputPath: " + outputPath);
             Console.WriteLine("");
 
-            Console.WriteLine("Parsing Test Execution JSON File...");
-            var project = LivingDocUtilities.DeserializeAsJson<LivingDocProject>(filePath);
+            var project = ParseJsonFile();
+            CreateOutputDirectories();
+            CopyOutputAttachments(project);
+            AssignUniqueIdentifier(project);
+            GenerateHtmlReport(project);
 
-            Console.WriteLine("Creating Test Execution Output Directories...");
+            Console.WriteLine("Generating LivingDoc Report Completed");
+            Console.WriteLine("");
+        }
+
+        internal LivingDocProject ParseJsonFile()
+        {
+            Console.WriteLine("Parse JSON File...");
+            return LivingDocUtilities.DeserializeAsJson<LivingDocProject>(inputPath);
+        }
+
+        internal void CreateOutputDirectories()
+        {
+            Console.WriteLine("Create Output Directories...");
+
             if (Directory.Exists(outputPath))
                 Directory.Delete(outputPath, true);
             Directory.CreateDirectory(outputPath);
             Directory.CreateDirectory(Path.Combine(outputPath, "Attachments"));
+        }
 
-            Console.WriteLine("Copy Attachments to Output Directory...");
+        internal void CopyOutputAttachments(LivingDocProject project)
+        {
+            Console.WriteLine("Copy Output Attachments...");
+
             foreach (var feature in project.Features)
             {
                 foreach (var scenario in feature.Scenarios)
@@ -52,8 +72,12 @@ namespace Expressium.LivingDocReport
                     }
                 }
             }
+        }
 
-            Console.WriteLine("Assign Unique Identifier to Features & Scenarios...");
+        internal void AssignUniqueIdentifier(LivingDocProject project)
+        {
+            Console.WriteLine("Assign Unique Identifier...");
+
             int indexId = 1;
             foreach (var feature in project.Features)
             {
@@ -65,26 +89,17 @@ namespace Expressium.LivingDocReport
                     scenario.Index = indexId++;
                 }
             }
-
-            //Console.WriteLine("Sort Features & Scenarios by Tags...");
-            //project.OrderByTags();
-
-            Console.WriteLine("Generating Test Execution HTML Report...");
-            GenerateHtmlReport(project);
-
-            Console.WriteLine("Generating Test Execution Report Completed");
-            Console.WriteLine("");
         }
 
         internal void GenerateHtmlReport(LivingDocProject project)
         {
-            var listOfLines = new List<string>();
+            Console.WriteLine("Generating  HTML Report...");
 
-            var bodyGenerator = new LivingDocBodyGenerator();
+            var listOfLines = new List<string>();
 
             listOfLines.AddRange(GenerateHtmlHeader());
             listOfLines.AddRange(GenerateHead());
-            listOfLines.AddRange(bodyGenerator.GenerateBody(project));
+            listOfLines.AddRange(GenerateBody(project));
             listOfLines.AddRange(GenerateHtmlFooter());
 
             var htmlFilePath = Path.Combine(outputPath, "LivingDoc.html");
@@ -129,6 +144,16 @@ namespace Expressium.LivingDocReport
         internal List<string> GenerateScripts()
         {
             return Resources.Scripts.Split(Environment.NewLine).ToList();
+        }
+
+        internal List<string> GenerateBody(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            var bodyGenerator = new LivingDocBodyGenerator();
+            listOfLines.AddRange(bodyGenerator.GenerateBody(project));
+
+            return listOfLines;
         }
 
         internal List<string> GenerateHtmlFooter()
