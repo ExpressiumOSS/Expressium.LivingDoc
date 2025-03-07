@@ -29,7 +29,8 @@ public sealed class Step
     /**
      * The test phase signalled by the keyword: Context definition (Given), Action performance (When), Outcome assertion (Then). Other keywords signal Continuation (And and But) from a prior keyword. Please note that all translations which a dialect maps to multiple keywords (`*` is in this category for all dialects), map to 'Unknown'.
      */
-    public StepKeywordType KeywordType { get; private set; }
+    //public StepKeywordType KeywordType { get; private set; }
+    public string KeywordType { get; private set; }
     public string Text { get; private set; }
     public DocString DocString { get; private set; }
     public DataTable DataTable { get; private set; }
@@ -42,7 +43,8 @@ public sealed class Step
     public Step(
         Location location,
         string keyword,
-        StepKeywordType keywordType,
+        //StepKeywordType keywordType,
+        string keywordType,
         string text,
         DocString docString,
         DataTable dataTable,

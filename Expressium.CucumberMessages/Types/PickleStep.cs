@@ -33,7 +33,8 @@ public sealed class PickleStep
      *
      * Note that the keywords `But` and `And` inherit their meaning from prior steps and the `*` 'keyword' doesn't have specific meaning (hence Unknown)
      */
-    public PickleStepType Type { get; private set; }
+    //public PickleStepType Type { get; private set; }
+    public string Type { get; private set; }
     public string Text { get; private set; }
 
 
@@ -41,7 +42,8 @@ public sealed class PickleStep
         PickleStepArgument argument,
         List<string> astNodeIds,
         string id,
-        PickleStepType type,
+        //PickleStepType type,
+        string type,
         string text
     ) 
     {
