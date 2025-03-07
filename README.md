@@ -1,21 +1,26 @@
-# ReqnRoll Test Execution Report
+# Expressium LivingDoc Test Report
 
-SpecFlow has reached its end-of-life and we need a replacement
-for the SpecFlow Living Doc functionality in ReqnRoll...
+SpecFlow has reached its end-of-life and a replacement
+for the SpecFlow LivingDoc functionality is required in ReqnRoll.
+This demo solution is intended to serve as input and inspiration for a potential solution.
 
-This demo solution is intended to serve as input and inspiration for a potential final solution.
+The ongoing implementation of the Cucumber Messages in ReqnRoll
+will provide a more flexible and powerful solution for generating LivingDoc test reports.
 
-During test execution, an output file named TestAutomation.json will be generated,
-containing the majority of the information needed to build a custom report generator
-utilizing the FeatureContext and ScenarioContext classes. Additionally,
-a lightweight TestExecutionReportGenerator will produce a simple HTML
-report based on the TestAutomation.json file.
+The current solution will generate a custom JSON file during test execution
+using the FeatureContext and ScenarioContext classes.
+The LivingDocGenerator will then create a self-contained HTML report based on the test execution output.
+
+<br />
+<img src="ExpressiumLivingDoc.png"
+     alt="Expressium LivingDoc"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 
 ## How-To-Use
 * Execute the ReqnRoll BDD business tests in the solution...
 * Run the LivingDoc.bat file from the project's root folder...
 
-## Demo
+## Demo Test Report
 Web: https://expressium.dev/reqnroll/LivingDoc.html
 
 

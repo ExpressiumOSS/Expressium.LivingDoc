@@ -1,9 +1,17 @@
 # TODO
-
 * Finalize alignment of Cucumber interface with LivingDocReport...
 * Gray Color of checkmark and messagebox at not failed / passed...
 * Background and Scenario in on structure...?
 * Handling Serializing of JSON Enums Status...?
+* Predefined Program file Argument for OutputPath...
+* Visual Folders in Tree View Mode...
+* Add Stacktrace Information in Scenario View...
+* Handling History Runs by List And Graph...
+* Gherkin Editor for new Scenario with intellisense...
+* Non-executed Scenarios and steps missing in ReqnRoll...
+
+
+# Inspiration
 
 ### HTML Colors
 * https://www.computerhope.com/cgi-bin/htmlcolor.pl?c=4682B4
@@ -31,3 +39,9 @@
 
 ### Cucumber Messages devkit
 https://github.com/cucumber/compatibility-kit/tree/main/devkit
+
+### Understanding Test Automation Report in Depth
+https://www.browserstack.com/guide/understanding-test-automation-report 
+
+### What is a Test Report Katalon
+https://katalon.com/resources-center/blog/what-is-a-test-report
