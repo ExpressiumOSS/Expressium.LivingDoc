@@ -188,7 +188,7 @@ namespace Expressium.CucumberMessages
                     }
                 }
 
-                if (livingDocFeature.Background.Steps.Count > 0)
+                if (livingDocFeature.Background != null && livingDocFeature.Background.Steps.Count > 0)
                 {
                     foreach (var backgroundStep in livingDocFeature.Background.Steps)
                         livingDocExample.Steps.Add(backgroundStep.Copy(backgroundStep));
