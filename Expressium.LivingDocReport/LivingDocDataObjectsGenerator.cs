@@ -194,7 +194,7 @@ namespace Expressium.LivingDocReport
                 {
                     listOfLines.Add($"<tr>");
                     listOfLines.Add($"<td colspan='2'>");
-                    listOfLines.Add($"<span style='margin-right: 1px;' class='step-indent color-{status}'><b>{stepMarker}</b></span>");
+                    listOfLines.Add($"<span class='step-indent color-{status}'><b>{stepMarker}</b></span>");
                     listOfLines.Add($"<span class='step-keyword'> " + step.Keyword + "</span> ");
                     listOfLines.Add($"<span>" + step.Name + "</span>");
                     listOfLines.Add($"</td>");
@@ -215,9 +215,9 @@ namespace Expressium.LivingDocReport
                 {
                     listOfLines.Add("<!-- Scenario Steps Table Section -->");
                     listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td colspan='2' class='examples' style='padding-left: 64px;'>");
+                    listOfLines.Add($"<td colspan='2' style='padding-left: 64px;'>");
 
-                    listOfLines.Add("<table>");
+                    listOfLines.Add("<table class='step-table'>");
                     listOfLines.Add("<tbody>");
 
                     int rowNumber = 1;
@@ -265,13 +265,13 @@ namespace Expressium.LivingDocReport
             {
                 listOfLines.Add("<!-- Data Scenario Examples -->");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='2' class='examples'><b>Examples:</b></td>");
+                listOfLines.Add($"<td colspan='2' class='step-table-name'>Examples:</td>");
                 listOfLines.Add($"</tr>");
 
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='2' class='examples'>");
+                listOfLines.Add($"<td colspan='2'>");
 
-                listOfLines.Add("<table>");
+                listOfLines.Add("<table class='step-table'>");
                 listOfLines.Add("<tbody>");
 
                 var numberOfCells = example.TableHeader.Cells.Count;
@@ -331,7 +331,7 @@ namespace Expressium.LivingDocReport
                 listOfLines.Add("<!-- Data Scenario Message -->");
                 listOfLines.Add($"<tr><td></td></tr>");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='2' style='width: 0px; min-width: fit-content;'>");
+                listOfLines.Add($"<td class='step-message' colspan='2'>");
                 listOfLines.Add($"<div class='step-{status}'>{message}</div>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
@@ -347,7 +347,7 @@ namespace Expressium.LivingDocReport
             if (example.Attachments.Count > 0)
             {
                 listOfLines.Add("<!-- Data Scenario Attachments -->");
-                listOfLines.Add("<div class='section' style='padding-top: 2px; padding-bottom: 0px;'>");
+                listOfLines.Add("<div class='section attachments'>");
 
                 listOfLines.Add("<span class='scenario-name'>Attachments:</span>");
                 listOfLines.Add("<ul>");

@@ -62,7 +62,7 @@ namespace Expressium.LivingDocReport
                             var fullName = step.Keyword + " " + step.Name;
                             if (!mapOfSteps.ContainsKey(fullName))
                             {
-                                listOfLines.Add($"<tr class='gridlines' onclick=\"loadStepDefinition(this);\">");
+                                listOfLines.Add($"<tr class='gridline' onclick=\"loadStepDefinition(this);\">");
                                 listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
                                 listOfLines.Add($"</tr>");
 

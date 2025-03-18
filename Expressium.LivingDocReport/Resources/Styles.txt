@@ -77,7 +77,6 @@
         header {
             padding: 8px;
             padding-left: 16px;
-            /* border-bottom: 1px solid #ddd; */
             background-color: var(--secondary-color);
         }
 
@@ -91,9 +90,14 @@
 
         .navigation {
             background-color: darkgray;
+            color: white;
             padding: 8px;
             padding-left: 16px;
             padding-right: 16px;            
+        }
+
+        a.navigation-link {
+            color: white;        
         }
 
         .section {
@@ -167,8 +171,12 @@
           color: black;
         }
 
-        .gridlines {
+        .gridline {
             border-bottom: 1px solid lightgray;
+        }
+
+        .gridline-header {
+            color: dimgray;
         }
 
         .project-name {
@@ -252,6 +260,7 @@
 
         .step-indent {
             padding-left: 32px;
+            margin-right: 1px;
         }
 
         .step-keyword {
@@ -279,6 +288,25 @@
             outline: 1px solid var(--incomplete-color);
             text-align: center;
             padding: 8px;
+        }
+
+        .step-table {
+            color: gray;
+        }
+
+        .step-table-name {
+            color: gray;
+            font-weight: bold;
+        }
+
+        .step-table td {
+            padding-top: 1px;
+            padding-bottom: 1px;
+        }
+
+        .step-message {
+            width: 0px;
+            min-width: fit-content;
         }
 
         data-item {
@@ -328,10 +356,6 @@
 
         .bgcolor-undefined {
             background: var(--undefined-color);
-        }
-
-        .examples {
-            color: gray;
         }
 
         .status-dot {
@@ -407,5 +431,10 @@
            resize: none;
            width: 100%;
            padding: 8px;
+        }
+
+        .attachments {
+            padding-top: 2px;
+            padding-bottom: 0px;
         }
     </style>

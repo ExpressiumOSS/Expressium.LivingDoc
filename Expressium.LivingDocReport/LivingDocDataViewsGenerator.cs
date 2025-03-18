@@ -31,23 +31,32 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add("<tbody id='table-list'>");
 
-            //listOfLines.Add($"<tr data-role='folder' style='color: dimgray;'>");
+            //listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
             //listOfLines.Add($"<td width='8px'>📂</td>");
-            //listOfLines.Add($"<td colspan='2' class='gridlines' style='font-weight: bold;'>");
-            //listOfLines.Add($"<span>{project.Title}</span>");
+            //listOfLines.Add($"<td colspan='2' class='gridline'>");
+            //listOfLines.Add($"<span><b>{project.Title}</b></span>");
             //listOfLines.Add($"</td>");
-            //listOfLines.Add($"<td class='gridlines' align='right'></td>");
+            //listOfLines.Add($"<td class='gridline' align='right'></td>");
             //listOfLines.Add($"</tr>");
 
             foreach (var feature in project.Features)
             {
-                listOfLines.Add($"<tr data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\" style='color: dimgray;'>");
+                //listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
+                //listOfLines.Add($"<td width='8px'>📂</td>");
+                //listOfLines.Add($"<td colspan='2' class='gridline'>");
+                //listOfLines.Add($"<span><b>{feature.Uri}</b></span>");
+                //listOfLines.Add($"</td>");
+                //listOfLines.Add($"<td class='gridline' align='right'></td>");
+                //listOfLines.Add($"</tr>");
+
+                listOfLines.Add($"<tr class='gridline-header' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
                 listOfLines.Add($"<td width='8px'>&#10011;</td>");
-                listOfLines.Add($"<td colspan='2' class='gridlines' style='font-weight: bold;'>");
+                listOfLines.Add($"<td colspan='2' class='gridline'>");
                 listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-                listOfLines.Add($"<span>{feature.Name}</span>");
+                listOfLines.Add($"<span><b>{feature.Name}</b></span>");
                 listOfLines.Add($"</td>");
-                listOfLines.Add($"<td class='gridlines' align='right'></td>");
+                //listOfLines.Add($"<td class='gridline' align='right'><span class='duration'>{feature.GetPercentageOfPassed()}%</span></td>");
+                listOfLines.Add($"<td class='gridline' align='right'></td>");
                 listOfLines.Add($"</tr>");
 
                 foreach (var scenario in feature.Scenarios)
@@ -55,11 +64,11 @@ namespace Expressium.LivingDocReport
                     listOfLines.Add($"<tr data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                     listOfLines.Add($"<td width='8px'></td>");
                     listOfLines.Add($"<td width='16px'></td>");
-                    listOfLines.Add($"<td class='gridlines'>");
+                    listOfLines.Add($"<td class='gridline'>");
                     listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
                     listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
                     listOfLines.Add($"</td>");
-                    listOfLines.Add($"<td class='gridlines'></td>");
+                    listOfLines.Add($"<td class='gridline'></td>");
                     listOfLines.Add($"</tr>");
                 }
             }
@@ -98,7 +107,7 @@ namespace Expressium.LivingDocReport
 
             foreach (var feature in project.Features)
             {
-                listOfLines.Add($"<tr class='gridlines' data-tags='{feature.Name} {feature.GetTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+                listOfLines.Add($"<tr class='gridline' data-tags='{feature.Name} {feature.GetTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
                 listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
                 listOfLines.Add($"<td><a href='#'>{feature.Name}</a></td>");
                 //listOfLines.Add($"<td align='center' data-scenarios='{feature.GetNumberOfScenariosSortId()}'>{feature.GetNumberOfScenarios()}</td>");
@@ -131,7 +140,7 @@ namespace Expressium.LivingDocReport
             listOfLines.Add("<tr data-role='header'>");
             listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
-            //listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-sequence\")'>Sequence<span class='sort-column'>&udarr;</span></th>");
+            //listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-steps\")'>Steps<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-coverage\")'>Coverage<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th onClick='sortTableByColumnByAttibute(3, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
@@ -144,10 +153,10 @@ namespace Expressium.LivingDocReport
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr class='gridlines' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                    listOfLines.Add($"<tr class='gridline' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                     listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span></td>");
                     listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
-                    //listOfLines.Add($"<td align='center' data-sequence='{scenario.GetIndexSortId()}'>{scenario.Index}</td>");
+                    //listOfLines.Add($"<td align='center' data-steps='{scenario.GetNumberOfStepsSortId()}'>{scenario.GetNumberOfSteps()}</td>");
                     listOfLines.Add($"<td align='center' data-coverage='{scenario.GetPercentageOfPassedSortId()}'>{scenario.GetPercentageOfPassed()}%</td>");
                     listOfLines.Add($"<td align='center' data-duration='{scenario.GetDurationSortId()}'>{scenario.GetDuration()}</td>");
                     listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
@@ -211,7 +220,7 @@ namespace Expressium.LivingDocReport
                                         .Where(x => x.Keyword + " " + x.Name == fullName)
                                         .Count();
 
-                                    listOfLines.Add($"<tr class='gridlines' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                                    listOfLines.Add($"<tr class='gridline' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                                     listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{step.GetStatus().ToLower()}'></span></td>");
                                     listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
                                     listOfLines.Add($"<td align='center' data-count='{count.ToString("D4")}'>{count}</td>");

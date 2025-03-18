@@ -13,7 +13,7 @@ namespace Expressium.LivingDocReport
             {
                 listOfLines.Add($"<ul>");
 
-                listOfLines.Add($"<li style='padding: 3px; color: dimgray; font-weight: bold;' class='gridlines'>");
+                listOfLines.Add($"<li style='padding: 3px; color: dimgray; font-weight: bold;' class='gridline'>");
                 listOfLines.Add($"<span>📂</span>");
                 listOfLines.Add($"<span>{child.Key}</span>");
                 listOfLines.Add($"</li>");
@@ -26,7 +26,7 @@ namespace Expressium.LivingDocReport
                     {
                         listOfLines.Add($"<ul>");
 
-                        listOfLines.Add($"<li style='padding: 3px; color: dimgray;' class='gridlines' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+                        listOfLines.Add($"<li style='padding: 3px; color: dimgray;' class='gridline' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
                         listOfLines.Add($"<span>&#10011;</span>");
                         listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
                         listOfLines.Add($"<span><b>{feature.Name}</b></span>");
@@ -35,7 +35,7 @@ namespace Expressium.LivingDocReport
                         foreach (var scenario in feature.Scenarios)
                         {
                             listOfLines.Add($"<ul>");
-                            listOfLines.Add($"<li style='padding: 3px;' class='gridlines' data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                            listOfLines.Add($"<li style='padding: 3px;' class='gridline' data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                             listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
                             listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
                             listOfLines.Add($"</li>");
@@ -63,7 +63,7 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add($"<ul style='padding-left: 0px;'>");
 
-            listOfLines.Add($"<li style='padding: 3px; color: dimgray; font-weight: bold;' class='gridlines'>");
+            listOfLines.Add($"<li style='padding: 3px; color: dimgray; font-weight: bold;' class='gridline'>");
             listOfLines.Add($"<span>📂</span>");
             listOfLines.Add($"<span>{project.Title}</span>");
             listOfLines.Add($"</li>");

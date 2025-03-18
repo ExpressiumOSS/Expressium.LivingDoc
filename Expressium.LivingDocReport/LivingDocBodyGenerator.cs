@@ -58,22 +58,22 @@ namespace Expressium.LivingDocReport
             if (includeNavigation)
             {
                 listOfLines.Add("<!-- Project Navigation Section -->");
-                listOfLines.Add("<nav class='navigation' style='color: white;'>");
+                listOfLines.Add("<nav class='navigation'>");
                 listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a title='Overview' style='color: white;' href='#' onclick=\"loadViewmode('project-view');\">Overview</a>");
+                listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewmode('project-view');\">Overview</a>");
                 listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a title='Features List View' style='color: white;' href='#' onclick=\"loadViewmode('features-view');\">Features</a>");
+                listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewmode('features-view');\">Features</a>");
                 listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a title='Scenarios List View' style='color: white;' href='#' onclick=\"loadViewmode('scenarios-view');\">Scenarios</a>");
+                listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewmode('scenarios-view');\">Scenarios</a>");
                 listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a title='Steps List View' style='color: white;' href='#' onclick=\"loadViewmode('steps-view');\">Steps</a>");
+                listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewmode('steps-view');\">Steps</a>");
                 listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a title='Analytics' style='color: white;' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
+                listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
                 listOfLines.Add("<span>|</span>");
 
                 if (includeEditor)
                 {
-                    listOfLines.Add("<a title='Gherkin Script Editor' style='color: white;' href='#' onclick=\"loadEditor('editor'); filterStepDefinitions();\">Editor</a>");
+                    listOfLines.Add("<a class='navigation-link' title='Gherkin Script Editor' href='#' onclick=\"loadEditor('editor'); filterStepDefinitions();\">Editor</a>");
                     listOfLines.Add("<span>|</span>");
                 }
 

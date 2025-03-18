@@ -89,5 +89,20 @@ namespace Expressium.LivingDoc
 
             return (int)Math.Round(100.0f / numberOfSteps * numberOfPassedSteps);
         }
+
+        public int GetNumberOfSteps()
+        {
+            var numberOfSteps = 0;
+
+            foreach (var example in Examples)
+                numberOfSteps += example.Steps.Count;
+
+            return numberOfSteps;
+        }
+
+        public string GetNumberOfStepsSortId()
+        {
+            return GetNumberOfSteps().ToString("D4");
+        }
     }
 }
