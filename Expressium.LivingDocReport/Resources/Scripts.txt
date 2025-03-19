@@ -131,6 +131,27 @@
                         tr[i].style.display = "";
                 }
             }
+
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+                if (role == "feature") {
+                    if (tr[i].style.display == "") {
+                        var featureId = tr[i].getAttribute('data-featureid');
+                        var collapse = tr[i].getAttribute('data-collapse');
+                        if (collapse == "true") {
+                            for (var g = 0; g < tr.length; g++) {
+                                var scenarioRole = tr[g].getAttribute("data-role");
+                                if (scenarioRole == "scenario") {
+                                    var featureIdSlave = tr[g].getAttribute('data-featureid');
+                                    if (featureId == featureIdSlave) {
+                                        tr[g].style.display = "none";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     </script>
     <script>
@@ -300,5 +321,24 @@
         function copyToClipboard() {
             var copyText = document.getElementById("script");
             navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
+    <script>
+        function loadCollapse(x) {
+            var collapse = x.getAttribute('data-collapse');
+            var parent = x.parentElement;
+
+            if (collapse == "false") {
+                x.innerHTML = "&#11208;";
+                x.setAttribute('data-collapse', 'true');
+                parent.setAttribute('data-collapse', 'true');
+            } else {
+
+                x.innerHTML = "&#11206;";
+                x.setAttribute('data-collapse', 'false');
+                parent.setAttribute('data-collapse', 'false');
+            }
+
+            filterScenarios();
         }
     </script>

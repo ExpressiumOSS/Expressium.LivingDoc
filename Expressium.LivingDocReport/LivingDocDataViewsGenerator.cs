@@ -50,7 +50,7 @@ namespace Expressium.LivingDocReport
                 //listOfLines.Add($"</tr>");
 
                 listOfLines.Add($"<tr class='gridline-header' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
-                listOfLines.Add($"<td width='8px'>&#10011;</td>");
+                listOfLines.Add($"<td data-collapse='false' width='8px' onclick=\"loadCollapse(this);\">&#11206;</td>");
                 listOfLines.Add($"<td colspan='2' class='gridline'>");
                 listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
                 listOfLines.Add($"<span><b>{feature.Name}</b></span>");
