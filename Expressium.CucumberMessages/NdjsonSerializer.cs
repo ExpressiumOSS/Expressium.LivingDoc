@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Expressium.Cucumber.Integrations
+namespace Expressium.CucumberMessages
 {
     /// <summary>
     /// When using System.Text.Json to serialize a Cucumber Message Envelope, the following serialization options are used.

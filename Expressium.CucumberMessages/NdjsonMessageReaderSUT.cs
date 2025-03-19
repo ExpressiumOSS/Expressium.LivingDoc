@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Expressium.Cucumber.Integrations
+namespace Expressium.CucumberMessages
 {
     public class NdjsonMessageReaderSUT : NdjsonMessageReader
     {

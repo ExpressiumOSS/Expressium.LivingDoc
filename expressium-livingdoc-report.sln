@@ -12,9 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.LivingDoc", "Exp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.LivingDocReport", "Expressium.LivingDocReport\Expressium.LivingDocReport.csproj", "{D6BE76B5-C907-4B04-A2C3-03B7FA8659CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.Cucumber.Integrations", "Expressium.Cucumber.Integrations\Expressium.Cucumber.Integrations.csproj", "{1AF1AA98-76B0-4DB9-B361-B383E078F169}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.Cucumber.Integrations.Tests", "Expressium.Cucumber.Integrations.Tests\Expressium.Cucumber.Integrations.Tests.csproj", "{8160453C-F740-4F91-9E3C-4BAE43B7A190}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.CucumberMessages.Tests", "Expressium.CucumberMessages.Tests\Expressium.CucumberMessages.Tests.csproj", "{7393B433-0BF8-4C81-8260-16A819ED6D38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +40,10 @@ Global
 		{D6BE76B5-C907-4B04-A2C3-03B7FA8659CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6BE76B5-C907-4B04-A2C3-03B7FA8659CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6BE76B5-C907-4B04-A2C3-03B7FA8659CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1AF1AA98-76B0-4DB9-B361-B383E078F169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AF1AA98-76B0-4DB9-B361-B383E078F169}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AF1AA98-76B0-4DB9-B361-B383E078F169}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AF1AA98-76B0-4DB9-B361-B383E078F169}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8160453C-F740-4F91-9E3C-4BAE43B7A190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8160453C-F740-4F91-9E3C-4BAE43B7A190}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8160453C-F740-4F91-9E3C-4BAE43B7A190}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8160453C-F740-4F91-9E3C-4BAE43B7A190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7393B433-0BF8-4C81-8260-16A819ED6D38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7393B433-0BF8-4C81-8260-16A819ED6D38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7393B433-0BF8-4C81-8260-16A819ED6D38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7393B433-0BF8-4C81-8260-16A819ED6D38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

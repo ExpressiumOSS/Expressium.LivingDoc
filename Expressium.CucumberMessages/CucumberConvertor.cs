@@ -2,22 +2,16 @@
 using Io.Cucumber.Messages.Types;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.IO;
 
 namespace Expressium.CucumberMessages
 {
     public static class CucumberConvertor
     {
-        public static void SaveAsTestExecution(string inputFileName, string outputFileName)
+        public static LivingDocProject ConvertToLivingDoc(string filePath)
         {
-            Console.WriteLine("Parsing Cucumber JSON File...");
             var livingDocProject = new LivingDocProject();
             livingDocProject.Title = "Cucumber";
-
-            var options = new JsonSerializerOptions();
-            options.PropertyNameCaseInsensitive = true;
-
-            var listOfEnvelopes = LivingDocUtilities.DeserializeAsJson<List<Envelope>>(inputFileName);
 
             var listOfPickles = new List<Pickle>();
             var listOfTestCases = new List<TestCase>();
@@ -26,28 +20,34 @@ namespace Expressium.CucumberMessages
             var listOfTestCaseFinished = new List<TestCaseFinished>();
             var listOfTestRunFinished = new List<TestRunFinished>();
 
-            foreach (var envelope in listOfEnvelopes)
+            using (FileStream fileStream = File.OpenRead(filePath))
             {
-                if (envelope.GherkinDocument != null)
-                    ParsingGherkinDocument(livingDocProject, envelope);
+                var enumerator = new NdjsonMessageReaderSUT(fileStream).GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    var envelope = enumerator.Current;
 
-                if (envelope.Pickle != null)
-                    listOfPickles.Add(envelope.Pickle);
+                    if (envelope.GherkinDocument != null)
+                        ParsingGherkinDocument(livingDocProject, envelope);
 
-                if (envelope.TestCase != null)
-                    listOfTestCases.Add(envelope.TestCase);
+                    if (envelope.Pickle != null)
+                        listOfPickles.Add(envelope.Pickle);
 
-                if (envelope.TestStepFinished != null)
-                    listOfTestStepFinished.Add(envelope.TestStepFinished);
+                    if (envelope.TestCase != null)
+                        listOfTestCases.Add(envelope.TestCase);
 
-                if (envelope.TestCaseStarted != null)
-                    listOfTestCaseStarted.Add(envelope.TestCaseStarted);
+                    if (envelope.TestStepFinished != null)
+                        listOfTestStepFinished.Add(envelope.TestStepFinished);
 
-                if (envelope.TestCaseFinished != null)
-                    listOfTestCaseFinished.Add(envelope.TestCaseFinished);
+                    if (envelope.TestCaseStarted != null)
+                        listOfTestCaseStarted.Add(envelope.TestCaseStarted);
 
-                if (envelope.TestRunFinished != null)
-                    listOfTestRunFinished.Add(envelope.TestRunFinished);
+                    if (envelope.TestCaseFinished != null)
+                        listOfTestCaseFinished.Add(envelope.TestCaseFinished);
+
+                    if (envelope.TestRunFinished != null)
+                        listOfTestRunFinished.Add(envelope.TestRunFinished);
+                }
             }
 
             var duration = new TimeSpan(0, 0, 0, 0, 0);
@@ -82,7 +82,7 @@ namespace Expressium.CucumberMessages
                                 if (testStepFinished == null)
                                     continue;
 
-                                step.Status = testStepFinished.TestStepResult.Status.ToLower().CapitalizeWords();
+                                step.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
                                 step.Message = testStepFinished.TestStepResult.Message;
                             }
 
@@ -100,7 +100,7 @@ namespace Expressium.CucumberMessages
                 }
             }
 
-            LivingDocUtilities.SerializeAsJson(outputFileName, livingDocProject);
+            return livingDocProject;
         }
 
         public static void ParsingGherkinDocument(LivingDocProject livingDocProject, Envelope envelope)

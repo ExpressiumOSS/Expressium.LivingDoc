@@ -5,20 +5,27 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Cucumber.Messages" Version="27.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\Expressium.LivingDoc\Expressium.LivingDoc.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="DataTable.json">
+	  <None Update="Samples\data-tables.feature.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Example.json">
+	  <None Update="Samples\examples-tables.feature.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Minimal.json">
+	  <None Update="Samples\minimal.feature.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Small.json">
+	  <None Update="Samples\rules.feature.ndjson">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Samples\skipped.feature.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

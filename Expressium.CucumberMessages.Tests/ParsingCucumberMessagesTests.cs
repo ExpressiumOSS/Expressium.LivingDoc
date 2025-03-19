@@ -1,7 +1,7 @@
 using Expressium.LivingDoc;
 using System.IO;
 
-namespace Expressium.Cucumber.Integrations.Tests
+namespace Expressium.CucumberMessages.Tests
 {
     public class ParsingCucumberMessagesTests
     {
