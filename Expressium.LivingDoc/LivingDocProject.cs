@@ -28,6 +28,11 @@ namespace Expressium.LivingDoc
             return Features.Find(x => x.Name == title);
         }
 
+        public int GetNumberOfFeatures()
+        {
+            return Features.Count;
+        }
+
         public int GetNumberOfPassedFeatures()
         {
             return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Passed.ToString());
