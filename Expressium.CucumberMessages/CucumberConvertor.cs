@@ -3,6 +3,7 @@ using Io.Cucumber.Messages.Types;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Expressium.CucumberMessages
 {
@@ -149,94 +150,96 @@ namespace Expressium.CucumberMessages
                 livingDocFeature.Background = livingDocBackground;
             }
 
-            // Scenario
             foreach (var child in feature.Children)
             {
-                if (child.Scenario == null)
-                    continue;
-
-                var scenario = child.Scenario;
-
-                var livingDocScenario = new LivingDocScenario();
-
-                if (scenario.Tags != null)
+                if (child.Scenario != null)
                 {
-                    foreach (var tag in scenario.Tags)
-                        livingDocScenario.Tags.Add(tag.Name);
+                    ParseScenario(livingDocFeature, child.Scenario);
                 }
-
-                livingDocScenario.Id = scenario.Id;
-                livingDocScenario.Description = scenario.Description;
-                livingDocScenario.Name = scenario.Name;
-                livingDocScenario.Keyword = scenario.Keyword;
-                livingDocFeature.Scenarios.Add(livingDocScenario);
-
-                var livingDocExample = new LivingDocExample();
-                livingDocScenario.Examples.Add(livingDocExample);
-
-                foreach (var example in scenario.Examples)
+                else if (child.Rule != null)
                 {
-                    var tableRowHeader = new LivingDocTableRow();
-                    foreach (var headerCell in example.TableHeader.Cells)
-                        tableRowHeader.Cells.Add(headerCell.Value);
-                    livingDocExample.DataTable.Rows.Add(tableRowHeader);
+                    var rule = child.Rule;
 
-                    foreach (var tablebodyRow in example.TableBody)
+                    foreach (var ruleChild in rule.Children)
                     {
-                        var tableRowData = new LivingDocTableRow();
-                        foreach (var tableBodyRowCell in tablebodyRow.Cells)
-                            tableRowData.Cells.Add(tableBodyRowCell.Value);
-                        livingDocExample.DataTable.Rows.Add(tableRowData);
+                        if (ruleChild.Scenario == null)
+                            continue;
+
+                        ParseScenario(livingDocFeature, ruleChild.Scenario);
                     }
                 }
+            }
+        }
 
-                if (livingDocFeature.Background != null && livingDocFeature.Background.Steps.Count > 0)
+        public static void ParseScenario(LivingDocFeature livingDocFeature, Scenario scenario)
+        {
+            var livingDocScenario = new LivingDocScenario();
+
+            if (scenario.Tags != null)
+            {
+                foreach (var tag in scenario.Tags)
+                    livingDocScenario.Tags.Add(tag.Name);
+            }
+
+            livingDocScenario.Id = scenario.Id;
+            livingDocScenario.Description = scenario.Description;
+            livingDocScenario.Name = scenario.Name;
+            livingDocScenario.Keyword = scenario.Keyword;
+            livingDocFeature.Scenarios.Add(livingDocScenario);
+
+            var livingDocExample = new LivingDocExample();
+            livingDocScenario.Examples.Add(livingDocExample);
+
+            foreach (var example in scenario.Examples)
+            {
+                var tableRowHeader = new LivingDocTableRow();
+                foreach (var headerCell in example.TableHeader.Cells)
+                    tableRowHeader.Cells.Add(headerCell.Value);
+                livingDocExample.DataTable.Rows.Add(tableRowHeader);
+
+                foreach (var tablebodyRow in example.TableBody)
                 {
-                    foreach (var backgroundStep in livingDocFeature.Background.Steps)
-                        livingDocExample.Steps.Add(backgroundStep.Copy(backgroundStep));
-                }
-
-                foreach (var step in scenario.Steps)
-                {
-                    var livingDocStep = new LivingDocStep();
-                    livingDocStep.Id = step.Id;
-                    livingDocStep.Name = step.Text;
-                    livingDocStep.Keyword = step.Keyword.Trim();
-
-                    if (step.DataTable != null)
-                    {
-                        foreach (var row in step.DataTable.Rows)
-                        {
-                            var tableRow = new LivingDocTableRow();
-                            foreach (var cell in row.Cells)
-                                tableRow.Cells.Add(cell.Value);
-                            livingDocStep.DataTable.Rows.Add(tableRow);
-                        }
-                    }
-
-                    livingDocExample.Steps.Add(livingDocStep);
+                    var tableRowData = new LivingDocTableRow();
+                    foreach (var tableBodyRowCell in tablebodyRow.Cells)
+                        tableRowData.Cells.Add(tableBodyRowCell.Value);
+                    livingDocExample.DataTable.Rows.Add(tableRowData);
                 }
             }
 
-            // Rule
-            foreach (var child in feature.Children)
+            if (livingDocFeature.Background != null && livingDocFeature.Background.Steps.Count > 0)
             {
-                if (child.Rule == null)
-                    continue;
-
-                var rule = child.Rule;
-
-                foreach (var ruleChild in rule.Children)
-                {
-                    if (ruleChild.Scenario == null)
-                        continue;
-
-                    var ruleScenario = ruleChild.Scenario;
-
-                    // var livingDocScenario = new LivingDocScenario();
-                    // TODO - Missing implementation of Rule Scenarios...
-                }
+                foreach (var backgroundStep in livingDocFeature.Background.Steps)
+                    livingDocExample.Steps.Add(backgroundStep.Copy(backgroundStep));
             }
+
+            foreach (var step in scenario.Steps)
+            {
+                var livingDocStep = new LivingDocStep();
+                livingDocStep.Id = step.Id;
+                livingDocStep.Name = step.Text;
+                livingDocStep.Keyword = step.Keyword.Trim();
+
+                if (step.DataTable != null)
+                {
+                    foreach (var row in step.DataTable.Rows)
+                    {
+                        var tableRow = new LivingDocTableRow();
+                        foreach (var cell in row.Cells)
+                            tableRow.Cells.Add(cell.Value);
+                        livingDocStep.DataTable.Rows.Add(tableRow);
+                    }
+                }
+
+                livingDocExample.Steps.Add(livingDocStep);
+            }
+        }
+
+        public static string CapitalizeWords(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+
+            return Regex.Replace(value, @"(^\w)|(\s\w)", m => m.Value.ToUpper());
         }
     }
 }

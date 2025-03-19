@@ -7,14 +7,6 @@ namespace Expressium.LivingDoc
 {
     public static class LivingDocUtilities
     {
-        public static string CapitalizeWords(this string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return value;
-
-            return Regex.Replace(value, @"(^\w)|(\s\w)", m => m.Value.ToUpper());
-        }
-
         public static T DeserializeAsJson<T>(string filePath)
         {
             var options = new JsonSerializerOptions();

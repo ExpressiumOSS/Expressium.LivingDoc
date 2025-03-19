@@ -1,12 +1,11 @@
-using Expressium.LivingDoc;
 using System.IO;
 
 namespace Expressium.CucumberMessages.Tests
 {
-    public class ParsingCucumberMessagesTests
+    public class CucumberParserTests
     {
         [Test]
-        public void ReadingCucumberMessagesNdjsonFile()
+        public void Parsing_Example_Tables_Feature()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
 
@@ -43,19 +42,6 @@ namespace Expressium.CucumberMessages.Tests
             Assert.That(numberOfEnvelopes, Is.EqualTo(100));
             Assert.That(numberOfScenarios, Is.EqualTo(2));
             Assert.That(numberOfSteps, Is.EqualTo(6));
-        }
-
-        [Test]
-        public void ConvertingCucumberMessagesNdjsonFile()
-        {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
-            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.json");
-
-            var livingDocProject = CucumberConvertor.ConvertToLivingDoc(inputFilePath);
-            LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
-
-            Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
         }
     }
 }
