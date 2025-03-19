@@ -8,7 +8,7 @@ namespace Expressium.LivingDoc
     {
         public int Index { get; set; }
         public string Id { get; set; }
-        public List<LivingDocTag> Tags { get; set; }
+        public List<string> Tags { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
         public string Keyword { get; set; }
@@ -18,13 +18,13 @@ namespace Expressium.LivingDoc
         public LivingDocScenario()
         {
             Index = 0;
-            Tags = new List<LivingDocTag>();
+            Tags = new List<string>();
             Examples = new List<LivingDocExample>();
         }
 
         public string GetTags()
         {
-            return string.Join(" ", Tags.Select(tag => tag.Name));
+            return string.Join(" ", Tags);
         }
 
         public string GetStatus()

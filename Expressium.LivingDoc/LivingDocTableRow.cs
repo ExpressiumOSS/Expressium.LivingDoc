@@ -5,11 +5,11 @@ namespace Expressium.LivingDoc
 {
     public class LivingDocTableRow
     {
-        public List<LivingDocTableCell> Cells { get; set; }
+        public List<string> Cells { get; set; }
 
         public LivingDocTableRow()
         {
-            Cells = new List<LivingDocTableCell>();
+            Cells = new List<string>();
         }
     }
 }

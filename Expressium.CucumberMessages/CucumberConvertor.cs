@@ -112,7 +112,7 @@ namespace Expressium.CucumberMessages
             if (feature.Tags != null)
             {
                 foreach (var tag in feature.Tags)
-                    livingDocFeature.Tags.Add(new LivingDocTag() { Name = tag.Name });
+                    livingDocFeature.Tags.Add(tag.Name);
             }
 
             //testExecutionFeature.Id = feature.Id;
@@ -162,7 +162,7 @@ namespace Expressium.CucumberMessages
                 if (scenario.Tags != null)
                 {
                     foreach (var tag in scenario.Tags)
-                        livingDocScenario.Tags.Add(new LivingDocTag() { Name = tag.Name });
+                        livingDocScenario.Tags.Add(tag.Name);
                 }
 
                 livingDocScenario.Id = scenario.Id;
@@ -176,15 +176,17 @@ namespace Expressium.CucumberMessages
 
                 foreach (var example in scenario.Examples)
                 {
+                    var tableRowHeader = new LivingDocTableRow();
                     foreach (var headerCell in example.TableHeader.Cells)
-                        livingDocExample.TableHeader.Cells.Add(new LivingDocTableCell() { Value = headerCell.Value });
+                        tableRowHeader.Cells.Add(headerCell.Value);
+                    livingDocExample.DataTable.Rows.Add(tableRowHeader);
 
                     foreach (var tablebodyRow in example.TableBody)
                     {
-                        var tableRow = new LivingDocTableRow();
+                        var tableRowData = new LivingDocTableRow();
                         foreach (var tableBodyRowCell in tablebodyRow.Cells)
-                            tableRow.Cells.Add(new LivingDocTableCell() { Value = tableBodyRowCell.Value });
-                        livingDocExample.TableBody.Add(tableRow);
+                            tableRowData.Cells.Add(tableBodyRowCell.Value);
+                        livingDocExample.DataTable.Rows.Add(tableRowData);
                     }
                 }
 
@@ -207,7 +209,7 @@ namespace Expressium.CucumberMessages
                         {
                             var tableRow = new LivingDocTableRow();
                             foreach (var cell in row.Cells)
-                                tableRow.Cells.Add(new LivingDocTableCell() { Value = cell.Value });
+                                tableRow.Cells.Add(cell.Value);
                             livingDocStep.DataTable.Rows.Add(tableRow);
                         }
                     }

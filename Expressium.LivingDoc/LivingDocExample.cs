@@ -10,16 +10,14 @@ namespace Expressium.LivingDoc
         public TimeSpan Duration { get; set; }
 
         public List<LivingDocStep> Steps { get; set; }
-        public LivingDocTableRow TableHeader { get; set; }
-        public List<LivingDocTableRow> TableBody { get; set; }
+        public LivingDocDataTable DataTable { get; set; }
         public List<string> Attachments { get; set; }
 
         public LivingDocExample()
         {
             Duration = new TimeSpan();
             Steps = new List<LivingDocStep>();
-            TableHeader = new LivingDocTableRow();
-            TableBody = new List<LivingDocTableRow>();
+            DataTable = new LivingDocDataTable();
             Attachments = new List<string>();
         }
 
@@ -53,6 +51,11 @@ namespace Expressium.LivingDoc
                 return $"{Duration.Minutes}min {Duration.Seconds}s";
 
             return $"{Duration.Seconds}s {Duration.Milliseconds.ToString("D3")}ms";
+        }
+
+        public bool HasDataTable()
+        {
+            return DataTable.Rows.Count > 0;
         }
     }
 }

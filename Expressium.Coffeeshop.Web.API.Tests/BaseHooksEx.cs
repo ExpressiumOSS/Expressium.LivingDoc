@@ -38,7 +38,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 var livingDocFeature = new LivingDocFeature();
 
                 foreach (var tag in featureContext.FeatureInfo.Tags)
-                    livingDocFeature.Tags.Add(new LivingDocTag() { Name = "@" + tag });
+                    livingDocFeature.Tags.Add("@" + tag);
 
                 livingDocFeature.Name = featureContext.FeatureInfo.Title;
                 livingDocFeature.Description = featureContext.FeatureInfo.Description;
@@ -51,7 +51,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 livingDocScenario = new LivingDocScenario();
 
                 foreach (var tag in scenarioContext.ScenarioInfo.Tags)
-                    livingDocScenario.Tags.Add(new LivingDocTag() { Name = "@" + tag });
+                    livingDocScenario.Tags.Add("@" + tag);
 
                 livingDocScenario.Name = scenarioContext.ScenarioInfo.Title;
                 livingDocScenario.Description = scenarioContext.ScenarioInfo.Description;
@@ -62,13 +62,15 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
                 if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
                 {
+                    var livingDocTableRowHeader = new LivingDocTableRow();
                     foreach (var key in scenarioContext.ScenarioInfo.Arguments.Keys)
-                        livingDocScenario.Examples[0].TableHeader.Cells.Add(new LivingDocTableCell() { Value = key.ToString() });
+                        livingDocTableRowHeader.Cells.Add(key.ToString());
+                    livingDocScenario.Examples[0].DataTable.Rows.Add(livingDocTableRowHeader);
 
-                    var livingDocTableRow = new LivingDocTableRow();
+                    var livingDocTableRowData = new LivingDocTableRow();
                     foreach (var value in scenarioContext.ScenarioInfo.Arguments.Values)
-                        livingDocTableRow.Cells.Add(new LivingDocTableCell() { Value = value.ToString() });
-                    livingDocScenario.Examples[0].TableBody.Add(livingDocTableRow);
+                        livingDocTableRowData.Cells.Add(value.ToString());
+                    livingDocScenario.Examples[0].DataTable.Rows.Add(livingDocTableRowData);
                 }
             }
         }
@@ -154,14 +156,14 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 {
                     var livingDocTableHeaderRow = new LivingDocTableRow();
                     foreach (var header in scenarioContext.StepContext.StepInfo.Table.Header)
-                        livingDocTableHeaderRow.Cells.Add(new LivingDocTableCell() { Value = header });
+                        livingDocTableHeaderRow.Cells.Add(header);
                     livingDocStep.DataTable.Rows.Add(livingDocTableHeaderRow);
 
                     var testExecutionTableRow = new LivingDocTableRow();
                     foreach (var row in scenarioContext.StepContext.StepInfo.Table.Rows)
                     {
                         foreach (var value in row.Values)
-                            testExecutionTableRow.Cells.Add(new LivingDocTableCell() { Value = value });
+                            testExecutionTableRow.Cells.Add(value);
                     }
                     livingDocStep.DataTable.Rows.Add(testExecutionTableRow);
                 }

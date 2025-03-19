@@ -1,4 +1,5 @@
 ﻿using Expressium.LivingDoc;
+using Io.Cucumber.Messages.Types;
 using System.Collections.Generic;
 using System.IO;
 
@@ -155,7 +156,7 @@ namespace Expressium.LivingDocReport
         internal List<string> GenerateDataScenarioTitle(LivingDocScenario scenario, LivingDocExample example)
         {
             var scenarioKeyword = "Scenario:";
-            if (example.TableHeader.Cells.Count > 0)
+            if (example.HasDataTable())
                 scenarioKeyword = "Scenario Outline:";
 
             var listOfLines = new List<string>();
@@ -216,39 +217,7 @@ namespace Expressium.LivingDocReport
                     listOfLines.Add("<!-- Scenario Steps Table Section -->");
                     listOfLines.Add($"<tr>");
                     listOfLines.Add($"<td colspan='2' style='padding-left: 64px;'>");
-
-                    listOfLines.Add("<table class='step-table'>");
-                    listOfLines.Add("<tbody>");
-
-                    int rowNumber = 1;
-                    foreach (var row in step.DataTable.Rows)
-                    {
-                        var numberOfCells = row.Cells.Count;
-                        int i = 1;
-                        listOfLines.Add($"<tr>");
-
-                        foreach (var cell in row.Cells)
-                        {
-                            listOfLines.Add($"<td>|</td>");
-
-                            if (rowNumber == 1)
-                                listOfLines.Add($"<td><i>" + cell.Value + "</i></td>");
-                            else
-                                listOfLines.Add($"<td>" + cell.Value + "</td>");
-
-                            if (i == numberOfCells)
-                                listOfLines.Add($"<td>|</td>");
-
-                            i++;
-                        }
-                        listOfLines.Add($"</tr>");
-
-                        rowNumber++;
-                    }
-
-                    listOfLines.Add("</tbody>");
-                    listOfLines.Add("</table>");
-
+                    listOfLines.AddRange(GenerateDataTable(step.DataTable));
                     listOfLines.Add($"</td>");
                     listOfLines.Add($"</tr>");
                 }
@@ -261,7 +230,7 @@ namespace Expressium.LivingDocReport
         {
             var listOfLines = new List<string>();
 
-            if (example.TableHeader.Cells.Count > 0)
+            if (example.HasDataTable())
             {
                 listOfLines.Add("<!-- Data Scenario Examples -->");
                 listOfLines.Add($"<tr>");
@@ -270,17 +239,31 @@ namespace Expressium.LivingDocReport
 
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td colspan='2'>");
+                listOfLines.AddRange(GenerateDataTable(example.DataTable));
+                listOfLines.Add($"</td>");
+                listOfLines.Add($"</tr>");
+            }
 
-                listOfLines.Add("<table class='step-table'>");
-                listOfLines.Add("<tbody>");
+            return listOfLines;
+        }
 
-                var numberOfCells = example.TableHeader.Cells.Count;
+        internal List<string> GenerateDataTable(LivingDocDataTable dataTable)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<table class='step-table'>");
+            listOfLines.Add("<tbody>");
+
+            foreach (var row in dataTable.Rows)
+            {
+                var numberOfCells = row.Cells.Count;
                 int i = 1;
                 listOfLines.Add($"<tr>");
-                foreach (var cell in example.TableHeader.Cells)
+
+                foreach (var cell in row.Cells)
                 {
                     listOfLines.Add($"<td>|</td>");
-                    listOfLines.Add($"<td><i>" + cell.Value + "</i></td>");
+                    listOfLines.Add($"<td>" + cell + "</td>");
 
                     if (i == numberOfCells)
                         listOfLines.Add($"<td>|</td>");
@@ -288,33 +271,10 @@ namespace Expressium.LivingDocReport
                     i++;
                 }
                 listOfLines.Add($"</tr>");
-
-                foreach (var body in example.TableBody)
-                {
-                    numberOfCells = body.Cells.Count;
-                    i = 1;
-                    listOfLines.Add($"<tr>");
-
-                    foreach (var cell in body.Cells)
-                    {
-                        listOfLines.Add($"<td>|</td>");
-                        listOfLines.Add($"<td>" + cell.Value + "</td>");
-
-                        if (i == numberOfCells)
-                            listOfLines.Add($"<td>|</td>");
-
-                        i++;
-                    }
-
-                    listOfLines.Add($"</tr>");
-                }
-
-                listOfLines.Add("</tbody>");
-                listOfLines.Add("</table>");
-
-                listOfLines.Add($"</td>");
-                listOfLines.Add($"</tr>");
             }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
 
             return listOfLines;
         }
