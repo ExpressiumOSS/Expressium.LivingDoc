@@ -40,16 +40,16 @@
 * https://github.com/cucumber/messages/tree/main/jsonschema
 
 ### Cucumber Messages devkit
-https://github.com/cucumber/compatibility-kit/tree/main/devkit
+* https://github.com/cucumber/compatibility-kit/tree/main/devkit
 
 ### Understanding Test Automation Report in Depth
-https://www.browserstack.com/guide/understanding-test-automation-report 
+* https://www.browserstack.com/guide/understanding-test-automation-report 
 
 ### What is a Test Report Katalon
-https://katalon.com/resources-center/blog/what-is-a-test-report
+* https://katalon.com/resources-center/blog/what-is-a-test-report
 
 ### Cucumber JSON Report Discussion
-https://github.com/orgs/reqnroll/discussions/302
+* https://github.com/orgs/reqnroll/discussions/302
 
 ### New LivingDoc Support
-https://github.com/orgs/reqnroll/discussions/37
+* https://github.com/orgs/reqnroll/discussions/37
