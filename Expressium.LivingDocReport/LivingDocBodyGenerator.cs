@@ -8,7 +8,6 @@ namespace Expressium.LivingDocReport
 {
     internal class LivingDocBodyGenerator
     {
-        private bool includeNavigation = true;
         private bool includeEditor = false;
 
         internal List<string> GenerateBody(LivingDocProject project)
@@ -55,30 +54,27 @@ namespace Expressium.LivingDocReport
         {
             var listOfLines = new List<string>();
 
-            if (includeNavigation)
+            listOfLines.Add("<!-- Project Navigation Section -->");
+            listOfLines.Add("<nav class='navigation'>");
+            listOfLines.Add("<span>|</span>");
+            listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewmode('project-view');\">Overview</a>");
+            listOfLines.Add("<span>|</span>");
+            listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewmode('features-view');\">Features</a>");
+            listOfLines.Add("<span>|</span>");
+            listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewmode('scenarios-view');\">Scenarios</a>");
+            listOfLines.Add("<span>|</span>");
+            listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewmode('steps-view');\">Steps</a>");
+            listOfLines.Add("<span>|</span>");
+            listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
+            listOfLines.Add("<span>|</span>");
+
+            if (includeEditor)
             {
-                listOfLines.Add("<!-- Project Navigation Section -->");
-                listOfLines.Add("<nav class='navigation'>");
+                listOfLines.Add("<a class='navigation-link' title='Gherkin Script Editor' href='#' onclick=\"loadEditor('editor'); filterStepDefinitions();\">Editor</a>");
                 listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewmode('project-view');\">Overview</a>");
-                listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewmode('features-view');\">Features</a>");
-                listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewmode('scenarios-view');\">Scenarios</a>");
-                listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewmode('steps-view');\">Steps</a>");
-                listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
-                listOfLines.Add("<span>|</span>");
-
-                if (includeEditor)
-                {
-                    listOfLines.Add("<a class='navigation-link' title='Gherkin Script Editor' href='#' onclick=\"loadEditor('editor'); filterStepDefinitions();\">Editor</a>");
-                    listOfLines.Add("<span>|</span>");
-                }
-
-                listOfLines.Add("</nav>");
             }
+
+            listOfLines.Add("</nav>");
 
             return listOfLines;
         }
@@ -118,16 +114,6 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add("<!-- Features PreFilters Section -->");
             listOfLines.Add("<div class='section layout-row'>");
-
-            if (!includeNavigation)
-            {
-                listOfLines.Add("<div class='layout-column align-left'>");
-                listOfLines.Add("<button title='Overview' onclick=\"loadViewmode('project-view');\">&#9776;</button>");
-                listOfLines.Add("<button title='Features List View' onclick=\"loadViewmode('features-view');\">&#9782;</button>");
-                listOfLines.Add("<button title='Scenarios List View' onclick=\"loadViewmode('scenarios-view');\">&#9783;</button>");
-                listOfLines.Add("<button title='Analytics' onclick=\"loadAnalytics('analytics');\">&#425;</button>");
-                listOfLines.Add("</div>");
-            }
 
             listOfLines.Add("<div class='layout-column align-right'>");
             listOfLines.Add("<button title='Preset Filter with Passed' class='color-undefined' onclick='presetFilter(\"passed\")'>Passed</button>");
