@@ -25,13 +25,18 @@ namespace Expressium.LivingDocReport
             listOfLines.Add("<span class='project-name'>Gherkin Script Editor</span>");
             listOfLines.Add("</div>");
 
-            listOfLines.Add("<div class='section'>");
-            //listOfLines.Add("<button onclick='copyToClipboard();'>Copy</button>");
-            // Clear
-            // Download
-            // View
-            //listOfLines.Add("<br />");
+            //listOfLines.Add("<!-- Editor Actions Section -->");
+            //listOfLines.Add("<div class='section layout-row'>");
+            //listOfLines.Add("<div class='layout-column align-right'>");
+            //listOfLines.Add("<button title='Preview Scenario Script' class='color-undefined' onclick='editorPreview()'>Preview</button>");
+            //listOfLines.Add("<button title='Copy Scenario Script' class='color-undefined' onclick='editorCopy()'>Copy</button>");
+            //listOfLines.Add("<button title='Format Scenario Script' class='color-undefined' onclick='editorFormat()'>Format</button>");
+            //listOfLines.Add("<button title='Clear Scenario Script' class='color-undefined' onclick='editorClear()'>Clear</button>");
+            //listOfLines.Add("<button title='Download Scenario Script' class='color-undefined' onclick='editorDownload()'>Download</button>");
+            //listOfLines.Add("</div>");
+            //listOfLines.Add("</div>");
 
+            listOfLines.Add("<div class='section'>");
             listOfLines.Add("<span class='scenario-name'>Scenario:</span>");
             listOfLines.Add("<br />");
             listOfLines.Add("<textarea class='filter' id='script' rows='7'></textarea>");

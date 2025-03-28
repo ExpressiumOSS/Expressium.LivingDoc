@@ -318,7 +318,7 @@
 		}
 	</script>
     <script>
-        function copyToClipboard() {
+        function editorCopy() {
             var copyText = document.getElementById("script");
             navigator.clipboard.writeText(copyText.value);
         }
