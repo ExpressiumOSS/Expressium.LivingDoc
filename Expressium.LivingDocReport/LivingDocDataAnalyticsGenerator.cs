@@ -32,6 +32,7 @@ namespace Expressium.LivingDocReport
 
             listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart(project));
             listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart(project));
+            listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart(project));            
             listOfLines.AddRange(GenerateDataAnalyticsDuration(project));
 
             listOfLines.Add("</div>");
@@ -65,6 +66,21 @@ namespace Expressium.LivingDocReport
             var numberOfTests = project.GetNumberOfScenarios();
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Scenarios", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataAnalyticsStepsStatusChart(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            var numberOfPassed = project.GetNumberOfPassedSteps();
+            var numberOfIncomplete = project.GetNumberOfIncompleteSteps();
+            var numberOfFailed = project.GetNumberOfFailedSteps();
+            var numberOfSkipped = project.GetNumberOfSkippedSteps();
+            var numberOfTests = project.GetNumberOfSteps();
+
+            listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Steps", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
 
             return listOfLines;
         }

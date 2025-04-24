@@ -88,6 +88,55 @@ namespace Expressium.LivingDoc
                 .Count();
         }
 
+        public int GetNumberOfPassedSteps()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .SelectMany(scenario => scenario.Examples)
+                .SelectMany(example => example.Steps)
+                .Where(step => step.IsPassed())
+                .Count();
+        }
+
+        public int GetNumberOfIncompleteSteps()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .SelectMany(scenario => scenario.Examples)
+                .SelectMany(example => example.Steps)
+                .Where(step => step.IsIncomplete())
+                .Count();
+        }
+
+        public int GetNumberOfFailedSteps()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .SelectMany(scenario => scenario.Examples)
+                .SelectMany(example => example.Steps)
+                .Where(step => step.IsFailed())
+                .Count();
+        }
+
+        public int GetNumberOfSkippedSteps()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .SelectMany(scenario => scenario.Examples)
+                .SelectMany(example => example.Steps)
+                .Where(step => step.IsSkipped())
+                .Count();
+        }
+
+        public int GetNumberOfSteps()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .SelectMany(scenario => scenario.Examples)
+                .SelectMany(example => example.Steps)
+                .Count();
+        }
+
         public string GetExecutionTime()
         {
             return ExecutionTime.ToString("ddd dd. MMM yyyy HH':'mm':'ss \"GMT\"z");
