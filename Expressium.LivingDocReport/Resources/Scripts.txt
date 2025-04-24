@@ -67,6 +67,16 @@
             var table = document.getElementById("table-list");
             var tr = table.getElementsByTagName("tr");
 
+            var statuses = [];
+            var prefilters = document.getElementsByTagName("button");
+            for (var i = 0; i < prefilters.length; i++) {
+                var prefilter = prefilters[i].getAttribute("data-prefilter");
+                var active = prefilters[i].className.includes(" active");
+                if (active) {
+                    statuses.push(prefilter);
+                }
+            }
+
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
                 var tags = tr[i].getAttribute("data-tags");
@@ -78,18 +88,30 @@
                     continue;
 
                 if (role == "feature")
-				    continue;
+                    continue;
 
                 for (var j = 0; j < td.length; j++) {
                     rowText += td[j].textContent.toUpperCase() + " ";
                 }
-                
+
                 var tagTokens = tags.toUpperCase().split(/\s+/);
                 for (var t = 0; t < tagTokens.length; t++) {
                     rowText += tagTokens[t].toUpperCase() + " ";
                 }
 
                 found = filterTokens.every(token => rowText.includes(token));
+
+                var hasPrefilter = false;
+                for (var t = 0; t < statuses.length; t++) {
+                    var prefilter = statuses[t];
+                    if (rowText.includes(prefilter.toUpperCase())) {
+                        hasPrefilter = true;
+                    }
+                }
+
+                if (statuses.length > 0 && !hasPrefilter) {
+                    found = false;
+                }
 
                 tr[i].style.display = found ? "" : "none";
             }
@@ -337,6 +359,19 @@
                 x.innerHTML = "&#11206;";
                 x.setAttribute('data-collapse', 'false');
                 parent.setAttribute('data-collapse', 'false');
+            }
+
+            filterScenarios();
+        }
+    </script>
+    <script>
+        function togglePrefilter(x) {
+            var attribute = x.className;
+
+            if (attribute.includes(" active")) {
+                x.className = x.className.replace(" active", "");
+            } else {
+                x.className += " active";
             }
 
             filterScenarios();
