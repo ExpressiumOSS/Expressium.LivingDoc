@@ -94,12 +94,12 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
-            listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'></th>");
+            listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Feature<span class='sort-column'>&udarr;</span></th>");
             //listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-scenarios\")'>Scenarios<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-coverage\")'>Coverage<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(3, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(2, \"data-coverage\")'>Coverage<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(3, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
@@ -138,12 +138,12 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
-            listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'></th>");
+            listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
             //listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-steps\")'>Steps<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-coverage\")'>Coverage<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(3, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(2, \"data-coverage\")'>Coverage<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(3, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
@@ -185,10 +185,10 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
-            listOfLines.Add("<th width='20px;' class='align-center' onClick='sortTableByColumn(0)'></th>");
+            listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Step<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumnByAttibute(2, \"data-count\")'>Count<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th onClick='sortTableByColumn(3)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-count\")'>Count<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumn(3)'>Status<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
