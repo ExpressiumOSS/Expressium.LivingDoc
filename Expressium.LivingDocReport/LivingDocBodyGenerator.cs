@@ -88,8 +88,8 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add("<!-- Left Content Section -->");
             listOfLines.Add("<div id='left-section' class='bg-light p-3'>");
-            listOfLines.AddRange(GenerateScenarioPreFilters(project));
-            listOfLines.AddRange(GenerateScenarioFilter(project));
+            listOfLines.AddRange(GeneratePreFilters(project));
+            listOfLines.AddRange(GenerateFilter(project));
             listOfLines.Add("<div id='scenario-view'></div>");
             listOfLines.Add("</div>");
 
@@ -108,11 +108,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioPreFilters(LivingDocProject project)
+        internal List<string> GeneratePreFilters(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Features PreFilters Section -->");
+            listOfLines.Add("<!-- PreFilters Section -->");
             listOfLines.Add("<div class='section layout-row'>");
 
             listOfLines.Add("<div class='layout-column align-right'>");
@@ -120,7 +120,7 @@ namespace Expressium.LivingDocReport
             listOfLines.Add("<button data-prefilter='Incomplete' title='Preset Filter with Incomplete' class='color-undefined' onclick='togglePrefilter(this)'>Incomplete</button>");
             listOfLines.Add("<button data-prefilter='Failed' title='Preset Filter with Failed' class='color-undefined' onclick='togglePrefilter(this)'>Failed</button>");
             listOfLines.Add("<button data-prefilter='Skipped' title='Preset Filter with Skipped' class='color-undefined' onclick='togglePrefilter(this)'>Skipped</button>");
-            listOfLines.Add("<button title='Clear Filter' class='color-undefined' onclick='presetFilter(\"\")'>Clear</button>");
+            listOfLines.Add("<button title='Clear Filter' class='color-undefined' onclick='clearPrefilters()'>Clear</button>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
@@ -128,11 +128,11 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
-        internal List<string> GenerateScenarioFilter(LivingDocProject project)
+        internal List<string> GenerateFilter(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Features Filter Section -->");
+            listOfLines.Add("<!-- Filter Section -->");
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<input class='filter' onkeyup='filterScenarios()' id='scenario-filter' type='text' placeholder='Filter by Keywords'>");
             listOfLines.Add("</div>");

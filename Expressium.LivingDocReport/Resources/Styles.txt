@@ -166,11 +166,6 @@
             background-color: var(--secondary-color);
         }
 
-        button:hover {
-          background-color: var(--secondary-color);
-          color: black;
-        }
-
         button.active {
             background-color: var(--secondary-color);
             color: black;

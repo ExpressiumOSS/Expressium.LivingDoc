@@ -42,7 +42,7 @@
 
             document.getElementById('scenario-view').innerHTML = listview;
 
-            presetFilter('');
+            filterScenarios();
         }
     </script>
     <script>
@@ -374,6 +374,21 @@
                 x.className += " active";
             }
 
+            filterScenarios();
+        }
+    </script>
+    <script>
+        function clearPrefilters() {
+            var prefilters = document.getElementsByTagName("button");
+            for (var i = 0; i < prefilters.length; i++) {
+                var prefilter = prefilters[i].getAttribute("data-prefilter");
+                var active = prefilters[i].className.includes(" active");
+                if (active) {
+                    prefilters[i].className = prefilters[i].className.replace(" active", "");
+                }
+            }
+
+            presetFilter('');
             filterScenarios();
         }
     </script>
