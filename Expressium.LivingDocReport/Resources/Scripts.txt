@@ -52,14 +52,6 @@
             document.getElementById('right-section').innerHTML = analytics;
         }
     </script>
-	<script>
-        function presetFilter(x) {
-            var input = document.getElementById("scenario-filter");
-            input.value = x;
-
-            filterScenarios();
-        }
-	</script>
     <script>
         function filterScenarios() {
             var input = document.getElementById("scenario-filter");
@@ -388,7 +380,9 @@
                 }
             }
 
-            presetFilter('');
+            var input = document.getElementById("scenario-filter");
+            input.value = '';
+
             filterScenarios();
         }
     </script>
