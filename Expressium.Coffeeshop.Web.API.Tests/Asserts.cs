@@ -22,9 +22,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 logger.InfoFormat("{0}", message);
                 logger.InfoFormat("Expected to be equal [{0}] and was [{1}] - PASSED", expected, actual);
             }
-            catch
+            catch (AssertionException)
             {
-                throw new ApplicationException($"Expected to be equal [{expected}] but was [{actual}] - FAILED");
+                throw new ApplicationException($"{message}\nExpected to be equal [{expected}] but was [{actual}] - FAILED");
             }
         }
 
@@ -37,9 +37,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 logger.InfoFormat("{0}", message);
                 logger.InfoFormat("Expected to be equal [True] and was [True] - PASSED");
             }
-            catch
+            catch (AssertionException)
             {
-                throw new ApplicationException($"Expected to be equal [True] but was [False] - FAILED");
+                throw new ApplicationException($"{message}\nExpected to be equal [True] but was [False] - FAILED");
             }
         }
 
@@ -52,9 +52,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 logger.InfoFormat("{0}", message);
                 logger.InfoFormat("Expected to be equal [False] and was [False] - PASSED");
             }
-            catch
+            catch (AssertionException)
             {
-                throw new ApplicationException($"Expected to be equal [False] but was [True] - FAILED");
+                throw new ApplicationException($"{message}\nExpected to be equal [False] but was [True] - FAILED");
             }
         }
 
@@ -67,9 +67,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 logger.InfoFormat("{0}", message);
                 logger.InfoFormat("Expected to be equal [Null] and was [Null]");
             }
-            catch
+            catch (AssertionException)
             {
-                throw new ApplicationException($"Expected to be equal [Null] but was [{actual}]");
+                throw new ApplicationException($"{message}\nExpected to be equal [Null] but was [{actual}]");
             }
         }
 
@@ -82,9 +82,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 logger.InfoFormat("{0}", message);
                 logger.InfoFormat("Expected to be different from [Null] and was [{0}] - PASSED", actual);
             }
-            catch
+            catch (AssertionException)
             {
-                throw new ApplicationException($"Expected to be be different from [Null] but was [Null] - FAILED");
+                throw new ApplicationException($"{message}\nExpected to be be different from [Null] but was [Null] - FAILED");
             }
         }
 
@@ -97,9 +97,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 logger.InfoFormat("{0}", message);
                 logger.InfoFormat("Expected to be different from [Empty] and was [{0}] - PASSED", actual);
             }
-            catch
+            catch (AssertionException)
             {
-                throw new ApplicationException($"Expected to be be different from [Empty] but was [Empty] - FAILED");
+                throw new ApplicationException($"{message}\nExpected to be be different from [Empty] but was [Empty] - FAILED");
             }
         }
 
@@ -112,9 +112,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 logger.InfoFormat("{0}", message);
                 logger.InfoFormat("Expected to be greater than [{0}] and was [{1}] - PASSED", expected, actual);
             }
-            catch
+            catch (AssertionException)
             {
-                throw new ApplicationException($"Expected to be greater than [{expected}] but was [{actual}] - FAILED");
+                throw new ApplicationException($"{message}\nExpected to be greater than [{expected}] but was [{actual}] - FAILED");
             }
         }
 
@@ -127,9 +127,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 logger.InfoFormat("{0}", message);
                 logger.InfoFormat("Expected to be less than [{0}] and was [{1}] - PASSED", expected, actual);
             }
-            catch
+            catch (AssertionException)
             {
-                throw new ApplicationException($"Expected to be less than [{expected}] but was [{actual}] - FAILED");
+                throw new ApplicationException($"{message}\nExpected to be less than [{expected}] but was [{actual}] - FAILED");
             }
         }
 
@@ -147,9 +147,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 logger.InfoFormat("{0}", message);
                 logger.InfoFormat("Expected to contain [{0}] in [{1}] - PASSED", expected, actualTruncated);
             }
-            catch
+            catch (AssertionException)
             {
-                throw new ApplicationException($"Expected to contain [{expected}] in [{actualTruncated}] - FAILED");
+                throw new ApplicationException($"{message}\nExpected to contain [{expected}] in [{actualTruncated}] - FAILED");
             }
         }
 
