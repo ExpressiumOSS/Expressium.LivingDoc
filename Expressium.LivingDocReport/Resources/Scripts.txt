@@ -37,10 +37,14 @@
         }
     </script>
     <script>
-        function loadViewmode(x) {
+        function loadViewmode(x,y) {
             var listview = document.getElementById(x).innerHTML;
 
             document.getElementById('scenario-view').innerHTML = listview;
+
+            var exists = document.getElementById('view-title');
+            if (exists)
+                document.getElementById('view-title').innerHTML = y;
 
             filterScenarios();
         }

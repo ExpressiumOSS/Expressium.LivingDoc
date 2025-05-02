@@ -292,7 +292,7 @@ namespace Expressium.LivingDocReport
                 listOfLines.Add($"<tr><td></td></tr>");
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td class='step-message' colspan='2'>");
-                listOfLines.Add($"<div class='step-{status}'>{message}</div>");
+                listOfLines.Add($"<div class='step-{status}'>{message.Trim().Replace("\n","<br>")}</div>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
             }

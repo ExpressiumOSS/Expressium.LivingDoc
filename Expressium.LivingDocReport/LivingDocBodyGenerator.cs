@@ -32,7 +32,7 @@ namespace Expressium.LivingDocReport
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<body onload=\"loadAnalytics('analytics'); loadViewmode('project-view');\">");
+            listOfLines.Add("<body onload=\"loadAnalytics('analytics'); loadViewmode('project-view','Overview');\">");
 
             return listOfLines;
         }
@@ -57,13 +57,13 @@ namespace Expressium.LivingDocReport
             listOfLines.Add("<!-- Project Navigation Section -->");
             listOfLines.Add("<nav class='navigation'>");
             listOfLines.Add("<span>|</span>");
-            listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewmode('project-view');\">Overview</a>");
+            listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewmode('project-view','Overview');\">Overview</a>");
             listOfLines.Add("<span>|</span>");
-            listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewmode('features-view');\">Features</a>");
+            listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewmode('features-view','Features');\">Features</a>");
             listOfLines.Add("<span>|</span>");
-            listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewmode('scenarios-view');\">Scenarios</a>");
+            listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewmode('scenarios-view','Scenarios');\">Scenarios</a>");
             listOfLines.Add("<span>|</span>");
-            listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewmode('steps-view');\">Steps</a>");
+            listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewmode('steps-view','Steps');\">Steps</a>");
             listOfLines.Add("<span>|</span>");
             listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
             listOfLines.Add("<span>|</span>");
@@ -88,6 +88,7 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add("<!-- Left Content Section -->");
             listOfLines.Add("<div id='left-section' class='bg-light p-3'>");
+            // listOfLines.AddRange(GenerateViewTitle(project));
             listOfLines.AddRange(GeneratePreFilters(project));
             listOfLines.AddRange(GenerateFilter(project));
             listOfLines.Add("<div id='scenario-view'></div>");
@@ -108,6 +109,18 @@ namespace Expressium.LivingDocReport
             return listOfLines;
         }
 
+        internal List<string> GenerateViewTitle(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- View Title Section -->");
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<span id='view-title' class='project-name'>Overview</span>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+            
         internal List<string> GeneratePreFilters(LivingDocProject project)
         {
             var listOfLines = new List<string>();
