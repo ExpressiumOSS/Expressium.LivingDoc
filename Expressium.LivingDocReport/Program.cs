@@ -25,8 +25,8 @@ namespace Expressium.LivingDocReport
             }
             else
             {
-                Console.WriteLine("Expressium.LivingDoc.exe [FILEPATH] [OUTPUTPATH]");
-                Console.WriteLine("Expressium.LivingDoc.exe C:\\SourceCode\\company-project-tests\\TestExecution.json C:\\SourceCode\\company-project-tests\\TestReport");
+                Console.WriteLine("Expressium.LivingDoc.exe [INPUTPATH] [OUTPUTPATH]");
+                Console.WriteLine("Expressium.LivingDoc.exe C:\\SourceCode\\company-project-tests\\TestExecution.json C:\\SourceCode\\company-project-tests\\LivingDoc.html");
             }
         }
     }

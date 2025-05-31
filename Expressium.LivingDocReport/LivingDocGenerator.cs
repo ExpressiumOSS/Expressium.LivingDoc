@@ -29,8 +29,6 @@ namespace Expressium.LivingDocReport
             Console.WriteLine("");
 
             var project = ParseJsonFile();
-            CreateOutputDirectories();
-            CopyOutputAttachments(project);
             AssignUniqueIdentifier(project);
             GenerateHtmlReport(project);
 
@@ -42,36 +40,6 @@ namespace Expressium.LivingDocReport
         {
             Console.WriteLine("Parse JSON File...");
             return LivingDocUtilities.DeserializeAsJson<LivingDocProject>(inputPath);
-        }
-
-        internal void CreateOutputDirectories()
-        {
-            Console.WriteLine("Create Output Directories...");
-
-            if (Directory.Exists(outputPath))
-                Directory.Delete(outputPath, true);
-            Directory.CreateDirectory(outputPath);
-            Directory.CreateDirectory(Path.Combine(outputPath, "Attachments"));
-        }
-
-        internal void CopyOutputAttachments(LivingDocProject project)
-        {
-            Console.WriteLine("Copy Output Attachments...");
-
-            foreach (var feature in project.Features)
-            {
-                foreach (var scenario in feature.Scenarios)
-                {
-                    foreach (var example in scenario.Examples)
-                    {
-                        foreach (var attachment in example.Attachments)
-                        {
-                            if (File.Exists(attachment))
-                                File.Copy(attachment, Path.Combine(outputPath, "Attachments", Path.GetFileName(attachment)), true);
-                        }
-                    }
-                }
-            }
         }
 
         internal void AssignUniqueIdentifier(LivingDocProject project)
@@ -102,7 +70,7 @@ namespace Expressium.LivingDocReport
             listOfLines.AddRange(GenerateBody(project));
             listOfLines.AddRange(GenerateHtmlFooter());
 
-            var htmlFilePath = Path.Combine(outputPath, "LivingDoc.html");
+            var htmlFilePath = outputPath;
             SaveListOfLinesToFile(htmlFilePath, listOfLines);
         }
 

@@ -325,7 +325,7 @@ namespace Expressium.LivingDocReport
                 foreach (var attachment in example.Attachments)
                 {
                     var filePath = Path.GetFileName(attachment);
-                    listOfLines.Add($"<li><a target='_blank' href='./Attachments/{filePath}'>{filePath}</a></li>");
+                    listOfLines.Add($"<li><a target='_blank' href='{attachment}'>{filePath}</a></li>");
                 }
 
                 listOfLines.Add("</ul>");

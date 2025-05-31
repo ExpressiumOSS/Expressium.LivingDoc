@@ -9,7 +9,7 @@
       "Password": "1234567890",
       "Logging": true,
       "LoggingPath": ".\\TestResults",
-      "BrowserType": "Chrome",
+      "BrowserType": "Edge",
       "Maximize": true,
       "Headless": false,
       "WindowSize": false,

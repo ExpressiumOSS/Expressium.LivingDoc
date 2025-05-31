@@ -63,14 +63,16 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
             if (File.Exists(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".log")))
             {
-                reqnrollOutputHelper.AddAttachment(".\\" + GetTestName() + "\\" + GetTestName() + ".log");
-                AddTestExecutionScenarioAttachment(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".log"));
+                var attachement = $"TestResults/{GetTestName()}/{GetTestName()}.log";
+                reqnrollOutputHelper.AddAttachment(attachement);
+                AddTestExecutionScenarioAttachment(attachement);
             }
 
             if (File.Exists(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".png")))
             {
-                reqnrollOutputHelper.AddAttachment(".\\" + GetTestName() + "\\" + GetTestName() + ".png");
-                AddTestExecutionScenarioAttachment(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".png"));
+                var attachement = $"TestResults/{GetTestName()}/{GetTestName()}.png";
+                reqnrollOutputHelper.AddAttachment(attachement);
+                AddTestExecutionScenarioAttachment(attachement);
             }
 
             AddTestExecutionAfterScenario();
