@@ -87,6 +87,9 @@ namespace Expressium.LivingDoc
                 numberOfPassedSteps += example.Steps.Count(step => step.IsPassed());
             }
 
+            if (numberOfSteps == 0)
+                return 0;
+
             return (int)Math.Round(100.0f / numberOfSteps * numberOfPassedSteps);
         }
 

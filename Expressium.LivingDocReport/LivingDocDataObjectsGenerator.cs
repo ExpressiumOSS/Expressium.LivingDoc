@@ -1,5 +1,4 @@
 ﻿using Expressium.LivingDoc;
-using Io.Cucumber.Messages.Types;
 using System.Collections.Generic;
 using System.IO;
 
@@ -70,9 +69,13 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add("<!-- Data Feature Description -->");
             listOfLines.Add("<div class='feature-description'>");
-            var listOfDescription = feature.Description.Trim().Split("\n");
-            foreach (var line in listOfDescription)
-                listOfLines.Add("<span>" + line.Trim() + "</span><br />");
+
+            if (feature.Description != null)
+            {
+                var listOfDescription = feature.Description.Trim().Split("\n");
+                foreach (var line in listOfDescription)
+                    listOfLines.Add("<span>" + line.Trim() + "</span><br />");
+            }
             listOfLines.Add("</div>");
             listOfLines.Add("<p></p>");
 
@@ -179,6 +182,7 @@ namespace Expressium.LivingDocReport
 
             listOfLines.Add("<!-- Data Scenario Steps -->");
 
+            string previousKeyword = null;
             foreach (var step in steps)
             {
                 var status = step.GetStatus().ToLower();
@@ -191,12 +195,16 @@ namespace Expressium.LivingDocReport
                 else
                     stepMarker = "&cross;";
 
+                var keyword = step.Keyword;
+                if (keyword == previousKeyword)
+                    keyword = "And";
+
                 if (isExecuted)
                 {
                     listOfLines.Add($"<tr>");
                     listOfLines.Add($"<td colspan='2'>");
                     listOfLines.Add($"<span class='step-indent color-{status}'><b>{stepMarker}</b></span>");
-                    listOfLines.Add($"<span class='step-keyword'> " + step.Keyword + "</span> ");
+                    listOfLines.Add($"<span class='step-keyword'> " + keyword + "</span> ");
                     listOfLines.Add($"<span>" + step.Name + "</span>");
                     listOfLines.Add($"</td>");
                     listOfLines.Add($"</tr>");
@@ -206,7 +214,7 @@ namespace Expressium.LivingDocReport
                     listOfLines.Add($"<tr>");
                     listOfLines.Add($"<td colspan='2'>");
                     listOfLines.Add($"<span class='step-indent color-skipped'></span>");
-                    listOfLines.Add($"<span class='step-keyword color-skipped'><i> " + step.Keyword + "</i></span> ");
+                    listOfLines.Add($"<span class='step-keyword color-skipped'><i> " + keyword + "</i></span> ");
                     listOfLines.Add($"<span class='color-skipped'><i>" + step.Name + "</i></span>");
                     listOfLines.Add($"</td>");
                     listOfLines.Add($"</tr>");
@@ -221,6 +229,8 @@ namespace Expressium.LivingDocReport
                     listOfLines.Add($"</td>");
                     listOfLines.Add($"</tr>");
                 }
+
+                previousKeyword = step.Keyword;
             }
 
             return listOfLines;
@@ -292,7 +302,7 @@ namespace Expressium.LivingDocReport
                 listOfLines.Add($"<tr><td></td></tr>");
                 listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td class='step-message' colspan='2'>");
-                listOfLines.Add($"<div class='step-{status}'>{message.Trim().Replace("\n","<br>")}</div>");
+                listOfLines.Add($"<div class='step-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
             }

@@ -66,6 +66,10 @@ namespace Expressium.LivingDoc
         public int GetPercentageOfPassed()
         {
             var numberOfPassed = Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());
+
+            if (Scenarios.Count == 0)
+                return 0;
+
             return (int)Math.Round(100.0f / Scenarios.Count * numberOfPassed);
         }
 
