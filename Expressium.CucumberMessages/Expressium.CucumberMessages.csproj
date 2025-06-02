@@ -12,22 +12,4 @@
 	  <ProjectReference Include="..\Expressium.LivingDoc\Expressium.LivingDoc.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Update="Samples\data-tables.feature.ndjson">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Samples\examples-tables.feature.ndjson">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Samples\minimal.feature.ndjson">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Samples\rules.feature.ndjson">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Samples\skipped.feature.ndjson">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
-
 </Project>

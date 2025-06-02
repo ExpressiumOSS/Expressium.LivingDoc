@@ -11,7 +11,7 @@ namespace Expressium.CucumberMessages.Tests
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.json");
 
-            var livingDocProject = CucumberConvertor.ConvertToLivingDoc(inputFilePath);
+            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
             LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
@@ -25,7 +25,7 @@ namespace Expressium.CucumberMessages.Tests
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "rules.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "rules.feature.json");
 
-            var livingDocProject = CucumberConvertor.ConvertToLivingDoc(inputFilePath);
+            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
             LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
@@ -39,7 +39,7 @@ namespace Expressium.CucumberMessages.Tests
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "data-tables.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "data-tables.feature.json");
 
-            var livingDocProject = CucumberConvertor.ConvertToLivingDoc(inputFilePath);
+            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
             LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
@@ -53,7 +53,7 @@ namespace Expressium.CucumberMessages.Tests
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.json");
 
-            var livingDocProject = CucumberConvertor.ConvertToLivingDoc(inputFilePath);
+            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
             LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));

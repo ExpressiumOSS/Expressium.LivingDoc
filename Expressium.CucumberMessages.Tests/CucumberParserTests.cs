@@ -15,7 +15,7 @@ namespace Expressium.CucumberMessages.Tests
 
             using (FileStream fileStream = File.OpenRead(filePath))
             {
-                var enumerator = new NdjsonMessageReaderSUT(fileStream).GetEnumerator();
+                var enumerator = new MessagesReader(fileStream).GetEnumerator();
                 while (enumerator.MoveNext())
                 {
                     numberOfEnvelopes++;

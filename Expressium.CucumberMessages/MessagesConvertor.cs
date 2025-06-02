@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Expressium.CucumberMessages
 {
-    public static class CucumberConvertor
+    public static class MessagesConvertor
     {
         public static LivingDocProject ConvertToLivingDoc(string filePath)
         {
@@ -23,7 +23,7 @@ namespace Expressium.CucumberMessages
 
             using (FileStream fileStream = File.OpenRead(filePath))
             {
-                var enumerator = new NdjsonMessageReaderSUT(fileStream).GetEnumerator();
+                var enumerator = new MessagesReader(fileStream).GetEnumerator();
                 while (enumerator.MoveNext())
                 {
                     var envelope = enumerator.Current;

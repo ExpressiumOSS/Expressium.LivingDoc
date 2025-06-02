@@ -9,7 +9,7 @@ namespace Expressium.CucumberMessages
     /// Consumers of Cucumber.Messages should use these options, or their serialization library's equivalent options.
     /// These options should work with System.Text.Json v6 or above.
     /// </summary>
-    public class NdjsonSerializer
+    public class MessagesSerializer
     {
         private static readonly Lazy<JsonSerializerOptions> _jsonOptions = new(() =>
         {
@@ -37,7 +37,7 @@ namespace Expressium.CucumberMessages
 
         public static string Serialize(Envelope message)
         {
-            return NdjsonSerializer.Serialize<Envelope>(message);
+            return MessagesSerializer.Serialize<Envelope>(message);
         }
 
         internal static string Serialize<T>(T message)
@@ -47,7 +47,7 @@ namespace Expressium.CucumberMessages
 
         public static Envelope Deserialize(string json)
         {
-            return NdjsonSerializer.Deserialize<Envelope>(json);
+            return MessagesSerializer.Deserialize<Envelope>(json);
         }
 
         internal static T Deserialize<T>(string json)

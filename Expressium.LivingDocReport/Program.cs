@@ -17,7 +17,7 @@ namespace Expressium.LivingDocReport
             else if (args.Length == 3 && args[0] == "--cucumber")
             {
                 var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Cucumber.json");
-                var livingDocProject = CucumberConvertor.ConvertToLivingDoc(args[1]);
+                var livingDocProject = MessagesConvertor.ConvertToLivingDoc(args[1]);
                 LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
 
                 var livingDocGenerator = new LivingDocGenerator(outputFilePath, args[2]);
