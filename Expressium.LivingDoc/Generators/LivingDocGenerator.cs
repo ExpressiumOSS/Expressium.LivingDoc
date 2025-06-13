@@ -59,19 +59,19 @@ namespace Expressium.LivingDoc.Generators
 
         internal LivingDocProject ParseCucumberMessagesJsonFile()
         {
-            Console.WriteLine("Parse Cucumber Messages JSON File...");
+            Console.WriteLine("Parsing Cucumber Messages JSON File...");
             return MessagesConvertor.ConvertToLivingDoc(inputPath);
         }
 
         internal LivingDocProject ParseLivingDocJsonFile()
         {
-            Console.WriteLine("Parse LivingDoc JSON File...");
+            Console.WriteLine("Parsing LivingDoc JSON File...");
             return LivingDocUtilities.DeserializeAsJson<LivingDocProject>(inputPath);
         }
 
         internal void AssignUniqueIdentifier(LivingDocProject project)
         {
-            Console.WriteLine("Assign Unique Identifier...");
+            Console.WriteLine("Assigning Unique Identifier...");
 
             var indexId = 1;
             foreach (var feature in project.Features)
