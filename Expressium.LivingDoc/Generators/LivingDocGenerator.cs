@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Html;
 using AngleSharp.Html.Parser;
+using Expressium.LivingDoc.Messages;
 using Expressium.LivingDoc.Models;
 using Expressium.LivingDoc.Properties;
 using System;
@@ -20,25 +21,51 @@ namespace Expressium.LivingDoc.Generators
             this.outputPath = outputPath;
         }
 
-        public void Execute()
+        public void Execute(bool useNativeFormat = false)
         {
-            Console.WriteLine("");
-            Console.WriteLine("Generating LivingDoc Report...");
-            Console.WriteLine("InputPath: " + inputPath);
-            Console.WriteLine("OutputPath: " + outputPath);
-            Console.WriteLine("");
+            try
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Generating LivingDoc Report...");
+                Console.WriteLine("InputPath: " + inputPath);
+                Console.WriteLine("OutputPath: " + outputPath);
+                Console.WriteLine("");
 
-            var project = ParseJsonFile();
-            AssignUniqueIdentifier(project);
-            GenerateHtmlReport(project);
+                if (useNativeFormat)
+                {
+                    var project = ParseLivingDocJsonFile();
+                    AssignUniqueIdentifier(project);
+                    GenerateHtmlReport(project);
+                }
+                else
+                {
+                    var project = ParseCucumberMessagesJsonFile();
+                    AssignUniqueIdentifier(project);
+                    GenerateHtmlReport(project);
+                }
 
-            Console.WriteLine("Generating LivingDoc Report Completed");
-            Console.WriteLine("");
+                Console.WriteLine("Generating LivingDoc Report Completed");
+                Console.WriteLine("");
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"IO error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+            }
         }
 
-        internal LivingDocProject ParseJsonFile()
+        private LivingDocProject ParseCucumberMessagesJsonFile()
         {
-            Console.WriteLine("Parse JSON File...");
+            Console.WriteLine("Parse Cucumber Messages JSON File...");
+            return MessagesConvertor.ConvertToLivingDoc(inputPath);
+        }
+
+        internal LivingDocProject ParseLivingDocJsonFile()
+        {
+            Console.WriteLine("Parse LivingDoc JSON File...");
             return LivingDocUtilities.DeserializeAsJson<LivingDocProject>(inputPath);
         }
 

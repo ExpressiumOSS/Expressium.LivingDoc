@@ -1,8 +1,5 @@
 ﻿using Expressium.LivingDoc.Generators;
-using Expressium.LivingDoc.Messages;
-using Expressium.LivingDoc.Models;
 using System;
-using System.IO;
 
 namespace Expressium.LivingDoc
 {
@@ -15,14 +12,10 @@ namespace Expressium.LivingDoc
                 var livingDocGenerator = new LivingDocGenerator(args[0], args[1]);
                 livingDocGenerator.Execute();
             }
-            else if (args.Length == 3 && args[0] == "--cucumber")
+            else if (args.Length == 3 && args[0] == "--native")
             {
-                var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Cucumber.json");
-                var livingDocProject = MessagesConvertor.ConvertToLivingDoc(args[1]);
-                LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
-
-                var livingDocGenerator = new LivingDocGenerator(outputFilePath, args[2]);
-                livingDocGenerator.Execute();
+                var livingDocGenerator = new LivingDocGenerator(args[1], args[2]);
+                livingDocGenerator.Execute(true);
             }
             else
             {
