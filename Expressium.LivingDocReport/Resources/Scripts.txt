@@ -289,6 +289,8 @@
 			var table = document.getElementById("steps-table-list");
 			var tr = table.getElementsByTagName("tr");
 
+			var numberOfFound = 0;
+
             for (var i = 0; i < tr.length; i++) {
                 var td = tr[i].getElementsByTagName("td");
                 var rowText = "";
@@ -300,7 +302,10 @@
 
 				found = filterTokens.every(token => rowText.includes(token));
 
-                if (i >= 5)
+				if (found)
+					numberOfFound++;
+
+                if (numberOfFound >= 6)
                     found = false;
 
 				tr[i].style.display = found ? "" : "none";
