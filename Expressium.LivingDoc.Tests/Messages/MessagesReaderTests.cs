@@ -1,7 +1,7 @@
 using Expressium.LivingDoc.Messages;
 using System.IO;
 
-namespace Expressium.LivingDocTests.Messages
+namespace Expressium.LivingDoc.UnitTests.Messages
 {
     public class MessagesReaderTests
     {

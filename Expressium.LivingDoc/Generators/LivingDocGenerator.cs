@@ -57,7 +57,7 @@ namespace Expressium.LivingDoc.Generators
             }
         }
 
-        private LivingDocProject ParseCucumberMessagesJsonFile()
+        internal LivingDocProject ParseCucumberMessagesJsonFile()
         {
             Console.WriteLine("Parse Cucumber Messages JSON File...");
             return MessagesConvertor.ConvertToLivingDoc(inputPath);
@@ -73,7 +73,7 @@ namespace Expressium.LivingDoc.Generators
         {
             Console.WriteLine("Assign Unique Identifier...");
 
-            int indexId = 1;
+            var indexId = 1;
             foreach (var feature in project.Features)
             {
                 feature.Id = Guid.NewGuid().ToString();
@@ -88,7 +88,7 @@ namespace Expressium.LivingDoc.Generators
 
         internal void GenerateHtmlReport(LivingDocProject project)
         {
-            Console.WriteLine("Generating  HTML Report...");
+            Console.WriteLine("Generating HTML Report...");
 
             var listOfLines = new List<string>();
 

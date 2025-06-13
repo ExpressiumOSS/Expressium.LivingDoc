@@ -6,6 +6,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>Expressium.LivingDoc.UnitTests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AngleSharp" Version="1.3.0" />
 		<PackageReference Include="Cucumber.Messages" Version="27.0.2" />
 	</ItemGroup>

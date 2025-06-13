@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.Coffeeshop.Web.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.LivingDoc", "Expressium.LivingDoc\Expressium.LivingDoc.csproj", "{9B1D865A-9FAC-C016-A091-B3DD5C1E4523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.LivingDocTests", "Expressium.LivingDoc.Tests\Expressium.LivingDocTests.csproj", "{4E237D7E-83A8-1553-F140-110E08EE8AC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expressium.LivingDoc.UnitTests", "Expressium.LivingDoc.Tests\Expressium.LivingDoc.UnitTests.csproj", "{4E237D7E-83A8-1553-F140-110E08EE8AC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

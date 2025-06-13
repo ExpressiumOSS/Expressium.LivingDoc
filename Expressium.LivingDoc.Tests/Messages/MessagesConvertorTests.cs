@@ -2,7 +2,7 @@
 using Expressium.LivingDoc.Models;
 using System.IO;
 
-namespace Expressium.LivingDocTests.Messages
+namespace Expressium.LivingDoc.UnitTests.Messages
 {
     internal class MessagesConvertorTests
     {
