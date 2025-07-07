@@ -437,4 +437,10 @@
             padding-top: 2px;
             padding-bottom: 0px;
         }
+
+        hr {
+            border: 0 none;
+            margin-top: 6px;
+            margin-bottom: 6px
+        }
     </style>

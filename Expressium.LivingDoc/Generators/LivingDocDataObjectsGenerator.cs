@@ -77,7 +77,7 @@ namespace Expressium.LivingDoc
                     listOfLines.Add("<span>" + line.Trim() + "</span><br />");
             }
             listOfLines.Add("</div>");
-            listOfLines.Add("<p></p>");
+            listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -95,7 +95,7 @@ namespace Expressium.LivingDoc
                 listOfLines.AddRange(GenerateDataScenarioSteps(feature.Background.Steps, false));
 
                 listOfLines.Add("</div>");
-                listOfLines.Add("<p></p>");
+                listOfLines.Add("<hr>");
             }
 
             return listOfLines;
