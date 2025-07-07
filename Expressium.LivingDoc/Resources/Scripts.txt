@@ -34,6 +34,10 @@
             }
 
             document.getElementById('right-section').innerHTML = feature;
+
+            var rules = document.getElementById('right-section').querySelectorAll('[data-rule-replica]');
+            for (var i = 0; i < rules.length; i++)
+                rules[i].style.display = "none";
         }
     </script>
     <script>

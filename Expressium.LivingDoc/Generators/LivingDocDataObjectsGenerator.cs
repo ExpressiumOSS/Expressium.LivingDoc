@@ -105,6 +105,7 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
+            var previousRule = string.Empty;
             foreach (var feature in project.Features)
             {
                 foreach (var scenario in feature.Scenarios)
@@ -124,11 +125,17 @@ namespace Expressium.LivingDoc
                             var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
 
                             listOfLines.Add("<!-- Scenario Rule Section -->");
-                            listOfLines.Add("<div class='section'>");
-                            listOfLines.Add("<div style='background-color: whitesmoke; padding: 4px;'>");
+                            if (previousRule != scenario.RuleId)
+                                listOfLines.Add("<div class='section'>");
+                            else
+                                listOfLines.Add("<div class='section' data-rule-replica>");
+                            listOfLines.AddRange(GenerateDataRuleTags(rule));
+                            listOfLines.Add("<div style='color: gray; background-color: whitesmoke; padding: 4px;'>");
                             listOfLines.Add("<span class='scenario-name'>Rule: " + rule.Name + "</span>");
                             listOfLines.Add("</div>");
                             listOfLines.Add("</div>");
+
+                            previousRule = scenario.RuleId;
                         }
 
                         listOfLines.Add("<!-- Scenario Outline Section -->");
@@ -163,6 +170,18 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<!-- Data Scenario Tags -->");
             listOfLines.Add("<div>");
             listOfLines.Add("<span class='tag-names'>" + scenario.GetTags() + "</span>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataRuleTags(LivingDocRule rule)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Data Rule Tags -->");
+            listOfLines.Add("<div>");
+            listOfLines.Add("<span class='tag-names'>" + rule.GetTags() + "</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
