@@ -119,6 +119,18 @@ namespace Expressium.LivingDoc
                             listOfLines.Add("<hr>");
                         exampleSplitter = true;
 
+                        if (!string.IsNullOrEmpty(scenario.RuleId))
+                        {
+                            var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
+
+                            listOfLines.Add("<!-- Scenario Rule Section -->");
+                            listOfLines.Add("<div class='section'>");
+                            listOfLines.Add("<div style='background-color: whitesmoke; padding: 4px;'>");
+                            listOfLines.Add("<span class='scenario-name'>Rule: " + rule.Name + "</span>");
+                            listOfLines.Add("</div>");
+                            listOfLines.Add("</div>");
+                        }
+
                         listOfLines.Add("<!-- Scenario Outline Section -->");
                         listOfLines.Add("<div class='section'>");
 

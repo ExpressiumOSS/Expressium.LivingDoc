@@ -7,6 +7,7 @@ namespace Expressium.LivingDoc.Models
     public class LivingDocScenario
     {
         public int Index { get; set; }
+        public string RuleId { get; set; }
         public string Id { get; set; }
         public List<string> Tags { get; set; }
         public string Description { get; set; }

@@ -160,18 +160,40 @@ namespace Expressium.LivingDoc.Messages
                 {
                     var rule = child.Rule;
 
+                    var ruleId = ParseRule(livingDocFeature, rule);
+
                     foreach (var ruleChild in rule.Children)
                     {
                         if (ruleChild.Scenario == null)
                             continue;
 
-                        ParseScenario(livingDocFeature, ruleChild.Scenario);
+                        ParseScenario(livingDocFeature, ruleChild.Scenario, ruleId);
                     }
                 }
             }
         }
 
-        public static void ParseScenario(LivingDocFeature livingDocFeature, Scenario scenario)
+        public static string ParseRule(LivingDocFeature livingDocFeature, Rule rule)
+        {
+            var livingDocRule = new LivingDocRule();
+
+            if (rule.Tags != null)
+            {
+                foreach (var tag in rule.Tags)
+                    livingDocRule.Tags.Add(tag.Name);
+            }
+
+            livingDocRule.Id = rule.Id;
+            livingDocRule.Description = rule.Description;
+            livingDocRule.Name = rule.Name;
+            livingDocRule.Keyword = rule.Keyword;
+
+            livingDocFeature.Rules.Add(livingDocRule);
+
+            return livingDocRule.Id;
+        }
+
+        public static void ParseScenario(LivingDocFeature livingDocFeature, Scenario scenario, string ruleId = null)
         {
             var livingDocScenario = new LivingDocScenario();
 
@@ -181,6 +203,7 @@ namespace Expressium.LivingDoc.Messages
                     livingDocScenario.Tags.Add(tag.Name);
             }
 
+            livingDocScenario.RuleId = ruleId;
             livingDocScenario.Id = scenario.Id;
             livingDocScenario.Description = scenario.Description;
             livingDocScenario.Name = scenario.Name;
