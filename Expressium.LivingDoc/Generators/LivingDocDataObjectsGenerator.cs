@@ -275,7 +275,7 @@ namespace Expressium.LivingDoc
                 listOfLines.Add($"</tr>");
 
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td style='padding-left: 32px;'>"); 
+                listOfLines.Add($"<td style='padding-left: 32px;'>");
                 listOfLines.AddRange(GenerateDataTable(example.DataTable));
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
@@ -327,7 +327,7 @@ namespace Expressium.LivingDoc
             {
                 listOfLines.Add("<!-- Data Scenario Message -->");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td>");
+                listOfLines.Add($"<td style='padding-top: 4px; padding-right: 20px; padding-left: 20px;'>");
                 listOfLines.Add($"<div class='step-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
@@ -344,7 +344,7 @@ namespace Expressium.LivingDoc
             {
                 listOfLines.Add("<!-- Data Scenario Attachments -->");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td class='scenario-name'>Attachments:</td>");
+                listOfLines.Add($"<td class='step-table-name' style='padding-left: 16px;'>Attachments:</td>");
                 listOfLines.Add($"</tr>");
 
                 listOfLines.Add($"<tr>");

@@ -157,6 +157,11 @@
             padding-right: 6px;
         }
 
+        table.scenario-outline td {
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+
         table.grid {
             border: 1px;
             width: 100%;
@@ -279,7 +284,7 @@
             background-color: #FFE6E6;
             outline: 1px solid var(--failed-color);
             text-align: center;
-            padding: 8px;
+            padding: 12px;
         }
 
         .step-incomplete {
@@ -287,7 +292,7 @@
             background-color: #FFF0E6;
             outline: 1px solid var(--incomplete-color);
             text-align: center;
-            padding: 8px;
+            padding: 12px;
         }
 
         .step-table {
@@ -299,7 +304,7 @@
             font-weight: bold;
         }
 
-        .step-table td {
+        table.step-table td {
             padding-top: 1px;
             padding-bottom: 1px;
         }
