@@ -152,11 +152,10 @@ namespace Expressium.LivingDoc
                         listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps, true));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
                         listOfLines.AddRange(GenerateDataScenarioMessage(example));
+                        listOfLines.AddRange(GenerateDataScenarioAttachments(example));
                         listOfLines.Add("</tbody>");
                         listOfLines.Add("</table>");
                         listOfLines.Add("</div>");
-
-                        listOfLines.AddRange(GenerateDataScenarioAttachments(example));
                     }
 
                     listOfLines.Add("</div>");
@@ -196,7 +195,7 @@ namespace Expressium.LivingDoc
 
             listOfLines.Add("<!-- Data Scenario Title -->");
             listOfLines.Add("<tr>");
-            listOfLines.Add("<td colspan='2'>");
+            listOfLines.Add("<td>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
             listOfLines.Add("<span class='scenario-name'>Scenario: " + scenario.Name + "</span>");
             listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
@@ -220,8 +219,6 @@ namespace Expressium.LivingDoc
                 var stepMarker = "";
                 if (step.IsPassed())
                     stepMarker = "&check;";
-                //else if (step.IsIncomplete())
-                //stepMarker = "&minus;";
                 else
                     stepMarker = "&cross;";
 
@@ -232,7 +229,7 @@ namespace Expressium.LivingDoc
                 if (isExecuted)
                 {
                     listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td colspan='2'>");
+                    listOfLines.Add($"<td>");
                     listOfLines.Add($"<span class='step-indent color-{status}'><b>{stepMarker}</b></span>");
                     listOfLines.Add($"<span class='step-keyword'> " + keyword + "</span> ");
                     listOfLines.Add($"<span>" + step.Name + "</span>");
@@ -242,7 +239,7 @@ namespace Expressium.LivingDoc
                 else
                 {
                     listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td colspan='2'>");
+                    listOfLines.Add($"<td>");
                     listOfLines.Add($"<span class='step-indent color-skipped'></span>");
                     listOfLines.Add($"<span class='step-keyword color-skipped'><i> " + keyword + "</i></span> ");
                     listOfLines.Add($"<span class='color-skipped'><i>" + step.Name + "</i></span>");
@@ -254,7 +251,7 @@ namespace Expressium.LivingDoc
                 {
                     listOfLines.Add("<!-- Scenario Steps Table Section -->");
                     listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td colspan='2' style='padding-left: 64px;'>");
+                    listOfLines.Add($"<td style='padding-left: 64px;'>");
                     listOfLines.AddRange(GenerateDataTable(step.DataTable));
                     listOfLines.Add($"</td>");
                     listOfLines.Add($"</tr>");
@@ -274,11 +271,11 @@ namespace Expressium.LivingDoc
             {
                 listOfLines.Add("<!-- Data Scenario Examples -->");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='2' class='step-table-name'>Examples:</td>");
+                listOfLines.Add($"<td class='step-table-name' style='padding-left: 16px;'>Examples:</td>");
                 listOfLines.Add($"</tr>");
 
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td colspan='2'>");
+                listOfLines.Add($"<td style='padding-left: 32px;'>"); 
                 listOfLines.AddRange(GenerateDataTable(example.DataTable));
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
@@ -329,9 +326,8 @@ namespace Expressium.LivingDoc
             if (message != null)
             {
                 listOfLines.Add("<!-- Data Scenario Message -->");
-                listOfLines.Add($"<tr><td></td></tr>");
                 listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td class='step-message' colspan='2'>");
+                listOfLines.Add($"<td>");
                 listOfLines.Add($"<div class='step-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"</tr>");
@@ -347,9 +343,12 @@ namespace Expressium.LivingDoc
             if (example.Attachments.Count > 0)
             {
                 listOfLines.Add("<!-- Data Scenario Attachments -->");
-                listOfLines.Add("<div class='section attachments'>");
+                listOfLines.Add($"<tr>");
+                listOfLines.Add($"<td class='scenario-name'>Attachments:</td>");
+                listOfLines.Add($"</tr>");
 
-                listOfLines.Add("<span class='scenario-name'>Attachments:</span>");
+                listOfLines.Add($"<tr>");
+                listOfLines.Add($"<td>");
                 listOfLines.Add("<ul>");
 
                 foreach (var attachment in example.Attachments)
@@ -359,8 +358,8 @@ namespace Expressium.LivingDoc
                 }
 
                 listOfLines.Add("</ul>");
-
-                listOfLines.Add("</div>");
+                listOfLines.Add($"</td>");
+                listOfLines.Add($"</tr>");
             }
 
             return listOfLines;

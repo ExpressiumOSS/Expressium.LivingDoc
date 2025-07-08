@@ -304,11 +304,6 @@
             padding-bottom: 1px;
         }
 
-        .step-message {
-            width: 0px;
-            min-width: fit-content;
-        }
-
         data-item {
             visibility: hidden;
         }
@@ -379,12 +374,9 @@
             font-weight: normal;
         }
         
-        .scenario-outline td:first-child {
-            padding-left: 0px;
-        }
-
         ul {
           list-style-type: none;
+          margin-bottom: 0px;
         }
 
         .chart-text {
@@ -431,11 +423,6 @@
            resize: none;
            width: 100%;
            padding: 8px;
-        }
-
-        .attachments {
-            padding-top: 2px;
-            padding-bottom: 0px;
         }
 
         hr {
