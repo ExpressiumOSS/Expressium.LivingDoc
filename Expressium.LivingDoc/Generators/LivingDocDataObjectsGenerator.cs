@@ -72,10 +72,13 @@ namespace Expressium.LivingDoc
 
             if (feature.Description != null)
             {
+                listOfLines.Add("<ul>");
                 var listOfDescription = feature.Description.Trim().Split("\n");
                 foreach (var line in listOfDescription)
-                    listOfLines.Add("<span>" + line.Trim() + "</span><br />");
+                    listOfLines.Add("<li>" + line.Trim() + "</li>");
+                listOfLines.Add("</ul>");
             }
+
             listOfLines.Add("</div>");
             listOfLines.Add("<hr>");
 

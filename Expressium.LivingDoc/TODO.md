@@ -15,7 +15,7 @@
 * Handling History Runs by List And Graph...
 
 ## Question
-* Should the visualization of the feature description be in italic...?
+* ~~Should the visualization of the feature description be in italic...?~~
 * Should Rules be resent in view single scenario mode...?
 * Should the Background be visualize as scenario steps are consolidated...?
 * Should the objects lists Features, Scenarios, Steps be a part of report...?

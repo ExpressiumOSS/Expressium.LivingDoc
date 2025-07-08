@@ -197,7 +197,7 @@
             font-family: Consolas, monospace;
             font-size: 14px;
             color: gray;
-            padding-left: 32px;
+            font-style: italic;
         }
 
         .scenario-name {
