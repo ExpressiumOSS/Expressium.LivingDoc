@@ -189,17 +189,13 @@ namespace Expressium.LivingDoc
 
         internal List<string> GenerateDataScenarioTitle(LivingDocScenario scenario, LivingDocExample example)
         {
-            var scenarioKeyword = "Scenario:";
-            if (example.HasDataTable())
-                scenarioKeyword = "Scenario Outline:";
-
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Scenario Title -->");
             listOfLines.Add("<tr>");
             listOfLines.Add("<td colspan='2'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
-            listOfLines.Add("<span class='scenario-name'>" + scenarioKeyword + " " + scenario.Name + "</span>");
+            listOfLines.Add("<span class='scenario-name'>Scenario: " + scenario.Name + "</span>");
             listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
             listOfLines.Add("</td>");
             listOfLines.Add("</tr>");

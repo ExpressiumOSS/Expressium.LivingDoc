@@ -14,6 +14,19 @@
 * Gherkin Editor for new Scenario with intellisense...
 * Handling History Runs by List And Graph...
 
+## Question
+* Should the visualization of the feature description be in italic...?
+* Should Rules be resent in view single scenario mode...?
+* Should the Background be visualize as scenario steps are consolidated...?
+* Should the objects lists Features, Scenarios, Steps be a part of report...?
+* Should the scenario Attachments be visual by default or toggled by button...?
+* Should the overall report name be based in the filename or properties...?
+* ~~Should the keyword always the presented as 'Scenarios' and override 'Example' and 'Outline'...?~~
+* Should the Analytics charts be shown per view mode only one at a time...?
+* Should the 'Completion' column be a part of Scenario view mode...?
+* Should the column 'Scenarios' representing number of be a part of the Feature list...?
+* Should the Steps column 'Count' be renamed to 'Usage' representing number of times...?
+ 
 # Inspiration
 
 ### HTML Colors
