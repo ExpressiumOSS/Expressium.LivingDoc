@@ -23,9 +23,9 @@
 * Should the overall report name be based in the filename or properties...?
 * ~~Should the keyword always the presented as 'Scenarios' and override 'Example' and 'Outline'...?~~
 * Should the Analytics charts be shown per view mode only one at a time...?
-* Should the 'Completion' column be a part of Scenario view mode...?
-* Should the column 'Scenarios' representing number of be a part of the Feature list...?
-* Should the Steps column 'Count' be renamed to 'Usage' representing number of times...?
+* ~~Should the 'Completion' column be a part of Scenario view mode...?~~
+* ~~Should the column 'Scenarios' representing number of be a part of the Feature list...?~~
+* ~~Should the Steps column 'Count' be renamed to 'Usage' representing number of times...?~~
  
 # Inspiration
 
