@@ -435,4 +435,16 @@
             margin-top: 6px;
             margin-bottom: 6px
         }
+
+        .circle-number {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: darkgray;
+            color:  white;
+            text-align: center;
+            line-height: 25px; /* Centers the text vertically */
+            font-size: 14px;
+            display: inline-block; /* Allows the circle to be displayed inline */
+        }
     </style>

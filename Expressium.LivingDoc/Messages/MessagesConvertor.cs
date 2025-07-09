@@ -210,31 +210,60 @@ namespace Expressium.LivingDoc.Messages
             livingDocScenario.Keyword = scenario.Keyword;
             livingDocFeature.Scenarios.Add(livingDocScenario);
 
-            var livingDocExample = new LivingDocExample();
-            livingDocScenario.Examples.Add(livingDocExample);
-
-            foreach (var example in scenario.Examples)
+            if (scenario.Examples.Count > 0)
             {
-                var tableRowHeader = new LivingDocTableRow();
-                foreach (var headerCell in example.TableHeader.Cells)
-                    tableRowHeader.Cells.Add(headerCell.Value);
-                livingDocExample.DataTable.Rows.Add(tableRowHeader);
-
-                foreach (var tablebodyRow in example.TableBody)
+                // Consolidating Scenario Examples as Self-Contained...
+                foreach (var examples in scenario.Examples)
                 {
-                    var tableRowData = new LivingDocTableRow();
-                    foreach (var tableBodyRowCell in tablebodyRow.Cells)
-                        tableRowData.Cells.Add(tableBodyRowCell.Value);
-                    livingDocExample.DataTable.Rows.Add(tableRowData);
+                    foreach (var tableBodyRow in examples.TableBody)
+                    {
+                        var livingDocExample = new LivingDocExample();
+                        livingDocScenario.Examples.Add(livingDocExample);
+
+                        AddFeatureBackgroundSteps(livingDocFeature, livingDocExample);
+                        AddScenarioExampleTableHeaders(examples, livingDocExample);
+                        AddScenarioExampleTableData(tableBodyRow, livingDocExample);
+                        AddScenarioExampleSteps(scenario, livingDocExample);
+                    }
                 }
             }
+            else
+            {
+                var livingDocExample = new LivingDocExample();
+                livingDocScenario.Examples.Add(livingDocExample);
 
-            if (livingDocFeature.Background != null && livingDocFeature.Background.Steps.Count > 0)
+                AddFeatureBackgroundSteps(livingDocFeature, livingDocExample);
+                AddScenarioExampleSteps(scenario, livingDocExample);
+            }
+        }
+
+        public static void AddScenarioExampleTableHeaders(Examples examples, LivingDocExample livingDocExample)
+        {
+            var tableRowHeader = new LivingDocTableRow();
+            foreach (var headerCell in examples.TableHeader.Cells)
+                tableRowHeader.Cells.Add(headerCell.Value);
+            livingDocExample.DataTable.Rows.Add(tableRowHeader);
+        }
+
+        public static void AddScenarioExampleTableData(TableRow tableBodyRow, LivingDocExample livingDocExample)
+        {
+            var tableRowData = new LivingDocTableRow();
+            foreach (var tableBodyRowCell in tableBodyRow.Cells)
+                tableRowData.Cells.Add(tableBodyRowCell.Value);
+            livingDocExample.DataTable.Rows.Add(tableRowData);
+        }
+
+        public static void AddFeatureBackgroundSteps(LivingDocFeature livingDocFeature, LivingDocExample livingDocExample)
+        {
+            if (livingDocFeature.Background != null) // && livingDocFeature.Background.Steps.Count > 0)
             {
                 foreach (var backgroundStep in livingDocFeature.Background.Steps)
                     livingDocExample.Steps.Add(backgroundStep.Copy(backgroundStep));
             }
+        }
 
+        public static void AddScenarioExampleSteps(Scenario scenario, LivingDocExample livingDocExample)
+        {
             foreach (var step in scenario.Steps)
             {
                 var livingDocStep = new LivingDocStep();

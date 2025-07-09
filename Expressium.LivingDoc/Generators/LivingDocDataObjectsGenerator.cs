@@ -116,12 +116,18 @@ namespace Expressium.LivingDoc
                     listOfLines.Add("<!-- Data Scenario -->");
                     listOfLines.Add($"<div class='data-item' id='{scenario.Id}'>");
 
+                    int index = 1;
                     bool exampleSplitter = false;
                     foreach (var example in scenario.Examples)
                     {
                         if (exampleSplitter)
                             listOfLines.Add("<hr>");
                         exampleSplitter = true;
+
+                        string indexId = string.Empty;
+                        if (example.HasDataTable())
+                            indexId = index.ToString();
+                        index++;
 
                         if (!string.IsNullOrEmpty(scenario.RuleId))
                         {
@@ -148,7 +154,7 @@ namespace Expressium.LivingDoc
 
                         listOfLines.Add("<table class='scenario-outline'>");
                         listOfLines.Add("<tbody>");
-                        listOfLines.AddRange(GenerateDataScenarioTitle(scenario, example));
+                        listOfLines.AddRange(GenerateDataScenarioTitle(scenario, example, indexId));
                         listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps, true));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
                         listOfLines.AddRange(GenerateDataScenarioMessage(example));
@@ -189,7 +195,7 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateDataScenarioTitle(LivingDocScenario scenario, LivingDocExample example)
+        internal List<string> GenerateDataScenarioTitle(LivingDocScenario scenario, LivingDocExample example, string indexId)
         {
             var listOfLines = new List<string>();
 
@@ -199,6 +205,10 @@ namespace Expressium.LivingDoc
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
             listOfLines.Add("<span class='scenario-name'>Scenario: " + scenario.Name + "</span>");
             listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
+
+            if (!string.IsNullOrEmpty(indexId))
+                listOfLines.Add($"<div class='circle-number'>{indexId}</div>");
+
             listOfLines.Add("</td>");
             listOfLines.Add("</tr>");
 
