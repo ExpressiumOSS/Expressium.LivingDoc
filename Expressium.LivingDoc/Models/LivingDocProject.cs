@@ -88,6 +88,14 @@ namespace Expressium.LivingDoc.Models
                 .Count();
         }
 
+        public int GetNumberOfExamples()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .SelectMany(scenario => scenario.Examples)
+                .Count();
+        }
+
         public int GetNumberOfPassedSteps()
         {
             return Features

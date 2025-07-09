@@ -34,12 +34,14 @@ namespace Expressium.LivingDoc.Generators
                 if (useNativeFormat)
                 {
                     var project = ParseLivingDocJsonFile();
+                    project.Title = Path.GetFileName(Path.GetFileNameWithoutExtension(outputPath));
                     AssignUniqueIdentifier(project);
                     GenerateHtmlReport(project);
                 }
                 else
                 {
                     var project = ParseCucumberMessagesJsonFile();
+                    project.Title = Path.GetFileName(Path.GetFileNameWithoutExtension(outputPath));
                     AssignUniqueIdentifier(project);
                     GenerateHtmlReport(project);
                 }

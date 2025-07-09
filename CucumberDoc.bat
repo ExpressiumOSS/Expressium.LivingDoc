@@ -2,26 +2,26 @@ echo off
 
 cd .\Expressium.LivingDoc.Tests\bin\Debug\net8.0
 
-Expressium.LivingDoc.exe .\Samples\stack-traces.feature.ndjson .\CucumberReportStackTraces.html
-start .\CucumberReportStackTraces.html
+Expressium.LivingDoc.exe .\Samples\stack-traces.feature.ndjson ".\Compatibility Kit Stack Traces.html"
+start "" ".\Stack Traces.html"
 
-Expressium.LivingDoc.exe .\Samples\retry.feature.ndjson .\CucumberReportRetry.html
-start .\CucumberReportRetry.html
+Expressium.LivingDoc.exe .\Samples\retry.feature.ndjson ".\Compatibility Kit Retry.html"
+start "" ".\Compatibility Kit Retry.html"
 
-Expressium.LivingDoc.exe .\Samples\attachments.feature.ndjson .\CucumberReportAttachments.html
-start .\CucumberReportAttachments.html
+Expressium.LivingDoc.exe .\Samples\attachments.feature.ndjson ".\Compatibility Kit Attachments.html"
+start "" ".\Compatibility Kit Attachments.html"
 
-Expressium.LivingDoc.exe .\Samples\examples-tables.feature.ndjson .\CucumberReportExampleTables.html
-start .\CucumberReportExampleTables.html
+Expressium.LivingDoc.exe .\Samples\examples-tables.feature.ndjson ".\Compatibility Kit Example Tables.html"
+start "" ".\Compatibility Kit Example Tables.html"
 
-Expressium.LivingDoc.exe .\Samples\minimal.feature.ndjson .\CucumberReportMinimal.html
-start .\CucumberReportMinimal.html
+Expressium.LivingDoc.exe .\Samples\minimal.feature.ndjson ".\Compatibility Kit Minimal.html"
+start "" ".\Compatibility Kit Minimal.html"
 
-Expressium.LivingDoc.exe .\Samples\data-tables.feature.ndjson .\CucumberReportDataTables.html
-start .\CucumberReportDataTables.html
+Expressium.LivingDoc.exe .\Samples\data-tables.feature.ndjson ".\Compatibility Kit Data Tables.html"
+start "" ".\Compatibility Kit Data Tables.html"
 
-Expressium.LivingDoc.exe .\Samples\rules.feature.ndjson .\CucumberReportRules.html
-start .\CucumberReportRules.html
+Expressium.LivingDoc.exe .\Samples\rules.feature.ndjson ".\Compatibility Kit Rules.html"
+start "" ".\Compatibility Kit Rules.html"
 
-rem Expressium.LivingDoc.exe .\Samples\skipped.feature.ndjson .\CucumberReportSkipped.html
-rem start .\CucumberReportSkipped.html
+rem Expressium.LivingDoc.exe .\Samples\skipped.feature.ndjson ".\Compatibility Kit Skipped.html"
+rem start "" ".\Compatibility Kit Skipped.html"

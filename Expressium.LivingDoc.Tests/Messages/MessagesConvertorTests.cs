@@ -17,7 +17,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
-            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(6));
+            Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(9));
+            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(27));
         }
 
         [Test]
