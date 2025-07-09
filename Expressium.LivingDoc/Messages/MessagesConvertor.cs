@@ -20,6 +20,7 @@ namespace Expressium.LivingDoc.Messages
             var listOfTestCaseStarted = new List<TestCaseStarted>();
             var listOfTestCaseFinished = new List<TestCaseFinished>();
             var listOfTestRunFinished = new List<TestRunFinished>();
+            var listOftAttachment = new List<Attachment>();
 
             using (FileStream fileStream = File.OpenRead(filePath))
             {
@@ -48,6 +49,9 @@ namespace Expressium.LivingDoc.Messages
 
                     if (envelope.TestRunFinished != null)
                         listOfTestRunFinished.Add(envelope.TestRunFinished);
+
+                    if (envelope.Attachment != null)
+                        listOftAttachment.Add(envelope.Attachment);
                 }
             }
 
@@ -94,6 +98,16 @@ namespace Expressium.LivingDoc.Messages
                             var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
                             if (testCaseFinished == null)
                                 continue;
+
+                            var attachments = listOftAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
+                            if (attachments.Count > 0)
+                            {
+                                foreach (var attachment in attachments)
+                                {
+                                    if (attachment.MediaType == "text/uri-list")
+                                        example.Attachments.Add(attachment.Body);
+                                }
+                            }
 
                             example.Duration = new TimeSpan(0, 0, 0, (int)testCaseFinished.Timestamp.Seconds, 0, (int)testCaseFinished.Timestamp.Nanos);
                         }
