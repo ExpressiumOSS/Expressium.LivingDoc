@@ -11,7 +11,7 @@
 		<PackageProjectUrl>https://expressium.dev</PackageProjectUrl>
 		<Copyright>© 2025 Expressium All Rights Reserved</Copyright>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<RepositoryUrl>https://github.com/ExpressiumOSS/ExpressiumLivingDoc</RepositoryUrl>
+		<RepositoryUrl>https://github.com/ExpressiumOSS/Expressium.LivingDoc</RepositoryUrl>
 		<PackageTags>expressium;reqnroll;bdd;livingdoc</PackageTags>
 	</PropertyGroup>
 
