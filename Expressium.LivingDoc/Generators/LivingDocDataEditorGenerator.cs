@@ -37,13 +37,13 @@ namespace Expressium.LivingDoc.Generators
             //listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<span class='scenario-name'>Scenario:</span>");
+            listOfLines.Add("<span class='scenario-keyword'>Scenario:</span>");
             listOfLines.Add("<br />");
             listOfLines.Add("<textarea class='filter' id='script' rows='7'></textarea>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<span class='scenario-name'>Step Definitions:</span>");
+            listOfLines.Add("<span class='scenario-keyword'>Step Definitions:</span>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");

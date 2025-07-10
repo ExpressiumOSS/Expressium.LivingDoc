@@ -58,7 +58,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<!-- Data Feature Name -->");
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-            listOfLines.Add($"<span class='feature-name'>Feature: {feature.Name}</span>");
+            listOfLines.Add($"<span class='feature-keyword'>Feature: </span>{feature.Name}");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -93,11 +93,9 @@ namespace Expressium.LivingDoc
             if (feature.Background != null && feature.Background.Steps.Count > 0)
             {
                 listOfLines.Add("<!-- Data Feature Background -->");
-                listOfLines.Add("<div class='feature-background'>");
-                listOfLines.Add("<span class='feature-name'>Background:</span><br />");
-
+                listOfLines.Add("<div>");
+                listOfLines.Add("<span class='background-keyword'>Background:</span><br />");
                 listOfLines.AddRange(GenerateDataScenarioSteps(feature.Background.Steps, false));
-
                 listOfLines.Add("</div>");
                 listOfLines.Add("<hr>");
             }
@@ -109,13 +107,30 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
-            var previousRule = string.Empty;
             foreach (var feature in project.Features)
             {
+                var previousRule = string.Empty;
                 foreach (var scenario in feature.Scenarios)
                 {
                     listOfLines.Add("<!-- Data Scenario -->");
                     listOfLines.Add($"<div class='data-item' id='{scenario.Id}'>");
+
+                    if (!string.IsNullOrEmpty(scenario.RuleId))
+                    {
+                        var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
+
+                        listOfLines.Add("<!-- Scenario Rule Section -->");
+                        if (previousRule != scenario.RuleId)
+                            listOfLines.Add("<div class='section'>");
+                        else
+                            listOfLines.Add("<div class='section' data-rule-replica>");
+                        listOfLines.AddRange(GenerateDataRuleTags(rule));
+                        listOfLines.Add("<span class='rule-keyword'>Rule: </span>" + rule.Name);
+                        listOfLines.Add("</div>");
+                        listOfLines.Add("<hr>");
+
+                        previousRule = scenario.RuleId;
+                    }
 
                     int index = 1;
                     bool exampleSplitter = false;
@@ -129,23 +144,6 @@ namespace Expressium.LivingDoc
                         if (example.HasDataTable())
                             indexId = index.ToString();
                         index++;
-
-                        if (!string.IsNullOrEmpty(scenario.RuleId))
-                        {
-                            var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
-
-                            listOfLines.Add("<!-- Scenario Rule Section -->");
-                            if (previousRule != scenario.RuleId)
-                                listOfLines.Add("<div class='section'>");
-                            else
-                                listOfLines.Add("<div class='section' data-rule-replica>");
-                            listOfLines.AddRange(GenerateDataRuleTags(rule));
-                            listOfLines.Add("<span class='rule-name'>Rule: " + rule.Name + "</span>");
-                            listOfLines.Add("</div>");
-                            listOfLines.Add("<hr>");
-
-                            previousRule = scenario.RuleId;
-                        }
 
                         listOfLines.Add("<!-- Scenario Outline Section -->");
                         listOfLines.Add("<div class='section'>");
@@ -203,7 +201,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<tr>");
             listOfLines.Add("<td>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
-            listOfLines.Add("<span class='scenario-name'>Scenario: " + scenario.Name + "</span>");
+            listOfLines.Add("<span class='scenario-keyword'>Scenario: </span>" + scenario.Name);
             listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
 
             if (!string.IsNullOrEmpty(indexId))

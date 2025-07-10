@@ -193,7 +193,7 @@
             color: dimgray;
         }
 
-        .feature-name {
+        .feature-keyword {
             font-weight: bold;
         }
 
@@ -204,11 +204,15 @@
             font-style: italic;
         }
 
-        .rule-name {
+        .background-keyword {
             font-weight: bold;
         }
 
-        .scenario-name {
+        .rule-keyword {
+            font-weight: bold;
+        }
+
+        .scenario-keyword {
             font-weight: bold;
         }
 
@@ -271,7 +275,6 @@
         }
 
         .step-keyword {
-            color: #2471A3;
             color: var(--master-color);
             font-weight: bold;
         }
