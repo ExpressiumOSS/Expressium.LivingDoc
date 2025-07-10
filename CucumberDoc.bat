@@ -3,7 +3,7 @@ echo off
 cd .\Expressium.LivingDoc.Tests\bin\Debug\net8.0
 
 Expressium.LivingDoc.exe .\Samples\stack-traces.feature.ndjson ".\Compatibility Kit Stack Traces.html"
-start "" ".\Stack Traces.html"
+start "" ".\Compatibility Kit Stack Traces.html"
 
 Expressium.LivingDoc.exe .\Samples\retry.feature.ndjson ".\Compatibility Kit Retry.html"
 start "" ".\Compatibility Kit Retry.html"
