@@ -19,6 +19,8 @@ namespace Expressium.LivingDoc.Models
 
         public LivingDocFeature()
         {
+            Id = Guid.NewGuid().ToString();
+
             Tags = new List<string>();
             Rules = new List<LivingDocRule>();
             Scenarios = new List<LivingDocScenario>();

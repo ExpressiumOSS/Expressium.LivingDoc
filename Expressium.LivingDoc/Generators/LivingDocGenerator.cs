@@ -35,14 +35,12 @@ namespace Expressium.LivingDoc.Generators
                 {
                     var project = ParseLivingDocJsonFile();
                     project.Title = Path.GetFileName(Path.GetFileNameWithoutExtension(outputPath));
-                    AssignUniqueIdentifier(project);
                     GenerateHtmlReport(project);
                 }
                 else
                 {
                     var project = ParseCucumberMessagesJsonFile();
                     project.Title = Path.GetFileName(Path.GetFileNameWithoutExtension(outputPath));
-                    AssignUniqueIdentifier(project);
                     GenerateHtmlReport(project);
                 }
 
@@ -69,23 +67,6 @@ namespace Expressium.LivingDoc.Generators
         {
             Console.WriteLine("Parsing LivingDoc JSON File...");
             return LivingDocUtilities.DeserializeAsJson<LivingDocProject>(inputPath);
-        }
-
-        internal void AssignUniqueIdentifier(LivingDocProject project)
-        {
-            Console.WriteLine("Assigning Unique Identifier...");
-
-            var indexId = 1;
-            foreach (var feature in project.Features)
-            {
-                feature.Id = Guid.NewGuid().ToString();
-
-                foreach (var scenario in feature.Scenarios)
-                {
-                    scenario.Id = Guid.NewGuid().ToString();
-                    scenario.Index = indexId++;
-                }
-            }
         }
 
         internal void GenerateHtmlReport(LivingDocProject project)

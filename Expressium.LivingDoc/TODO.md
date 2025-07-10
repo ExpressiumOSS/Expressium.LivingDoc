@@ -21,6 +21,10 @@
 * Should the overall report name be based in the filename or properties...?
 * Should the Analytics charts be shown per view mode only one at a time...?
  
+## Before Release
+* Remove usage of native Expressium LivingDoc in program...
+
+
 # Inspiration
 
 ### HTML Colors

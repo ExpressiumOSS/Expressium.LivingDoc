@@ -26,51 +26,6 @@ namespace Expressium.LivingDoc.UnitTests
         }
 
         [Test]
-        public void AssignUniqueIdentifier_AssignsIdsAndIndexesCorrectly()
-        {
-            // Arrange
-            var project = new LivingDocProject
-            {
-                Features = new List<LivingDocFeature>
-                {
-                    new LivingDocFeature
-                    {
-                        Scenarios = new List<LivingDocScenario>
-                        {
-                            new LivingDocScenario(),
-                            new LivingDocScenario()
-                        }
-                    },
-                    new LivingDocFeature
-                    {
-                        Scenarios = new List<LivingDocScenario>
-                        {
-                            new LivingDocScenario()
-                        }
-                    }
-                }
-            };
-
-            var generator = new LivingDocGenerator("dummyInput", "dummyOutput");
-
-            // Act
-            generator.AssignUniqueIdentifier(project);
-
-            // Assert
-            int expectedIndex = 1;
-            foreach (var feature in project.Features)
-            {
-                Assert.That(string.IsNullOrWhiteSpace(feature.Id), Is.False, "Feature ID should not be null or empty.");
-
-                foreach (var scenario in feature.Scenarios)
-                {
-                    Assert.That(string.IsNullOrWhiteSpace(scenario.Id), Is.False, "Scenario ID should not be null or empty.");
-                    Assert.That(expectedIndex++, Is.EqualTo(scenario.Index), "Scenario index mismatch.");
-                }
-            }
-        }
-
-        [Test]
         public void GenerateHtmlReport_GeneratesNonEmptyHtmlFile()
         {
             // Arrange

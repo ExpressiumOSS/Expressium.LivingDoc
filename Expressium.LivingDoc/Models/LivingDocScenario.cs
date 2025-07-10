@@ -6,9 +6,8 @@ namespace Expressium.LivingDoc.Models
 {
     public class LivingDocScenario
     {
-        public int Index { get; set; }
-        public string RuleId { get; set; }
         public string Id { get; set; }
+        public string RuleId { get; set; }
         public List<string> Tags { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
@@ -18,7 +17,8 @@ namespace Expressium.LivingDoc.Models
 
         public LivingDocScenario()
         {
-            Index = 0;
+            Id = Guid.NewGuid().ToString();
+
             Tags = new List<string>();
             Examples = new List<LivingDocExample>();
         }
@@ -42,11 +42,6 @@ namespace Expressium.LivingDoc.Models
             {
                 return LivingDocStatuses.Undefined.ToString();
             }
-        }
-
-        public string GetIndexSortId()
-        {
-            return Index.ToString("D4");
         }
 
         public string GetDuration()
