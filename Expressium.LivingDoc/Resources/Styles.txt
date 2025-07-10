@@ -85,7 +85,7 @@
             color: #555;
             text-align: center;
             padding: 10px;
-            font-size: 0.9em;
+            font-size: 0.875em;
         }
 
         .navigation {
@@ -185,7 +185,7 @@
         }
 
         .project-name {
-            font-size: 24px;
+            font-size: 1.5em;
             font-weight: bold;
         }
 
@@ -194,19 +194,17 @@
         }
 
         .feature-name {
-            font-size: 16px;
             font-weight: bold;
         }
 
         .feature-description {
             font-family: Consolas, monospace;
-            font-size: 14px;
+            font-size: 0.875em;
             color: gray;
             font-style: italic;
         }
 
         .scenario-name {
-            font-size: 16px;
             font-weight: bold;
         }
 
@@ -219,12 +217,12 @@
         }
 
         .chart-percentage {
-            font-size: 36px;
+            font-size: 2.25em;
             line-height: 1.0;
         }
 
         .chart-status {
-            font-size: 32px;
+            font-size: 2em;
             color: gray;
             line-height: 1.0;
         }
@@ -244,17 +242,17 @@
         }
 
         .chart-count-number {
-            font-size: 20px;
+            font-size: 1.25em;
             line-height: 1.0;
         }
 
         .chart-count-percentage {
-            font-size: 18px;
+            font-size: 1.125em;
             line-height: 1.0;
         }
 
         .chart-count-status {
-            font-size: 18px;
+            font-size: 1.125em;
             line-height: 1.0;
         }
 
@@ -437,14 +435,14 @@
         }
 
         .circle-number {
-            width: 25px;
-            height: 25px;
+            width: 1.5em;
+            height: 1.5em;
             border-radius: 50%;
             background-color: darkgray;
             color:  white;
             text-align: center;
-            line-height: 25px; /* Centers the text vertically */
-            font-size: 14px;
+            line-height: 1.5em; /* Centers the text vertically */
+            font-size: 0.875em;
             display: inline-block; /* Allows the circle to be displayed inline */
         }
     </style>

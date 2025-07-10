@@ -34,7 +34,6 @@ namespace Expressium.LivingDoc.Generators
                 if (useNativeFormat)
                 {
                     var project = ParseLivingDocJsonFile();
-                    project.Title = Path.GetFileName(Path.GetFileNameWithoutExtension(outputPath));
                     GenerateHtmlReport(project);
                 }
                 else

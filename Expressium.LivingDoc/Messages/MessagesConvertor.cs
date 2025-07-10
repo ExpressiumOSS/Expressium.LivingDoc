@@ -130,12 +130,9 @@ namespace Expressium.LivingDoc.Messages
                     livingDocFeature.Tags.Add(tag.Name);
             }
 
-            //testExecutionFeature.Id = feature.Id;
             livingDocFeature.Description = feature.Description;
             livingDocFeature.Name = feature.Name;
             livingDocFeature.Keyword = feature.Keyword;
-            //testExecutionFeature.Line = feature.line;
-            //testExecutionFeature.Uri = feature.uri;
             livingDocProject.Features.Add(livingDocFeature);
 
             // Background
@@ -269,7 +266,7 @@ namespace Expressium.LivingDoc.Messages
 
         public static void AddFeatureBackgroundSteps(LivingDocFeature livingDocFeature, LivingDocExample livingDocExample)
         {
-            if (livingDocFeature.Background != null) // && livingDocFeature.Background.Steps.Count > 0)
+            if (livingDocFeature.Background != null)
             {
                 foreach (var backgroundStep in livingDocFeature.Background.Steps)
                     livingDocExample.Steps.Add(backgroundStep.Copy(backgroundStep));

@@ -192,8 +192,8 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Data Analytics Duration -->");
             listOfLines.Add("<div style='padding-top: 6px; text-align: center; justify-content: center; align-items: center; display: flex;'>");
-            listOfLines.Add($"<span style='font-size: 40px;'>&#9201;</span>");
-            listOfLines.Add($"<span style='font-size: 24px; padding-top: 6px;'>");
+            listOfLines.Add($"<span style='font-size: 2.5em;'>&#9201;</span>");
+            listOfLines.Add($"<span style='font-size: 1.5em; padding-top: 6px;'>");
             listOfLines.Add($"<span style='color: gray;'>Duration </span>");
             listOfLines.Add($"<span>{project.GetDuration()}</span>");
             listOfLines.Add("</span>");
