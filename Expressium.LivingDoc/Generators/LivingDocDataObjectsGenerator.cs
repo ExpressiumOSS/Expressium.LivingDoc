@@ -140,10 +140,9 @@ namespace Expressium.LivingDoc
                             else
                                 listOfLines.Add("<div class='section' data-rule-replica>");
                             listOfLines.AddRange(GenerateDataRuleTags(rule));
-                            listOfLines.Add("<div style='color: gray; background-color: whitesmoke; padding: 4px;'>");
-                            listOfLines.Add("<span class='scenario-name'>Rule: " + rule.Name + "</span>");
+                            listOfLines.Add("<span class='rule-name'>Rule: " + rule.Name + "</span>");
                             listOfLines.Add("</div>");
-                            listOfLines.Add("</div>");
+                            listOfLines.Add("<hr>");
 
                             previousRule = scenario.RuleId;
                         }

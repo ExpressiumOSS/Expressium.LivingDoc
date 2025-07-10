@@ -1,0 +1,312 @@
+{
+  "Title": "Expressium.Coffeeshop.Web.API.Tests",
+  "ExecutionTime": "2025-07-10T20:46:20.1376909+02:00",
+  "Duration": "00:00:57.2039552",
+  "Features": [
+    {
+      "Id": "69112c9d-dd79-4f66-981f-33335378c508",
+      "Tags": [
+        "@TA-1000",
+        "@BusinessTests"
+      ],
+      "Description": "\tAs a User\r\n\tI want to send to a user Contact Us inquiry\r\n\tSo that I can recieve detailed product information",
+      "Name": "Coffees Shop",
+      "Uri": "BusinessTests/Features",
+      "Background": {
+        "Id": "915aaf58-423b-436b-a471-9d166b6996c5",
+        "Keyword": "Background",
+        "Steps": [
+          {
+            "Keyword": "Given",
+            "Name": "I have logged in with valid user credentials",
+            "Status": "Passed"
+          }
+        ]
+      },
+      "Rules": [
+        {
+          "Id": "25",
+          "Tags": [
+            "@TA-2999"
+          ],
+          "Name": "Ordering Coffee as a Customer",
+          "Keyword": "Rule"
+        }
+      ],
+      "Scenarios": [
+        {
+          "RuleId": "25",
+          "Id": "c4cbd5c6-96a0-4771-b528-0b9419b66696",
+          "Tags": [
+            "@TA-1001",
+            "@Done"
+          ],
+          "Name": "Successful User Login with Valid Credentials",
+          "Examples": [
+            {
+              "Stacktrace": "   at Expressium.Coffeeshop.Web.API.Tests.Asserts.EqualTo(Object actual, Object expected, String message) in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API.Tests\\Asserts.cs:line 27\r\n   at Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps.LoginSteps.ThenIShouldBeRedirectedToTheHomePage() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API.Tests\\BusinessTests\\Steps\\LoginSteps.cs:line 29\r\n   at InvokeStub_Action\u00601.Invoke(Object, Span\u00601)\r\n   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\r\n--- End of stack trace from previous location ---\r\n   at Reqnroll.Bindings.BindingInvoker.InvokeBindingAsync(IBinding binding, IContextManager contextManager, Object[] arguments, ITestTracer testTracer, DurationHolder durationHolder)\r\n   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepMatchAsync(BindingMatch match, Object[] arguments, DurationHolder durationHolder)\r\n   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)\r\n   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()\r\n   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()\r\n   at Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Features.LoginFeature.ScenarioCleanupAsync()\r\n   at Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Features.LoginFeature.SuccessfulUserLoginWithValidCredentials() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API.Tests\\BusinessTests\\Features\\Login.feature:line 10\r\n   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter\u00601.GetResult()\r\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await[TResult](TestExecutionContext context, Func\u00601 invoke)\r\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(TestExecutionContext context, Func\u00601 invoke)\r\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)\r\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)\r\n   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.\u003C\u003Ec__DisplayClass1_0.\u003CExecute\u003Eb__0()\r\n   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)",
+              "Duration": "00:00:03.4784413",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should be redirected to the Home page",
+                  "Status": "Failed",
+                  "Duration": 0,
+                  "Message": "Validate the HomePage title property...\nExpected to be equal [XHome] but was [Home] - FAILED",
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/SuccessfulUserLoginWithValidCredentials/SuccessfulUserLoginWithValidCredentials.log",
+                "TestResults/SuccessfulUserLoginWithValidCredentials/SuccessfulUserLoginWithValidCredentials.png"
+              ]
+            }
+          ]
+        },
+        {
+          "RuleId": "25",
+          "Id": "d25e102a-3e44-49e9-8f45-8d1ac8cc97fc",
+          "Tags": [
+            "@TA-1002",
+            "@Done"
+          ],
+          "Name": "Successful Submitting a Contact Us Inquiry",
+          "Examples": [
+            {
+              "Duration": "00:00:05.6418426",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I complete and submit the Contact Us formular",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should receive an inquiry confirmation message",
+                  "Status": "Pending",
+                  "Duration": 0,
+                  "Message": "Pending Step Definition",
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/SuccessfulSubmittingAContactUsInquiry/SuccessfulSubmittingAContactUsInquiry.log",
+                "TestResults/SuccessfulSubmittingAContactUsInquiry/SuccessfulSubmittingAContactUsInquiry.png"
+              ]
+            }
+          ]
+        },
+        {
+          "RuleId": "25",
+          "Id": "f5a3f24a-e2c4-4521-a91b-6e406a5e09af",
+          "Tags": [
+            "@TA-1003",
+            "@Review"
+          ],
+          "Name": "Ordering Multiple Coffees Confirmation Notification",
+          "Examples": [
+            {
+              "Duration": "00:00:04.4954123",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I add multiple pieces of coffees to the shopping cart",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": [
+                      {
+                        "Cells": [
+                          "Brand",
+                          "Pieces"
+                        ]
+                      },
+                      {
+                        "Cells": [
+                          "La Ceiba Huehuetenango",
+                          "2"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should have a confirmation notification message",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/OrderingMultipleCoffeesConfirmationNotification/OrderingMultipleCoffeesConfirmationNotification.log",
+                "TestResults/OrderingMultipleCoffeesConfirmationNotification/OrderingMultipleCoffeesConfirmationNotification.png"
+              ]
+            }
+          ]
+        },
+        {
+          "RuleId": "25",
+          "Id": "3cda086e-fbdf-4a47-ba69-585e60804339",
+          "Tags": [
+            "@TA-1004",
+            "@Review"
+          ],
+          "Name": "Ordering Coffee Confirmation Notification",
+          "Examples": [
+            {
+              "Duration": "00:00:04.1367739",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I add Santa Rita Cerrado Mineiro coffee to the shopping cart",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should have $99 in the confirmation notification message",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": [
+                  {
+                    "Cells": [
+                      "Brand",
+                      "Price"
+                    ]
+                  },
+                  {
+                    "Cells": [
+                      "Santa Rita Cerrado Mineiro",
+                      "$99"
+                    ]
+                  }
+                ]
+              },
+              "Attachments": [
+                "TestResults/OrderingCoffeeConfirmationNotificationSantaRitaCerradoMineiro $99/OrderingCoffeeConfirmationNotificationSantaRitaCerradoMineiro $99.log",
+                "TestResults/OrderingCoffeeConfirmationNotificationSantaRitaCerradoMineiro $99/OrderingCoffeeConfirmationNotificationSantaRitaCerradoMineiro $99.png"
+              ]
+            },
+            {
+              "Duration": "00:00:04.2005593",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I add La Soledad Antioquia coffee to the shopping cart",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should have $77 in the confirmation notification message",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": [
+                  {
+                    "Cells": [
+                      "Brand",
+                      "Price"
+                    ]
+                  },
+                  {
+                    "Cells": [
+                      "La Soledad Antioquia",
+                      "$77"
+                    ]
+                  }
+                ]
+              },
+              "Attachments": [
+                "TestResults/OrderingCoffeeConfirmationNotificationLaSoledadAntioquia $77/OrderingCoffeeConfirmationNotificationLaSoledadAntioquia $77.log",
+                "TestResults/OrderingCoffeeConfirmationNotificationLaSoledadAntioquia $77/OrderingCoffeeConfirmationNotificationLaSoledadAntioquia $77.png"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

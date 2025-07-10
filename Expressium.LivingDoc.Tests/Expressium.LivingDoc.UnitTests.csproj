@@ -36,6 +36,9 @@
 	  <None Update="Samples\minimal.feature.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Samples\native.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Samples\retry.feature">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
