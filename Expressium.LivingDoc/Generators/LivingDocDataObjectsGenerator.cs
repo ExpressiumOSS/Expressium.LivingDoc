@@ -58,7 +58,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<!-- Data Feature Name -->");
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-            listOfLines.Add($"<span class='feature-keyword'>Feature: </span>{feature.Name}");
+            listOfLines.Add($"<span class='feature-keyword'>Feature: </span><span class='feature-name'>{feature.Name}</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -125,7 +125,7 @@ namespace Expressium.LivingDoc
                         else
                             listOfLines.Add("<div class='section' data-rule-replica>");
                         listOfLines.AddRange(GenerateDataRuleTags(rule));
-                        listOfLines.Add("<span class='rule-keyword'>Rule: </span>" + rule.Name);
+                        listOfLines.Add("<span class='rule-keyword'>Rule: </span><span class='rule-name'>" + rule.Name + "</span>");
                         listOfLines.Add("</div>");
                         listOfLines.Add("<hr>");
 
@@ -201,7 +201,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<tr>");
             listOfLines.Add("<td>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
-            listOfLines.Add("<span class='scenario-keyword'>Scenario: </span>" + scenario.Name);
+            listOfLines.Add("<span class='scenario-keyword'>Scenario: </span><span class='scenario-name'>" + scenario.Name + "</span>");
             listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
 
             if (!string.IsNullOrEmpty(indexId))

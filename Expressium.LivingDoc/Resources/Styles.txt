@@ -197,6 +197,10 @@
             font-weight: bold;
         }
 
+        .feature-name {
+            font-weight: normal;
+        }
+
         .feature-description {
             font-family: Consolas, monospace;
             font-size: 0.875em;
@@ -212,8 +216,16 @@
             font-weight: bold;
         }
 
+        .rule-name {
+            font-weight: normal;
+        }
+
         .scenario-keyword {
             font-weight: bold;
+        }
+
+        .scenario-name {
+            font-weight: normal;
         }
 
         .tag-names {
