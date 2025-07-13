@@ -147,18 +147,12 @@ namespace Expressium.LivingDoc
 
                         listOfLines.Add("<!-- Scenario Outline Section -->");
                         listOfLines.Add("<div class='section'>");
-
                         listOfLines.AddRange(GenerateDataScenarioTags(scenario));
-
-                        listOfLines.Add("<table class='scenario-outline'>");
-                        listOfLines.Add("<tbody>");
                         listOfLines.AddRange(GenerateDataScenarioTitle(scenario, example, indexId));
                         listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps, true));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
                         listOfLines.AddRange(GenerateDataScenarioMessage(example));
                         listOfLines.AddRange(GenerateDataScenarioAttachments(example));
-                        listOfLines.Add("</tbody>");
-                        listOfLines.Add("</table>");
                         listOfLines.Add("</div>");
                     }
 
@@ -198,8 +192,7 @@ namespace Expressium.LivingDoc
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Scenario Title -->");
-            listOfLines.Add("<tr>");
-            listOfLines.Add("<td>");
+            listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
             listOfLines.Add("<span class='scenario-keyword'>Scenario: </span><span class='scenario-name'>" + scenario.Name + "</span>");
             listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
@@ -207,8 +200,7 @@ namespace Expressium.LivingDoc
             if (!string.IsNullOrEmpty(indexId))
                 listOfLines.Add($"<div class='circle-number'>{indexId}</div>");
 
-            listOfLines.Add("</td>");
-            listOfLines.Add("</tr>");
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }
@@ -218,6 +210,8 @@ namespace Expressium.LivingDoc
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Scenario Steps -->");
+            listOfLines.Add("<div style='padding-left: 0px;'>");
+            listOfLines.Add("<ul>");
 
             string previousKeyword = null;
             foreach (var step in steps)
@@ -234,39 +228,36 @@ namespace Expressium.LivingDoc
                 if (keyword == previousKeyword)
                     keyword = "And";
 
+                listOfLines.Add("<li style='padding-top: 2px; padding-bottom: 1px;'>");
+
                 if (isExecuted)
-                {
-                    listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td>");
-                    listOfLines.Add($"<span class='step-indent color-{status}'><b>{stepMarker}</b></span>");
+                {                    
+                    listOfLines.Add($"<span class='color-{status}'><b>{stepMarker}</b></span>");
                     listOfLines.Add($"<span class='step-keyword'> " + keyword + "</span> ");
                     listOfLines.Add($"<span>" + step.Name + "</span>");
-                    listOfLines.Add($"</td>");
-                    listOfLines.Add($"</tr>");
                 }
                 else
                 {
-                    listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td>");
-                    listOfLines.Add($"<span class='step-indent color-skipped'></span>");
+                    listOfLines.Add($"<span class='color-skipped'></span>");
                     listOfLines.Add($"<span class='step-keyword color-skipped'><i> " + keyword + "</i></span> ");
                     listOfLines.Add($"<span class='color-skipped'><i>" + step.Name + "</i></span>");
-                    listOfLines.Add($"</td>");
-                    listOfLines.Add($"</tr>");
                 }
 
                 if (step.DataTable.Rows.Count > 0)
                 {
                     listOfLines.Add("<!-- Scenario Steps Table Section -->");
-                    listOfLines.Add($"<tr>");
-                    listOfLines.Add($"<td style='padding-left: 64px;'>");
+                    listOfLines.Add($"<div style='padding-left: 32px;'>");
                     listOfLines.AddRange(GenerateDataTable(step.DataTable));
-                    listOfLines.Add($"</td>");
-                    listOfLines.Add($"</tr>");
+                    listOfLines.Add($"</div>");
                 }
+
+                listOfLines.Add("</li>");
 
                 previousKeyword = step.Keyword;
             }
+
+            listOfLines.Add("</ul>");
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }
@@ -278,15 +269,12 @@ namespace Expressium.LivingDoc
             if (example.HasDataTable())
             {
                 listOfLines.Add("<!-- Data Scenario Examples -->");
-                listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td class='step-table-name' style='padding-left: 16px;'>Examples:</td>");
-                listOfLines.Add($"</tr>");
-
-                listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td style='padding-left: 32px;'>");
+                listOfLines.Add("<div>");
+                listOfLines.Add("<span class='examples-keyword'>Examples:</span>");
+                listOfLines.Add("<div style='padding-left: 32px;'>");
                 listOfLines.AddRange(GenerateDataTable(example.DataTable));
-                listOfLines.Add($"</td>");
-                listOfLines.Add($"</tr>");
+                listOfLines.Add("</div>");
+                listOfLines.Add("</div>");
             }
 
             return listOfLines;
@@ -296,7 +284,7 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<table class='step-table'>");
+            listOfLines.Add("<table class='step-datatable'>");
             listOfLines.Add("<tbody>");
 
             foreach (var row in dataTable.Rows)
@@ -334,11 +322,12 @@ namespace Expressium.LivingDoc
             if (message != null)
             {
                 listOfLines.Add("<!-- Data Scenario Message -->");
-                listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td style='padding-top: 4px; padding-right: 20px; padding-left: 20px;'>");
+                listOfLines.Add($"<div>");
+                //listOfLines.Add($"<span class='attachments-keyword'>Message:</span>");
+                listOfLines.Add($"<div class='message-box'>");
                 listOfLines.Add($"<div class='step-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
-                listOfLines.Add($"</td>");
-                listOfLines.Add($"</tr>");
+                listOfLines.Add($"</div>");
+                listOfLines.Add("</div>");
             }
 
             return listOfLines;
@@ -351,12 +340,9 @@ namespace Expressium.LivingDoc
             if (example.Attachments.Count > 0)
             {
                 listOfLines.Add("<!-- Data Scenario Attachments -->");
-                listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td class='step-table-name' style='padding-left: 16px;'>Attachments:</td>");
-                listOfLines.Add($"</tr>");
-
-                listOfLines.Add($"<tr>");
-                listOfLines.Add($"<td>");
+                listOfLines.Add($"<div style='padding-top: 4px;'>");
+                listOfLines.Add($"<span class='attachments-keyword'>Attachments:</span>");
+                listOfLines.Add("<div style='padding-left: 0px;'>");
                 listOfLines.Add("<ul>");
 
                 foreach (var attachment in example.Attachments)
@@ -369,8 +355,8 @@ namespace Expressium.LivingDoc
                 }
 
                 listOfLines.Add("</ul>");
-                listOfLines.Add($"</td>");
-                listOfLines.Add($"</tr>");
+                listOfLines.Add("</div>");
+                listOfLines.Add("</div>");
             }
 
             return listOfLines;

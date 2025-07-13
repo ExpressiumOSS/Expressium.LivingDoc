@@ -157,11 +157,6 @@
             padding-right: 6px;
         }
 
-        table.scenario-outline td {
-            padding-top: 2px;
-            padding-bottom: 2px;
-        }
-
         table.grid {
             border: 1px;
             width: 100%;
@@ -281,11 +276,6 @@
             height: 0.4em;
         }
 
-        .step-indent {
-            padding-left: 32px;
-            margin-right: 1px;
-        }
-
         .step-keyword {
             color: var(--master-color);
             font-weight: bold;
@@ -312,18 +302,35 @@
             padding: 12px;
         }
 
-        .step-table {
+        .step-datatable {
             color: gray;
+            padding-left: 32px;
         }
 
-        .step-table-name {
-            color: gray;
-            font-weight: bold;
-        }
-
-        table.step-table td {
+        table.step-datatable td {
             padding-top: 1px;
             padding-bottom: 1px;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        .examples-keyword {
+            font-weight: bold;
+            color: gray;
+            padding-left: 16px;
+        }
+
+        .attachments-keyword {
+            font-weight: bold;
+            color: gray;
+            padding-left: 16px;
+        }
+
+        .message-box {
+            padding-top: 4px;
+            padding-left: 16px;
+            padding-right: 16px;
+            max-width: 600px;
         }
 
         data-item {
