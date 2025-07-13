@@ -249,8 +249,8 @@ namespace Expressium.LivingDoc
                     if (step.IsSkipped())
                     {
                         listOfLines.Add($"<span class='color-skipped'><b>{stepMarker}</b></span>");
-                        listOfLines.Add($"<span class='step-keyword-skipped color-skipped'><i>" + keyword + "</i></span>");
-                        listOfLines.Add($"<span class='color-skipped'><i>" + step.Name + "</i></span>");
+                        listOfLines.Add($"<span class='step-keyword-skipped color-skipped'>" + keyword + "</span>");
+                        listOfLines.Add($"<span class='color-skipped'>" + step.Name + "</span>");
                     }
                     else
                     {
@@ -262,8 +262,8 @@ namespace Expressium.LivingDoc
                 else
                 {
                     listOfLines.Add($"<span class='color-skipped'></span>");
-                    listOfLines.Add($"<span class='step-keyword-skipped color-skipped'><i>" + keyword + "</i></span>");
-                    listOfLines.Add($"<span class='color-skipped'><i>" + step.Name + "</i></span>");
+                    listOfLines.Add($"<span class='step-keyword-skipped color-skipped'>" + keyword + "</span>");
+                    listOfLines.Add($"<span class='color-skipped'>" + step.Name + "</span>");
                 }
 
                 if (step.DataTable.Rows.Count > 0)
