@@ -26,6 +26,7 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<!-- Data Feature -->");
                 listOfLines.Add($"<div class='data-item' id='{feature.Id}'>");
 
+                listOfLines.Add("<!-- Feature Section -->");
                 listOfLines.Add("<div class='section'>");
                 listOfLines.AddRange(GenerateDataFeaturesTags(feature));
                 listOfLines.AddRange(GenerateDataFeatureName(feature));
@@ -69,11 +70,11 @@ namespace Expressium.LivingDoc
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Feature Description -->");
-            listOfLines.Add("<div class='feature-description'>");
+            listOfLines.Add("<div>");
 
             if (feature.Description != null)
             {
-                listOfLines.Add("<ul>");
+                listOfLines.Add("<ul class='feature-description'>");
                 var listOfDescription = feature.Description.Trim().Split("\n");
                 foreach (var line in listOfDescription)
                     listOfLines.Add("<li>" + line.Trim() + "</li>");
@@ -94,7 +95,7 @@ namespace Expressium.LivingDoc
             {
                 listOfLines.Add("<!-- Data Feature Background -->");
                 listOfLines.Add("<div>");
-                listOfLines.Add("<span class='background-keyword'>Background:</span><br />");
+                listOfLines.Add("<span class='background-keyword'>Background:</span>");
                 listOfLines.AddRange(GenerateDataScenarioSteps(feature.Background.Steps, false));
                 listOfLines.Add("</div>");
                 listOfLines.Add("<hr>");
@@ -118,17 +119,7 @@ namespace Expressium.LivingDoc
                     if (!string.IsNullOrEmpty(scenario.RuleId))
                     {
                         var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
-
-                        listOfLines.Add("<!-- Scenario Rule Section -->");
-                        if (previousRule != scenario.RuleId)
-                            listOfLines.Add("<div class='section'>");
-                        else
-                            listOfLines.Add("<div class='section' data-rule-replica>");
-                        listOfLines.AddRange(GenerateDataRuleTags(rule));
-                        listOfLines.Add("<span class='rule-keyword'>Rule: </span><span class='rule-name'>" + rule.Name + "</span>");
-                        listOfLines.Add("</div>");
-                        listOfLines.Add("<hr>");
-
+                        listOfLines.AddRange(GenerateDataScenarioRule(rule, previousRule));
                         previousRule = scenario.RuleId;
                     }
 
@@ -145,10 +136,10 @@ namespace Expressium.LivingDoc
                             indexId = index.ToString();
                         index++;
 
-                        listOfLines.Add("<!-- Scenario Outline Section -->");
+                        listOfLines.Add("<!-- Scenario Section -->");
                         listOfLines.Add("<div class='section'>");
                         listOfLines.AddRange(GenerateDataScenarioTags(scenario));
-                        listOfLines.AddRange(GenerateDataScenarioTitle(scenario, example, indexId));
+                        listOfLines.AddRange(GenerateDataScenarioName(scenario, example, indexId));
                         listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps, true));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
                         listOfLines.AddRange(GenerateDataScenarioMessage(example));
@@ -159,6 +150,29 @@ namespace Expressium.LivingDoc
                     listOfLines.Add("</div>");
                 }
             }
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataScenarioRule(LivingDocRule rule, string previousRule)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Scenario Rule Section -->");
+            if (previousRule != rule.Id)
+                listOfLines.Add("<div class='section'>");
+            else
+                listOfLines.Add("<div class='section' data-rule-replica>");
+            listOfLines.AddRange(GenerateDataRuleTags(rule));
+
+            listOfLines.Add("<!-- Data Rule Name -->");
+            listOfLines.Add("<div>");
+            listOfLines.Add("<span class='rule-keyword'>Rule: </span>");
+            listOfLines.Add("<span class='rule-name'>" + rule.Name + "</span>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+            listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -187,11 +201,11 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateDataScenarioTitle(LivingDocScenario scenario, LivingDocExample example, string indexId)
+        internal List<string> GenerateDataScenarioName(LivingDocScenario scenario, LivingDocExample example, string indexId)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Data Scenario Title -->");
+            listOfLines.Add("<!-- Data Scenario Name -->");
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
             listOfLines.Add("<span class='scenario-keyword'>Scenario: </span><span class='scenario-name'>" + scenario.Name + "</span>");
@@ -210,8 +224,8 @@ namespace Expressium.LivingDoc
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Scenario Steps -->");
-            listOfLines.Add("<div style='padding-left: 0px;'>");
-            listOfLines.Add("<ul>");
+            listOfLines.Add("<div>");
+            listOfLines.Add("<ul class='scenario-steps'>");
 
             string previousKeyword = null;
             foreach (var step in steps)
@@ -228,27 +242,34 @@ namespace Expressium.LivingDoc
                 if (keyword == previousKeyword)
                     keyword = "And";
 
-                listOfLines.Add("<li style='padding-top: 2px; padding-bottom: 1px;'>");
+                listOfLines.Add("<li>");
 
                 if (isExecuted)
-                {                    
-                    listOfLines.Add($"<span class='color-{status}'><b>{stepMarker}</b></span>");
-                    listOfLines.Add($"<span class='step-keyword'> " + keyword + "</span> ");
-                    listOfLines.Add($"<span>" + step.Name + "</span>");
+                {
+                    if (step.IsSkipped())
+                    {
+                        listOfLines.Add($"<span class='color-skipped'><b>{stepMarker}</b></span>");
+                        listOfLines.Add($"<span class='step-keyword-skipped color-skipped'><i>" + keyword + "</i></span>");
+                        listOfLines.Add($"<span class='color-skipped'><i>" + step.Name + "</i></span>");
+                    }
+                    else
+                    {
+                        listOfLines.Add($"<span class='color-{status}'><b>{stepMarker}</b></span>");
+                        listOfLines.Add($"<span class='step-keyword'> " + keyword + "</span> ");
+                        listOfLines.Add($"<span>" + step.Name + "</span>");
+                    }
                 }
                 else
                 {
                     listOfLines.Add($"<span class='color-skipped'></span>");
-                    listOfLines.Add($"<span class='step-keyword color-skipped'><i> " + keyword + "</i></span> ");
+                    listOfLines.Add($"<span class='step-keyword-skipped color-skipped'><i>" + keyword + "</i></span>");
                     listOfLines.Add($"<span class='color-skipped'><i>" + step.Name + "</i></span>");
                 }
 
                 if (step.DataTable.Rows.Count > 0)
                 {
-                    listOfLines.Add("<!-- Scenario Steps Table Section -->");
-                    listOfLines.Add($"<div style='padding-left: 32px;'>");
+                    listOfLines.Add("<!-- Scenario Steps Data Table Section -->");
                     listOfLines.AddRange(GenerateDataTable(step.DataTable));
-                    listOfLines.Add($"</div>");
                 }
 
                 listOfLines.Add("</li>");
@@ -271,9 +292,7 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<!-- Data Scenario Examples -->");
                 listOfLines.Add("<div>");
                 listOfLines.Add("<span class='examples-keyword'>Examples:</span>");
-                listOfLines.Add("<div style='padding-left: 32px;'>");
                 listOfLines.AddRange(GenerateDataTable(example.DataTable));
-                listOfLines.Add("</div>");
                 listOfLines.Add("</div>");
             }
 
@@ -322,11 +341,8 @@ namespace Expressium.LivingDoc
             if (message != null)
             {
                 listOfLines.Add("<!-- Data Scenario Message -->");
-                listOfLines.Add($"<div>");
-                //listOfLines.Add($"<span class='attachments-keyword'>Message:</span>");
                 listOfLines.Add($"<div class='message-box'>");
-                listOfLines.Add($"<div class='step-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
-                listOfLines.Add($"</div>");
+                listOfLines.Add($"<div class='message-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
                 listOfLines.Add("</div>");
             }
 
@@ -342,7 +358,6 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<!-- Data Scenario Attachments -->");
                 listOfLines.Add($"<div style='padding-top: 4px;'>");
                 listOfLines.Add($"<span class='attachments-keyword'>Attachments:</span>");
-                listOfLines.Add("<div style='padding-left: 0px;'>");
                 listOfLines.Add("<ul>");
 
                 foreach (var attachment in example.Attachments)
@@ -355,7 +370,6 @@ namespace Expressium.LivingDoc
                 }
 
                 listOfLines.Add("</ul>");
-                listOfLines.Add("</div>");
                 listOfLines.Add("</div>");
             }
 

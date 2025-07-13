@@ -188,45 +188,6 @@
             color: dimgray;
         }
 
-        .feature-keyword {
-            font-weight: bold;
-        }
-
-        .feature-name {
-            font-weight: normal;
-        }
-
-        .feature-description {
-            font-family: Consolas, monospace;
-            font-size: 0.875em;
-            color: gray;
-            font-style: italic;
-        }
-
-        .background-keyword {
-            font-weight: bold;
-        }
-
-        .rule-keyword {
-            font-weight: bold;
-        }
-
-        .rule-name {
-            font-weight: normal;
-        }
-
-        .scenario-keyword {
-            font-weight: bold;
-        }
-
-        .scenario-name {
-            font-weight: normal;
-        }
-
-        .tag-names {
-            color: #5F9EA0;
-        }
-
         .duration {
             color: gray;
         }
@@ -274,63 +235,6 @@
         .chart-count-bar {
             width: 110px;
             height: 0.4em;
-        }
-
-        .step-keyword {
-            color: var(--master-color);
-            font-weight: bold;
-        }
-
-        .step-status {
-            color: gray;
-            font-style: italic;
-        }
-
-        .step-failed {
-            color: var(--failed-color);
-            background-color: #FFE6E6;
-            outline: 1px solid var(--failed-color);
-            text-align: center;
-            padding: 12px;
-        }
-
-        .step-incomplete {
-            color: var(--incomplete-color);
-            background-color: #FFF0E6;
-            outline: 1px solid var(--incomplete-color);
-            text-align: center;
-            padding: 12px;
-        }
-
-        .step-datatable {
-            color: gray;
-            padding-left: 32px;
-        }
-
-        table.step-datatable td {
-            padding-top: 1px;
-            padding-bottom: 1px;
-            padding-left: 4px;
-            padding-right: 4px;
-        }
-
-        .examples-keyword {
-            font-weight: bold;
-            color: gray;
-            padding-left: 16px;
-        }
-
-        .attachments-keyword {
-            font-weight: bold;
-            color: gray;
-            padding-left: 16px;
-        }
-
-        .message-box {
-            padding-top: 4px;
-            padding-left: 16px;
-            padding-right: 16px;
-            max-width: 600px;
         }
 
         data-item {
@@ -470,5 +374,105 @@
             line-height: 1.5em; /* Centers the text vertically */
             font-size: 0.875em;
             display: inline-block; /* Allows the circle to be displayed inline */
+        }
+
+        .tag-names {
+            color: #5F9EA0;
+        }
+
+        .feature-keyword {
+            font-weight: bold;
+        }
+
+        .feature-name {
+            font-weight: normal;
+        }
+
+        .feature-description {
+            font-family: Consolas, monospace;
+            font-size: 0.875em;
+            color: gray;
+            font-style: italic;
+        }
+
+        .background-keyword {
+            font-weight: bold;
+        }
+
+        .rule-keyword {
+            font-weight: bold;
+        }
+
+        .rule-name {
+            font-weight: normal;
+        }
+
+        .scenario-keyword {
+            font-weight: bold;
+        }
+
+        .scenario-name {
+            font-weight: normal;
+        }
+
+        .step-keyword {
+            color: var(--master-color);
+            font-weight: bold;
+        }
+
+        .step-keyword-skipped {
+            font-weight: bold;
+        }
+
+        ul.scenario-steps li {
+            padding-top: 2px;
+            padding-bottom: 1px;
+        }
+
+        .step-datatable {
+            color: gray;
+            margin-left: 32px;
+        }
+
+        table.step-datatable td {
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        .message-box {
+            padding-top: 4px;
+            padding-left: 8px;
+            padding-right: 8px;
+            max-width: 600px;
+        }
+
+        .message-failed {
+            color: var(--failed-color);
+            background-color: #FFE6E6;
+            outline: 1px solid var(--failed-color);
+            text-align: center;
+            padding: 12px;
+        }
+
+        .message-incomplete {
+            color: var(--incomplete-color);
+            background-color: #FFF0E6;
+            outline: 1px solid var(--incomplete-color);
+            text-align: center;
+            padding: 12px;
+        }
+
+        .examples-keyword {
+            font-weight: bold;
+            color: gray;
+            padding-left: 16px;
+        }
+
+        .attachments-keyword {
+            font-weight: bold;
+            color: gray;
+            padding-left: 16px;
         }
     </style>

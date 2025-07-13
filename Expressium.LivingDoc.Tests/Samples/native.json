@@ -116,6 +116,15 @@
                   "DataTable": {
                     "Rows": []
                   }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should have another confirmation notification message",
+                  "Status": "Skipped",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
                 }
               ],
               "DataTable": {
