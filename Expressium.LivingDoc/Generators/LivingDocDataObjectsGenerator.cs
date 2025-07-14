@@ -33,7 +33,6 @@ namespace Expressium.LivingDoc
                 listOfLines.AddRange(GenerateDataFeatureDescription(feature));
                 listOfLines.AddRange(GenerateDataFeatureBackground(feature));
                 listOfLines.Add("</div>");
-                listOfLines.Add("<hr>");
                 listOfLines.Add("</div>");
             }
 
@@ -69,19 +68,18 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Data Feature Description -->");
-            listOfLines.Add("<div>");
-
             if (feature.Description != null)
             {
+                listOfLines.Add("<!-- Data Feature Description -->");
+                listOfLines.Add("<div>");
                 listOfLines.Add("<ul class='feature-description'>");
                 var listOfDescription = feature.Description.Trim().Split("\n");
                 foreach (var line in listOfDescription)
                     listOfLines.Add("<li>" + line.Trim() + "</li>");
                 listOfLines.Add("</ul>");
+                listOfLines.Add("</div>");
             }
 
-            listOfLines.Add("</div>");
             listOfLines.Add("<hr>");
 
             return listOfLines;
@@ -97,6 +95,7 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<div>");
                 listOfLines.Add("<span class='background-keyword'>Background:</span>");
                 listOfLines.AddRange(GenerateDataFeatureBackgroundSteps(feature.Background.Steps));
+                listOfLines.Add("<hr>");
                 listOfLines.Add("</div>");
             }
 
@@ -153,13 +152,8 @@ namespace Expressium.LivingDoc
                     }
 
                     int index = 1;
-                    bool exampleSplitter = false;
                     foreach (var example in scenario.Examples)
                     {
-                        if (exampleSplitter)
-                            listOfLines.Add("<hr>");
-                        exampleSplitter = true;
-
                         string indexId = string.Empty;
                         if (example.HasDataTable())
                             indexId = index.ToString();
@@ -171,8 +165,9 @@ namespace Expressium.LivingDoc
                         listOfLines.AddRange(GenerateDataScenarioName(scenario, example, indexId));
                         listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
-                        listOfLines.AddRange(GenerateDataScenarioMessage(example));
+                        //listOfLines.AddRange(GenerateDataScenarioMessage(example));
                         listOfLines.AddRange(GenerateDataScenarioAttachments(example));
+                        listOfLines.Add("<hr>");
                         listOfLines.Add("</div>");
                     }
 
@@ -200,9 +195,8 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<span class='rule-keyword'>Rule: </span>");
             listOfLines.Add("<span class='rule-name'>" + rule.Name + "</span>");
             listOfLines.Add("</div>");
-
-            listOfLines.Add("</div>");
             listOfLines.Add("<hr>");
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }
@@ -299,16 +293,16 @@ namespace Expressium.LivingDoc
 
                 listOfLines.Add("</li>");
 
-                //string message = step.Message;
-                //if (message != null)
-                //{
-                //    listOfLines.Add("<!-- Data Step Message -->");
-                //    listOfLines.Add("<li>");
-                //    listOfLines.Add($"<div class='message-box'>");
-                //    listOfLines.Add($"<div class='message-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
-                //    listOfLines.Add("</div>");
-                //    listOfLines.Add("</li>");
-                //}
+                string message = step.Message;
+                if (message != null)
+                {
+                    listOfLines.Add("<!-- Data Step Message -->");
+                    listOfLines.Add("<li>");
+                    listOfLines.Add($"<div class='message-box'>");
+                    listOfLines.Add($"<div class='message-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
+                    listOfLines.Add("</div>");
+                    listOfLines.Add("</li>");
+                }
 
                 previousKeyword = step.Keyword;
             }
@@ -367,23 +361,23 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateDataScenarioMessage(LivingDocExample example)
-        {
-            var listOfLines = new List<string>();
+        //internal List<string> GenerateDataScenarioMessage(LivingDocExample example)
+        //{
+        //    var listOfLines = new List<string>();
 
-            var status = example.GetStatus().ToLower();
+        //    var status = example.GetStatus().ToLower();
 
-            string message = example.GetMessage();
-            if (message != null)
-            {
-                listOfLines.Add("<!-- Data Scenario Message -->");
-                listOfLines.Add($"<div class='message-box'>");
-                listOfLines.Add($"<div class='message-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
-                listOfLines.Add("</div>");
-            }
+        //    string message = example.GetMessage();
+        //    if (message != null)
+        //    {
+        //        listOfLines.Add("<!-- Data Scenario Message -->");
+        //        listOfLines.Add($"<div class='message-box'>");
+        //        listOfLines.Add($"<div class='message-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
+        //        listOfLines.Add("</div>");
+        //    }
 
-            return listOfLines;
-        }
+        //    return listOfLines;
+        //}
 
         internal List<string> GenerateDataScenarioAttachments(LivingDocExample example)
         {

@@ -15,7 +15,6 @@
             var table = document.getElementById("project-view");
             var tr = table.getElementsByTagName("tr");
 
-            var previous = false;
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
 
@@ -23,12 +22,7 @@
                     var parentId = tr[i].getAttribute('data-featureid');
                     if (featureId == parentId) {
                         var scenarioId = tr[i].getAttribute('data-scenarioid');
-                        if (previous) {
-                            feature = feature.concat("<hr>");
-                        }
-
                         feature = feature.concat(document.getElementById(scenarioId).innerHTML);
-                        previous = true;
                     }
                 }
             }
