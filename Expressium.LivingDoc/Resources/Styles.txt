@@ -39,11 +39,6 @@
             syntax: "<color>";
             inherits: false;
             initial-value: gray;
-        }
-
-        @property --undefined-color {
-            syntax: "<color>";
-            inherits: false;
             initial-value: darkgray;
         }
 
@@ -162,6 +157,10 @@
             background-color: var(--secondary-color);
         }
 
+        button.toolbox-options {
+            color: darkgray;
+        }
+
         button.active {
             background-color: var(--secondary-color);
             color: black;
@@ -272,14 +271,6 @@
 
         .bgcolor-skipped {
             background: var(--skipped-color);
-        }
-
-        .color-undefined {
-            color: var(--undefined-color);
-        }
-
-        .bgcolor-undefined {
-            background: var(--undefined-color);
         }
 
         .status-dot {

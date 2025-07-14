@@ -28,11 +28,11 @@ namespace Expressium.LivingDoc.Generators
             //listOfLines.Add("<!-- Editor Actions Section -->");
             //listOfLines.Add("<div class='section layout-row'>");
             //listOfLines.Add("<div class='layout-column align-right'>");
-            //listOfLines.Add("<button title='Preview Scenario Script' class='color-undefined' onclick='editorPreview()'>Preview</button>");
-            //listOfLines.Add("<button title='Copy Scenario Script' class='color-undefined' onclick='editorCopy()'>Copy</button>");
-            //listOfLines.Add("<button title='Format Scenario Script' class='color-undefined' onclick='editorFormat()'>Format</button>");
-            //listOfLines.Add("<button title='Clear Scenario Script' class='color-undefined' onclick='editorClear()'>Clear</button>");
-            //listOfLines.Add("<button title='Download Scenario Script' class='color-undefined' onclick='editorDownload()'>Download</button>");
+            //listOfLines.Add("<button title='Preview Scenario Script' class='toolbox-options' onclick='editorPreview()'>Preview</button>");
+            //listOfLines.Add("<button title='Copy Scenario Script' class='toolbox-options' onclick='editorCopy()'>Copy</button>");
+            //listOfLines.Add("<button title='Format Scenario Script' class='toolbox-options' onclick='editorFormat()'>Format</button>");
+            //listOfLines.Add("<button title='Clear Scenario Script' class='toolbox-options' onclick='editorClear()'>Clear</button>");
+            //listOfLines.Add("<button title='Download Scenario Script' class='toolbox-options' onclick='editorDownload()'>Download</button>");
             //listOfLines.Add("</div>");
             //listOfLines.Add("</div>");
 

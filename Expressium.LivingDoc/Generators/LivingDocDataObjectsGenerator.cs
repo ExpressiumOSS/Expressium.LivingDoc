@@ -269,7 +269,7 @@ namespace Expressium.LivingDoc
                     stepMarker = "&cross;";
                 else
                 {
-                    stepMarker = "&minus;";
+                    stepMarker = "&cross;";
                 }
 
                     var keyword = step.Keyword;
