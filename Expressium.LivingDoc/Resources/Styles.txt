@@ -438,7 +438,7 @@
 
         .message-failed {
             color: var(--failed-color);
-            background-color: #FFE6E6;      
+            background-color: #FFEBEB;      
             outline: 1px solid var(--failed-color);
             text-align: center;
             padding: 8px;
@@ -447,7 +447,7 @@
 
         .message-incomplete {
             color: var(--incomplete-color);
-            background-color: #FFF0E6;
+            background-color: #FFF5E6;
             outline: 1px solid var(--incomplete-color);
             text-align: center;
             padding: 8px;
