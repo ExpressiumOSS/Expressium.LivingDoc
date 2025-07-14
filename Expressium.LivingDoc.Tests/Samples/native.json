@@ -27,7 +27,7 @@
         {
           "Id": "25",
           "Tags": [
-            "@TA-2999"
+            "@TA-1000A"
           ],
           "Name": "Ordering Coffee as a Customer",
           "Keyword": "Rule"
@@ -36,9 +36,32 @@
       "Scenarios": [
         {
           "RuleId": "25",
+          "Id": "c4cbd5c6-96a0-4771-b528-0b9419b77796",
+          "Tags": [
+            "@TA-1001A",
+            "@Ignored"
+          ],
+          "Name": "UnSsccessful User Login with Invalid Credentials",
+          "Examples": [
+            {
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with invalid user credentials"
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should have an error message displayed on the Login page"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RuleId": "25",
           "Id": "c4cbd5c6-96a0-4771-b528-0b9419b66696",
           "Tags": [
-            "@TA-1001",
+            "@TA-1001B",
             "@Done"
           ],
           "Name": "Successful User Login with Valid Credentials",
