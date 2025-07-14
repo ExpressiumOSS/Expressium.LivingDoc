@@ -3,8 +3,18 @@
 
 ## Test Report Improvements
 * View Title in section left to the Prefilters...!?
-* Highlight selected item in navigation menu...!?
 * Handling stacktrace as message in example...!?
+
+## Question
+* How to handle addtional project properties like Title, Environment etc...?
+* How to determine the report title - based on filename or properties...?
+* How to handle consolidated steps in background, rules, scenarios...?
+* How to handle additional test result information like attachments, messages...?
+* How to handle objects lists like Features, Scenarios, Steps...?
+* How to handle Analytics for Features, Scenarios, Steps in views...? 
+ 
+## Before Release
+* Remove usage of native Expressium LivingDoc in program...
 
 ## Possible Enhancements
 * Visualize folders structure as Tree View in Overview...
@@ -12,18 +22,6 @@
 * Export filtered lists to Spreadsheet... 
 * Gherkin Editor for new Scenario with intellisense...
 * Handling History Runs by List And Graph...
-
-## Question
-* Should the project properties like Name be based on output filename...?
-* Should Rules be resent in view single scenario mode...?
-* Should the Background be visualize as scenario steps are consolidated...?
-* Should the objects lists Features, Scenarios, Steps be a part of report...?
-* Should the scenario Attachments be visual by default or toggled by button...?
-* Should the overall report name be based in the filename or properties...?
-* Should the Analytics charts be shown per view mode only one at a time...?
- 
-## Before Release
-* Remove usage of native Expressium LivingDoc in program...
 
 
 # Inspiration

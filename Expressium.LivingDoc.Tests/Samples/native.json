@@ -41,7 +41,7 @@
             "@TA-1001A",
             "@Ignored"
           ],
-          "Name": "UnSsccessful User Login with Invalid Credentials",
+          "Name": "Unsuccessful User Login with Invalid Credentials",
           "Examples": [
             {
               "Steps": [

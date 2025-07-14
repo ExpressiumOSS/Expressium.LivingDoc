@@ -239,7 +239,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
             listOfLines.Add("<span class='scenario-keyword'>Scenario: </span><span class='scenario-name'>" + scenario.Name + "</span>");
-            listOfLines.Add("<span class='duration'>&nbsp;" + example.GetDuration() + "</span>");
+            listOfLines.Add($"<span class='duration'>&nbsp;{example.GetDuration()}</span>");
 
             if (!string.IsNullOrEmpty(indexId))
                 listOfLines.Add($"<div class='circle-number'>{indexId}</div>");
@@ -272,7 +272,7 @@ namespace Expressium.LivingDoc
                     stepMarker = "&cross;";
                 }
 
-                    var keyword = step.Keyword;
+                var keyword = step.Keyword;
                 if (keyword == previousKeyword)
                     keyword = "And";
 

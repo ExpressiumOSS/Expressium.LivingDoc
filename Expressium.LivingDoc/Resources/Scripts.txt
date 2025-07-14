@@ -51,6 +51,14 @@
                 document.getElementById('view-title').innerHTML = y;
 
             filterScenarios();
+
+            var navLinks = document.querySelectorAll('.navigation-link');
+			for (var i = 0; i < navLinks.length; i++) {
+				if (navLinks[i].textContent == y)
+					navLinks[i].classList.add('navigation-active');
+				else
+                    navLinks[i].classList.remove('navigation-active');
+            }
         }
     </script>
     <script>

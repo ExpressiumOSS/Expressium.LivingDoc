@@ -91,6 +91,10 @@
             color: white;        
         }
 
+        a.navigation-active {
+            font-weight: bold;       
+        }
+
         .section {
             padding-bottom: 8px;
         }
