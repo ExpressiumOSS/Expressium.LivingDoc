@@ -33,7 +33,7 @@ namespace Expressium.LivingDoc
                 listOfLines.AddRange(GenerateDataFeatureDescription(feature));
                 listOfLines.AddRange(GenerateDataFeatureBackground(feature));
                 listOfLines.Add("</div>");
-
+                listOfLines.Add("<hr>");
                 listOfLines.Add("</div>");
             }
 
@@ -96,10 +96,39 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<!-- Data Feature Background -->");
                 listOfLines.Add("<div>");
                 listOfLines.Add("<span class='background-keyword'>Background:</span>");
-                listOfLines.AddRange(GenerateDataScenarioSteps(feature.Background.Steps, false));
+                listOfLines.AddRange(GenerateDataFeatureBackgroundSteps(feature.Background.Steps));
                 listOfLines.Add("</div>");
-                listOfLines.Add("<hr>");
             }
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataFeatureBackgroundSteps(List<LivingDocStep> steps)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Data Background Steps -->");
+            listOfLines.Add("<div>");
+            listOfLines.Add("<ul class='scenario-steps'>");
+
+            string previousKeyword = null;
+            foreach (var step in steps)
+            {
+                var keyword = step.Keyword;
+                if (keyword == previousKeyword)
+                    keyword = "And";
+
+                listOfLines.Add("<li>");
+                listOfLines.Add($"<span class='color-skipped'></span>");
+                listOfLines.Add($"<span class='step-keyword'>" + keyword + "</span>");
+                listOfLines.Add($"<span>" + step.Name + "</span>");
+                listOfLines.Add("</li>");
+
+                previousKeyword = step.Keyword;
+            }
+
+            listOfLines.Add("</ul>");
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }
@@ -140,7 +169,7 @@ namespace Expressium.LivingDoc
                         listOfLines.Add("<div class='section'>");
                         listOfLines.AddRange(GenerateDataScenarioTags(scenario));
                         listOfLines.AddRange(GenerateDataScenarioName(scenario, example, indexId));
-                        listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps, true));
+                        listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
                         listOfLines.AddRange(GenerateDataScenarioMessage(example));
                         listOfLines.AddRange(GenerateDataScenarioAttachments(example));
@@ -163,6 +192,7 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<div class='section'>");
             else
                 listOfLines.Add("<div class='section' data-rule-replica>");
+
             listOfLines.AddRange(GenerateDataRuleTags(rule));
 
             listOfLines.Add("<!-- Data Rule Name -->");
@@ -177,18 +207,6 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateDataScenarioTags(LivingDocScenario scenario)
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.Add("<!-- Data Scenario Tags -->");
-            listOfLines.Add("<div>");
-            listOfLines.Add("<span class='tag-names'>" + scenario.GetTags() + "</span>");
-            listOfLines.Add("</div>");
-
-            return listOfLines;
-        }
-
         internal List<string> GenerateDataRuleTags(LivingDocRule rule)
         {
             var listOfLines = new List<string>();
@@ -196,6 +214,18 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<!-- Data Rule Tags -->");
             listOfLines.Add("<div>");
             listOfLines.Add("<span class='tag-names'>" + rule.GetTags() + "</span>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataScenarioTags(LivingDocScenario scenario)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Data Scenario Tags -->");
+            listOfLines.Add("<div>");
+            listOfLines.Add("<span class='tag-names'>" + scenario.GetTags() + "</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -219,7 +249,7 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateDataScenarioSteps(List<LivingDocStep> steps, bool isExecuted)
+        internal List<string> GenerateDataScenarioSteps(List<LivingDocStep> steps)
         {
             var listOfLines = new List<string>();
 
@@ -235,35 +265,30 @@ namespace Expressium.LivingDoc
                 var stepMarker = "";
                 if (step.IsPassed())
                     stepMarker = "&check;";
-                else
+                else if (step.IsFailed() || step.IsIncomplete())
                     stepMarker = "&cross;";
+                else
+                {
+                    stepMarker = "&minus;";
+                }
 
-                var keyword = step.Keyword;
+                    var keyword = step.Keyword;
                 if (keyword == previousKeyword)
                     keyword = "And";
 
                 listOfLines.Add("<li>");
 
-                if (isExecuted)
+                if (step.IsSkipped())
                 {
-                    if (step.IsSkipped())
-                    {
-                        listOfLines.Add($"<span class='color-skipped'><b>{stepMarker}</b></span>");
-                        listOfLines.Add($"<span class='step-keyword-skipped color-skipped'>" + keyword + "</span>");
-                        listOfLines.Add($"<span class='color-skipped'>" + step.Name + "</span>");
-                    }
-                    else
-                    {
-                        listOfLines.Add($"<span class='color-{status}'><b>{stepMarker}</b></span>");
-                        listOfLines.Add($"<span class='step-keyword'> " + keyword + "</span> ");
-                        listOfLines.Add($"<span>" + step.Name + "</span>");
-                    }
+                    listOfLines.Add($"<span class='color-skipped'><b>{stepMarker}</b></span>");
+                    listOfLines.Add($"<span class='step-keyword'>" + keyword + "</span>");
+                    listOfLines.Add($"<span>" + step.Name + "</span>");
                 }
                 else
                 {
-                    listOfLines.Add($"<span class='color-skipped'></span>");
-                    listOfLines.Add($"<span class='step-keyword-skipped color-skipped'>" + keyword + "</span>");
-                    listOfLines.Add($"<span class='color-skipped'>" + step.Name + "</span>");
+                    listOfLines.Add($"<span class='color-{status}'><b>{stepMarker}</b></span>");
+                    listOfLines.Add($"<span class='step-keyword'> " + keyword + "</span> ");
+                    listOfLines.Add($"<span>" + step.Name + "</span>");
                 }
 
                 if (step.DataTable.Rows.Count > 0)
@@ -273,6 +298,17 @@ namespace Expressium.LivingDoc
                 }
 
                 listOfLines.Add("</li>");
+
+                //string message = step.Message;
+                //if (message != null)
+                //{
+                //    listOfLines.Add("<!-- Data Step Message -->");
+                //    listOfLines.Add("<li>");
+                //    listOfLines.Add($"<div class='message-box'>");
+                //    listOfLines.Add($"<div class='message-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
+                //    listOfLines.Add("</div>");
+                //    listOfLines.Add("</li>");
+                //}
 
                 previousKeyword = step.Keyword;
             }

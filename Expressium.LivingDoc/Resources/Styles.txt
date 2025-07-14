@@ -2,16 +2,12 @@
         @property --master-color {
             syntax: "<color>";
             inherits: false;
-            initial-value: steelblue;
-            initial-value: #3C78AA;
             initial-value: #326EA0;            
         }
 
         @property --primary-color {
             syntax: "<color>";
             inherits: false;
-            initial-value: #598EBC;
-            initial-value: #508CBE;     
             initial-value: #909090;
         }
 
@@ -442,18 +438,20 @@
         }
 
         .message-box {
-            padding-top: 4px;
-            padding-left: 8px;
-            padding-right: 8px;
-            max-width: 600px;
+            padding-top: 8px;
+            padding-bottom: 4px;
+            padding-left: 16px;
+            padding-right: 16px;
+            max-width: 500px;
         }
 
         .message-failed {
             color: var(--failed-color);
-            background-color: #FFE6E6;
+            background-color: #FFE6E6;      
             outline: 1px solid var(--failed-color);
             text-align: center;
-            padding: 12px;
+            padding: 8px;
+            border-radius: 16px;
         }
 
         .message-incomplete {
@@ -461,7 +459,8 @@
             background-color: #FFF0E6;
             outline: 1px solid var(--incomplete-color);
             text-align: center;
-            padding: 12px;
+            padding: 8px;
+            border-radius: 16px;
         }
 
         .examples-keyword {
