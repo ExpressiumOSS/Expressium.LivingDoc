@@ -38,7 +38,7 @@
         function loadViewmode(x,y) {
             var listview = document.getElementById(x).innerHTML;
 
-            document.getElementById('scenario-view').innerHTML = listview;
+            document.getElementById('list-view').innerHTML = listview;
 
             var exists = document.getElementById('view-title');
             if (exists)

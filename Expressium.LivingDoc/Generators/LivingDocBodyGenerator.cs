@@ -91,7 +91,7 @@ namespace Expressium.LivingDoc.Generators
             // listOfLines.AddRange(GenerateViewTitle(project));
             listOfLines.AddRange(GeneratePreFilters(project));
             listOfLines.AddRange(GenerateFilter(project));
-            listOfLines.Add("<div id='scenario-view'></div>");
+            listOfLines.Add("<div id='list-view'></div>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<!-- Splitter Content Section -->");
