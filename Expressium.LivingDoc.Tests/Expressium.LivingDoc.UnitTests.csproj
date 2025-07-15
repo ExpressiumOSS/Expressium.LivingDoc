@@ -27,6 +27,12 @@
 	  <None Update="Samples\attachments.feature.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Samples\background.feature">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Samples\background.feature.ndjson">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Samples\data-tables.feature.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
