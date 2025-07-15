@@ -120,6 +120,7 @@ namespace Expressium.LivingDoc.Messages
 
         public static void ParsingGherkinDocument(LivingDocProject livingDocProject, Envelope envelope)
         {
+            var uri = envelope.GherkinDocument.Uri;
             var feature = envelope.GherkinDocument.Feature;
 
             var livingDocFeature = new LivingDocFeature();
@@ -131,6 +132,7 @@ namespace Expressium.LivingDoc.Messages
             }
 
             livingDocFeature.Description = feature.Description;
+            livingDocFeature.Uri = uri;
             livingDocFeature.Name = feature.Name;
             livingDocFeature.Keyword = feature.Keyword;
             livingDocProject.Features.Add(livingDocFeature);

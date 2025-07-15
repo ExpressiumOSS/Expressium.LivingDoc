@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Expressium.LivingDoc.Models
@@ -109,6 +110,14 @@ namespace Expressium.LivingDoc.Models
             }
 
             return $"{duration.Minutes.ToString("D2")}:{duration.Seconds.ToString("D2")}:{duration.Milliseconds.ToString("D3")}";
+        }
+
+        public string GetFolder()
+        {
+            if (!string.IsNullOrEmpty(Uri))
+                return Path.GetDirectoryName(Uri);
+
+            return null;
         }
     }
 }
