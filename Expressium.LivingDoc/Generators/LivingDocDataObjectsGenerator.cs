@@ -294,7 +294,7 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("</li>");
 
                 string message = step.Message;
-                if (message != null)
+                if (!string.IsNullOrWhiteSpace(message))
                 {
                     listOfLines.Add("<!-- Data Step Message -->");
                     listOfLines.Add("<li>");
