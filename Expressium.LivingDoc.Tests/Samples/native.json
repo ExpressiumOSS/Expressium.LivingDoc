@@ -27,7 +27,7 @@
         {
           "Id": "25",
           "Tags": [
-            "@TA-1000A"
+            "@TA-1001"
           ],
           "Name": "Ordering Coffee as a Customer",
           "Keyword": "Rule"
@@ -38,7 +38,7 @@
           "RuleId": "25",
           "Id": "c4cbd5c6-96a0-4771-b528-0b9419b77796",
           "Tags": [
-            "@TA-1001A",
+            "@TA-1002",
             "@Ignored"
           ],
           "Name": "Unsuccessful User Login with Invalid Credentials",
@@ -61,7 +61,7 @@
           "RuleId": "25",
           "Id": "c4cbd5c6-96a0-4771-b528-0b9419b66696",
           "Tags": [
-            "@TA-1001B",
+            "@TA-1003",
             "@Done"
           ],
           "Name": "Successful User Login with Valid Credentials",
@@ -104,7 +104,7 @@
           "RuleId": "25",
           "Id": "d25e102a-3e44-49e9-8f45-8d1ac8cc97fc",
           "Tags": [
-            "@TA-1002",
+            "@TA-1004",
             "@Done"
           ],
           "Name": "Successful Submitting a Contact Us Inquiry",
@@ -164,7 +164,7 @@
           "RuleId": "25",
           "Id": "f5a3f24a-e2c4-4521-a91b-6e406a5e09af",
           "Tags": [
-            "@TA-1003",
+            "@TA-1005",
             "@Review"
           ],
           "Name": "Ordering Multiple Coffees Confirmation Notification",
@@ -227,7 +227,7 @@
           "RuleId": "25",
           "Id": "3cda086e-fbdf-4a47-ba69-585e60804339",
           "Tags": [
-            "@TA-1004",
+            "@TA-1006",
             "@Review"
           ],
           "Name": "Ordering Coffee Confirmation Notification",

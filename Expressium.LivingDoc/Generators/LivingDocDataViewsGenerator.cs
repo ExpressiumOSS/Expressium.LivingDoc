@@ -61,7 +61,14 @@ namespace Expressium.LivingDoc.Generators
 
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                    var ruleTags = string.Empty;
+                    if (!string.IsNullOrEmpty(scenario.RuleId))
+                    {
+                        var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
+                        ruleTags = rule.GetTags();
+                    }
+
+                    listOfLines.Add($"<tr data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                     listOfLines.Add($"<td width='8px'></td>");
                     listOfLines.Add($"<td width='16px'></td>");
                     listOfLines.Add($"<td class='gridline'>");
