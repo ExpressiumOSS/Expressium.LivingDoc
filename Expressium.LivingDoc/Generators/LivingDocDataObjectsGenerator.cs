@@ -160,7 +160,7 @@ namespace Expressium.LivingDoc
                         index++;
 
                         listOfLines.Add("<!-- Scenario Section -->");
-                        listOfLines.Add("<div class='section'>");
+                        listOfLines.Add("<div class='section' style='width: fit-content;'>");
                         listOfLines.AddRange(GenerateDataScenarioTags(scenario));
                         listOfLines.AddRange(GenerateDataScenarioName(scenario, example, indexId));
                         listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps));
