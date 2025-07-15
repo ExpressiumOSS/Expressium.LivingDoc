@@ -2,6 +2,9 @@ echo off
 
 cd .\Expressium.LivingDoc.Tests\bin\Debug\net8.0
 
+Expressium.LivingDoc.exe .\Samples\empty.feature.ndjson ".\Samples\Compatibility Kit Empty.html"
+start "" ".\Samples\Compatibility Kit Empty.html"
+
 Expressium.LivingDoc.exe .\Samples\background.feature.ndjson ".\Samples\Compatibility Kit Background.html"
 start "" ".\Samples\Compatibility Kit Background.html"
 
