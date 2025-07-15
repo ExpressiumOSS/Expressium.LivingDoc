@@ -4,7 +4,7 @@ using Expressium.Coffeeshop.Web.API.Tests.Factories;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Reqnroll;
 
-namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
+namespace Expressium.Coffeeshop.Web.API.Tests.Steps
 {
     [Binding]
     public class LoginSteps : BaseSteps

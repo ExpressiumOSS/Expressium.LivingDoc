@@ -7,7 +7,7 @@
 
 ## Question
 * How to handle addtional project properties like Title, Environment etc...?
-* How to determine the report title - based on filename or properties...?
+* How to handle the report title - based on filename, arguments or properties...?
 * How to handle consolidated steps in background, rules, scenarios...?
 * How to handle additional test result information like attachments, messages...?
 * How to handle objects lists like Features, Scenarios, Steps...?

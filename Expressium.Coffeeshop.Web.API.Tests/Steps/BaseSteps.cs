@@ -1,7 +1,7 @@
 using log4net;
 using OpenQA.Selenium;
 
-namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
+namespace Expressium.Coffeeshop.Web.API.Tests.Steps
 {
     public class BaseSteps
     {

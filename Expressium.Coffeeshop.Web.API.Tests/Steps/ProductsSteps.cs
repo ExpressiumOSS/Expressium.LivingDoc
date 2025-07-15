@@ -3,7 +3,7 @@ using Expressium.Coffeeshop.Web.API.Pages;
 using Expressium.Coffeeshop.Web.API.Tests.Factories;
 using Reqnroll;
 
-namespace Expressium.Coffeeshop.Web.API.Tests.BusinessTests.Steps
+namespace Expressium.Coffeeshop.Web.API.Tests.Steps
 {
     [Binding]
     public class ProductsSteps : BaseSteps
