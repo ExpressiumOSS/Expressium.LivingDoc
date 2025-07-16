@@ -406,6 +406,11 @@
             font-weight: normal;
         }
 
+        .step-marker {
+            font-weight: bold;
+            text-align: center;
+        }
+
         .step-keyword {
             color: var(--master-color);
             font-weight: bold;
