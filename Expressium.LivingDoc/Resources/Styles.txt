@@ -351,8 +351,8 @@
 
         hr {
             border: 0 none;
-            margin-top: 4px;
-            margin-bottom: 4px
+            margin-top: 6px;
+            margin-bottom: 6px;
         }
 
         .circle-number {
