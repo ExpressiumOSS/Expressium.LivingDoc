@@ -147,22 +147,27 @@
             font-weight: 600;
         }
 
-        table.grid th, td {
-            padding-left: 6px;
-            padding-right: 6px;
-        }
-
-        table.grid {
+        table.grid-view,
+        table.tree-view {
             border: 1px;
             width: 100%;
         }
 
-        .tree-cell {
-            padding-left: 0px;
+        table.grid-view tr:hover,
+        table.tree-view tr:hover {
+            background-color: var(--secondary-color);
         }
 
-        table.grid tr:hover td {
-            background-color: var(--secondary-color);
+        table.grid-view th,
+        table.grid-view td {
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+
+        table.tree-view th,
+        table.tree-view td {
+            padding-left: 0px;
+            padding-right: 6px;
         }
 
         button.toolbox-options {

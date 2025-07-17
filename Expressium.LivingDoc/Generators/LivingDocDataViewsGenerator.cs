@@ -27,7 +27,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='project-view'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='table-grid' class='grid'>");
+            listOfLines.Add("<table id='table-grid' class='tree-view'>");
 
             listOfLines.Add("<tbody id='table-list'>");
 
@@ -59,7 +59,7 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add($"<td class='gridline' align='right'></td>");
                 listOfLines.Add($"</tr>");
 
-                foreach (var scenario in feature.Scenarios)
+                foreach (var scenario in feature.Scenarios) 
                 {
                     var ruleTags = string.Empty;
                     if (!string.IsNullOrEmpty(scenario.RuleId))
@@ -97,7 +97,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='features-view'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='table-grid' class='grid'>");
+            listOfLines.Add("<table id='table-grid' class='grid-view'>");
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
@@ -141,7 +141,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='scenarios-view'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='table-grid' class='grid'>");
+            listOfLines.Add("<table id='table-grid' class='grid-view'>");
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");
@@ -188,7 +188,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='steps-view'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='table-grid' class='grid'>");
+            listOfLines.Add("<table id='table-grid' class='grid-view'>");
 
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr data-role='header'>");

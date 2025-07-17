@@ -51,7 +51,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='steps-grid' class='grid'>");
+            listOfLines.Add("<table id='steps-grid' class='grid-view'>");
             listOfLines.Add("<tbody id='steps-table-list'>");
 
             var mapOfSteps = new Dictionary<string, string>();
