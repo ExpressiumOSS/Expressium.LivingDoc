@@ -4,6 +4,9 @@ Feature: Product Management
 	I want to order products from the web application
 	So that I can enjoy my favorite coffee
 
+@TR-4001
+Rule: Ordering Confirmation Notification
+
 @TA-4001 @Review
 Scenario Outline: Ordering Coffee Confirmation Notification
 	Given I have logged in with valid user credentials
@@ -13,6 +16,8 @@ Examples:
 	| Brand                      | Price |
 	| Santa Rita Cerrado Mineiro | $99   |
 	| La Soledad Antioquia       | $77   |
+
+Rule: Ordering Multiple Products
 
 @TA-4002 @Review
 Scenario: Ordering Multiple Coffees Confirmation Notification

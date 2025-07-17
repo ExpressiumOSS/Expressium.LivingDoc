@@ -157,6 +157,10 @@
             width: 100%;
         }
 
+        .tree-cell {
+            padding-left: 0px;
+        }
+
         table.grid tr:hover td {
             background-color: var(--secondary-color);
         }
@@ -372,11 +376,12 @@
         }
 
         .feature-keyword {
+            color: var(--master-color);
             font-weight: bold;
         }
 
         .feature-name {
-            font-weight: normal;
+            font-weight: bold;
         }
 
         .feature-description {
@@ -387,23 +392,26 @@
         }
 
         .background-keyword {
+            color: var(--master-color);
             font-weight: bold;
         }
 
         .rule-keyword {
+            color: var(--master-color);
             font-weight: bold;
         }
 
         .rule-name {
-            font-weight: normal;
+            font-weight: bold;
         }
 
         .scenario-keyword {
+            color: var(--master-color);
             font-weight: bold;
         }
 
         .scenario-name {
-            font-weight: normal;
+            font-weight: bold;
         }
 
         .step-marker {
@@ -425,12 +433,15 @@
             padding-bottom: 1px;
         }
 
-        .step-datatable {
-            color: gray;
-            margin-left: 32px;
+        .steps-datatable {
+            padding-left: 32px;
         }
 
-        table.step-datatable td {
+        .datatable {
+            color: gray;
+        }
+
+        table.datatable td {
             padding-top: 1px;
             padding-bottom: 1px;
             padding-left: 4px;
@@ -465,6 +476,14 @@
             font-weight: bold;
             color: gray;
             padding-left: 16px;
+        }
+
+        .examples-datatable {
+            padding-left: 16px;
+        }
+
+        .attachments {
+            padding-top: 4px;
         }
 
         .attachments-keyword {

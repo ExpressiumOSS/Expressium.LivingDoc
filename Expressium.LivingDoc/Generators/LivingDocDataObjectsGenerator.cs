@@ -288,7 +288,9 @@ namespace Expressium.LivingDoc
                 if (step.DataTable.Rows.Count > 0)
                 {
                     listOfLines.Add("<!-- Scenario Steps Data Table Section -->");
+                    listOfLines.Add($"<div class='steps-datatable'>");
                     listOfLines.AddRange(GenerateDataTable(step.DataTable));
+                    listOfLines.Add("</div>");
                 }
 
                 listOfLines.Add("</li>");
@@ -322,7 +324,9 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<!-- Data Scenario Examples -->");
                 listOfLines.Add("<div>");
                 listOfLines.Add("<span class='examples-keyword'>Examples:</span>");
+                listOfLines.Add("<div class='examples-datatable'>");
                 listOfLines.AddRange(GenerateDataTable(example.DataTable));
+                listOfLines.Add("</div>");
                 listOfLines.Add("</div>");
             }
 
@@ -333,7 +337,7 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<table class='step-datatable'>");
+            listOfLines.Add("<table class='datatable'>");
             listOfLines.Add("<tbody>");
 
             foreach (var row in dataTable.Rows)
@@ -386,7 +390,7 @@ namespace Expressium.LivingDoc
             if (example.Attachments.Count > 0)
             {
                 listOfLines.Add("<!-- Data Scenario Attachments -->");
-                listOfLines.Add($"<div style='padding-top: 4px;'>");
+                listOfLines.Add($"<div class='attachments'>");
                 listOfLines.Add($"<span class='attachments-keyword'>Attachments:</span>");
                 listOfLines.Add("<ul>");
 
