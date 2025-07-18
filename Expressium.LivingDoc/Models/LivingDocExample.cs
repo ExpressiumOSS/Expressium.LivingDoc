@@ -27,13 +27,13 @@ namespace Expressium.LivingDoc.Models
                 return LivingDocStatuses.Failed.ToString();
             else if (Steps.Any(step => step.IsIncomplete()))
                 return LivingDocStatuses.Incomplete.ToString();
-            else if (Steps.Any(step => step.IsSkipped()))
+            else if (Steps.Count == 0 || Steps.Any(step => step.IsSkipped()))
                 return LivingDocStatuses.Skipped.ToString();
-            else if (Steps.TrueForAll(step => step.IsPassed()))
+            else if (Steps.Count > 0 && Steps.TrueForAll(step => step.IsPassed()))
                 return LivingDocStatuses.Passed.ToString();
             else
             {
-                return LivingDocStatuses.Undefined.ToString();
+                return LivingDocStatuses.Unknown.ToString();
             }
         }
 

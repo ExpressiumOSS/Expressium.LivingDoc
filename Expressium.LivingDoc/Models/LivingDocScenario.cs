@@ -34,13 +34,13 @@ namespace Expressium.LivingDoc.Models
                 return LivingDocStatuses.Failed.ToString();
             else if (Examples.Any(example => example.GetStatus() == LivingDocStatuses.Incomplete.ToString()))
                 return LivingDocStatuses.Incomplete.ToString();
-            else if (Examples.Any(example => example.GetStatus() == LivingDocStatuses.Skipped.ToString()))
+            else if (Examples.Count == 0 || Examples.Any(example => example.GetStatus() == LivingDocStatuses.Skipped.ToString()))
                 return LivingDocStatuses.Skipped.ToString();
-            else if (Examples.TrueForAll(example => example.GetStatus() == LivingDocStatuses.Passed.ToString()))
+            else if (Examples.Count > 0 && Examples.TrueForAll(example => example.GetStatus() == LivingDocStatuses.Passed.ToString()))
                 return LivingDocStatuses.Passed.ToString();
             else
             {
-                return LivingDocStatuses.Undefined.ToString();
+                return LivingDocStatuses.Unknown.ToString();
             }
         }
 
