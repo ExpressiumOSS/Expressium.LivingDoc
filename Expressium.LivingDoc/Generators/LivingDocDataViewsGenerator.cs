@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Expressium.LivingDoc.Generators
 {
-    internal partial class LivingDocDataViewsGenerator
+    internal class LivingDocDataViewsGenerator
     {
         bool includeOverviewFolder = false;
 

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Expressium.LivingDoc
 {
-    internal partial class LivingDocDataObjectsGenerator
+    internal class LivingDocDataObjectsGenerator
     {
         internal List<string> Generate(LivingDocProject project)
         {

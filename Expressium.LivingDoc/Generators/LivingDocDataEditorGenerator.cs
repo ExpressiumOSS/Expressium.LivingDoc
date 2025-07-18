@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Expressium.LivingDoc.Generators
 {
-    internal partial class LivingDocDataEditorGenerator
+    internal class LivingDocDataEditorGenerator
     {
         internal List<string> Generate(LivingDocProject project)
         {
