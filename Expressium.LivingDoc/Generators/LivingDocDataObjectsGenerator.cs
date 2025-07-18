@@ -236,7 +236,10 @@ namespace Expressium.LivingDoc
             listOfLines.Add($"<span class='duration'>&nbsp;{example.GetDuration()}</span>");
 
             if (!string.IsNullOrEmpty(indexId))
-                listOfLines.Add($"<div class='circle-number'>{indexId}</div>");
+                listOfLines.Add($"<span class='circle-number'>{indexId}</span>");
+
+            //if (example.Attachments.Count > 0)
+                //listOfLines.Add("<span title='Attachments' onclick=\"toggleAttachments(this)\">&#128279;</span>");
 
             listOfLines.Add("</div>");
 
@@ -391,6 +394,8 @@ namespace Expressium.LivingDoc
             {
                 listOfLines.Add("<!-- Data Scenario Attachments -->");
                 listOfLines.Add($"<div class='attachments'>");
+                // Default Visibility at Toggle Attachments...
+                // listOfLines.Add($"<div class='attachments' style='display: none;'>");
                 listOfLines.Add($"<span class='attachments-keyword'>Attachments:</span>");
                 listOfLines.Add("<ul>");
 

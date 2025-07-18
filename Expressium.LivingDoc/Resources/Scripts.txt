@@ -425,3 +425,19 @@
             filterScenarios();
         }
     </script>
+    <script>
+        function toggleAttachments(x) {
+            var grandParent = x.parentElement?.parentElement;
+            if (!grandParent) return;
+
+            var attachments = grandParent.getElementsByClassName('attachments');
+            for (var i = 0; i < attachments.length; i++) {
+                if (attachments[i].style.display === "none") {
+                    attachments[i].style.display = "block";
+                } else {
+                    attachments[i].style.display = "none";
+                }
+            }
+        }
+
+    </script>
