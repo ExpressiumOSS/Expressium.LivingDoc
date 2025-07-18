@@ -44,7 +44,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- Header Section -->");
             listOfLines.Add("<header>");
             listOfLines.Add("<span class='project-name'>" + project.Title + "</span><br />");
-            listOfLines.Add("<span class='project-date'>Generated " + project.GetExecutionTime() + "</span>");
+            listOfLines.Add("<span class='project-date'>Generated " + project.GetDate() + "</span>");
             listOfLines.Add("</header>");
 
             return listOfLines;

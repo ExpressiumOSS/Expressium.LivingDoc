@@ -7,7 +7,7 @@ namespace Expressium.LivingDoc.Models
     public class LivingDocProject
     {
         public string Title { get; set; }
-        public DateTime ExecutionTime { get; set; }
+        public DateTime Date { get; set; }
         public TimeSpan Duration { get; set; }
 
         public List<LivingDocFeature> Features { get; set; }
@@ -145,9 +145,9 @@ namespace Expressium.LivingDoc.Models
                 .Count();
         }
 
-        public string GetExecutionTime()
+        public string GetDate()
         {
-            return ExecutionTime.ToString("ddd dd. MMM yyyy HH':'mm':'ss \"GMT\"z");
+            return Date.ToString("ddd dd. MMM yyyy HH':'mm':'ss \"GMT\"z");
         }
 
         public string GetDuration()
@@ -156,53 +156,6 @@ namespace Expressium.LivingDoc.Models
                 return $"{Duration.Minutes}min {Duration.Seconds}s";
 
             return $"{Duration.Seconds}s {Duration.Milliseconds.ToString("D3")}ms";
-        }
-
-        public LivingDocFolder GetListOfFolderNodes()
-        {
-            var listOfFolders = new List<string>();
-
-            foreach (var feature in Features)
-            {
-                if (!listOfFolders.Contains(feature.Uri))
-                    listOfFolders.Add(feature.Uri);
-            }
-
-            return BuildTree(listOfFolders);
-        }
-
-        //public static List<string> GetListOfFolders(this LivingDocProject project)
-        //{
-        //    var listOfFolders = new List<string>();
-
-        //    foreach (var feature in project.Features)
-        //    {
-        //        if (!listOfFolders.Contains(feature.Uri))
-        //            listOfFolders.Add(feature.Uri);
-        //    }
-
-        //    return listOfFolders;
-        //}
-
-        public LivingDocFolder BuildTree(List<string> tokens)
-        {
-            var root = new LivingDocFolder("Root");
-
-            foreach (var token in tokens)
-            {
-                var parts = token.Split('/');
-                var current = root;
-
-                foreach (var part in parts)
-                {
-                    if (!current.Children.ContainsKey(part))
-                        current.Children[part] = new LivingDocFolder(part);
-
-                    current = current.Children[part];
-                }
-            }
-
-            return root;
         }
     }
 }

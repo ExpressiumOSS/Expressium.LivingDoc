@@ -18,7 +18,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             livingDocProject = new LivingDocProject();
             livingDocProject.Title = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            livingDocProject.ExecutionTime = DateTime.UtcNow.ToLocalTime();
+            livingDocProject.Date = DateTime.UtcNow.ToLocalTime();
             projectStartTime = DateTime.Now;
 
             System.Threading.Thread.Sleep(1000);
