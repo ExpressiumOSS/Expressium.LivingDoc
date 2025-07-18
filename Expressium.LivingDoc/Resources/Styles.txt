@@ -166,7 +166,7 @@
 
         table.tree-view th,
         table.tree-view td {
-            padding-left: 0px;
+            padding-left: 2px;
             padding-right: 6px;
         }
 

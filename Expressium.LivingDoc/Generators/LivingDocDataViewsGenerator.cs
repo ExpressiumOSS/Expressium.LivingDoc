@@ -55,7 +55,6 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
                 listOfLines.Add($"<span><b>{feature.Name}</b></span>");
                 listOfLines.Add($"</td>");
-                //listOfLines.Add($"<td class='gridline' align='right'><span class='duration'>{feature.GetPercentageOfPassed()}%</span></td>");
                 listOfLines.Add($"<td class='gridline' align='right'></td>");
                 listOfLines.Add($"</tr>");
 

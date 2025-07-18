@@ -114,7 +114,7 @@ namespace Expressium.LivingDoc.Models
 
         public string GetFolder()
         {
-            if (!string.IsNullOrEmpty(Uri))
+            if (!string.IsNullOrWhiteSpace(Uri))
                 return Path.GetDirectoryName(Uri);
 
             return null;
