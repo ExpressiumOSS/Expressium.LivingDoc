@@ -62,12 +62,12 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
                 if (scenarioContext.ScenarioInfo.Arguments.Count > 0)
                 {
-                    var livingDocTableRowHeader = new LivingDocTableRow();
+                    var livingDocTableRowHeader = new LivingDocDataTableRow();
                     foreach (var key in scenarioContext.ScenarioInfo.Arguments.Keys)
                         livingDocTableRowHeader.Cells.Add(key.ToString());
                     livingDocScenario.Examples[0].DataTable.Rows.Add(livingDocTableRowHeader);
 
-                    var livingDocTableRowData = new LivingDocTableRow();
+                    var livingDocTableRowData = new LivingDocDataTableRow();
                     foreach (var value in scenarioContext.ScenarioInfo.Arguments.Values)
                         livingDocTableRowData.Cells.Add(value.ToString());
                     livingDocScenario.Examples[0].DataTable.Rows.Add(livingDocTableRowData);
@@ -154,12 +154,12 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
                 if (scenarioContext.StepContext.StepInfo.Table != null)
                 {
-                    var livingDocTableHeaderRow = new LivingDocTableRow();
+                    var livingDocTableHeaderRow = new LivingDocDataTableRow();
                     foreach (var header in scenarioContext.StepContext.StepInfo.Table.Header)
                         livingDocTableHeaderRow.Cells.Add(header);
                     livingDocStep.DataTable.Rows.Add(livingDocTableHeaderRow);
 
-                    var testExecutionTableRow = new LivingDocTableRow();
+                    var testExecutionTableRow = new LivingDocDataTableRow();
                     foreach (var row in scenarioContext.StepContext.StepInfo.Table.Rows)
                     {
                         foreach (var value in row.Values)

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Expressium.LivingDoc.Models
 {
-    public class LivingDocTableRow
+    public class LivingDocDataTableRow
     {
         public List<string> Cells { get; set; }
 
-        public LivingDocTableRow()
+        public LivingDocDataTableRow()
         {
             Cells = new List<string>();
         }

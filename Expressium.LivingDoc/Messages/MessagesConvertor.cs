@@ -252,18 +252,18 @@ namespace Expressium.LivingDoc.Messages
 
         public static void AddScenarioExampleTableHeaders(Examples examples, LivingDocExample livingDocExample)
         {
-            var tableRowHeader = new LivingDocTableRow();
+            var dataTableRowHeader = new LivingDocDataTableRow();
             foreach (var headerCell in examples.TableHeader.Cells)
-                tableRowHeader.Cells.Add(headerCell.Value);
-            livingDocExample.DataTable.Rows.Add(tableRowHeader);
+                dataTableRowHeader.Cells.Add(headerCell.Value);
+            livingDocExample.DataTable.Rows.Add(dataTableRowHeader);
         }
 
         public static void AddScenarioExampleTableData(TableRow tableBodyRow, LivingDocExample livingDocExample)
         {
-            var tableRowData = new LivingDocTableRow();
+            var dataTableRow = new LivingDocDataTableRow();
             foreach (var tableBodyRowCell in tableBodyRow.Cells)
-                tableRowData.Cells.Add(tableBodyRowCell.Value);
-            livingDocExample.DataTable.Rows.Add(tableRowData);
+                dataTableRow.Cells.Add(tableBodyRowCell.Value);
+            livingDocExample.DataTable.Rows.Add(dataTableRow);
         }
 
         public static void AddFeatureBackgroundSteps(LivingDocFeature livingDocFeature, LivingDocExample livingDocExample)
@@ -288,10 +288,10 @@ namespace Expressium.LivingDoc.Messages
                 {
                     foreach (var row in step.DataTable.Rows)
                     {
-                        var tableRow = new LivingDocTableRow();
+                        var dataTableRow = new LivingDocDataTableRow();
                         foreach (var cell in row.Cells)
-                            tableRow.Cells.Add(cell.Value);
-                        livingDocStep.DataTable.Rows.Add(tableRow);
+                            dataTableRow.Cells.Add(cell.Value);
+                        livingDocStep.DataTable.Rows.Add(dataTableRow);
                     }
                 }
 
