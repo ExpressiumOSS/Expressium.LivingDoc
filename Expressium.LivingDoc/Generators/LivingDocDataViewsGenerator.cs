@@ -7,6 +7,8 @@ namespace Expressium.LivingDoc.Generators
 {
     internal partial class LivingDocDataViewsGenerator
     {
+        bool includeOverviewFolder = false;
+
         internal List<string> Generate(LivingDocProject project)
         {
             var listOfLines = new List<string>();
@@ -21,6 +23,7 @@ namespace Expressium.LivingDoc.Generators
 
         internal List<string> GenerateDataOverview(LivingDocProject project)
         {
+            string previousFolder = null;
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Overview -->");
@@ -31,34 +34,56 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<tbody id='table-list'>");
 
-            //listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
-            //listOfLines.Add($"<td width='8px'>📂</td>");
-            //listOfLines.Add($"<td colspan='2' class='gridline'>");
-            //listOfLines.Add($"<span><b>{project.Title}</b></span>");
-            //listOfLines.Add($"</td>");
-            //listOfLines.Add($"<td class='gridline' align='right'></td>");
-            //listOfLines.Add($"</tr>");
+            if (includeOverviewFolder)
+            {
+                listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
+                listOfLines.Add($"<td width='8px'>📂</td>");
+                listOfLines.Add($"<td colspan='4' class='gridline'>");
+                listOfLines.Add($"<span><b>{project.Title}</b></span>");
+                listOfLines.Add($"</td>");
+                listOfLines.Add($"<td class='gridline' align='right'></td>");
+                listOfLines.Add($"</tr>");
+            }
 
             foreach (var feature in project.Features)
             {
-                //listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
-                //listOfLines.Add($"<td width='8px'>📂</td>");
-                //listOfLines.Add($"<td colspan='2' class='gridline'>");
-                //listOfLines.Add($"<span><b>{feature.Uri}</b></span>");
-                //listOfLines.Add($"</td>");
-                //listOfLines.Add($"<td class='gridline' align='right'></td>");
-                //listOfLines.Add($"</tr>");
+                var featureFolder = feature.GetFolder();
+                if (includeOverviewFolder)
+                {
+                    if (!string.IsNullOrWhiteSpace(featureFolder))
+                    {
+                        listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
+                        listOfLines.Add($"<td></td>");
+                        listOfLines.Add($"<td width='8px'>📂</td>");
+                        listOfLines.Add($"<td colspan='3' class='gridline'>");
+                        listOfLines.Add($"<span><b>{feature.GetFolder()}</b></span>");
+                        listOfLines.Add($"</td>");
+                        listOfLines.Add($"<td class='gridline' align='right'></td>");
+                        listOfLines.Add($"</tr>");
+                    }
+
+                    previousFolder = featureFolder;
+                }
 
                 listOfLines.Add($"<tr class='gridline-header' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+                if (includeOverviewFolder)
+                {
+                    listOfLines.Add($"<td></td>");
+                    if (!string.IsNullOrWhiteSpace(featureFolder))
+                        listOfLines.Add($"<td></td>");
+                }
                 listOfLines.Add($"<td data-collapse='false' width='8px' onclick=\"loadCollapse(this);\">&#11206;</td>");
-                listOfLines.Add($"<td colspan='2' class='gridline'>");
+                if (includeOverviewFolder && !string.IsNullOrWhiteSpace(featureFolder))
+                    listOfLines.Add($"<td colspan='2' class='gridline'>");
+                else
+                    listOfLines.Add($"<td colspan='3' class='gridline'>");
                 listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
                 listOfLines.Add($"<span><b>{feature.Name}</b></span>");
                 listOfLines.Add($"</td>");
                 listOfLines.Add($"<td class='gridline' align='right'></td>");
                 listOfLines.Add($"</tr>");
 
-                foreach (var scenario in feature.Scenarios) 
+                foreach (var scenario in feature.Scenarios)
                 {
                     var ruleTags = string.Empty;
                     if (!string.IsNullOrEmpty(scenario.RuleId))
@@ -68,13 +93,22 @@ namespace Expressium.LivingDoc.Generators
                     }
 
                     listOfLines.Add($"<tr data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
-                    listOfLines.Add($"<td width='8px'></td>");
-                    listOfLines.Add($"<td width='16px'></td>");
-                    listOfLines.Add($"<td class='gridline'>");
+                    if (includeOverviewFolder)
+                    {
+                        listOfLines.Add($"<td></td>");
+                        if (!string.IsNullOrWhiteSpace(featureFolder))
+                            listOfLines.Add($"<td></td>");
+                    }
+                    listOfLines.Add($"<td></td>");
+                    listOfLines.Add($"<td width='16px;'></td>");
+                    if (includeOverviewFolder && !string.IsNullOrWhiteSpace(featureFolder))
+                        listOfLines.Add($"<td class='gridline'>");
+                    else
+                        listOfLines.Add($"<td class='gridline' colspan='2'>");
                     listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
                     listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
                     listOfLines.Add($"</td>");
-                    listOfLines.Add($"<td class='gridline'></td>");
+                    listOfLines.Add($"<td class='gridline' align='right'></td>");
                     listOfLines.Add($"</tr>");
                 }
             }
