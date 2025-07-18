@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Expressium.LivingDoc.Models
 {
-    public static class LivingDocUtilities
+    public static class LivingDocSerializer
     {
         public static T DeserializeAsJson<T>(string filePath)
         {

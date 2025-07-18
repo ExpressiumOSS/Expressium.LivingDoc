@@ -28,7 +28,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             livingDocProject.Duration = DateTime.Now - projectStartTime;
 
-            LivingDocUtilities.SerializeAsJson(Path.Combine(Directory.GetCurrentDirectory(), outputFileName), livingDocProject);
+            LivingDocSerializer.SerializeAsJson(Path.Combine(Directory.GetCurrentDirectory(), outputFileName), livingDocProject);
         }
 
         private void AddTestExecutionBeforeScenario()

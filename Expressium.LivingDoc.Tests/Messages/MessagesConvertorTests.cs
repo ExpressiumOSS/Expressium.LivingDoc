@@ -13,7 +13,7 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.json");
 
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
-            LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
+            LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
@@ -28,7 +28,7 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "rules.feature.json");
 
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
-            LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
+            LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
@@ -42,7 +42,7 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "data-tables.feature.json");
 
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
-            LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
+            LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
@@ -56,7 +56,7 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.json");
 
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
-            LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
+            LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));

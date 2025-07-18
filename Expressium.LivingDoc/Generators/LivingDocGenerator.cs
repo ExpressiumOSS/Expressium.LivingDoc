@@ -67,7 +67,7 @@ namespace Expressium.LivingDoc.Generators
         internal LivingDocProject ParseLivingDocJsonFile()
         {
             Console.WriteLine("Parsing LivingDoc JSON File...");
-            return LivingDocUtilities.DeserializeAsJson<LivingDocProject>(inputPath);
+            return LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputPath);
         }
 
         internal void GenerateHtmlReport(LivingDocProject project)
