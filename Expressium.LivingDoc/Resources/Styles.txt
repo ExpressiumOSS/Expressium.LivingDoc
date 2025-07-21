@@ -199,6 +199,12 @@
             color: dimgray;
         }
 
+        .page-name {
+            font-size: 1.375em;
+            font-weight: bold;
+            line-height: 1;
+        }
+
         .duration {
             color: gray;
         }

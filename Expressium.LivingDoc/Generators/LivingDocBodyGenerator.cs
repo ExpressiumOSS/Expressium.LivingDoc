@@ -88,8 +88,8 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Left Content Section -->");
             listOfLines.Add("<div id='left-section' class='bg-light p-3'>");
-            // listOfLines.AddRange(GenerateViewTitle(project));
-            listOfLines.AddRange(GeneratePreFilters(project));
+
+            listOfLines.AddRange(GenerateViewPreFilters(project));
             listOfLines.AddRange(GenerateFilter(project));
             listOfLines.Add("<div id='list-view'></div>");
             listOfLines.Add("</div>");
@@ -108,26 +108,19 @@ namespace Expressium.LivingDoc.Generators
 
             return listOfLines;
         }
-
-        internal List<string> GenerateViewTitle(LivingDocProject project)
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.Add("<!-- View Title Section -->");
-            listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<span id='view-title' class='project-name'>Overview</span>");
-            listOfLines.Add("</div>");
-
-            return listOfLines;
-        }
             
-        internal List<string> GeneratePreFilters(LivingDocProject project)
+        internal List<string> GenerateViewPreFilters(LivingDocProject project)
         {
             var listOfLines = new List<string>();
-
-            listOfLines.Add("<!-- PreFilters Section -->");
+            
             listOfLines.Add("<div class='section layout-row'>");
 
+            listOfLines.Add("<!-- View Title Section -->");
+            listOfLines.Add("<div class='layout-column align-left'>");
+            listOfLines.Add("<span id='view-title' class='page-name'>Overview</span>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<!-- PreFilters Section -->");
             listOfLines.Add("<div class='layout-column align-right'>");
             listOfLines.Add("<button data-prefilter='Passed' title='Preset Filter with Passed' class='toolbox-options' onclick='togglePrefilter(this)'>Passed</button>");
             listOfLines.Add("<button data-prefilter='Incomplete' title='Preset Filter with Incomplete' class='toolbox-options' onclick='togglePrefilter(this)'>Incomplete</button>");

@@ -22,7 +22,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='editor'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<span class='project-name'>Gherkin Script Editor</span>");
+            listOfLines.Add("<span class='page-name'>Gherkin Script Editor</span>");
             listOfLines.Add("</div>");
 
             //listOfLines.Add("<!-- Editor Actions Section -->");
