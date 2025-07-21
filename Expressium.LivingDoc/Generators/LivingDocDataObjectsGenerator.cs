@@ -241,7 +241,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add($"<span class='duration'>&nbsp;{example.GetDuration()}</span>");
 
             if (example.Attachments.Count > 0)
-                listOfLines.Add("<span style='color: gray;' title='Attachments' onclick=\"toggleAttachments(this)\">&nbsp;&#9776;</span>");
+                listOfLines.Add("<span style='color: gray;' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&nbsp;&#9776;</span>");
 
             listOfLines.Add("</div>");
 
