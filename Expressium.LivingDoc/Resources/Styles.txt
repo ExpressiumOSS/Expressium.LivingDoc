@@ -21,18 +21,21 @@
             syntax: "<color>";
             inherits: false;
             initial-value: #4AB356;
+            initial-value: #48A84F;
         }
 
         @property --incomplete-color {
             syntax: "<color>";
             inherits: false;
             initial-value: #F8A700;
+            initial-value: #F5BB00;
         }
 
         @property --failed-color {
             syntax: "<color>";
             inherits: false;
             initial-value: #F03D2D;
+            initial-value: #EB4431;
         }
 
         @property --skipped-color {
@@ -390,7 +393,7 @@
         }
 
         .feature-description {
-            font-family: Consolas, monospace;
+            font-family: Consolas;
             font-size: 0.875em;
             color: gray;
             font-style: italic;
@@ -435,7 +438,7 @@
 
         ul.scenario-steps li {
             padding-top: 2px;
-            padding-bottom: 1px;
+            padding-bottom: 2px;
         }
 
         .steps-datatable {
@@ -484,7 +487,7 @@
         }
 
         .examples-datatable {
-            padding-left: 16px;
+            padding-left: 32px;
         }
 
         .attachments {

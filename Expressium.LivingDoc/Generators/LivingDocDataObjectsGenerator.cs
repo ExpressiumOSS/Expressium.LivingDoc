@@ -59,6 +59,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<span class='feature-keyword'>Feature: </span><span class='feature-name'>{feature.Name}</span>");
+            //listOfLines.Add($"<span class='duration'>&nbsp;{feature.GetDuration()}</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -165,7 +166,6 @@ namespace Expressium.LivingDoc
                         listOfLines.AddRange(GenerateDataScenarioName(scenario, example, indexId));
                         listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
-                        //listOfLines.AddRange(GenerateDataScenarioMessage(example));
                         listOfLines.AddRange(GenerateDataScenarioAttachments(example));
                         listOfLines.Add("<hr>");
                         listOfLines.Add("</div>");
@@ -232,14 +232,16 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<!-- Data Scenario Name -->");
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
-            listOfLines.Add("<span class='scenario-keyword'>Scenario: </span><span class='scenario-name'>" + scenario.Name + "</span>");
-            listOfLines.Add($"<span class='duration'>&nbsp;{example.GetDuration()}</span>");
+            listOfLines.Add("<span class='scenario-keyword'>Scenario: </span>");
+            listOfLines.Add("<span class='scenario-name'>" + scenario.Name + "</span>");
 
             if (!string.IsNullOrEmpty(indexId))
                 listOfLines.Add($"<span class='circle-number'>{indexId}</span>");
 
+            listOfLines.Add($"<span class='duration'>&nbsp;{example.GetDuration()}</span>");
+
             if (example.Attachments.Count > 0)
-                listOfLines.Add("<span style='color: gray;' title='Attachments' onclick=\"toggleAttachments(this)\">&#9776;</span>");
+                listOfLines.Add("<span style='color: gray;' title='Attachments' onclick=\"toggleAttachments(this)\">&nbsp;&#9776;</span>");
 
             listOfLines.Add("</div>");
 
@@ -368,24 +370,6 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        //internal List<string> GenerateDataScenarioMessage(LivingDocExample example)
-        //{
-        //    var listOfLines = new List<string>();
-
-        //    var status = example.GetStatus().ToLower();
-
-        //    string message = example.GetMessage();
-        //    if (message != null)
-        //    {
-        //        listOfLines.Add("<!-- Data Scenario Message -->");
-        //        listOfLines.Add($"<div class='message-box'>");
-        //        listOfLines.Add($"<div class='message-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
-        //        listOfLines.Add("</div>");
-        //    }
-
-        //    return listOfLines;
-        //}
-
         internal List<string> GenerateDataScenarioAttachments(LivingDocExample example)
         {
             var listOfLines = new List<string>();
@@ -393,11 +377,9 @@ namespace Expressium.LivingDoc
             if (example.Attachments.Count > 0)
             {
                 listOfLines.Add("<!-- Data Scenario Attachments -->");
-                //listOfLines.Add($"<div class='attachments'>");
-                // Default Visibility at Toggle Attachments...
                 listOfLines.Add($"<div class='attachments' style='display: none;'>");
                 listOfLines.Add($"<span class='attachments-keyword'>Attachments:</span>");
-                listOfLines.Add("<ul>");
+                listOfLines.Add("<ul class='attachments-files'>");
 
                 foreach (var attachment in example.Attachments)
                 {
