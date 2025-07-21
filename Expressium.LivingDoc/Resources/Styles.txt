@@ -63,9 +63,21 @@
             cursor: col-resize;
         }
 
-        #left-section, #right-section {
+        #left-section {
+            flex: 1;
+            overflow: hidden;
+            /* overflow: auto; */
+        }
+
+        #right-section {
             flex: 1;
             overflow: auto;
+        }
+
+        #list-view {
+            flex: 1;
+            overflow: auto;
+            height: calc(100% - 68px); /* Adjust for filter and search height */
         }
 
         header {
