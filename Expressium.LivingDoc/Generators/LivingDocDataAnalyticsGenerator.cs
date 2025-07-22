@@ -114,7 +114,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<div class='section' id='{title.ToLower()}-analytics' style='width: fit-content; margin: auto;'>");
-            listOfLines.Add($"<span class='page-name' style='padding-left: 8px; color: dimgray;'>{title}</span>");
+            listOfLines.Add($"<span class='page-name'>{title}</span>");
             listOfLines.Add("<div class='section' style='width: fit-content; margin: auto; padding: 16px; border-radius: 16px; background-color: whitesmoke;'>");
 
             {

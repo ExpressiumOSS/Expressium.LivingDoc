@@ -215,6 +215,8 @@
             font-size: 1.25em;
             font-weight: bold;
             line-height: 1;
+            color: dimgray;
+            padding-left: 4px;
         }
 
         .duration {

@@ -43,8 +43,8 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Header Section -->");
             listOfLines.Add("<header>");
-            listOfLines.Add("<span class='project-name'>" + project.Title + "</span><br />");
-            listOfLines.Add("<span class='project-date'>Generated " + project.GetDate() + "</span>");
+            listOfLines.Add($"<span class='project-name'>{project.Title}</span><br />");
+            listOfLines.Add($"<span class='project-date'>Generated {project.GetDate()}</span>");
             listOfLines.Add("</header>");
 
             return listOfLines;
@@ -108,11 +108,11 @@ namespace Expressium.LivingDoc.Generators
 
             return listOfLines;
         }
-            
+
         internal List<string> GenerateViewPreFilters(LivingDocProject project)
         {
             var listOfLines = new List<string>();
-            
+
             listOfLines.Add("<div class='section layout-row'>");
 
             listOfLines.Add("<!-- View Title Section -->");

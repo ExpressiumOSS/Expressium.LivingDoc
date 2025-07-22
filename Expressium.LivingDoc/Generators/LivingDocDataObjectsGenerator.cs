@@ -280,14 +280,14 @@ namespace Expressium.LivingDoc
                 if (step.IsSkipped())
                 {
                     listOfLines.Add($"<span class='step-marker color-skipped'>{stepMarker}</span>");
-                    listOfLines.Add($"<span class='step-keyword'>" + keyword + "</span>");
-                    listOfLines.Add($"<span>" + step.Name + "</span>");
+                    listOfLines.Add($"<span class='step-keyword'>{keyword}</span>");
+                    listOfLines.Add($"<span>{step.Name}</span>");
                 }
                 else
                 {
                     listOfLines.Add($"<span class='step-marker color-{status}'>{stepMarker}</span>");
-                    listOfLines.Add($"<span class='step-keyword'> " + keyword + "</span> ");
-                    listOfLines.Add($"<span>" + step.Name + "</span>");
+                    listOfLines.Add($"<span class='step-keyword'>{keyword}</span>");
+                    listOfLines.Add($"<span>{step.Name}</span>");
                 }
 
                 if (step.DataTable.Rows.Count > 0)
