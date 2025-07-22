@@ -10,10 +10,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
         public void Converting_Example_Tables_Feature()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
-            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.json");
 
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
-            LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
@@ -25,10 +23,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
         public void Converting_Rules_Feature()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "rules.feature.ndjson");
-            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "rules.feature.json");
 
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
-            LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
@@ -39,10 +35,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
         public void Converting_Data_Table_Feature()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "data-tables.feature.ndjson");
-            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "data-tables.feature.json");
 
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
-            LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
@@ -53,28 +47,24 @@ namespace Expressium.LivingDoc.UnitTests.Messages
         public void Converting_Minimal_Feature()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
-            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.json");
 
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
-            LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(1));
         }
 
-        //[Test]
-        //public void Converting_Skipped_Feature()
-        //{
-        //    var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "skipped.feature.ndjson");
-        //    var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "skipped.feature.json");
+    //    [Test]
+    //    public void Converting_Skipped_Feature()
+    //    {
+    //        var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "skipped.feature.ndjson");
 
-        //    var livingDocProject = CucumberConvertor.ConvertToLivingDoc(inputFilePath);
-        //    LivingDocUtilities.SerializeAsJson(outputFilePath, livingDocProject);
+    //        var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
 
-        //    Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-        //    Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
-        //    Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(1));
-        //}
+    //        Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
+    //        Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
+    //        Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(1));
+    //    }
     }
 }
