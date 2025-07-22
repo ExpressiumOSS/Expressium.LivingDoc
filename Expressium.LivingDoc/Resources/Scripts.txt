@@ -57,7 +57,11 @@
     </script>
     <script>
         function loadAnalyticsSection() {
-            var navLinkActive = document.querySelectorAll('.navigation-active');
+
+            var analytics = document.getElementById("analytics").innerHTML;
+            document.getElementById('right-section').innerHTML = analytics;
+
+            var navLinkActive = document.querySelectorAll('a.navigation-link.navigation-active');
             if (navLinkActive.length > 0) {
                 var name = navLinkActive[0].textContent.toLowerCase();
              
@@ -81,8 +85,8 @@
         }
     </script>
     <script>
-        function loadAnalytics(x) {
-            var analytics = document.getElementById(x).innerHTML;
+        function loadAnalytics() {
+            var analytics = document.getElementById("analytics").innerHTML;
             document.getElementById('right-section').innerHTML = analytics;
         }
     </script>

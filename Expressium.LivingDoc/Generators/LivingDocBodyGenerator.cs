@@ -32,7 +32,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<body onload=\"loadAnalytics('analytics'); loadViewmode('project-view','Overview');\">");
+            listOfLines.Add("<body onload=\"loadViewmode('project-view','Overview'); loadAnalytics()\">");
 
             return listOfLines;
         }
@@ -65,7 +65,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<span>|</span>");
             listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewmode('steps-view','Steps');\">Steps</a>");
             listOfLines.Add("<span>|</span>");
-            listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics('analytics');\">Analytics</a>");
+            listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
             listOfLines.Add("<span>|</span>");
 
             if (includeEditor)
