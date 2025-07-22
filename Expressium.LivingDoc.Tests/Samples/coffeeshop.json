@@ -1,0 +1,533 @@
+{
+  "Title": "Expressium.Coffeeshop.Web.API.Tests",
+  "Date": "2025-07-22T12:15:42.25104+02:00",
+  "Duration": "00:00:54.9774099",
+  "Features": [
+    {
+      "Id": "23df8da9-840b-41f8-84d1-4082eb75b7d1",
+      "Tags": [
+        "@TA-3000",
+        "@ContactUs",
+        "@BusinessTests"
+      ],
+      "Description": "\tAs a User\r\n\tI want to send to a user Contact Us inquiry\r\n\tSo that I can recieve detailed product information",
+      "Name": "ContactUs",
+      "Uri": "Features",
+      "Rules": [],
+      "Scenarios": [
+        {
+          "Id": "c7c4ec58-97b9-48e8-9347-b46340805e02",
+          "Tags": [
+            "@TA-3003",
+            "@Review"
+          ],
+          "Name": "Successful Resubmitting a Contact Us Inquiry",
+          "Examples": [
+            {
+              "Duration": "00:00:06.4255228",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I complete and submit the Contact Us formular",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/SuccessfulResubmittingAContactUsInquiry/SuccessfulResubmittingAContactUsInquiry.log",
+                "TestResults/SuccessfulResubmittingAContactUsInquiry/SuccessfulResubmittingAContactUsInquiry.png"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "7a2b0ed0-e7aa-4d7b-9699-04fadb413dda",
+          "Tags": [
+            "@TA-3001",
+            "@Done"
+          ],
+          "Name": "Successful Submitting a Contact Us Inquiry",
+          "Examples": [
+            {
+              "Duration": "00:00:05.5552265",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I complete and submit the Contact Us formular",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should receive an inquiry confirmation message",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/SuccessfulSubmittingAContactUsInquiry/SuccessfulSubmittingAContactUsInquiry.log",
+                "TestResults/SuccessfulSubmittingAContactUsInquiry/SuccessfulSubmittingAContactUsInquiry.png"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "bfac85ba-bbbb-4181-b652-54cb5eb0b473",
+      "Tags": [
+        "@TA-1000",
+        "@Login",
+        "@BusinessTests"
+      ],
+      "Description": "\tAs a User\r\n\tI want to login on the web application\r\n\tSo that I can administrate my product orders",
+      "Name": "Login",
+      "Uri": "Features",
+      "Rules": [],
+      "Scenarios": [
+        {
+          "Id": "ab7589c7-d0b7-4333-9cf3-dc3ddb0a6072",
+          "Tags": [
+            "@TA-1001",
+            "@Done"
+          ],
+          "Name": "Successful User Login with Valid Credentials",
+          "Examples": [
+            {
+              "Stacktrace": "   at Expressium.Coffeeshop.Web.API.Tests.Asserts.EqualTo(Object actual, Object expected, String message) in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API.Tests\\Asserts.cs:line 27\r\n   at Expressium.Coffeeshop.Web.API.Tests.Steps.LoginSteps.ThenIShouldBeRedirectedToTheHomePage() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API.Tests\\Steps\\LoginSteps.cs:line 29\r\n   at InvokeStub_Action\u00601.Invoke(Object, Span\u00601)\r\n   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\r\n--- End of stack trace from previous location ---\r\n   at Reqnroll.Bindings.BindingInvoker.InvokeBindingAsync(IBinding binding, IContextManager contextManager, Object[] arguments, ITestTracer testTracer, DurationHolder durationHolder)\r\n   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepMatchAsync(BindingMatch match, Object[] arguments, DurationHolder durationHolder)\r\n   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)\r\n   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()\r\n   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()\r\n   at Expressium.Coffeeshop.Web.API.Tests.Features.LoginFeature.ScenarioCleanupAsync()\r\n   at Expressium.Coffeeshop.Web.API.Tests.Features.LoginFeature.SuccessfulUserLoginWithValidCredentials() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API.Tests\\Features\\Login.feature:line 10\r\n   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter\u00601.GetResult()\r\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await[TResult](TestExecutionContext context, Func\u00601 invoke)\r\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(TestExecutionContext context, Func\u00601 invoke)\r\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)\r\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)\r\n   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.\u003C\u003Ec__DisplayClass1_0.\u003CExecute\u003Eb__0()\r\n   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)",
+              "Duration": "00:00:03.0425896",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should be redirected to the Home page",
+                  "Status": "Failed",
+                  "Duration": 0,
+                  "Message": "Validate the HomePage title property...\nExpected to be equal [XHome] but was [Home] - FAILED",
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/SuccessfulUserLoginWithValidCredentials/SuccessfulUserLoginWithValidCredentials.log",
+                "TestResults/SuccessfulUserLoginWithValidCredentials/SuccessfulUserLoginWithValidCredentials.png"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "d4e2bde3-b88d-4bb5-84d0-c7107a8ade73",
+          "Tags": [
+            "@TA-1002",
+            "@Review"
+          ],
+          "Name": "Unsuccessful User Login with Invalid Credentials",
+          "Examples": [
+            {
+              "Duration": "00:00:03.1031912",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with invalid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should have an error message on the Login page",
+                  "Status": "Pending",
+                  "Duration": 0,
+                  "Message": "Pending Step Definition",
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/UnsuccessfulUserLoginWithInvalidCredentials/UnsuccessfulUserLoginWithInvalidCredentials.log",
+                "TestResults/UnsuccessfulUserLoginWithInvalidCredentials/UnsuccessfulUserLoginWithInvalidCredentials.png"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "53b8dadf-aa5c-4b4e-8d66-a738b8ec3f68",
+      "Tags": [
+        "@TA-4000",
+        "@Products",
+        "@BusinessTests"
+      ],
+      "Description": "\tAs a User\r\n\tI want to order products from the web application\r\n\tSo that I can enjoy my favorite coffee",
+      "Name": "Product Management",
+      "Uri": "Features",
+      "Rules": [],
+      "Scenarios": [
+        {
+          "Id": "d003274a-76f2-417c-aac2-4d05aa69d4bf",
+          "Tags": [
+            "@TA-4001",
+            "@Review"
+          ],
+          "Name": "Ordering Coffee Confirmation Notification",
+          "Examples": [
+            {
+              "Duration": "00:00:04.4944234",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I add Santa Rita Cerrado Mineiro coffee to the shopping cart",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should have $99 in the confirmation notification message",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": [
+                  {
+                    "Cells": [
+                      "Brand",
+                      "Price"
+                    ]
+                  },
+                  {
+                    "Cells": [
+                      "Santa Rita Cerrado Mineiro",
+                      "$99"
+                    ]
+                  }
+                ]
+              },
+              "Attachments": [
+                "TestResults/OrderingCoffeeConfirmationNotificationSantaRitaCerradoMineiro $99/OrderingCoffeeConfirmationNotificationSantaRitaCerradoMineiro $99.log",
+                "TestResults/OrderingCoffeeConfirmationNotificationSantaRitaCerradoMineiro $99/OrderingCoffeeConfirmationNotificationSantaRitaCerradoMineiro $99.png"
+              ]
+            },
+            {
+              "Duration": "00:00:04.2210384",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I add La Soledad Antioquia coffee to the shopping cart",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should have $77 in the confirmation notification message",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": [
+                  {
+                    "Cells": [
+                      "Brand",
+                      "Price"
+                    ]
+                  },
+                  {
+                    "Cells": [
+                      "La Soledad Antioquia",
+                      "$77"
+                    ]
+                  }
+                ]
+              },
+              "Attachments": [
+                "TestResults/OrderingCoffeeConfirmationNotificationLaSoledadAntioquia $77/OrderingCoffeeConfirmationNotificationLaSoledadAntioquia $77.log",
+                "TestResults/OrderingCoffeeConfirmationNotificationLaSoledadAntioquia $77/OrderingCoffeeConfirmationNotificationLaSoledadAntioquia $77.png"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "fbdc65b5-c010-44ba-b6bd-3826e59c5b20",
+          "Tags": [
+            "@TA-4002",
+            "@Review"
+          ],
+          "Name": "Ordering Multiple Coffees Confirmation Notification",
+          "Examples": [
+            {
+              "Duration": "00:00:04.3791383",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I add multiple pieces of coffees to the shopping cart",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": [
+                      {
+                        "Cells": [
+                          "Brand",
+                          "Pieces"
+                        ]
+                      },
+                      {
+                        "Cells": [
+                          "La Ceiba Huehuetenango",
+                          "2"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should have a confirmation notification message",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/OrderingMultipleCoffeesConfirmationNotification/OrderingMultipleCoffeesConfirmationNotification.log",
+                "TestResults/OrderingMultipleCoffeesConfirmationNotification/OrderingMultipleCoffeesConfirmationNotification.png"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "3959d264-f509-400c-830f-5b0eec716392",
+      "Tags": [
+        "@TA-2000",
+        "@Registration",
+        "@BusinessTests"
+      ],
+      "Description": "\tAs a User\r\n\tI want to send to a user Registration inquiry\r\n\tSo that I can order my favorite coffee",
+      "Name": "Registration",
+      "Uri": "Features",
+      "Rules": [],
+      "Scenarios": [
+        {
+          "Id": "83181ac9-697b-48ce-99a1-a46f9243fa56",
+          "Tags": [
+            "@TA-2002",
+            "@InProgress"
+          ],
+          "Name": "Successful Canceling a Registration Inquiry",
+          "Examples": [
+            {
+              "Stacktrace": "   at Expressium.Coffeeshop.Web.API.WebElements.WaitForElementExist(By locator, IWebDriver driver) in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API\\WebElements.cs:line 145\r\n   at Expressium.Coffeeshop.Web.API.WebElements.GetElement(By locator, IWebDriver driver) in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API\\WebElements.cs:line 274\r\n   at Expressium.Coffeeshop.Web.API.Controls.WebControl.GetElement() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API\\Controls\\WebControl.cs:line 51\r\n   at Expressium.Coffeeshop.Web.API.Controls.WebControl.WaitForElementIsEnabled() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API\\Controls\\WebControl.cs:line 81\r\n   at Expressium.Coffeeshop.Web.API.Controls.WebButton.Click() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API\\Controls\\WebButton.cs:line 17\r\n   at Expressium.Coffeeshop.Web.API.Pages.RegistrationPage.ClickCancel() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API\\Pages\\RegistrationPage.cs:line 127\r\n   at Expressium.Coffeeshop.Web.API.Tests.Steps.RegistrationSteps.WhenICompleteAndCancelTheRegistrationFormular() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API.Tests\\Steps\\RegistrationSteps.cs:line 38\r\n   at InvokeStub_Action\u00601.Invoke(Object, Span\u00601)\r\n   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\r\n--- End of stack trace from previous location ---\r\n   at Reqnroll.Bindings.BindingInvoker.InvokeBindingAsync(IBinding binding, IContextManager contextManager, Object[] arguments, ITestTracer testTracer, DurationHolder durationHolder)\r\n   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepMatchAsync(BindingMatch match, Object[] arguments, DurationHolder durationHolder)\r\n   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)\r\n   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()\r\n   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()\r\n   at Expressium.Coffeeshop.Web.API.Tests.Features.RegistrationFeature.ScenarioCleanupAsync()\r\n   at Expressium.Coffeeshop.Web.API.Tests.Features.RegistrationFeature.SuccessfulCancelingARegistrationInquiry() in C:\\Company\\Source\\Expressium.LivingDoc\\Expressium.Coffeeshop.Web.API.Tests\\Features\\Registration.feature:line 15\r\n   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter\u00601.GetResult()\r\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await[TResult](TestExecutionContext context, Func\u00601 invoke)\r\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(TestExecutionContext context, Func\u00601 invoke)\r\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)\r\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)\r\n   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.\u003C\u003Ec__DisplayClass1_0.\u003CExecute\u003Eb__0()\r\n   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)",
+              "Duration": "00:00:09.9198492",
+              "Steps": [
+                {
+                  "Keyword": "When",
+                  "Name": "I complete and cancel the Registration formular",
+                  "Status": "Failed",
+                  "Duration": 0,
+                  "Message": "Page element \u0027By.Name: cancel\u0027 was expected to exist within 5000 milliseconds...",
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/SuccessfulCancelingARegistrationInquiry/SuccessfulCancelingARegistrationInquiry.log",
+                "TestResults/SuccessfulCancelingARegistrationInquiry/SuccessfulCancelingARegistrationInquiry.png"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "441afe5b-fbc8-4fea-a8c7-e5c3bbe07251",
+          "Tags": [
+            "@TA-2003",
+            "@InProgress"
+          ],
+          "Name": "Successful Resubmitting a Registration Inquiry",
+          "Examples": [
+            {
+              "Duration": "00:00:07.3467499",
+              "Steps": [
+                {
+                  "Keyword": "When",
+                  "Name": "I complete and submit the Registration formular",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I complete and submit the Registration formular",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should be redirected to the Login page",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/SuccessfulResubmittingARegistrationInquiry/SuccessfulResubmittingARegistrationInquiry.log",
+                "TestResults/SuccessfulResubmittingARegistrationInquiry/SuccessfulResubmittingARegistrationInquiry.png"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "f3e83e6c-6ea0-45b3-b1a4-b4fab29e94c5",
+          "Tags": [
+            "@TA-2001",
+            "@InProgress"
+          ],
+          "Name": "Successful Submitting a Registration Inquiry",
+          "Examples": [
+            {
+              "Duration": "00:00:05.1859011",
+              "Steps": [
+                {
+                  "Keyword": "When",
+                  "Name": "I complete and submit the Registration formular",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should be redirected to the Login page",
+                  "Status": "Passed",
+                  "Duration": 0,
+                  "DataTable": {
+                    "Rows": []
+                  }
+                }
+              ],
+              "DataTable": {
+                "Rows": []
+              },
+              "Attachments": [
+                "TestResults/SuccessfulSubmittingARegistrationInquiry/SuccessfulSubmittingARegistrationInquiry.log",
+                "TestResults/SuccessfulSubmittingARegistrationInquiry/SuccessfulSubmittingARegistrationInquiry.png"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
