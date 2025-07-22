@@ -4,12 +4,12 @@ namespace Expressium.LivingDoc.Models
 {
     public enum LivingDocStatuses
     {
-        Passed,
+        Failed,
         Incomplete,
         Pending,
         Undefined,
         Ambiguous,
-        Failed,
+        Passed,
         Skipped,
         Unknown
     }

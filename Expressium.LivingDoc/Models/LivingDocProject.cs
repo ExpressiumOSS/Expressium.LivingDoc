@@ -33,54 +33,6 @@ namespace Expressium.LivingDoc.Models
             return Features.Count;
         }
 
-        public int GetNumberOfPassedFeatures()
-        {
-            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Passed.ToString());
-        }
-
-        public int GetNumberOfIncompleteFeatures()
-        {
-            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Incomplete.ToString());
-        }
-
-        public int GetNumberOfFailedFeatures()
-        {
-            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Failed.ToString());
-        }
-
-        public int GetNumberOfSkippedFeatures()
-        {
-            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Skipped.ToString());
-        }
-
-        public int GetNumberOfPassedScenarios()
-        {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());
-        }
-
-        public int GetNumberOfIncompleteScenarios()
-        {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Incomplete.ToString());
-        }
-
-        public int GetNumberOfFailedScenarios()
-        {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Failed.ToString());
-        }
-
-        public int GetNumberOfSkippedScenarios()
-        {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Skipped.ToString());
-        }
-
         public int GetNumberOfScenarios()
         {
             return Features
@@ -104,6 +56,63 @@ namespace Expressium.LivingDoc.Models
                 .SelectMany(feature => feature.Scenarios)
                 .SelectMany(scenario => scenario.Examples)
                 .Count();
+        }
+
+        public int GetNumberOfSteps()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .SelectMany(scenario => scenario.Examples)
+                .SelectMany(example => example.Steps)
+                .Count();
+        }
+
+        public int GetNumberOfFailedFeatures()
+        {
+            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Failed.ToString());
+        }
+
+        public int GetNumberOfIncompleteFeatures()
+        {
+            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Incomplete.ToString());
+        }
+
+        public int GetNumberOfPassedFeatures()
+        {
+            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Passed.ToString());
+        }
+
+        public int GetNumberOfSkippedFeatures()
+        {
+            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Skipped.ToString());
+        }
+
+        public int GetNumberOfFailedScenarios()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Failed.ToString());
+        }
+
+        public int GetNumberOfIncompleteScenarios()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Incomplete.ToString());
+        }
+
+        public int GetNumberOfPassedScenarios()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());
+        }
+
+        public int GetNumberOfSkippedScenarios()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Skipped.ToString());
         }
 
         public int GetNumberOfPassedSteps()
@@ -143,15 +152,6 @@ namespace Expressium.LivingDoc.Models
                 .SelectMany(scenario => scenario.Examples)
                 .SelectMany(example => example.Steps)
                 .Where(step => step.IsSkipped())
-                .Count();
-        }
-
-        public int GetNumberOfSteps()
-        {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .SelectMany(scenario => scenario.Examples)
-                .SelectMany(example => example.Steps)
                 .Count();
         }
 

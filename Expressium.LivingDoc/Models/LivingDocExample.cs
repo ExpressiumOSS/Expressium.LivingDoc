@@ -37,14 +37,6 @@ namespace Expressium.LivingDoc.Models
             }
         }
 
-        //public string GetMessage()
-        //{
-        //    if (Steps.Any(step => step.Message != null))
-        //        return Steps.First(step => step.Message != null).Message;
-
-        //    return null;
-        //}
-
         public string GetDuration()
         {
             if (Duration.Minutes > 0)
