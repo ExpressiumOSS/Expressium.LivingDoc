@@ -88,6 +88,16 @@ namespace Expressium.LivingDoc.Models
                 .Count();
         }
 
+        public int GetNumberOfRules()
+        {
+            return Features
+                .SelectMany(feature => feature.Scenarios)
+                .Where(scenario => scenario.RuleId != null)
+                .Select(scenario => scenario.RuleId)
+                .Distinct()
+                .Count();
+        }
+
         public int GetNumberOfExamples()
         {
             return Features
