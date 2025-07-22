@@ -25,54 +25,41 @@ namespace Expressium.LivingDoc.Generators
         {
             try
             {
-                Console.WriteLine("");
-                Console.WriteLine("Generating LivingDoc Report...");
-                Console.WriteLine("InputPath: " + inputPath);
-                Console.WriteLine("OutputPath: " + outputPath);
-                Console.WriteLine("");
-
                 if (useNativeFormat)
                 {
                     var project = ParseLivingDocJsonFile();
-                    project.Features = project.Features.OrderBy(f => f.Name).ToList();
-                    GenerateHtmlReport(project);
+                    GenerateDocument(project);
                 }
                 else
                 {
                     var project = ParseCucumberMessagesJsonFile();
                     project.Title = Path.GetFileName(Path.GetFileNameWithoutExtension(outputPath));
-                    project.Features = project.Features.OrderBy(f => f.Name).ToList();
-                    GenerateHtmlReport(project);
+                    GenerateDocument(project);
                 }
-
-                Console.WriteLine("Generating LivingDoc Report Completed");
-                Console.WriteLine("");
             }
             catch (IOException ex)
             {
-                Console.WriteLine($"IO error: {ex.Message}");
+                throw new IOException($"IO error: {ex.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                throw new IOException($"Unexpected error: {ex.Message}");
             }
         }
 
         internal LivingDocProject ParseCucumberMessagesJsonFile()
         {
-            Console.WriteLine("Parsing Cucumber Messages JSON File...");
             return MessagesConvertor.ConvertToLivingDoc(inputPath);
         }
 
         internal LivingDocProject ParseLivingDocJsonFile()
         {
-            Console.WriteLine("Parsing LivingDoc JSON File...");
             return LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputPath);
         }
 
-        internal void GenerateHtmlReport(LivingDocProject project)
+        internal void GenerateDocument(LivingDocProject project)
         {
-            Console.WriteLine("Generating HTML Report...");
+            project.Features = project.Features.OrderBy(f => f.Name).ToList();
 
             var listOfLines = new List<string>();
 

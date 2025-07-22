@@ -9,13 +9,31 @@ namespace Expressium.LivingDoc
         {
             if (args.Length == 2)
             {
+                Console.WriteLine("");
+                Console.WriteLine("Generating Cucumber Messages LivingDoc Report...");
+                Console.WriteLine("InputPath: " + args[0]);
+                Console.WriteLine("OutputPath: " + args[1]);
+                Console.WriteLine("Executing LivingDoc Code Generator");
+
                 var livingDocGenerator = new LivingDocGenerator(args[0], args[1]);
                 livingDocGenerator.Execute();
+
+                Console.WriteLine("Generating LivingDoc Report Completed");
+                Console.WriteLine("");
             }
             else if (args.Length == 3 && args[0] == "--native")
             {
+                Console.WriteLine("");
+                Console.WriteLine("Generating Native LivingDoc Report...");
+                Console.WriteLine("InputPath: " + args[1]);
+                Console.WriteLine("OutputPath: " + args[2]);
+                Console.WriteLine("Executing LivingDoc Code Generator");
+
                 var livingDocGenerator = new LivingDocGenerator(args[1], args[2]);
                 livingDocGenerator.Execute(true);
+
+                Console.WriteLine("Generating LivingDoc Report Completed");
+                Console.WriteLine("");
             }
             else
             {
