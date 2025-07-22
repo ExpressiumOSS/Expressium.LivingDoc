@@ -69,7 +69,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateHtmlFooter());
 
             var htmlFilePath = outputPath;
-            SaveListOfLinesToFile(htmlFilePath, listOfLines);
+            SaveHtmlFile(htmlFilePath, listOfLines);
         }
 
         internal List<string> GenerateHtmlHeader()
@@ -131,7 +131,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal static void SaveListOfLinesToFile(string filePath, List<string> listOfLines)
+        internal static void SaveHtmlFile(string filePath, List<string> listOfLines)
         {
             var content = string.Join(Environment.NewLine, listOfLines);
 
