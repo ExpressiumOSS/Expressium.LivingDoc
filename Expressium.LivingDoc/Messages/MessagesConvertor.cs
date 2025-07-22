@@ -89,7 +89,6 @@ namespace Expressium.LivingDoc.Messages
 
                                 step.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
                                 step.Message = testStepFinished.TestStepResult.Message;
-                                step.Duration = new TimeSpan(0, 0, 0, (int)testStepFinished.Timestamp.Seconds, 0, (int)testStepFinished.Timestamp.Nanos);
                             }
 
                             var testCaseStarted = listOfTestCaseStarted.Find(g => g.TestCaseId == testCase.Id);

@@ -20,7 +20,7 @@ namespace Expressium.LivingDoc.Models
         public string Keyword { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
-        public TimeSpan Duration { get; set; }
+        public long Duration { get; set; }
         public string Message { get; set; }
 
         public LivingDocDataTable DataTable { get; set; }
