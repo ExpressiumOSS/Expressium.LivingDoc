@@ -180,7 +180,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<tr data-role='header'>");
             listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-steps\")'>Steps<span class='sort-column'>&udarr;</span></th>");
+            //listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-steps\")'>Steps<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-tests\")'>Tests<span class='sort-column'>&udarr;</span></th>");
             //listOfLines.Add("<th width='120' onClick='sortTableByColumnByAttibute(2, \"data-completion\")'>Completion<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(3, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
@@ -196,7 +197,8 @@ namespace Expressium.LivingDoc.Generators
                     listOfLines.Add($"<tr class='gridline' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                     listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span></td>");
                     listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
-                    listOfLines.Add($"<td align='center' data-steps='{scenario.GetNumberOfStepsSortId()}'>{scenario.GetNumberOfSteps()}</td>");
+                    //listOfLines.Add($"<td align='center' data-steps='{scenario.GetNumberOfStepsSortId()}'>{scenario.GetNumberOfSteps()}</td>");
+                    listOfLines.Add($"<td align='center' data-tests='{scenario.GetNumberOfTestsSortId()}'>{scenario.GetNumberOfTests()}</td>");
                     //listOfLines.Add($"<td align='center' data-completion='{scenario.GetPercentageOfPassedSortId()}'>{scenario.GetPercentageOfPassed()}%</td>");
                     listOfLines.Add($"<td align='center' data-duration='{scenario.GetDurationSortId()}'>{scenario.GetDuration()}</td>");
                     listOfLines.Add($"<td>{scenario.GetStatus()}</td>");

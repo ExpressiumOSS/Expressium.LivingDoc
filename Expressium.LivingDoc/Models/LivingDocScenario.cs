@@ -81,5 +81,15 @@ namespace Expressium.LivingDoc.Models
         {
             return GetNumberOfSteps().ToString("D4");
         }
+
+        public int GetNumberOfTests()
+        {
+            return Examples.Count;
+        }
+
+        public string GetNumberOfTestsSortId()
+        {
+            return Examples.Count.ToString("D4");
+        }
     }
 }

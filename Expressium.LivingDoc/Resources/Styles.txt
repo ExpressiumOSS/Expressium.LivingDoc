@@ -260,6 +260,15 @@
             color: gray;
         }
 
+        .chart-outline {
+            width: fit-content;
+            margin: auto;
+            padding: 16px;
+            padding-left: 24px;
+            padding-right: 24px;
+            background-color: whitesmoke;
+        }
+
         .chart-name {
             font-size: 1.25em;
             font-weight: bold;

@@ -33,7 +33,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart(project));
             listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart(project));
-            listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart(project));            
+            listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart(project));
             listOfLines.AddRange(GenerateDataAnalyticsDuration(project));
 
             listOfLines.Add("</div>");
@@ -118,13 +118,20 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<div class='section' id='{title.ToLower()}-analytics' style='width: fit-content; margin: auto;'>");
+
+            //listOfLines.Add($"<div class='tab'>");
+            //listOfLines.Add($"<button class='toolbox-options' onclick='openCity()'>Features</button>");
+            //listOfLines.Add($"<button class='toolbox-options' onclick='openCity()'>Scenarios</button>");
+            //listOfLines.Add($"<button class='toolbox-options' onclick='openCity()'>Steps</button>");
+            //listOfLines.Add($"</div>");
+
             listOfLines.Add($"<span class='chart-name'>{title}</span>");
-            listOfLines.Add("<div class='section' style='width: fit-content; margin: auto; padding: 16px; border-radius: 16px; background-color: whitesmoke;'>");
+            listOfLines.Add("<div class='section chart-outline'>");
 
             {
                 listOfLines.Add("<!-- Data Analytics Status Chart -->");
                 listOfLines.Add($"<div class='section' style='text-align: center; max-width: 500px; margin: auto;'>");
-                listOfLines.Add($"    <svg width='180px' height='180px' viewBox='0 0 42 42'>");
+                listOfLines.Add($"    <svg width='160px' height='160px' viewBox='0 0 42 42'>");
                 listOfLines.Add($"        <g transform='rotate(-90, 21, 21)'>");
                 listOfLines.Add($"            <circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155'></circle>");
                 listOfLines.Add($"            <circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfPassed} {100 - percentageOfPassed}' stroke-dashoffset='0'></circle>");
