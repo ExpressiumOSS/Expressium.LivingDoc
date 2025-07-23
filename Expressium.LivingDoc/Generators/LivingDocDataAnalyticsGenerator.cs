@@ -131,7 +131,7 @@ namespace Expressium.LivingDoc.Generators
             {
                 listOfLines.Add("<!-- Data Analytics Status Chart -->");
                 listOfLines.Add($"<div class='section' style='text-align: center; max-width: 500px; margin: auto;'>");
-                listOfLines.Add($"    <svg width='160px' height='160px' viewBox='0 0 42 42'>");
+                listOfLines.Add($"    <svg width='160px' height='168px' viewBox='0 0 42 42'>");
                 listOfLines.Add($"        <g transform='rotate(-90, 21, 21)'>");
                 listOfLines.Add($"            <circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155'></circle>");
                 listOfLines.Add($"            <circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfPassed} {100 - percentageOfPassed}' stroke-dashoffset='0'></circle>");

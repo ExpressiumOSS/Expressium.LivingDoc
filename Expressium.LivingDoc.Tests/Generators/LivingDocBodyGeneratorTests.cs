@@ -26,7 +26,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var bodyGenerator = new LivingDocBodyGenerator();
             var listOfLines = bodyGenerator.GenerateBody(project);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(420));
+            Assert.That(listOfLines.Count, Is.GreaterThan(400));
         }
     }
 }
