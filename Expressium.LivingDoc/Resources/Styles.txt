@@ -1,48 +1,87 @@
 ﻿    <style>
-        @property --master-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #326EA0;            
-        }
-
-        @property --primary-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #909090;
-        }
-
-        @property --secondary-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #C7D9E9;
-        }
-
         @property --passed-color {
             syntax: "<color>";
             inherits: false;
-            initial-value: #4AB356;
             initial-value: #48A84F;
         }
 
         @property --incomplete-color {
             syntax: "<color>";
             inherits: false;
-            initial-value: #F8A700;
             initial-value: #F5BB00;
         }
 
         @property --failed-color {
             syntax: "<color>";
             inherits: false;
-            initial-value: #F03D2D;
             initial-value: #EB4431;
         }
 
         @property --skipped-color {
             syntax: "<color>";
             inherits: false;
-            initial-value: gray;
-            initial-value: darkgray;
+            initial-value: #A9A9A9;
+        }
+
+        @property --passed-background-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #E5F4E6;
+        }
+
+        @property --incomplete-background-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #FFF6D6;
+        }
+
+        @property --failed-background-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #FBE6E3;
+        }
+
+        @property --skipped-background-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #F0F0F0;
+        }
+
+        @property --passed-text-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #2B672F;
+        }
+
+        @property --incomplete-text-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #7A5E00;
+        }
+
+        @property --failed-text-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #99271E;
+        }
+
+        @property --skipped-text-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #000000;
+        }
+
+        @property --keyword-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #326EA0;
+            initial-value: #2F6795;                   
+        }
+
+        @property --hover-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: #C7D9E9;
         }
 
         body, html {
@@ -83,7 +122,7 @@
         header {
             padding: 8px;
             padding-left: 16px;
-            background-color: var(--secondary-color);
+            background-color: #C7D9E9;
         }
 
         footer {
@@ -95,7 +134,7 @@
         }
 
         .navigation {
-            background-color: darkgray;
+            background-color: #909090;
             color: white;
             padding: 8px;
             padding-left: 16px;
@@ -144,7 +183,6 @@
             background-color: #f1f1f1;
             border: hidden;
             padding: 8px;
-            border-radius: 4px;
         }
 
         th, td {
@@ -155,7 +193,7 @@
         }
 
         th {
-            background-color: var(--primary-color);
+            background-color: #909090;
             color: white;
             border: solid;
             border-width: 1px;
@@ -170,7 +208,7 @@
 
         table.grid-view tr:hover,
         table.tree-view tr:hover {
-            background-color: var(--secondary-color);
+            background-color: var(--hover-color);
         }
 
         table.grid-view th,
@@ -190,7 +228,7 @@
         }
 
         button.active {
-            background-color: var(--secondary-color);
+            background-color: var(--hover-color);
             color: black;
         }
 
@@ -216,11 +254,17 @@
             font-weight: bold;
             line-height: 1;
             color: dimgray;
-            padding-left: 4px;
         }
 
         .duration {
             color: gray;
+        }
+
+        .chart-name {
+            font-size: 1.25em;
+            font-weight: bold;
+            line-height: 1;
+            color: dimgray;
         }
 
         .chart-percentage {
@@ -237,11 +281,6 @@
         .chart-bar {
              height: 0.8em;
              float: left
-        }
-
-        .chart-message {
-            color: gray;
-            font-style: italic;
         }
 
         .chart-count {
@@ -273,7 +312,7 @@
         }
 
         a {
-            color: var(--master-color);
+            color: var(--keyword-color);
             text-decoration: none;
         }
 
@@ -402,7 +441,7 @@
         }
 
         .feature-keyword {
-            color: var(--master-color);
+            color: var(--keyword-color);
             font-weight: bold;
         }
 
@@ -418,12 +457,12 @@
         }
 
         .background-keyword {
-            color: var(--master-color);
+            color: var(--keyword-color);
             font-weight: bold;
         }
 
         .rule-keyword {
-            color: var(--master-color);
+            color: var(--keyword-color);
             font-weight: bold;
         }
 
@@ -432,7 +471,7 @@
         }
 
         .scenario-keyword {
-            color: var(--master-color);
+            color: var(--keyword-color);
             font-weight: bold;
         }
 
@@ -446,7 +485,7 @@
         }
 
         .step-keyword {
-            color: var(--master-color);
+            color: var(--keyword-color);
             font-weight: bold;
         }
 
@@ -475,27 +514,39 @@
         }
 
         .message-box {
-            padding-top: 8px;
+            padding-top: 4px;
             padding-bottom: 4px;
+            padding-left: 2px;
+            padding-right: 2px;
             max-width: inherit;
         }
 
-        .message-failed {
-            color: var(--failed-color);
-            background-color: #FFEBEB;      
-            outline: 1px solid var(--failed-color);
-            text-align: center;
+        .message-passed {
+            color: var(--passed-text-color);
+            background-color: var(--passed-background-color);      
             padding: 8px;
-            border-radius: 16px;
+            border-left: 8px solid var(--passed-color);
+        }
+
+        .message-failed {
+            color: var(--failed-text-color);
+            background-color: var(--failed-background-color);      
+            padding: 8px;
+            border-left: 8px solid var(--failed-color);
         }
 
         .message-incomplete {
-            color: var(--incomplete-color);
-            background-color: #FFF5E6;
-            outline: 1px solid var(--incomplete-color);
-            text-align: center;
+            color: var(--incomplete-text-color);
+            background-color: var(--incomplete-background-color);;
             padding: 8px;
-            border-radius: 16px;
+            border-left: 8px solid var(--incomplete-color);
+        }
+
+        .message-skipped {
+            color: var(--skipped-text-color);
+            background-color: var(--skipped-background-color);;
+            padding: 8px;
+            border-left: 8px solid var(--skipped-color);
         }
 
         .examples-keyword {

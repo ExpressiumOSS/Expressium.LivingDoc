@@ -29,6 +29,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("</div>");
+            listOfLines.Add("<hr>");
 
             listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart(project));
             listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart(project));
@@ -51,6 +52,7 @@ namespace Expressium.LivingDoc.Generators
             var numberOfTests = project.Features.Count;
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Features", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+            listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -66,6 +68,7 @@ namespace Expressium.LivingDoc.Generators
             var numberOfTests = project.GetNumberOfScenarios();
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Scenarios", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+            listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -81,6 +84,7 @@ namespace Expressium.LivingDoc.Generators
             var numberOfTests = project.GetNumberOfSteps();
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Steps", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+            listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -114,7 +118,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<div class='section' id='{title.ToLower()}-analytics' style='width: fit-content; margin: auto;'>");
-            listOfLines.Add($"<span class='page-name'>{title}</span>");
+            listOfLines.Add($"<span class='chart-name'>{title}</span>");
             listOfLines.Add("<div class='section' style='width: fit-content; margin: auto; padding: 16px; border-radius: 16px; background-color: whitesmoke;'>");
 
             {
