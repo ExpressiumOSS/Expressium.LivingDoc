@@ -89,18 +89,31 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
+        internal int CalculatePercentage(int numberOfStatuses, int numberOfTests)
+        {
+            if (numberOfStatuses == 0)
+                return 0;
+
+            var percentage = (int)Math.Round(100.0f / numberOfTests * numberOfStatuses);
+
+            if (numberOfStatuses > 0 && percentage == 0)
+                percentage = 1;
+
+            return percentage;
+        }
+
         internal List<string> GenerateDataAnalyticsStatusChart(string title, int numberOfPassed, int numberOfIncomplete, int numberOfFailed, int numberOfSkipped, int numberOfTests)
         {
-            var percentageOfPassed = (int)Math.Round(100.0f / numberOfTests * numberOfPassed);
-            var percentageOfIncomplete = (int)Math.Round(100.0f / numberOfTests * numberOfIncomplete);
-            var percentageOfFailed = (int)Math.Round(100.0f / numberOfTests * numberOfFailed);
-            var percentageOfSkipped = (int)Math.Round(100.0f / numberOfTests * numberOfSkipped);
+            var percentageOfPassed = CalculatePercentage(numberOfPassed, numberOfTests);
+            var percentageOfIncomplete = CalculatePercentage(numberOfIncomplete, numberOfTests);
+            var percentageOfFailed = CalculatePercentage(numberOfFailed, numberOfTests);
+            var percentageOfSkipped = CalculatePercentage(numberOfSkipped, numberOfTests);
 
             var totalPercentage = percentageOfPassed + percentageOfIncomplete + percentageOfFailed + percentageOfSkipped;
 
             // Adjust the largest category if there's a discrepancy
             int difference = 100 - totalPercentage;
-            if (difference != 0)
+            if (totalPercentage != 0 && difference != 0)
             {
                 var percentages = new List<(int value, Action<int> setter)>
                 {
@@ -118,13 +131,6 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<div class='section' id='{title.ToLower()}-analytics' style='width: fit-content; margin: auto;'>");
-
-            //listOfLines.Add($"<div class='tab'>");
-            //listOfLines.Add($"<button class='toolbox-options' onclick='openCity()'>Features</button>");
-            //listOfLines.Add($"<button class='toolbox-options' onclick='openCity()'>Scenarios</button>");
-            //listOfLines.Add($"<button class='toolbox-options' onclick='openCity()'>Steps</button>");
-            //listOfLines.Add($"</div>");
-
             listOfLines.Add($"<span class='chart-name'>{title}</span>");
             listOfLines.Add("<div class='section chart-outline'>");
 
