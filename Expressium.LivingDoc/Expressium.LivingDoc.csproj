@@ -3,14 +3,15 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net8.0</TargetFramework>
-		<Title>Expressium LivingDoc Test Report for ReqnRoll Test Automation</Title>
+		<PackageId>Expressium.LivingDoc</PackageId>
+		<Title>Expressium LivingDoc Test Report for ReqnRoll</Title>
 		<Version>1.0.0</Version>
+		<Authors>Soeren Andersen</Authors>
 		<Company>Expressium</Company>
 		<Product>LivingDoc</Product>
-		<Authors>Soeren Andersen</Authors>
-		<PackageProjectUrl>https://expressium.dev</PackageProjectUrl>
+		<Description>LivingDoc Test Report for ReqnRoll</Description>
 		<Copyright>© 2025 Expressium All Rights Reserved</Copyright>
-		<PackageReadmeFile></PackageReadmeFile>
+		<PackageProjectUrl>https://expressium.dev</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ExpressiumOSS/Expressium.LivingDoc</RepositoryUrl>
 		<PackageTags>expressium;reqnroll;bdd;livingdoc</PackageTags>
 	</PropertyGroup>
