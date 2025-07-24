@@ -306,8 +306,8 @@
         }
     </script>
     <script>
-        function loadEditor(x) {
-            var editor = document.getElementById(x).innerHTML;
+        function loadEditor() {
+            var editor = document.getElementById('editor').innerHTML;
 
             document.getElementById('right-section').innerHTML = editor;
 
@@ -443,5 +443,12 @@
                 }
             }
         }
-
+    </script>
+    <script>
+        function editorCopy() {
+            var textArea = document.getElementById("script");
+            textArea.select();
+            navigator.clipboard.writeText(textArea.value);
+            window.getSelection().removeAllRanges();
+        }
     </script>

@@ -9,8 +9,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests.Factories
         {
             var model = new RegistrationPageModel();
 
-            // TODO - Implement potential missing factory property...
-
             model.FirstName = "John";
             model.LastName = "Doe";
             model.Country = "Denmark";

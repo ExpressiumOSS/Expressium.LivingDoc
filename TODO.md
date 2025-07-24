@@ -10,7 +10,11 @@
 * How to handle additional test result information like attachments, messages...?
 * How to handle objects lists like Features, Scenarios, Steps...?
 * How to handle Analytics for Features, Scenarios, Steps in views...? 
- 
+* How to handle incomplete steps with missing messages...?
+    * Ambiguous - Multiple step definitions match
+    * Undefined - No matching step definition
+    * Pending - Incomplete step definition
+
 ## Enhancements
 * Visualize folders structure as Tree View in Overview...
 * Include scenario steps too during filtering...
@@ -59,5 +63,3 @@
 
 ### New LivingDoc Support
 * https://github.com/orgs/reqnroll/discussions/37
-
-

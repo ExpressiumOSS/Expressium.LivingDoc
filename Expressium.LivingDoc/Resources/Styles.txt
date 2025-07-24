@@ -223,7 +223,12 @@
             padding-right: 6px;
         }
 
-        button.toolbox-options {
+        button {
+            border: 1px solid gray;
+            background-color: whitesmoke;
+        }
+
+        button.status-option {
             color: darkgray;
         }
 
@@ -250,7 +255,7 @@
         }
 
         .page-name {
-            font-size: 1.25em;
+            font-size: 1.50em;
             font-weight: bold;
             line-height: 1;
             color: dimgray;
@@ -364,11 +369,6 @@
             display: inline-block;
             margin-left: 2px;
             margin-right: 2px;
-        }
-
-        button {
-            border: 1px solid gray;
-            background-color: whitesmoke;
         }
 
         .sort-column {

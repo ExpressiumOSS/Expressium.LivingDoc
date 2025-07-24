@@ -93,6 +93,13 @@ namespace Expressium.LivingDoc.Messages
 
                                 step.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
                                 step.Message = testStepFinished.TestStepResult.Message;
+
+                                if (testStepFinished.TestStepResult.Exception != null)
+                                {
+                                    var exceptionType = testStepFinished.TestStepResult.Exception.Type;
+                                    var exceptionMessage = testStepFinished.TestStepResult.Exception.Message;
+                                    var exceptionStacktrace = testStepFinished.TestStepResult.Exception.StackTrace;
+                                }
                             }
 
                             var testCaseStarted = listOfTestCaseStarted.Find(g => g.TestCaseId == testCase.Id);
