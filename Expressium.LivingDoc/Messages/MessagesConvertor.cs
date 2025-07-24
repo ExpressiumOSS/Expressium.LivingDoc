@@ -3,6 +3,7 @@ using Io.Cucumber.Messages.Types;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Expressium.LivingDoc.Messages
@@ -56,8 +57,8 @@ namespace Expressium.LivingDoc.Messages
             }
 
             var duration = new TimeSpan(0, 0, 0, 0, 0);
-            foreach (var testRunStarted in listOfTestRunFinished)
-                duration += new TimeSpan(0, 0, 0, (int)testRunStarted.Timestamp.Seconds, 0, (int)testRunStarted.Timestamp.Nanos);
+            foreach (var testRunFinished in listOfTestRunFinished)
+                duration += new TimeSpan(0, 0, 0, (int)testRunFinished.Timestamp.Seconds, 0, (int)testRunFinished.Timestamp.Nanos);
             livingDocProject.Duration = duration;
 
             foreach (var feature in livingDocProject.Features)
@@ -70,6 +71,9 @@ namespace Expressium.LivingDoc.Messages
                         var testCase = listOfTestCases.Find(y => y.PickleId == pickle.Id);
                         if (testCase == null)
                             continue;
+
+                        if (int.TryParse(pickle.Id, out int number))
+                            scenario.Order = number;
 
                         foreach (var example in scenario.Examples)
                         {
@@ -114,6 +118,11 @@ namespace Expressium.LivingDoc.Messages
                     }
                 }
             }
+
+            int orderId = 1;
+            var listOfScenarios = livingDocProject.Features.SelectMany(feature => feature.Scenarios);
+            foreach (var scenario in listOfScenarios.OrderBy(o => o.Order))
+                scenario.Order = orderId++;
 
             return livingDocProject;
         }

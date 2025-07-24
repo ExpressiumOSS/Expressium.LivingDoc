@@ -62,13 +62,6 @@ namespace Expressium.LivingDoc.Generators
 
         internal void GenerateDocument(LivingDocProject project)
         {
-            int orderId = 1;
-            foreach (var feature in project.Features)
-            {
-                foreach (var scenario in feature.Scenarios)
-                    scenario.Order = orderId++;
-            }
-
             project.Features = project.Features.OrderBy(f => f.Name).ToList();
 
             var listOfLines = new List<string>();

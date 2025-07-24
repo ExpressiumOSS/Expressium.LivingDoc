@@ -13,6 +13,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         private LivingDocScenario livingDocScenario;
         private static DateTime projectStartTime;
         private static DateTime exampleStartTime;
+        private static int orderId = 1;
 
         private static void InitializeTestExecution()
         {
@@ -53,6 +54,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                 foreach (var tag in scenarioContext.ScenarioInfo.Tags)
                     livingDocScenario.Tags.Add("@" + tag);
 
+                livingDocScenario.Order = orderId++;
                 livingDocScenario.Name = scenarioContext.ScenarioInfo.Title;
                 livingDocScenario.Description = scenarioContext.ScenarioInfo.Description;
 

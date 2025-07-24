@@ -7,12 +7,12 @@ namespace Expressium.LivingDoc.Models
     public class LivingDocScenario
     {
         public string Id { get; set; }
-        public int Order { get; set; }
         public string RuleId { get; set; }
         public List<string> Tags { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
         public string Keyword { get; set; }
+        public int Order { get; set; }
 
         public List<LivingDocExample> Examples { get; set; }
 

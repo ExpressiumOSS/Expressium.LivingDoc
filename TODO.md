@@ -5,8 +5,7 @@
 * Extensive UnitTest for Messages, Models and Generators classes...
 
 ## Question
-* How to handle addtional project properties like Title, Environment etc...?
-* How to handle the report title - based on filename, arguments or properties...?
+* How to handle addtional project properties like Title and Environment...?
 * How to handle consolidated steps in background, rules, scenarios...?
 * How to handle additional test result information like attachments, messages...?
 * How to handle objects lists like Features, Scenarios, Steps...?
