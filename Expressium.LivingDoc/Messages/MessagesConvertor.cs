@@ -12,7 +12,7 @@ namespace Expressium.LivingDoc.Messages
         public static LivingDocProject ConvertToLivingDoc(string filePath)
         {
             var livingDocProject = new LivingDocProject();
-            livingDocProject.Title = "Cucumber";
+            livingDocProject.Title = "LivingDoc";
 
             var listOfPickles = new List<Pickle>();
             var listOfTestCases = new List<TestCase>();

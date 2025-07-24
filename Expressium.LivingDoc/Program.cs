@@ -7,15 +7,16 @@ namespace Expressium.LivingDoc
     {
         static void Main(string[] args)
         {
-            if (args.Length == 2)
+            if (args.Length == 6)
             {
                 Console.WriteLine("");
                 Console.WriteLine("Generating Cucumber Messages LivingDoc Report...");
-                Console.WriteLine("InputPath: " + args[0]);
-                Console.WriteLine("OutputPath: " + args[1]);
+                Console.WriteLine("Input: " + args[1]);
+                Console.WriteLine("Output: " + args[3]);
+                Console.WriteLine("Title: " + args[5]);
                 Console.WriteLine("Executing LivingDoc Code Generator");
 
-                var livingDocGenerator = new LivingDocGenerator(args[0], args[1]);
+                var livingDocGenerator = new LivingDocGenerator(args[1], args[3], args[5]);
                 livingDocGenerator.Execute();
 
                 Console.WriteLine("Generating LivingDoc Report Completed");
@@ -25,8 +26,8 @@ namespace Expressium.LivingDoc
             {
                 Console.WriteLine("");
                 Console.WriteLine("Generating Native LivingDoc Report...");
-                Console.WriteLine("InputPath: " + args[1]);
-                Console.WriteLine("OutputPath: " + args[2]);
+                Console.WriteLine("Input: " + args[1]);
+                Console.WriteLine("Output: " + args[2]);
                 Console.WriteLine("Executing LivingDoc Code Generator");
 
                 var livingDocGenerator = new LivingDocGenerator(args[1], args[2]);
@@ -37,8 +38,8 @@ namespace Expressium.LivingDoc
             }
             else
             {
-                Console.WriteLine("Expressium.LivingDoc.exe [INPUTPATH] [OUTPUTPATH]");
-                Console.WriteLine("Expressium.LivingDoc.exe C:\\SourceCode\\company-project-tests\\TestExecution.json C:\\SourceCode\\company-project-tests\\LivingDoc.html");
+                Console.WriteLine("Expressium.LivingDoc.exe --input [INPUTFILE] --output [OUTPUTFILE] --title [TITLE]");
+                Console.WriteLine("Expressium.LivingDoc.exe --input .\\TestExecution.json --output .\\LivingDoc.html --title \"Expressium CoffeeShop\"");
             }
         }
     }

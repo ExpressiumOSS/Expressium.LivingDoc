@@ -12,13 +12,15 @@ namespace Expressium.LivingDoc.Generators
 {
     public class LivingDocGenerator
     {
-        private string inputPath;
-        private string outputPath;
+        private string input;
+        private string output;
+        private string title;
 
-        public LivingDocGenerator(string inputPath, string outputPath)
+        public LivingDocGenerator(string inputPath, string outputPath, string title = null)
         {
-            this.inputPath = inputPath;
-            this.outputPath = outputPath;
+            this.input = inputPath;
+            this.output = outputPath;
+            this.title = title;
         }
 
         public void Execute(bool useNativeFormat = false)
@@ -33,7 +35,8 @@ namespace Expressium.LivingDoc.Generators
                 else
                 {
                     var project = ParseCucumberMessagesJsonFile();
-                    project.Title = Path.GetFileName(Path.GetFileNameWithoutExtension(outputPath));
+                    if (!string.IsNullOrEmpty(title))
+                        project.Title = title;
                     GenerateDocument(project);
                 }
             }
@@ -49,12 +52,12 @@ namespace Expressium.LivingDoc.Generators
 
         internal LivingDocProject ParseCucumberMessagesJsonFile()
         {
-            return MessagesConvertor.ConvertToLivingDoc(inputPath);
+            return MessagesConvertor.ConvertToLivingDoc(input);
         }
 
         internal LivingDocProject ParseLivingDocJsonFile()
         {
-            return LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputPath);
+            return LivingDocSerializer.DeserializeAsJson<LivingDocProject>(input);
         }
 
         internal void GenerateDocument(LivingDocProject project)
@@ -75,7 +78,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateBody(project));
             listOfLines.AddRange(GenerateHtmlFooter());
 
-            var htmlFilePath = outputPath;
+            var htmlFilePath = output;
             SaveHtmlFile(htmlFilePath, listOfLines);
         }
 
