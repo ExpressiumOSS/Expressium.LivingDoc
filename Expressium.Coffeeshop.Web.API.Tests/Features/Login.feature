@@ -1,7 +1,7 @@
 @TA-1000 @Login @BusinessTests
 Feature: Login
 	As a User
-	I want to login on the web application
+	I want to login to the web application
 	So that I can administrate my product orders
 
 @TA-1001 @Done

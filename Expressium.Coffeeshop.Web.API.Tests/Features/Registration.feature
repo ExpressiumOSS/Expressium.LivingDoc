@@ -1,7 +1,7 @@
 ﻿@TA-2000 @Registration @BusinessTests
 Feature: Registration
 	As a User
-	I want to send to a user Registration inquiry
+	I want to send to a Registration inquiry
 	So that I can order my favorite coffee
 
 @TA-2001 @InProgress

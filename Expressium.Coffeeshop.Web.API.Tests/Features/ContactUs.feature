@@ -1,7 +1,7 @@
 @TA-3000 @ContactUs @BusinessTests
 Feature: ContactUs
 	As a User
-	I want to send to a user Contact Us inquiry
+	I want to send to a Contact Us inquiry
 	So that I can recieve detailed product information
 
 Background:

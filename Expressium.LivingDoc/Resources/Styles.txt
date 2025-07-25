@@ -74,8 +74,8 @@
         @property --keyword-color {
             syntax: "<color>";
             inherits: false;
-            initial-value: #326EA0;
-            initial-value: #2F6795;                   
+            initial-value: #326EA0;    
+            initial-value: #2F6795;          
         }
 
         @property --hover-color {
@@ -142,11 +142,12 @@
         }
 
         a.navigation-link {
-            color: white;        
+            color: whitesmoke;        
         }
 
         a.navigation-active {
             font-weight: bold;
+            color: white;        
         }
 
         .section {
