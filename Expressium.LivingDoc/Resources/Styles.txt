@@ -88,6 +88,7 @@
             height: 100%;
             margin: 0;
             overflow: hidden;
+			/* font-family: 'Segoe UI Variable Small'; */
         }
 
         #content-wrapper {
@@ -225,15 +226,16 @@
         }
 
         button {
-            border: 1px solid gray;
-            background-color: whitesmoke;
+            border: 1px solid dimgray;
         }
 
         button.status-option {
+            border: 1px solid darkgray;
             color: darkgray;
         }
 
         button.active {
+            border: 1px solid dimgray;
             background-color: var(--hover-color);
             color: black;
         }
@@ -401,25 +403,25 @@
         .donut-segment-passed {
             stroke: var(--passed-color);
             fill: transparent;
-            stroke-width: 3;
+            stroke-width: 3.2px;
         }
 
         .donut-segment-incomplete {
             stroke: var(--incomplete-color);
             fill: transparent;
-            stroke-width: 3;
+            stroke-width: 3.2px;
         }
 
         .donut-segment-failed {
             stroke: var(--failed-color);
             fill: transparent;
-            stroke-width: 3;
+            stroke-width: 3.2px;
         }
 
         .donut-segment-skipped {
             stroke: var(--skipped-color);
             fill: transparent;
-            stroke-width: 3;
+            stroke-width: 3.2px;
         }
 
         textarea {

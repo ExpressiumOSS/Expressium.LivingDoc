@@ -126,7 +126,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<button data-prefilter='Incomplete' title='Preset Filter with Incomplete' class='status-option' onclick='togglePrefilter(this)'>Incomplete</button>");
             listOfLines.Add("<button data-prefilter='Failed' title='Preset Filter with Failed' class='status-option' onclick='togglePrefilter(this)'>Failed</button>");
             listOfLines.Add("<button data-prefilter='Skipped' title='Preset Filter with Skipped' class='status-option' onclick='togglePrefilter(this)'>Skipped</button>");
-            listOfLines.Add("<button title='Clear Filters' class='status-option' onclick='clearPrefilters()'>Clear</button>");
+            listOfLines.Add("<button title='Clear Filters' onclick='clearPrefilters()'>Clear</button>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");

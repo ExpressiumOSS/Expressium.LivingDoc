@@ -106,10 +106,6 @@ namespace Expressium.LivingDoc.Messages
                             if (testCaseStarted == null)
                                 continue;
 
-                            var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
-                            if (testCaseFinished == null)
-                                continue;
-
                             var attachments = listOftAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
                             if (attachments.Count > 0)
                             {
@@ -119,6 +115,10 @@ namespace Expressium.LivingDoc.Messages
                                         example.Attachments.Add(attachment.Body);
                                 }
                             }
+
+                            var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
+                            if (testCaseFinished == null)
+                                continue;
 
                             example.Duration = new TimeSpan(0, 0, 0, (int)testCaseFinished.Timestamp.Seconds, 0, (int)testCaseFinished.Timestamp.Nanos);
                         }
