@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 
 namespace Expressium.LivingDoc.Messages
@@ -171,7 +172,7 @@ namespace Expressium.LivingDoc.Messages
                 foreach (var step in background.Steps)
                 {
                     var livingDocStep = new LivingDocStep();
-                    livingDocStep.Name = step.Text;
+                    livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
                     livingDocStep.Keyword = step.Keyword.Trim();
                     livingDocBackground.Steps.Add(livingDocStep);
                 }
@@ -297,7 +298,7 @@ namespace Expressium.LivingDoc.Messages
             {
                 var livingDocStep = new LivingDocStep();
                 livingDocStep.Id = step.Id;
-                livingDocStep.Name = step.Text;
+                livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
                 livingDocStep.Keyword = step.Keyword.Trim();
 
                 if (step.DataTable != null)
