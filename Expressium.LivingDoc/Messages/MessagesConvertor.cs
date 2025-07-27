@@ -32,7 +32,7 @@ namespace Expressium.LivingDoc.Messages
                     var envelope = enumerator.Current;
 
                     if (envelope.GherkinDocument != null)
-                        ParsingGherkinDocument(livingDocProject, envelope);
+                        ParsingGherkinDocument(livingDocProject, envelope.GherkinDocument);
 
                     if (envelope.Pickle != null)
                         listOfPickles.Add(envelope.Pickle);
@@ -135,10 +135,10 @@ namespace Expressium.LivingDoc.Messages
             return livingDocProject;
         }
 
-        public static void ParsingGherkinDocument(LivingDocProject livingDocProject, Envelope envelope)
+        public static void ParsingGherkinDocument(LivingDocProject livingDocProject, GherkinDocument gherkinDocument)
         {
-            var uri = envelope.GherkinDocument.Uri;
-            var feature = envelope.GherkinDocument.Feature;
+            var uri = gherkinDocument.Uri;
+            var feature = gherkinDocument.Feature;
 
             var livingDocFeature = new LivingDocFeature();
 

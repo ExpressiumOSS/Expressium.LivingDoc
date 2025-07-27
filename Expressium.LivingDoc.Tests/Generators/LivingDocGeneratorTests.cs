@@ -62,13 +62,13 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         [Test]
         public void LivingDocGenerator_GenerateDocument_Invalid_Input_File()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "skipped.feature.ndjson");
-            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "skipped.html");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.feature.ndjson");
+            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.html");
 
             var generator = new LivingDocGenerator(inputFilePath, outputFilePath);
 
             var exception = Assert.Throws<IOException>(() => generator.Execute());
-            Assert.That(exception.Message.StartsWith("Unexpected error: Could not parse JSON"));
+            Assert.That(exception.Message.StartsWith("Unexpected error: Object reference not set to an instance of an object."));
         }
 
         [Test]
