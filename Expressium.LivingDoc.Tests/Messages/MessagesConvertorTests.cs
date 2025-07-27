@@ -168,16 +168,16 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             // TODO - Missing message information stacktrace...
         }
 
-        //    [Test]
-        //    public void Converting_Skipped_Feature()
-        //    {
-        //        var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "skipped.feature.ndjson");
+        [Test]
+        public void Converting_Skipped_Feature()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "skipped.feature.ndjson");
 
-        //        var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
 
-        //        Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-        //        Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
-        //        Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(1));
-        //    }
+            Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
+            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(5));
+        }
     }
 }
