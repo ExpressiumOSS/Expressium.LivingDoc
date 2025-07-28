@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Expressium.LivingDoc.UnitTests.Models
 {
-    internal class ModelsSerializerTests
+    internal class LivingDocSerializerTests
     {
         [Test]
         public void LivingDoc_Project_DeserializeAsJson()
