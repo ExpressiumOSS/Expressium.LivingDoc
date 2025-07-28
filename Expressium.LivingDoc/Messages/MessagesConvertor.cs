@@ -9,13 +9,11 @@ using System.Text.RegularExpressions;
 
 namespace Expressium.LivingDoc.Messages
 {
-    public static class MessagesConvertor
+    internal static class MessagesConvertor
     {
-        public static LivingDocProject ConvertToLivingDoc(string filePath)
+        internal static LivingDocProject ConvertToLivingDoc(string filePath)
         {
-            var livingDocProject = new LivingDocProject();
-            livingDocProject.Title = "LivingDoc";
-
+            var listOfGherkinDocuments = new List<GherkinDocument>();
             var listOfPickles = new List<Pickle>();
             var listOfTestCases = new List<TestCase>();
             var listOfTestStepFinished = new List<TestStepFinished>();
@@ -24,6 +22,7 @@ namespace Expressium.LivingDoc.Messages
             var listOfTestRunFinished = new List<TestRunFinished>();
             var listOftAttachment = new List<Attachment>();
 
+            // Parse Cucumber Messages JSON file...
             using (FileStream fileStream = File.OpenRead(filePath))
             {
                 var enumerator = new MessagesReader(fileStream).GetEnumerator();
@@ -32,7 +31,7 @@ namespace Expressium.LivingDoc.Messages
                     var envelope = enumerator.Current;
 
                     if (envelope.GherkinDocument != null)
-                        ParsingGherkinDocument(livingDocProject, envelope.GherkinDocument);
+                        listOfGherkinDocuments.Add(envelope.GherkinDocument);
 
                     if (envelope.Pickle != null)
                         listOfPickles.Add(envelope.Pickle);
@@ -57,11 +56,18 @@ namespace Expressium.LivingDoc.Messages
                 }
             }
 
+            var livingDocProject = new LivingDocProject();
+            livingDocProject.Title = "LivingDoc";
+
+            ParseGherkinDocument(livingDocProject, listOfGherkinDocuments.First());
+
+            // Parse Project Duration...
             var duration = new TimeSpan(0, 0, 0, 0, 0);
             foreach (var testRunFinished in listOfTestRunFinished)
                 duration += new TimeSpan(0, 0, 0, (int)testRunFinished.Timestamp.Seconds, 0, (int)testRunFinished.Timestamp.Nanos);
             livingDocProject.Duration = duration;
 
+            // Parse Test Results...
             foreach (var feature in livingDocProject.Features)
             {
                 foreach (var scenario in feature.Scenarios)
@@ -127,6 +133,7 @@ namespace Expressium.LivingDoc.Messages
                 }
             }
 
+            // Assign Scenario Order...
             int orderId = 1;
             var listOfScenarios = livingDocProject.Features.SelectMany(feature => feature.Scenarios);
             foreach (var scenario in listOfScenarios.OrderBy(o => o.Order))
@@ -135,7 +142,7 @@ namespace Expressium.LivingDoc.Messages
             return livingDocProject;
         }
 
-        public static void ParsingGherkinDocument(LivingDocProject livingDocProject, GherkinDocument gherkinDocument)
+        internal static void ParseGherkinDocument(LivingDocProject livingDocProject, GherkinDocument gherkinDocument)
         {
             var uri = gherkinDocument.Uri;
             var feature = gherkinDocument.Feature;
@@ -203,7 +210,7 @@ namespace Expressium.LivingDoc.Messages
             }
         }
 
-        public static string ParseRule(LivingDocFeature livingDocFeature, Rule rule)
+        internal static string ParseRule(LivingDocFeature livingDocFeature, Rule rule)
         {
             var livingDocRule = new LivingDocRule();
 
@@ -223,7 +230,7 @@ namespace Expressium.LivingDoc.Messages
             return livingDocRule.Id;
         }
 
-        public static void ParseScenario(LivingDocFeature livingDocFeature, Scenario scenario, string ruleId = null)
+        internal static void ParseScenario(LivingDocFeature livingDocFeature, Scenario scenario, string ruleId = null)
         {
             var livingDocScenario = new LivingDocScenario();
 
@@ -250,10 +257,10 @@ namespace Expressium.LivingDoc.Messages
                         var livingDocExample = new LivingDocExample();
                         livingDocScenario.Examples.Add(livingDocExample);
 
-                        AddFeatureBackgroundSteps(livingDocFeature, livingDocExample);
-                        AddScenarioExampleTableHeaders(examples, livingDocExample);
-                        AddScenarioExampleTableData(tableBodyRow, livingDocExample);
-                        AddScenarioExampleSteps(scenario, livingDocExample);
+                        ParseScenarioBackgroundSteps(livingDocExample, livingDocFeature);
+                        ParseScenarioExampleSteps(livingDocExample, scenario);
+                        ParseScenarioExampleTableHeaders(livingDocExample, examples);
+                        ParseScenarioExampleTableData(livingDocExample, tableBodyRow);
                     }
                 }
             }
@@ -262,28 +269,12 @@ namespace Expressium.LivingDoc.Messages
                 var livingDocExample = new LivingDocExample();
                 livingDocScenario.Examples.Add(livingDocExample);
 
-                AddFeatureBackgroundSteps(livingDocFeature, livingDocExample);
-                AddScenarioExampleSteps(scenario, livingDocExample);
+                ParseScenarioBackgroundSteps(livingDocExample, livingDocFeature);
+                ParseScenarioExampleSteps(livingDocExample, scenario);
             }
         }
 
-        public static void AddScenarioExampleTableHeaders(Examples examples, LivingDocExample livingDocExample)
-        {
-            var dataTableRowHeader = new LivingDocDataTableRow();
-            foreach (var headerCell in examples.TableHeader.Cells)
-                dataTableRowHeader.Cells.Add(headerCell.Value);
-            livingDocExample.DataTable.Rows.Add(dataTableRowHeader);
-        }
-
-        public static void AddScenarioExampleTableData(TableRow tableBodyRow, LivingDocExample livingDocExample)
-        {
-            var dataTableRow = new LivingDocDataTableRow();
-            foreach (var tableBodyRowCell in tableBodyRow.Cells)
-                dataTableRow.Cells.Add(tableBodyRowCell.Value);
-            livingDocExample.DataTable.Rows.Add(dataTableRow);
-        }
-
-        public static void AddFeatureBackgroundSteps(LivingDocFeature livingDocFeature, LivingDocExample livingDocExample)
+        internal static void ParseScenarioBackgroundSteps(LivingDocExample livingDocExample, LivingDocFeature livingDocFeature)
         {
             if (livingDocFeature.Background != null)
             {
@@ -292,7 +283,7 @@ namespace Expressium.LivingDoc.Messages
             }
         }
 
-        public static void AddScenarioExampleSteps(Scenario scenario, LivingDocExample livingDocExample)
+        internal static void ParseScenarioExampleSteps(LivingDocExample livingDocExample, Scenario scenario)
         {
             foreach (var step in scenario.Steps)
             {
@@ -316,7 +307,23 @@ namespace Expressium.LivingDoc.Messages
             }
         }
 
-        public static string CapitalizeWords(this string value)
+        internal static void ParseScenarioExampleTableHeaders(LivingDocExample livingDocExample, Examples examples)
+        {
+            var dataTableRow = new LivingDocDataTableRow();
+            foreach (var tableHeaderRowCell in examples.TableHeader.Cells)
+                dataTableRow.Cells.Add(tableHeaderRowCell.Value);
+            livingDocExample.DataTable.Rows.Add(dataTableRow);
+        }
+
+        internal static void ParseScenarioExampleTableData(LivingDocExample livingDocExample, TableRow tableBodyRow)
+        {
+            var dataTableRow = new LivingDocDataTableRow();
+            foreach (var tableBodyRowCell in tableBodyRow.Cells)
+                dataTableRow.Cells.Add(tableBodyRowCell.Value);
+            livingDocExample.DataTable.Rows.Add(dataTableRow);
+        }
+
+        internal static string CapitalizeWords(this string value)
         {
             if (string.IsNullOrEmpty(value))
                 return value;

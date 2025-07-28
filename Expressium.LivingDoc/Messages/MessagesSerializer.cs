@@ -9,7 +9,7 @@ namespace Expressium.LivingDoc.Messages
     /// Consumers of Cucumber.Messages should use these options, or their serialization library's equivalent options.
     /// These options should work with System.Text.Json v6 or above.
     /// </summary>
-    public class MessagesSerializer
+    internal class MessagesSerializer
     {
         private static readonly Lazy<JsonSerializerOptions> _jsonOptions = new(() =>
         {
@@ -36,7 +36,7 @@ namespace Expressium.LivingDoc.Messages
             }
         }
 
-        public static string Serialize(Envelope message)
+        internal static string Serialize(Envelope message)
         {
             return Serialize<Envelope>(message);
         }
@@ -46,7 +46,7 @@ namespace Expressium.LivingDoc.Messages
             return JsonSerializer.Serialize(message, JsonOptions);
         }
 
-        public static Envelope Deserialize(string json)
+        internal static Envelope Deserialize(string json)
         {
             return Deserialize<Envelope>(json);
         }
