@@ -167,5 +167,19 @@ namespace Expressium.LivingDoc.Models
 
             return $"{Duration.Seconds}s {Duration.Milliseconds.ToString("D3")}ms";
         }
+
+        public List<string> GetFolders()
+        {
+            var listOfFolders = Features
+            .Select(feature => feature.GetFolder())
+            .Distinct()
+            .Where(folder => !string.IsNullOrWhiteSpace(folder))
+            .OrderBy(folder => folder)
+            .ToList();
+
+            listOfFolders.Add(null);
+
+            return listOfFolders;
+        }
     }
 }

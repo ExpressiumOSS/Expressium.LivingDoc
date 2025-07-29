@@ -111,7 +111,7 @@ namespace Expressium.LivingDoc.Generators
 
             var totalPercentage = percentageOfPassed + percentageOfIncomplete + percentageOfFailed + percentageOfSkipped;
 
-            // Adjust the largest category if there's a discrepancy
+            // Adjust the percentages at discrepancy...
             int difference = 100 - totalPercentage;
             if (totalPercentage != 0 && difference != 0)
             {
@@ -123,7 +123,6 @@ namespace Expressium.LivingDoc.Generators
                     (percentageOfSkipped, val => percentageOfSkipped = val)
                 };
 
-                // Find the category with the largest percentage and adjust it
                 var maxCategory = percentages.OrderByDescending(p => p.value).First();
                 maxCategory.setter(maxCategory.value + difference);
             }

@@ -261,15 +261,9 @@ namespace Expressium.LivingDoc
             {
                 var status = step.GetStatus().ToLower();
 
-                var stepMarker = "";
+                var stepMarker = "&cross;";
                 if (step.IsPassed())
                     stepMarker = "&check;";
-                else if (step.IsFailed() || step.IsIncomplete())
-                    stepMarker = "&cross;";
-                else
-                {
-                    stepMarker = "&cross;";
-                }
 
                 var keyword = step.Keyword;
                 if (keyword == previousKeyword)
@@ -277,18 +271,9 @@ namespace Expressium.LivingDoc
 
                 listOfLines.Add("<li>");
 
-                if (step.IsSkipped())
-                {
-                    listOfLines.Add($"<span class='step-marker color-skipped'>{stepMarker}</span>");
-                    listOfLines.Add($"<span class='step-keyword'>{keyword}</span>");
-                    listOfLines.Add($"<span>{step.Name}</span>");
-                }
-                else
-                {
-                    listOfLines.Add($"<span class='step-marker color-{status}'>{stepMarker}</span>");
-                    listOfLines.Add($"<span class='step-keyword'>{keyword}</span>");
-                    listOfLines.Add($"<span>{step.Name}</span>");
-                }
+                listOfLines.Add($"<span class='step-marker color-{status}'>{stepMarker}</span>");
+                listOfLines.Add($"<span class='step-keyword'>{keyword}</span>");
+                listOfLines.Add($"<span>{step.Name}</span>");
 
                 if (step.DataTable.Rows.Count > 0)
                 {
