@@ -59,7 +59,8 @@ namespace Expressium.LivingDoc.Messages
             var livingDocProject = new LivingDocProject();
             livingDocProject.Title = "LivingDoc";
 
-            ParseGherkinDocument(livingDocProject, listOfGherkinDocuments.First());
+            foreach (var gherkinDocument in listOfGherkinDocuments)
+                ParseGherkinDocument(livingDocProject, gherkinDocument);
 
             // Parse Project Duration...
             var duration = new TimeSpan(0, 0, 0, 0, 0);

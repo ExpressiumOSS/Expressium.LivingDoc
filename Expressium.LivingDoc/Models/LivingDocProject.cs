@@ -177,6 +177,27 @@ namespace Expressium.LivingDoc.Models
             .OrderBy(folder => folder)
             .ToList();
 
+            var listOfExpandedFolders = new List<string>();
+            foreach (var folder in listOfFolders)
+            {
+                if (!string.IsNullOrWhiteSpace(folder) && folder.Contains("\\"))
+                {
+                    var parts = folder.Split('\\');
+                    if (parts.Length > 1)
+                    {
+                        if (!listOfFolders.Contains(parts[0]))
+                            listOfExpandedFolders.Add(parts[0]);
+                    }
+                }
+            }
+
+            foreach (var folder in listOfExpandedFolders)
+            {
+                if (!listOfFolders.Contains(folder))
+                    listOfFolders.Add(folder);
+            }
+
+            listOfFolders.Sort();
             listOfFolders.Add(null);
 
             return listOfFolders;
