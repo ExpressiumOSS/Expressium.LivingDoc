@@ -182,11 +182,11 @@ namespace Expressium.LivingDoc.Models
             {
                 if (!string.IsNullOrWhiteSpace(folder) && folder.Contains("\\"))
                 {
-                    var parts = folder.Split('\\');
-                    if (parts.Length > 1)
+                    var tokens = folder.Split('\\');
+                    if (tokens.Length > 1)
                     {
-                        if (!listOfFolders.Contains(parts[0]))
-                            listOfExpandedFolders.Add(parts[0]);
+                        if (!listOfFolders.Contains(tokens[0]))
+                            listOfExpandedFolders.Add(tokens[0]);
                     }
                 }
             }
@@ -201,6 +201,24 @@ namespace Expressium.LivingDoc.Models
             listOfFolders.Add(null);
 
             return listOfFolders;
+        }
+
+        public int GetFolderDepth()
+        {
+            var depth = 0;
+
+            var folders = GetFolders();
+            foreach (var folder in folders)
+            {
+                if (string.IsNullOrWhiteSpace(folder))
+                    continue;
+
+                var tokens = folder.Split('\\');
+                if (tokens.Length > depth)
+                    depth = tokens.Length;
+            }
+
+            return depth;
         }
     }
 }

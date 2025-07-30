@@ -26,10 +26,12 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<td class='gridline' colspan='5'>");
             listOfLines.Add($"<span><b>{project.Title}</b></span>");
             listOfLines.Add($"</td>");
+            listOfLines.Add($"<td class='gridline' align='right'></td>");
             listOfLines.Add($"</tr>");
 
             var listOfExcludeFolders = new List<string>();
 
+            var folderDepth = project.GetFolderDepth();
             var listOfFolders = project.GetFolders();
             foreach (var folder in listOfFolders)
             {
@@ -57,6 +59,7 @@ namespace Expressium.LivingDoc.Generators
                         listOfLines.Add($"<td class='gridline' colspan='4'>");
                         listOfLines.Add($"<span><b>{folder}</b></span>");
                         listOfLines.Add($"</td>");
+                        listOfLines.Add($"<td class='gridline' align='right'></td>");
                         listOfLines.Add($"</tr>");
                     }
                 }
@@ -78,6 +81,7 @@ namespace Expressium.LivingDoc.Generators
                             listOfLines.Add($"<td class='gridline' colspan='3'>");
                             listOfLines.Add($"<span><b>{subFolder.Replace(folder + "\\", "")}</b></span>");
                             listOfLines.Add($"</td>");
+                            listOfLines.Add($"<td class='gridline' align='right'></td>");
                             listOfLines.Add($"</tr>");
                         }
                     }
@@ -116,6 +120,7 @@ namespace Expressium.LivingDoc.Generators
                         listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
                         listOfLines.Add($"<span><b>{feature.Name}</b></span>");
                         listOfLines.Add($"</td>");
+                        listOfLines.Add($"<td class='gridline' align='right'></td>");
                         listOfLines.Add($"</tr>");
 
                         foreach (var scenario in feature.Scenarios)
@@ -157,6 +162,7 @@ namespace Expressium.LivingDoc.Generators
                             listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
                             listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
                             listOfLines.Add($"</td>");
+                            listOfLines.Add($"<td class='gridline' align='right'></td>");
                             listOfLines.Add($"</tr>");
                         }
                     }
