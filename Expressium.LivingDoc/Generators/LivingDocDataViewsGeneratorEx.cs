@@ -1,16 +1,19 @@
 ﻿using Expressium.LivingDoc.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Expressium.LivingDoc.Generators
 {
     internal partial class LivingDocDataViewsGenerator
     {
+        private int numberOfColumns = 10;
+
         internal List<string> GenerateDataOverviewWithFolders(LivingDocProject project)
         {
+            var listOfFolders = project.GetFolders();
+
+            var listOfExcludeFolders = new List<string>();
+
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Overview -->");
@@ -21,152 +24,14 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<tbody id='table-list'>");
 
-            listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
-            listOfLines.Add($"<td width='8px;'>📂</td>");
-            listOfLines.Add($"<td class='gridline' colspan='5'>");
-            listOfLines.Add($"<span><b>{project.Title}</b></span>");
-            listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='gridline' align='right'></td>");
-            listOfLines.Add($"</tr>");
+            listOfLines.AddRange(GenerateOverviewFolder(project.Title, 0));
 
-            var listOfExcludeFolders = new List<string>();
-
-            var folderDepth = project.GetFolderDepth();
-            var listOfFolders = project.GetFolders();
             foreach (var folder in listOfFolders)
             {
                 if (listOfExcludeFolders.Contains(folder))
                     continue;
 
-                var listOfSubFolders = new List<string>();
-                foreach (var subFolder in listOfFolders)
-                {
-                    if (subFolder != null && subFolder.StartsWith(folder + "\\"))
-                    {
-                        listOfSubFolders.Add(subFolder);
-                        listOfExcludeFolders.Add(subFolder);
-                    }
-                }
-
-                listOfSubFolders.Add(folder);
-                if (!string.IsNullOrWhiteSpace(folder))
-                {
-                    if (!string.IsNullOrWhiteSpace(folder))
-                    {
-                        listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
-                        listOfLines.Add($"<td></td>");
-                        listOfLines.Add($"<td width='8px;'>📂</td>");
-                        listOfLines.Add($"<td class='gridline' colspan='4'>");
-                        listOfLines.Add($"<span><b>{folder}</b></span>");
-                        listOfLines.Add($"</td>");
-                        listOfLines.Add($"<td class='gridline' align='right'></td>");
-                        listOfLines.Add($"</tr>");
-                    }
-                }
-
-                foreach (var subFolder in listOfSubFolders)
-                {
-                    var isSubFolder = false;
-                    if (subFolder != folder)
-                        isSubFolder = true;
-
-                    if (!string.IsNullOrWhiteSpace(subFolder))
-                    {
-                        if (!string.IsNullOrWhiteSpace(subFolder) && isSubFolder)
-                        {
-                            listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
-                            listOfLines.Add($"<td></td>");
-                            listOfLines.Add($"<td></td>");
-                            listOfLines.Add($"<td width='8px;'>📂</td>");
-                            listOfLines.Add($"<td class='gridline' colspan='3'>");
-                            listOfLines.Add($"<span><b>{subFolder.Replace(folder + "\\", "")}</b></span>");
-                            listOfLines.Add($"</td>");
-                            listOfLines.Add($"<td class='gridline' align='right'></td>");
-                            listOfLines.Add($"</tr>");
-                        }
-                    }
-
-                    foreach (var feature in project.Features)
-                    {
-                        var featureFolder = feature.GetFolder();
-                        if (featureFolder != subFolder)
-                            continue;
-
-                        listOfLines.Add($"<tr class='gridline-header' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
-                        listOfLines.Add($"<td></td>");
-
-                        if (!string.IsNullOrWhiteSpace(featureFolder))
-                        {
-                            if (isSubFolder)
-                            {
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td data-collapse='false' width='8px;' style='text-align: center;' onclick=\"loadCollapse(this);\">&#11206;</td>");
-                                listOfLines.Add($"<td class='gridline' colspan='2'>");
-                            }
-                            else
-                            {
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td data-collapse='false' width='8px;' style='text-align: center;' onclick=\"loadCollapse(this);\">&#11206;</td>");
-                                listOfLines.Add($"<td class='gridline' colspan='3'>");
-                            }
-                        }
-                        else
-                        {
-                            listOfLines.Add($"<td data-collapse='false' width='8px;' style='text-align: center;' onclick=\"loadCollapse(this);\">&#11206;</td>");
-                            listOfLines.Add($"<td class='gridline' colspan='4'>");
-                        }
-
-                        listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-                        listOfLines.Add($"<span><b>{feature.Name}</b></span>");
-                        listOfLines.Add($"</td>");
-                        listOfLines.Add($"<td class='gridline' align='right'></td>");
-                        listOfLines.Add($"</tr>");
-
-                        foreach (var scenario in feature.Scenarios)
-                        {
-                            var ruleTags = string.Empty;
-                            if (!string.IsNullOrEmpty(scenario.RuleId))
-                            {
-                                var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
-                                ruleTags = rule.GetTags();
-                            }
-
-                            listOfLines.Add($"<tr data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
-
-                            if (isSubFolder)
-                            {
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td width='16px;'></td>");
-                                listOfLines.Add($"<td class='gridline' colspan='1'>");
-                            }
-                            else if (string.IsNullOrWhiteSpace(featureFolder))
-                            {
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td width='16px;'></td>");
-                                listOfLines.Add($"<td class='gridline' colspan='3'>");
-                            }
-                            else
-                            {
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td></td>");
-                                listOfLines.Add($"<td width='16px;'></td>");
-                                listOfLines.Add($"<td class='gridline' colspan='2'>");
-                            }
-
-                            listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
-                            listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
-                            listOfLines.Add($"</td>");
-                            listOfLines.Add($"<td class='gridline' align='right'></td>");
-                            listOfLines.Add($"</tr>");
-                        }
-                    }
-                }
+                listOfLines.AddRange(GenerateOverview(project, listOfFolders, listOfExcludeFolders, folder, 1));
             }
 
             listOfLines.Add("</tbody>");
@@ -176,6 +41,123 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</div>");
 
             return listOfLines;
+        }
+
+        internal List<string> GenerateOverview(LivingDocProject project, List<string> listOfFolders, List<string> listOfExcludeFolders, string folder, int indent)
+        {
+            var listOfLines = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(folder))
+                listOfLines.AddRange(GenerateOverviewFolder(folder.Split("\\").Last(), indent));
+
+            foreach (var subFolder in listOfFolders)
+            {
+                var folderDepth = GetFolderDepth(folder);
+                var subFolderDepth = GetFolderDepth(subFolder);
+                if (subFolder != null && subFolder.StartsWith(folder + "\\") && folderDepth + 1 == subFolderDepth)
+                {
+                    listOfLines.AddRange(GenerateOverview(project, listOfFolders, listOfExcludeFolders, subFolder, indent + 1));
+                    listOfExcludeFolders.Add(subFolder);
+                }
+            }
+
+            foreach (var feature in project.Features)
+            {
+                var featureFolder = feature.GetFolder();
+                if (featureFolder == folder)
+                {
+                    var featureDepth = GetFolderDepth(featureFolder);
+
+                    listOfLines.AddRange(GenerateOverviewFeature(feature, featureDepth + 1));
+
+                    foreach (var scenario in feature.Scenarios)
+                        listOfLines.AddRange(GenerateOverviewScenario(feature, scenario, featureDepth + 2));
+                }
+            }
+
+            listOfExcludeFolders.Add(folder);
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateOverviewFolder(string folder, int indent)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
+
+            for (var i = 0; i < indent; i++)
+                listOfLines.Add($"<td></td>");
+
+            listOfLines.Add($"<td width='20px;'>📂</td>");
+            listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
+            listOfLines.Add($"<span><b>{folder}</b></span>");
+            listOfLines.Add($"</td>");
+            listOfLines.Add($"<td class='gridline' align='right'></td>");
+            listOfLines.Add($"</tr>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateOverviewFeature(LivingDocFeature feature, int indent)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add($"<tr class='gridline-header' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+
+            for (var i = 0; i < indent; i++)
+                listOfLines.Add($"<td></td>");
+
+            listOfLines.Add($"<td data-collapse='false' width='20px;' style='text-align: center;' onclick=\"loadCollapse(this);\">&#11206;</td>");
+            listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
+            listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
+            listOfLines.Add($"<span><b>{feature.Name}</b></span>");
+            listOfLines.Add($"</td>");
+            listOfLines.Add($"<td class='gridline' align='right'></td>");
+            listOfLines.Add($"</tr>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateOverviewScenario(LivingDocFeature feature, LivingDocScenario scenario, int indent)
+        {
+            var ruleTags = string.Empty;
+            if (!string.IsNullOrEmpty(scenario.RuleId))
+            {
+                var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
+                ruleTags = rule.GetTags();
+            }
+
+            var listOfLines = new List<string>();
+
+            listOfLines.Add($"<tr data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+
+            for (var i = 0; i < indent; i++)
+                listOfLines.Add($"<td></td>");
+
+            listOfLines.Add($"<td width='20px;'></td>");
+            listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
+            listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
+            listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
+            listOfLines.Add($"</td>");
+            listOfLines.Add($"<td class='gridline' align='right'></td>");
+            listOfLines.Add($"</tr>");
+
+            return listOfLines;
+        }
+
+        internal int GetFolderDepth(string folder)
+        {
+            var depth = 0;
+
+            if (string.IsNullOrWhiteSpace(folder))
+                return 0;
+
+            var tokens = folder.Split('\\');
+            if (tokens.Length > depth)
+                depth = tokens.Length;
+
+            return depth;
         }
     }
 }

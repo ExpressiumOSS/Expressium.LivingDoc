@@ -125,5 +125,21 @@ namespace Expressium.LivingDoc.Models
 
             return null;
         }
+
+        public int GetFolderDepth()
+        {
+            var depth = 0;
+
+            var folder = GetFolder();
+
+            if (string.IsNullOrWhiteSpace(folder))
+                return 0;
+
+            var tokens = folder.Split('\\');
+            if (tokens.Length > depth)
+                depth = tokens.Length;
+
+            return depth;
+        }
     }
 }
