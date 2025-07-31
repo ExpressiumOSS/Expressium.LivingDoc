@@ -52,7 +52,7 @@
                     navLinks[i].classList.remove('navigation-active');
             }
 
-            filterScenarios();
+            filterView();
         }
     </script>
     <script>
@@ -91,13 +91,32 @@
         }
     </script>
     <script>
-        function filterScenarios() {
-
+        function filterView() {
             var navLinkActive = document.querySelectorAll('a.navigation-link.navigation-active');
-            var name = "";
-            if (navLinkActive.length > 0)
+            if (navLinkActive.length > 0) {
                 name = navLinkActive[0].textContent.toLowerCase();
 
+                if (name == "overview") {
+                    filterDataByRole("scenario");
+                    filterDataFeatures();
+                    filterDataFolders();
+                }
+                else if (name == "features") {
+                    filterDataByRole("feature");
+                }
+                else if (name == "scenarios") {
+                    filterDataByRole("scenario");
+                }
+                else if (name == "steps") {
+                    filterDataByRole("step");
+                }
+                else {
+                }
+            }
+        }
+    </script>
+    <script>
+        function filterDataByRole(roleType) {
             var input = document.getElementById("scenario-filter");
             var filterTokens = input.value.toUpperCase().split(/\s+/);
             var table = document.getElementById("table-list");
@@ -123,10 +142,7 @@
                 if (role == null)
                     continue;
 
-                if (role == "folder")
-                    continue;
-
-                if (name == "overview" && role == "feature")
+                if (role != roleType)
                     continue;
 
                 for (var j = 0; j < td.length; j++) {
@@ -154,15 +170,10 @@
 
                 tr[i].style.display = found ? "" : "none";
             }
-
-            if (name == "overview") {
-                filterFeatures();
-                filterFolders();
-            }
         }
     </script>
     <script>
-        function filterFeatures() {
+        function filterDataFeatures() {
             var table = document.getElementById("table-list");
             var tr = table.getElementsByTagName("tr");
 
@@ -223,7 +234,7 @@
         }
     </script>
     <script>
-        function filterFolders() {
+        function filterDataFolders() {
             var table = document.getElementById("table-list");
             var tr = table.getElementsByTagName("tr");
 
@@ -450,7 +461,7 @@
                 parent.setAttribute('data-collapse', 'false');
             }
 
-            filterScenarios();
+            filterView();
         }
     </script>
     <script>
@@ -476,7 +487,7 @@
                 }
             }
 
-            filterScenarios();
+            filterView();
         }
     </script>
     <script>
@@ -502,7 +513,7 @@
                 }
             }
 
-            filterScenarios();
+            filterView();
         }
     </script>
     <script>
@@ -515,7 +526,7 @@
                 x.className += " active";
             }
 
-            filterScenarios();
+            filterView();
         }
     </script>
     <script>
@@ -532,7 +543,7 @@
             var input = document.getElementById("scenario-filter");
             input.value = '';
 
-            filterScenarios();
+            filterView();
         }
     </script>
     <script>
