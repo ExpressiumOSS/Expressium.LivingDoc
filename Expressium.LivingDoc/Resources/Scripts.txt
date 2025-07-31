@@ -114,6 +114,9 @@
                 var rowText = "";
                 var found = false;
 
+                if (role == null)
+                    continue;
+
                 if (role == "folder")
                     continue;
 
@@ -147,6 +150,7 @@
             }
 
             filterFeatures();
+            filterFolders();
         }
     </script>
     <script>
@@ -154,6 +158,7 @@
             var table = document.getElementById("table-list");
             var tr = table.getElementsByTagName("tr");
 
+            // Hide all features first
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
 
@@ -163,10 +168,11 @@
 
             var features = [];
 
+            // Collect all features that have visible scenarios
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
 
-                if (role != "feature") {
+                if (role == "scenario") {
                     if (tr[i].style.display == "") {
                         var parent = tr[i].getAttribute("data-parent");
                         features.push(parent);
@@ -174,6 +180,7 @@
                 }
             }
 
+            // Show features that have visible scenarios
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
 
@@ -184,6 +191,7 @@
                 }
             }
 
+            // Collapse scenarios under features if the feature is collapsed
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
                 if (role == "feature") {
@@ -202,6 +210,45 @@
                             }
                         }
                     }
+                }
+            }
+        }
+    </script>
+    <script>
+        function filterFolders() {
+            var table = document.getElementById("table-list");
+            var tr = table.getElementsByTagName("tr");
+
+            // Hide all folder first
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "folder")
+                    tr[i].style.display = "none";
+            }
+
+            var folders = [];
+
+            // Collect all folders that have visible features
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "feature") {
+                    if (tr[i].style.display == "") {
+                        var parent = tr[i].getAttribute("data-parent");
+                        folders.push(parent);
+                    }
+                }
+            }
+
+            // Show folders that have visible features
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "folder") {
+                    var name = tr[i].getAttribute("data-name");
+                    if (folders.includes(name))
+                        tr[i].style.display = "";
                 }
             }
         }

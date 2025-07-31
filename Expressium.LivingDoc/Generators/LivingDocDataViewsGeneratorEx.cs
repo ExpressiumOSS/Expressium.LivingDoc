@@ -48,7 +48,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             if (!string.IsNullOrWhiteSpace(folder))
-                listOfLines.AddRange(GenerateOverviewFolder(folder.Split("\\").Last(), indent));
+                listOfLines.AddRange(GenerateOverviewFolder(folder, indent));
 
             foreach (var subFolder in listOfFolders)
             {
@@ -84,14 +84,17 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add($"<tr class='gridline-header' data-role='folder'>");
+            if (indent == 0)
+                listOfLines.Add($"<tr class='gridline-header'>");
+            else
+                listOfLines.Add($"<tr class='gridline-header' data-name='{folder}' data-role='folder'>");
 
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
             listOfLines.Add($"<td width='16px;' style='font-size: 0.940em; padding: 2px; text-align: center;'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
-            listOfLines.Add($"<span><b>{folder}</b></span>");
+            listOfLines.Add($"<span><b>{folder.Split("\\").Last()}</b></span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' align='right'></td>");
             listOfLines.Add($"</tr>");
@@ -103,7 +106,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add($"<tr class='gridline-header' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+            listOfLines.Add($"<tr class='gridline-header' data-parent='{feature.GetFolder()}' data-name='{feature.Id}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
 
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
@@ -130,7 +133,7 @@ namespace Expressium.LivingDoc.Generators
 
             var listOfLines = new List<string>();
 
-            listOfLines.Add($"<tr data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+            listOfLines.Add($"<tr data-parent='{feature.Id}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
