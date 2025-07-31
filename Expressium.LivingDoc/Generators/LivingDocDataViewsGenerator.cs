@@ -12,6 +12,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.AddRange(GenerateDataOverview(project));
+            // listOfLines.AddRange(GenerateDataOverviewWithFolders(project));
             listOfLines.AddRange(GenerateDataFeaturesView(project));
             listOfLines.AddRange(GenerateDataScenariosView(project));
             listOfLines.AddRange(GenerateDataStepsView(project));
@@ -35,7 +36,7 @@ namespace Expressium.LivingDoc.Generators
             {
                 var featureFolder = feature.GetFolder();
 
-                listOfLines.Add($"<tr class='gridline-header' data-name='{feature.Name}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+                listOfLines.Add($"<tr class='gridline-header' data-name='{feature.Id}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
 
                 listOfLines.Add($"<td data-collapse='false' width='8px' onclick=\"loadCollapse(this);\">&#11206;</td>");
                 listOfLines.Add($"<td colspan='3' class='gridline'>");
@@ -54,7 +55,7 @@ namespace Expressium.LivingDoc.Generators
                         ruleTags = rule.GetTags();
                     }
 
-                    listOfLines.Add($"<tr data-parent='{feature.Name}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                    listOfLines.Add($"<tr data-parent='{feature.Id}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                     listOfLines.Add($"<td></td>");
                     listOfLines.Add($"<td width='16px;'></td>");
                     listOfLines.Add($"<td class='gridline' colspan='2'>");
@@ -100,7 +101,7 @@ namespace Expressium.LivingDoc.Generators
 
             foreach (var feature in project.Features)
             {
-                listOfLines.Add($"<tr class='gridline' data-tags='{feature.Name} {feature.GetTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+                listOfLines.Add($"<tr class='gridline' data-role='feature' data-tags='{feature.Name} {feature.GetTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
                 listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
                 listOfLines.Add($"<td><a href='#'>{feature.Name}</a></td>");
                 listOfLines.Add($"<td align='center' data-scenarios='{feature.GetNumberOfScenariosSortId()}'>{feature.GetNumberOfScenarios()}</td>");
@@ -149,7 +150,7 @@ namespace Expressium.LivingDoc.Generators
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr class='gridline' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                    listOfLines.Add($"<tr class='gridline' data-role='scenario' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                     listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span></td>");
                     listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
                     //listOfLines.Add($"<td align='center' data-tests='{scenario.GetNumberOfTestsSortId()}'>{scenario.GetNumberOfTests()}</td>");
@@ -219,7 +220,7 @@ namespace Expressium.LivingDoc.Generators
                                         .Where(x => x.Keyword + " " + x.Name == fullName)
                                         .Count();
 
-                                    listOfLines.Add($"<tr class='gridline' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                                    listOfLines.Add($"<tr class='gridline' data-role='step' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                                     listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{step.GetStatus().ToLower()}'></span></td>");
                                     listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
                                     listOfLines.Add($"<td align='center' data-count='{count.ToString("D4")}'>{count}</td>");

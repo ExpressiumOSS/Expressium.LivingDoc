@@ -44,8 +44,6 @@
             if (exists)
                 document.getElementById('view-title').innerHTML = y;
 
-            filterScenarios();
-
             var navLinks = document.querySelectorAll('.navigation-link');
             for (var i = 0; i < navLinks.length; i++) {
                 if (navLinks[i].textContent == y)
@@ -53,6 +51,8 @@
                 else
                     navLinks[i].classList.remove('navigation-active');
             }
+
+            filterScenarios();
         }
     </script>
     <script>
@@ -92,6 +92,12 @@
     </script>
     <script>
         function filterScenarios() {
+
+            var navLinkActive = document.querySelectorAll('a.navigation-link.navigation-active');
+            var name = "";
+            if (navLinkActive.length > 0)
+                name = navLinkActive[0].textContent.toLowerCase();
+
             var input = document.getElementById("scenario-filter");
             var filterTokens = input.value.toUpperCase().split(/\s+/);
             var table = document.getElementById("table-list");
@@ -120,7 +126,7 @@
                 if (role == "folder")
                     continue;
 
-                if (role == "feature")
+                if (name == "overview" && role == "feature")
                     continue;
 
                 for (var j = 0; j < td.length; j++) {
@@ -149,8 +155,10 @@
                 tr[i].style.display = found ? "" : "none";
             }
 
-            filterFeatures();
-            filterFolders();
+            if (name == "overview") {
+                filterFeatures();
+                filterFolders();
+            }
         }
     </script>
     <script>
