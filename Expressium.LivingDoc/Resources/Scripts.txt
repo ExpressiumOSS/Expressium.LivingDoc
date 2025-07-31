@@ -35,7 +35,7 @@
         }
     </script>
     <script>
-        function loadViewmode(x,y) {
+        function loadViewmode(x, y) {
             var listview = document.getElementById(x).innerHTML;
 
             document.getElementById('list-view').innerHTML = listview;
@@ -47,10 +47,10 @@
             filterScenarios();
 
             var navLinks = document.querySelectorAll('.navigation-link');
-			for (var i = 0; i < navLinks.length; i++) {
-				if (navLinks[i].textContent == y)
-					navLinks[i].classList.add('navigation-active');
-				else
+            for (var i = 0; i < navLinks.length; i++) {
+                if (navLinks[i].textContent == y)
+                    navLinks[i].classList.add('navigation-active');
+                else
                     navLinks[i].classList.remove('navigation-active');
             }
         }
@@ -64,7 +64,7 @@
             var navLinkActive = document.querySelectorAll('a.navigation-link.navigation-active');
             if (navLinkActive.length > 0) {
                 var name = navLinkActive[0].textContent.toLowerCase();
-             
+
                 var sectionFeatures = document.getElementById("features-analytics");
                 sectionFeatures.style.display = "none";
 
@@ -73,7 +73,7 @@
 
                 var sectionSteps = document.getElementById("steps-analytics");
                 sectionSteps.style.display = "none";
-            
+
                 if (name == "overview") {
                     var sectionActive = document.getElementById("scenarios-analytics");
                     sectionActive.style.display = "";
@@ -303,7 +303,7 @@
         }
     </script>
     <script>
-        function sortTableByColumnByAttibute(n,a) {
+        function sortTableByColumnByAttibute(n, a) {
             var table = document.getElementById("table-grid");
             var count = 0;
             var switching = true;
@@ -360,17 +360,17 @@
 
             document.getElementById("script").value = "";
             document.getElementById("script").value += "@TA-??? @Review";
-            document.getElementById("script").value += "\nScenario: Successfully Creating a new Gherkin Script";            
+            document.getElementById("script").value += "\nScenario: Successfully Creating a new Gherkin Script";
         }
     </script>
     <script>
         function filterStepDefinitions() {
-			var input = document.getElementById("stepdefinition-filter"); 
-			var filterTokens = input.value.toUpperCase().split(/\s+/);
-			var table = document.getElementById("steps-table-list");
-			var tr = table.getElementsByTagName("tr");
+            var input = document.getElementById("stepdefinition-filter");
+            var filterTokens = input.value.toUpperCase().split(/\s+/);
+            var table = document.getElementById("steps-table-list");
+            var tr = table.getElementsByTagName("tr");
 
-			var numberOfFound = 0;
+            var numberOfFound = 0;
 
             for (var i = 0; i < tr.length; i++) {
                 var td = tr[i].getElementsByTagName("td");
@@ -381,15 +381,15 @@
                     rowText += td[j].textContent.toUpperCase() + " ";
                 }
 
-				found = filterTokens.every(token => rowText.includes(token));
+                found = filterTokens.every(token => rowText.includes(token));
 
-				if (found)
-					numberOfFound++;
+                if (found)
+                    numberOfFound++;
 
                 if (numberOfFound >= 6)
                     found = false;
 
-				tr[i].style.display = found ? "" : "none";
+                tr[i].style.display = found ? "" : "none";
             }
         }
     </script>
@@ -406,21 +406,21 @@
             }
         }
     </script>
-	<script>
-		function loadStepDefinitionByEnter() {
+    <script>
+        function loadStepDefinitionByEnter() {
             var table = document.getElementById("steps-table-list");
-			var tr = table.getElementsByTagName("tr");
+            var tr = table.getElementsByTagName("tr");
 
-			for (var i = 0; i < tr.length; i++) {
-				if (tr[i].style.display == "") {
-					loadStepDefinition(tr[i]);
+            for (var i = 0; i < tr.length; i++) {
+                if (tr[i].style.display == "") {
+                    loadStepDefinition(tr[i]);
                     break;
-				}
-			}
+                }
+            }
 
-			document.getElementById("stepdefinition-filter").value = "";
-		}
-	</script>
+            document.getElementById("stepdefinition-filter").value = "";
+        }
+    </script>
     <script>
         function editorCopy() {
             var copyText = document.getElementById("script");
@@ -437,10 +437,61 @@
                 x.setAttribute('data-collapse', 'true');
                 parent.setAttribute('data-collapse', 'true');
             } else {
-
                 x.innerHTML = "&#11206;";
                 x.setAttribute('data-collapse', 'false');
                 parent.setAttribute('data-collapse', 'false');
+            }
+
+            filterScenarios();
+        }
+    </script>
+    <script>
+        function loadCollapseAll() {
+            var table = document.getElementById("table-list");
+            var tr = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "feature") {
+                    var cells = tr[i].getElementsByTagName("td");
+
+                    for (var a = 0; a < cells.length; a++) {
+                        var collapse = cells[a].getAttribute('data-collapse');
+
+                        if (collapse == "false") {
+                            cells[a].innerHTML = "&#11208;";
+                            cells[a].setAttribute('data-collapse', 'true');
+                            tr[i].setAttribute('data-collapse', 'true');
+                        }
+                    }
+                }
+            }
+
+            filterScenarios();
+        }
+    </script>
+    <script>
+        function loadExpandAll() {
+            var table = document.getElementById("table-list");
+            var tr = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "feature") {
+                    var cells = tr[i].getElementsByTagName("td");
+
+                    for (var a = 0; a < cells.length; a++) {
+                        var collapse = cells[a].getAttribute('data-collapse');
+
+                        if (collapse == "true") {
+                            cells[a].innerHTML = "&#11206;";
+                            cells[a].setAttribute('data-collapse', 'false');
+                            tr[i].setAttribute('data-collapse', 'false');
+                        }
+                    }
+                }
             }
 
             filterScenarios();

@@ -24,7 +24,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<tbody id='table-list'>");
 
-            listOfLines.AddRange(GenerateOverviewFolder(project.Title, 0));
+            listOfLines.AddRange(GenerateOverviewHeaderFolder(project.Title));
 
             foreach (var folder in listOfFolders)
             {
@@ -80,14 +80,29 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
+        internal List<string> GenerateOverviewHeaderFolder(string folder)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add($"<tr class='gridline-header'>");
+            listOfLines.Add($"<td width='16px;' style='font-size: 0.940em; padding: 2px; text-align: center;'>📂</td>");
+            listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - 1}'>");
+            listOfLines.Add($"<span><b>{folder.Split("\\").Last()}</b></span>");
+            listOfLines.Add($"</td>");
+            listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' colspan='2' align='right'>");
+            listOfLines.Add("<a class='tool-link' style='color: gray; font-size: 1.25em;' title='Expand All Features' href='#' onclick='loadExpandAll()'><b>&plus;</b></a>");
+            listOfLines.Add("<a class='tool-link' style='color: gray; font-size: 1.25em;' title='Collapse All Features' href='#' onclick='loadCollapseAll()'><b>&minus;</b></a>");
+            listOfLines.Add($"</td>");
+            listOfLines.Add($"</tr>");
+
+            return listOfLines;
+        }
+
         internal List<string> GenerateOverviewFolder(string folder, int indent)
         {
             var listOfLines = new List<string>();
 
-            if (indent == 0)
-                listOfLines.Add($"<tr class='gridline-header'>");
-            else
-                listOfLines.Add($"<tr class='gridline-header' data-name='{folder}' data-role='folder'>");
+            listOfLines.Add($"<tr class='gridline-header' data-name='{folder}' data-role='folder'>");
 
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
@@ -97,6 +112,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<span><b>{folder.Split("\\").Last()}</b></span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' align='right'></td>");
+
             listOfLines.Add($"</tr>");
 
             return listOfLines;
