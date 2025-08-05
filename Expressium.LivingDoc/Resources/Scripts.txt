@@ -238,36 +238,109 @@
             var table = document.getElementById("table-list");
             var tr = table.getElementsByTagName("tr");
 
-            // Hide all folder first
+            var features = table.querySelectorAll('[data-role="feature"]');
+
+            // Display all folder first and reset attributes
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
 
-                if (role == "folder")
-                    tr[i].style.display = "none";
-            }
-
-            var folders = [];
-
-            // Collect all folders that have visible features
-            for (var i = 0; i < tr.length; i++) {
-                var role = tr[i].getAttribute("data-role");
-
-                if (role == "feature") {
-                    if (tr[i].style.display == "") {
-                        var parent = tr[i].getAttribute("data-parent");
-                        folders.push(parent);
-                    }
+                if (role == "folder") {
+                    tr[i].style.display = "";
+                    tr[i].setAttribute('has-folders', 'false');
+                    tr[i].setAttribute('has-features', 'false');
                 }
             }
 
-            // Show folders that have visible features
+            var foldersDataParents = [];
+
+            // Collect all folders that have visible features
+            for (var i = 0; i < features.length; i++) {
+                if (features[i].style.display == "") {
+                    var parent = features[i].getAttribute("data-parent");
+                    foldersDataParents.push(parent);
+                }
+            }
+
+            // Set folders that have visible features
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
 
                 if (role == "folder") {
                     var name = tr[i].getAttribute("data-name");
-                    if (folders.includes(name))
-                        tr[i].style.display = "";
+                    if (foldersDataParents.includes(name))
+                        tr[i].setAttribute('has-features', 'true');
+                }
+            }
+
+            // Set folders that have subsequent folders
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "folder") {
+                    var folderPath = tr[i].getAttribute('data-name');
+
+                    for (var s = 0; s < tr.length; s++) {
+                        var srole = tr[s].getAttribute("data-role");
+
+                        if (srole == "folder") {
+                            var sfolderPath = tr[s].getAttribute('data-name');
+                            if (sfolderPath != folderPath) {
+                                if (sfolderPath.startsWith(folderPath)) {
+                                    tr[i].setAttribute('has-folders', 'true');
+                                }
+                            }
+                        }                       
+                    }
+                }
+            }
+
+            // Hide folders that have invisible folders and features
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+
+                if (role == "folder") {
+                    var hasFolders = tr[i].getAttribute('has-folders');
+                    var hasFeatures = tr[i].getAttribute('has-features');
+                    if (hasFolders == "false" && hasFeatures == "false")
+                        tr[i].style.display = "none";
+                }
+            }
+
+            // Hide folders that have no visible subfolders
+            filterSubFolder(tr);
+            filterSubFolder(tr);
+        }
+    </script>
+    <script>
+        function filterSubFolder(tr) {
+            for (var i = 0; i < tr.length; i++) {
+                var role = tr[i].getAttribute("data-role");
+                if (role == "folder") {
+                    var hasFolders = tr[i].getAttribute('has-folders');
+                    var hasFeatures = tr[i].getAttribute('has-features');
+                    if (hasFolders == "true" && hasFeatures == "false") {
+                        var folderPath = tr[i].getAttribute('data-name');
+
+                        var hasVisibleSubfolders = false;
+
+                        for (var s = 0; s < tr.length; s++) {
+                            var srole = tr[s].getAttribute("data-role");
+                            if (srole == "folder") {
+                                var sfolderPath = tr[s].getAttribute('data-name');
+                                if (sfolderPath != folderPath) {
+                                    if (sfolderPath.startsWith(folderPath)) {
+                                        if (tr[s].style.display == "") {
+                                            hasVisibleSubfolders = true;
+                                        }
+                                    }
+                                }
+                            }                       
+                        }
+
+                        if (!hasVisibleSubfolders) {
+                            tr[i].style.display = "none";
+                        }
+                    }
                 }
             }
         }

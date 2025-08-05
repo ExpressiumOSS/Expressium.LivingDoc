@@ -109,7 +109,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add($"<td width='16px;' style='font-size: 0.940em; padding: 2px; text-align: center;'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
-            listOfLines.Add($"<span><b>{folder.Split("\\").Last()}</b></span>");
+            listOfLines.Add($"<span><b>{folder?.Split("\\").Last() ?? ""}</b></span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' align='right'></td>");
 
