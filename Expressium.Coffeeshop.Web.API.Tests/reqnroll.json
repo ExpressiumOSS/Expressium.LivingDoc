@@ -1,0 +1,11 @@
+{
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
+  "formatters": {
+    "html": {
+      "outputFilePath": "reqnroll_report.html"
+    },
+    "message": {
+      "outputFilePath": "reqnroll_report.ndjson"
+    }
+  }
+}

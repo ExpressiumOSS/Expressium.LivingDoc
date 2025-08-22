@@ -11,8 +11,8 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateDataOverview(project));
-            // listOfLines.AddRange(GenerateDataOverviewWithFolders(project));
+            // listOfLines.AddRange(GenerateDataOverview(project));
+            listOfLines.AddRange(GenerateDataOverviewWithFolders(project));
             listOfLines.AddRange(GenerateDataFeaturesView(project));
             listOfLines.AddRange(GenerateDataScenariosView(project));
             listOfLines.AddRange(GenerateDataStepsView(project));
