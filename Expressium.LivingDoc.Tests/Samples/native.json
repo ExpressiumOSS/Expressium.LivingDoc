@@ -1,6 +1,6 @@
 {
   "Title": "Expressium.Coffeeshop.Web.API.Tests",
-  "ExecutionTime": "2025-07-10T20:46:20.1376909+02:00",
+  "Date": "2025-07-10T20:46:20.1376909+02:00",
   "Duration": "00:00:57.2039552",
   "Features": [
     {
@@ -74,7 +74,7 @@
                   "Keyword": "Given",
                   "Name": "I have logged in with valid user credentials",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -83,7 +83,7 @@
                   "Keyword": "Then",
                   "Name": "I should be redirected to the Home page",
                   "Status": "Failed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "Message": "Validate the HomePage title property...\nExpected to be equal [XHome] but was [Home] - FAILED",
                   "DataTable": {
                     "Rows": []
@@ -116,7 +116,7 @@
                   "Keyword": "Given",
                   "Name": "I have logged in with valid user credentials",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -125,7 +125,7 @@
                   "Keyword": "When",
                   "Name": "I complete and submit the Contact Us formular",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -134,7 +134,7 @@
                   "Keyword": "Then",
                   "Name": "I should receive an inquiry confirmation message",
                   "Status": "Pending",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "Message": "Pending Step Definition",
                   "DataTable": {
                     "Rows": []
@@ -144,7 +144,7 @@
                   "Keyword": "Then",
                   "Name": "I should have another confirmation notification message",
                   "Status": "Skipped",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -176,7 +176,7 @@
                   "Keyword": "Given",
                   "Name": "I have logged in with valid user credentials",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -185,7 +185,7 @@
                   "Keyword": "When",
                   "Name": "I add multiple pieces of coffees to the shopping cart",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": [
                       {
@@ -207,7 +207,7 @@
                   "Keyword": "Then",
                   "Name": "I should have a confirmation notification message",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -239,7 +239,7 @@
                   "Keyword": "Given",
                   "Name": "I have logged in with valid user credentials",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -248,7 +248,7 @@
                   "Keyword": "When",
                   "Name": "I add Santa Rita Cerrado Mineiro coffee to the shopping cart",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -257,7 +257,7 @@
                   "Keyword": "Then",
                   "Name": "I should have $99 in the confirmation notification message",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -291,7 +291,7 @@
                   "Keyword": "Given",
                   "Name": "I have logged in with valid user credentials",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -300,7 +300,7 @@
                   "Keyword": "When",
                   "Name": "I add La Soledad Antioquia coffee to the shopping cart",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }
@@ -309,7 +309,7 @@
                   "Keyword": "Then",
                   "Name": "I should have $77 in the confirmation notification message",
                   "Status": "Passed",
-                  "Duration": 0,
+                  "Duration": "00:00:00",
                   "DataTable": {
                     "Rows": []
                   }

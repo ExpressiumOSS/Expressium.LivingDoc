@@ -15,7 +15,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
-            Assert.That(livingDocExample.GetDuration(), Is.EqualTo("4s 000ms"));
+            Assert.That(livingDocExample.GetDuration(), Is.EqualTo("0s 003ms"));
             Assert.That(livingDocExample.HasDataTable(), Is.False);
         }
 
@@ -28,7 +28,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
-            Assert.That(livingDocExample.GetDuration(), Is.EqualTo("4s 000ms"));
+            Assert.That(livingDocExample.GetDuration(), Is.EqualTo("0s 003ms"));
             Assert.That(livingDocExample.HasDataTable(), Is.False);
         }
 
@@ -41,7 +41,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
-            Assert.That(livingDocExample.GetDuration(), Is.EqualTo("8s 000ms"));
+            Assert.That(livingDocExample.GetDuration(), Is.EqualTo("0s 007ms"));
             Assert.That(livingDocExample.HasDataTable(), Is.True);
         }
 
@@ -54,7 +54,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
-            Assert.That(livingDocExample.GetDuration(), Is.EqualTo("2s 000ms"));
+            Assert.That(livingDocExample.GetDuration(), Is.EqualTo("0s 001ms"));
             Assert.That(livingDocExample.HasDataTable(), Is.False);
         }
     }

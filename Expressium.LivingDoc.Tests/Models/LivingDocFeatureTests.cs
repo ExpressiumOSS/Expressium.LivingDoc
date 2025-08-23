@@ -17,7 +17,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
-            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("4s 000ms"));
+            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 003ms"));
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
-            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("30s 000ms"));
+            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 013ms"));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
-            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("3min 36s"));
+            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 063ms"));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
-            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("2s 000ms"));
+            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 001ms"));
         }
     }
 }
