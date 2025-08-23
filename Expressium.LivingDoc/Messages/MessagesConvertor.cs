@@ -62,12 +62,6 @@ namespace Expressium.LivingDoc.Messages
             foreach (var gherkinDocument in listOfGherkinDocuments)
                 ParseGherkinDocument(livingDocProject, gherkinDocument);
 
-            // Parse Project Duration...
-            var duration = new TimeSpan(0, 0, 0, 0, 0);
-            foreach (var testRunFinished in listOfTestRunFinished)
-                duration += new TimeSpan(0, 0, 0, (int)testRunFinished.Timestamp.Seconds, 0, (int)testRunFinished.Timestamp.Nanos);
-            livingDocProject.Duration = duration;
-
             // Parse Test Results...
             foreach (var feature in livingDocProject.Features)
             {
@@ -101,6 +95,7 @@ namespace Expressium.LivingDoc.Messages
 
                                 step.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
                                 step.Message = testStepFinished.TestStepResult.Message;
+                                step.Duration += new TimeSpan(0, 0, 0, (int)testStepFinished.TestStepResult.Duration.Seconds, (int)testStepFinished.TestStepResult.Duration.Nanos / 1000000);
 
                                 if (testStepFinished.TestStepResult.Exception != null)
                                 {
@@ -128,11 +123,18 @@ namespace Expressium.LivingDoc.Messages
                             if (testCaseFinished == null)
                                 continue;
 
-                            example.Duration = new TimeSpan(0, 0, 0, (int)testCaseFinished.Timestamp.Seconds, 0, (int)testCaseFinished.Timestamp.Nanos);
+                            example.Duration = new TimeSpan(0, 0, 0, (int)testCaseFinished.Timestamp.Seconds - (int)testCaseStarted.Timestamp.Seconds, (int)testCaseFinished.Timestamp.Nanos / 1000000 - (int)testCaseStarted.Timestamp.Nanos / 1000000);
                         }
                     }
                 }
             }
+
+            // Parse Project Duration...
+            var duration = new TimeSpan(0, 0, 0, 0, 0);
+            var examples = livingDocProject.Features.SelectMany(feature => feature.Scenarios).SelectMany(scenario => scenario.Examples);
+            foreach (var example in examples)
+                duration += example.Duration;
+            livingDocProject.Duration = duration;
 
             // Assign Scenario Order...
             int orderId = 1;
@@ -182,6 +184,7 @@ namespace Expressium.LivingDoc.Messages
                     var livingDocStep = new LivingDocStep();
                     livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
                     livingDocStep.Keyword = step.Keyword.Trim();
+                    livingDocStep.Id = step.Id;
                     livingDocBackground.Steps.Add(livingDocStep);
                 }
 
