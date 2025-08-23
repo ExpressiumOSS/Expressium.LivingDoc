@@ -22,6 +22,9 @@ namespace Expressium.LivingDoc.Models
         public string Status { get; set; }
         public TimeSpan Duration { get; set; }
         public string Message { get; set; }
+        public string ExceptionType { get; set; }
+        public string ExceptionMessage { get; set; }
+        public string ExceptionStackTrace { get; set; }
 
         public LivingDocDataTable DataTable { get; set; }
 

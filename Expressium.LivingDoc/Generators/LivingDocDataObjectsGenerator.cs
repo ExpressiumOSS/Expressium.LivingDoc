@@ -285,7 +285,7 @@ namespace Expressium.LivingDoc
 
                 listOfLines.Add("</li>");
 
-                string message = step.Message;
+                var message = step.Message;
                 if (!string.IsNullOrWhiteSpace(message))
                 {
                     listOfLines.Add("<!-- Data Step Message -->");
@@ -295,6 +295,39 @@ namespace Expressium.LivingDoc
                     listOfLines.Add("</div>");
                     listOfLines.Add("</li>");
                 }
+
+                var exceptionType = step.ExceptionType;
+                var exceptionMessage = step.ExceptionMessage;
+                if (!string.IsNullOrWhiteSpace(exceptionType) || !string.IsNullOrWhiteSpace(exceptionMessage))
+                {
+                    listOfLines.Add("<!-- Data Step Message -->");
+                    listOfLines.Add("<li>");
+                    listOfLines.Add($"<div class='message-box'>");
+                    listOfLines.Add($"<div class='message-{status}'><b>{exceptionType}</b><br>{exceptionMessage.Replace("\n", "<br>")}</div>");
+                    listOfLines.Add("</div>");
+                    listOfLines.Add("</li>");
+                }
+
+                //var exceptionStackTrace = step.ExceptionStackTrace;
+                //if (!string.IsNullOrWhiteSpace(exceptionStackTrace))
+                //{
+                //    listOfLines.Add("<!-- Data Step Message -->");
+                //    listOfLines.Add("<li>");
+                //    listOfLines.Add($"<div class='message-box'>");
+                //    listOfLines.Add($"<div class='message-{status}'><b>StackTrace</b><br><div style='font-size: 0.875em'>{exceptionStackTrace}</div></div>");
+                //    listOfLines.Add("</div>");
+                //    listOfLines.Add("</li>");
+                //}
+
+                //if (step.Status == LivingDocStatuses.Undefined.ToString())
+                //{
+                //    listOfLines.Add("<!-- Data Step Message -->");
+                //    listOfLines.Add("<li>");
+                //    listOfLines.Add($"<div class='message-box'>");
+                //    listOfLines.Add($"<div class='message-{status}'><b>UndefinedStepException</b><br>Undefined Step Definition.</div>");
+                //    listOfLines.Add("</div>");
+                //    listOfLines.Add("</li>");
+                //}
 
                 previousKeyword = step.Keyword;
             }

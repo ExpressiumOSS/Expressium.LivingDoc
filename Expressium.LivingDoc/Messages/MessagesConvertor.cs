@@ -106,9 +106,9 @@ namespace Expressium.LivingDoc.Messages
 
                                 if (testStepFinished.TestStepResult.Exception != null)
                                 {
-                                    var exceptionType = testStepFinished.TestStepResult.Exception.Type;
-                                    var exceptionMessage = testStepFinished.TestStepResult.Exception.Message;
-                                    var exceptionStacktrace = testStepFinished.TestStepResult.Exception.StackTrace;
+                                    step.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
+                                    step.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
+                                    step.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
                                 }
                             }
 
