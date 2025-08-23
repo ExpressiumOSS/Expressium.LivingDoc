@@ -7,9 +7,17 @@ namespace Expressium.LivingDoc.Generators
     internal partial class LivingDocDataViewsGenerator
     {
         private int numberOfColumns = 10;
+        private bool showFolderStructure = true;
 
         internal List<string> GenerateDataOverviewWithFolders(LivingDocProject project)
         {
+            // Overview without folder structure...
+            if (!showFolderStructure)
+            {
+                foreach (var feature in project.Features)
+                    feature.Uri = string.Empty;
+            }
+
             var listOfFolders = project.GetFolders();
 
             var listOfExcludeFolders = new List<string>();
