@@ -1,5 +1,5 @@
 ﻿@TA-4000 @Products @BusinessTests
-Feature: Product Management
+Feature: Orders
 	As a User
 	I want to order products from the web application
 	So that I can enjoy my favorite coffee
