@@ -19,6 +19,7 @@ namespace Expressium.LivingDoc.Messages
             var listOfTestStepFinished = new List<TestStepFinished>();
             var listOfTestCaseStarted = new List<TestCaseStarted>();
             var listOfTestCaseFinished = new List<TestCaseFinished>();
+            var listOfTestRunStarted = new List<TestRunStarted>();
             var listOfTestRunFinished = new List<TestRunFinished>();
             var listOftAttachment = new List<Attachment>();
 
@@ -48,6 +49,9 @@ namespace Expressium.LivingDoc.Messages
                     if (envelope.TestCaseFinished != null)
                         listOfTestCaseFinished.Add(envelope.TestCaseFinished);
 
+                    if (envelope.TestRunStarted != null)
+                        listOfTestRunStarted.Add(envelope.TestRunStarted);
+
                     if (envelope.TestRunFinished != null)
                         listOfTestRunFinished.Add(envelope.TestRunFinished);
 
@@ -58,6 +62,10 @@ namespace Expressium.LivingDoc.Messages
 
             var livingDocProject = new LivingDocProject();
             livingDocProject.Title = "LivingDoc";
+
+            // Get Test Results Date...
+            var testRunStarted = listOfTestRunStarted.FirstOrDefault();
+            livingDocProject.Date = testRunStarted.Timestamp.ToDateTime();
 
             foreach (var gherkinDocument in listOfGherkinDocuments)
                 ParseGherkinDocument(livingDocProject, gherkinDocument);
@@ -95,7 +103,6 @@ namespace Expressium.LivingDoc.Messages
 
                                 step.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
                                 step.Message = testStepFinished.TestStepResult.Message;
-                                step.Duration += new TimeSpan(0, 0, 0, (int)testStepFinished.TestStepResult.Duration.Seconds, (int)testStepFinished.TestStepResult.Duration.Nanos / 1000000);
 
                                 if (testStepFinished.TestStepResult.Exception != null)
                                 {
@@ -123,7 +130,7 @@ namespace Expressium.LivingDoc.Messages
                             if (testCaseFinished == null)
                                 continue;
 
-                            example.Duration = new TimeSpan(0, 0, 0, (int)testCaseFinished.Timestamp.Seconds - (int)testCaseStarted.Timestamp.Seconds, (int)testCaseFinished.Timestamp.Nanos / 1000000 - (int)testCaseStarted.Timestamp.Nanos / 1000000);
+                            example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
                         }
                     }
                 }
