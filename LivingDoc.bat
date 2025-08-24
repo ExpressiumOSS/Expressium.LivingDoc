@@ -9,5 +9,5 @@ start .\LivingDocNative.html
 start .\ReqnRoll.html
 
 del .\LivingDoc.html
-Expressium.LivingDoc.exe -input .\TestExecution.ndjson --output .\LivingDoc.html --title "Expressium.Coffeeshop.Web.API.Tests"
+Expressium.LivingDoc.exe -input .\ReqnRoll.ndjson --output .\LivingDoc.html --title "Expressium.Coffeeshop.Web.API.Tests"
 start .\LivingDoc.html
