@@ -43,7 +43,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
 
                 livingDocFeature.Name = featureContext.FeatureInfo.Title;
                 livingDocFeature.Description = featureContext.FeatureInfo.Description;
-                livingDocFeature.Uri = featureContext.FeatureInfo.FolderPath;
+                livingDocFeature.Uri = featureContext.FeatureInfo.FolderPath + "\\" + livingDocFeature.Name + ".feature";
                 livingDocProject.Features.Add(livingDocFeature);
             }
 
