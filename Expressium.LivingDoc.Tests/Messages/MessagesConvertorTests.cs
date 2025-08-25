@@ -179,5 +179,17 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(5));
         }
+
+        [Test]
+        public void Converting_HooksErrors_Feature()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "hooks-errors.feature.ndjson");
+
+            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+
+            Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
+            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(3));
+        }
     }
 }

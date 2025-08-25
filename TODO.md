@@ -1,7 +1,7 @@
 # ToDo
 * Final implementaion of ReqnRoll Cucumber Messages output...
 * Remove usage of native Expressium LivingDoc in solution...
-* Create NuGet package with proram executable file included...
+* Create NuGet package with program executable file included...
 * Extensive UnitTest for Messages, Models and Generators classes...
 
 ## Question
@@ -16,7 +16,6 @@
     * Pending - Incomplete step definition
 
 ## Enhancements
-* Visualize folders structure as Tree View in Overview...
 * Include scenario steps too during filtering...
 * Export filtered lists to Spreadsheet or Clipboard... 
 * Gherkin Scenario Editor with intellisense for steps...
@@ -57,12 +56,6 @@
 
 ### What is a Test Report Katalon
 * https://katalon.com/resources-center/blog/what-is-a-test-report
-
-### Cucumber JSON Report Discussion
-* https://github.com/orgs/reqnroll/discussions/302
-
-### New LivingDoc Support
-* https://github.com/orgs/reqnroll/discussions/37
 
 ### Cucumber React Preview
 * https://cucumber-react-preview.netlify.app/?story=gherkin--gherkindocument--attachments
