@@ -5,73 +5,15 @@ using System.Linq;
 
 namespace Expressium.LivingDoc.Generators
 {
-    internal partial class LivingDocDataViewsGenerator
+    internal class LivingDocDataListviewsGenerator
     {
         internal List<string> Generate(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            // listOfLines.AddRange(GenerateDataOverview(project));
-            listOfLines.AddRange(GenerateDataOverviewWithFolders(project));
             listOfLines.AddRange(GenerateDataFeaturesView(project));
             listOfLines.AddRange(GenerateDataScenariosView(project));
             listOfLines.AddRange(GenerateDataStepsView(project));
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataOverview(LivingDocProject project)
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.Add("<!-- Data Overview -->");
-            listOfLines.Add($"<div class='data-item' id='project-view'>");
-
-            listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<table id='table-grid' class='tree-view'>");
-
-            listOfLines.Add("<tbody id='table-list'>");
-
-            foreach (var feature in project.Features)
-            {
-                var featureFolder = feature.GetFolder();
-
-                listOfLines.Add($"<tr class='gridline-header' data-name='{feature.Id}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
-
-                listOfLines.Add($"<td data-collapse='false' width='8px' onclick=\"loadCollapse(this);\">&#11206;</td>");
-                listOfLines.Add($"<td colspan='3' class='gridline'>");
-                listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-                listOfLines.Add($"<span><b>{feature.Name}</b></span>");
-                listOfLines.Add($"</td>");
-                listOfLines.Add($"<td class='gridline' align='right'></td>");
-                listOfLines.Add($"</tr>");
-
-                foreach (var scenario in feature.Scenarios)
-                {
-                    var ruleTags = string.Empty;
-                    if (!string.IsNullOrEmpty(scenario.RuleId))
-                    {
-                        var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
-                        ruleTags = rule.GetTags();
-                    }
-
-                    listOfLines.Add($"<tr data-parent='{feature.Id}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
-                    listOfLines.Add($"<td></td>");
-                    listOfLines.Add($"<td width='16px;'></td>");
-                    listOfLines.Add($"<td class='gridline' colspan='2'>");
-                    listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
-                    listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
-                    listOfLines.Add($"</td>");
-                    listOfLines.Add($"<td class='gridline' align='right'></td>");
-                    listOfLines.Add($"</tr>");
-                }
-            }
-
-            listOfLines.Add("</tbody>");
-            listOfLines.Add("</table>");
-            listOfLines.Add("</div>");
-
-            listOfLines.Add("</div>");
 
             return listOfLines;
         }

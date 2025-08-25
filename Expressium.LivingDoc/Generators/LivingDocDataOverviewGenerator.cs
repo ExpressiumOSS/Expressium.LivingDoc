@@ -4,12 +4,21 @@ using System.Linq;
 
 namespace Expressium.LivingDoc.Generators
 {
-    internal partial class LivingDocDataViewsGenerator
+    internal class LivingDocDataOverviewGenerator
     {
         private int numberOfColumns = 10;
         private bool showFolderStructure = true;
 
-        internal List<string> GenerateDataOverviewWithFolders(LivingDocProject project)
+        internal List<string> Generate(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.AddRange(GenerateDataOverview(project));
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataOverview(LivingDocProject project)
         {
             // Overview without folder structure...
             if (!showFolderStructure)
