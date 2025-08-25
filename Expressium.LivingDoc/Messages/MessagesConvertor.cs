@@ -23,7 +23,7 @@ namespace Expressium.LivingDoc.Messages
             var listOfTestRunFinished = new List<TestRunFinished>();
             var listOftAttachment = new List<Attachment>();
 
-            // Parse Cucumber Messages JSON file...
+            // Parse Cucumber Messages file...
             using (FileStream fileStream = File.OpenRead(filePath))
             {
                 var enumerator = new MessagesReader(fileStream).GetEnumerator();
@@ -67,6 +67,7 @@ namespace Expressium.LivingDoc.Messages
             var testRunStarted = listOfTestRunStarted.FirstOrDefault();
             livingDocProject.Date = testRunStarted.Timestamp.ToDateTime();
 
+            // Parse Gherkin Documents...
             foreach (var gherkinDocument in listOfGherkinDocuments)
                 ParseGherkinDocument(livingDocProject, gherkinDocument);
 
@@ -81,9 +82,6 @@ namespace Expressium.LivingDoc.Messages
                         var testCase = listOfTestCases.Find(y => y.PickleId == pickle.Id);
                         if (testCase == null)
                             continue;
-
-                        if (int.TryParse(pickle.Id, out int number))
-                            scenario.Order = number;
 
                         foreach (var example in scenario.Examples)
                         {
@@ -136,7 +134,7 @@ namespace Expressium.LivingDoc.Messages
                 }
             }
 
-            // Parse Project Duration...
+            // Calculate Project Duration...
             var duration = new TimeSpan(0, 0, 0, 0, 0);
             var examples = livingDocProject.Features.SelectMany(feature => feature.Scenarios).SelectMany(scenario => scenario.Examples);
             foreach (var example in examples)

@@ -1,5 +1,5 @@
 @TA-3000 @ContactUs @BusinessTests
-Feature: ContactUs
+Feature: Contact Us
 	As a User
 	I want to send to a Contact Us inquiry
 	So that I can recieve detailed product information
