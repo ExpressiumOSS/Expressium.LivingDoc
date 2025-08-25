@@ -7,6 +7,8 @@ namespace Expressium.LivingDoc
 {
     internal class LivingDocDataObjectsGenerator
     {
+        private bool includeStackTraces = false;
+
         internal List<string> Generate(LivingDocProject project)
         {
             var listOfLines = new List<string>();
@@ -287,29 +289,27 @@ namespace Expressium.LivingDoc
                 var exceptionType = step.ExceptionType;
                 var exceptionMessage = step.ExceptionMessage;
                 var exceptionStackTrace = step.ExceptionStackTrace;
-                if (!string.IsNullOrWhiteSpace(exceptionType) || !string.IsNullOrWhiteSpace(exceptionMessage) || !string.IsNullOrWhiteSpace(exceptionStackTrace))
+                if (!string.IsNullOrWhiteSpace(exceptionType) || !string.IsNullOrWhiteSpace(exceptionMessage))
                 {
                     listOfLines.Add("<!-- Data Step Message -->");
                     listOfLines.Add("<li>");
                     listOfLines.Add($"<div class='message-box'>");
                     listOfLines.Add($"<div class='message-{status}'>");
-                    listOfLines.Add($"<b>{exceptionType}</b><br>");
-                    listOfLines.Add($"{exceptionMessage.Replace("\n", "<br>")}<br>");
-                    listOfLines.Add($"<div style='font-size: 0.875em; padding: 8px;'><b>StackTrace:</b><br>{exceptionStackTrace}</div>");
+
+                    if (!string.IsNullOrWhiteSpace(exceptionType))
+                        listOfLines.Add($"<b>{exceptionType}</b><br>");
+
+                    if (!string.IsNullOrWhiteSpace(exceptionMessage))
+                        listOfLines.Add($"{exceptionMessage.Replace("\n", "<br>")}<br>");
+
+                    if (includeStackTraces)
+                        if (!string.IsNullOrWhiteSpace(exceptionStackTrace))
+                            listOfLines.Add($"<div style='font-size: 0.875em; padding: 8px;'><b>StackTrace:</b><br>{exceptionStackTrace}</div>");
+
                     listOfLines.Add("</div>");
                     listOfLines.Add("</div>");
                     listOfLines.Add("</li>");
                 }
-
-                //if (step.Status == LivingDocStatuses.Undefined.ToString())
-                //{
-                //    listOfLines.Add("<!-- Data Step Message -->");
-                //    listOfLines.Add("<li>");
-                //    listOfLines.Add($"<div class='message-box'>");
-                //    listOfLines.Add($"<div class='message-{status}'><b>UndefinedStepException</b><br>Undefined Step Definition.</div>");
-                //    listOfLines.Add("</div>");
-                //    listOfLines.Add("</li>");
-                //}
             }
 
             listOfLines.Add("</ul>");

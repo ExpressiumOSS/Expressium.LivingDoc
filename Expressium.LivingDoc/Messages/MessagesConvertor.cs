@@ -134,12 +134,37 @@ namespace Expressium.LivingDoc.Messages
                 }
             }
 
+            var examples = livingDocProject.Features.SelectMany(feature => feature.Scenarios).SelectMany(scenario => scenario.Examples);
+
             // Calculate Project Duration...
             var duration = new TimeSpan(0, 0, 0, 0, 0);
-            var examples = livingDocProject.Features.SelectMany(feature => feature.Scenarios).SelectMany(scenario => scenario.Examples);
             foreach (var example in examples)
                 duration += example.Duration;
             livingDocProject.Duration = duration;
+
+            // Handle Undefined and Ambiguous Step Messages...
+            foreach (var example in examples)
+            {
+                foreach (var step in example.Steps)
+                {
+                    if (step.Status == LivingDocStatuses.Undefined.ToString())
+                    {
+                        if (string.IsNullOrEmpty(step.ExceptionType))
+                        {
+                            step.ExceptionType = "Warning";
+                            step.ExceptionMessage = "Undefined Step Definition...";
+                        }
+                    }
+                    else if (step.Status == LivingDocStatuses.Ambiguous.ToString())
+                    {
+                        if (string.IsNullOrEmpty(step.ExceptionType))
+                        {
+                            step.ExceptionType = "Warning";
+                            step.ExceptionMessage = "Ambiguous Step Definition...";
+                        }
+                    }
+                }
+            }
 
             // Assign Scenario Order...
             int orderId = 1;
