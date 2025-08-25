@@ -68,9 +68,14 @@ namespace Expressium.LivingDoc.Generators
                 {
                     foreach (var example in scenario.Examples)
                     {
+                        var previousKeyword = "Given";
                         foreach (var step in example.Steps)
                         {
-                            var fullName = step.Keyword + " " + step.Name;
+                            var keywordType = step.Keyword;
+                            if (step.Keyword == "And")
+                                keywordType = previousKeyword;
+
+                            var fullName = keywordType + " " + step.Name;
                             if (!mapOfSteps.ContainsKey(fullName))
                             {
                                 listOfLines.Add($"<tr class='gridline' onclick=\"loadStepDefinition(this);\">");

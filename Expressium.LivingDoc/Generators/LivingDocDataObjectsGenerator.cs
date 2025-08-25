@@ -111,20 +111,13 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<div>");
             listOfLines.Add("<ul class='scenario-steps'>");
 
-            string previousKeyword = null;
             foreach (var step in steps)
             {
-                var keyword = step.Keyword;
-                if (keyword == previousKeyword)
-                    keyword = "And";
-
                 listOfLines.Add("<li>");
                 listOfLines.Add($"<span class='color-skipped'></span>");
-                listOfLines.Add($"<span class='step-keyword'>" + keyword + "</span>");
+                listOfLines.Add($"<span class='step-keyword'>" + step.Keyword + "</span>");
                 listOfLines.Add($"<span>" + step.Name + "</span>");
                 listOfLines.Add("</li>");
-
-                previousKeyword = step.Keyword;
             }
 
             listOfLines.Add("</ul>");
@@ -256,7 +249,6 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<div>");
             listOfLines.Add("<ul class='scenario-steps'>");
 
-            string previousKeyword = null;
             foreach (var step in steps)
             {
                 var status = step.GetStatus().ToLower();
@@ -265,14 +257,10 @@ namespace Expressium.LivingDoc
                 if (step.IsPassed())
                     stepMarker = "&check;";
 
-                var keyword = step.Keyword;
-                if (keyword == previousKeyword)
-                    keyword = "And";
-
                 listOfLines.Add("<li>");
 
                 listOfLines.Add($"<span class='step-marker color-{status}'>{stepMarker}</span>");
-                listOfLines.Add($"<span class='step-keyword'>{keyword}</span>");
+                listOfLines.Add($"<span class='step-keyword'>{step.Keyword}</span>");
                 listOfLines.Add($"<span>{step.Name}</span>");
 
                 if (step.DataTable.Rows.Count > 0)
@@ -322,8 +310,6 @@ namespace Expressium.LivingDoc
                 //    listOfLines.Add("</div>");
                 //    listOfLines.Add("</li>");
                 //}
-
-                previousKeyword = step.Keyword;
             }
 
             listOfLines.Add("</ul>");
