@@ -69,6 +69,12 @@
 	  <None Update="Samples\native.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Samples\orders.feature">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Samples\orders.feature.ndjson">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Samples\pending.feature">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

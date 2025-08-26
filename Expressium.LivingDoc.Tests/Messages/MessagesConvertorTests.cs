@@ -191,5 +191,17 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(3));
         }
+
+        [Test]
+        public void Converting_Orders_Feature()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "Orders.ndjson");
+
+            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+
+            Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
+            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(2));
+        }
     }
 }

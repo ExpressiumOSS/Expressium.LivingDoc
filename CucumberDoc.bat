@@ -18,7 +18,7 @@ del .\Samples\Background.html
 Expressium.LivingDoc.exe -input .\Samples\background.feature.ndjson --output .\Samples\Background.html --title "Compatibility Kit Background"
 start .\Samples\Background.html
 
-del .\Samples\Stack Traces.html
+del .\Samples\StackTraces.html
 Expressium.LivingDoc.exe -input .\Samples\stack-traces.feature.ndjson --output .\Samples\StackTraces.html --title "Compatibility Kit Stack Traces"
 start .\Samples\StackTraces.html
 
@@ -30,7 +30,7 @@ del .\Samples\Attachments.html
 Expressium.LivingDoc.exe -input .\Samples\attachments.feature.ndjson --output .\Samples\Attachments.html --title "Compatibility Kit Attachments"
 start .\Samples\Attachments.html
 
-del .\Samples\Example Tables.html
+del .\Samples\ExampleTables.html
 Expressium.LivingDoc.exe -input .\Samples\examples-tables.feature.ndjson --output .\Samples\ExampleTables.html --title "Compatibility Kit Example Tables"
 start .\Samples\ExampleTables.html
 
@@ -38,7 +38,7 @@ del .\Samples\Minimal.html
 Expressium.LivingDoc.exe -input .\Samples\minimal.feature.ndjson --output .\Samples\Minimal.html --title "Compatibility Kit Minimal"
 start .\Samples\Minimal.html
 
-del .\Samples\Data Tables.html
+del .\Samples\DataTables.html
 Expressium.LivingDoc.exe -input .\Samples\data-tables.feature.ndjson --output .\Samples\DataTables.html --title "Compatibility Kit Data Tables"
 start .\Samples\DataTables.html
 
@@ -53,3 +53,8 @@ start .\Samples\Skipped.html
 del .\Samples\HooksErrors.html
 Expressium.LivingDoc.exe -input .\Samples\hooks-errors.feature.ndjson --output .\Samples\HooksErrors.html --title "Compatibility Kit Hooks Errors"
 start .\Samples\HooksErrors.html
+
+del .\Samples\Orders.html
+Expressium.LivingDoc.exe -input .\Samples\orders.feature.ndjson --output .\Samples\Orders.html --title "Expressium Orders Tables"
+start .\Samples\Orders.html
+
