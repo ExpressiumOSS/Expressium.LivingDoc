@@ -62,9 +62,13 @@ namespace Expressium.LivingDoc.Messages
             var livingDocProject = new LivingDocProject();
             livingDocProject.Title = "LivingDoc";
 
-            // Get Test Results Date...
+            // Get Test Execution Date...
             var testRunStarted = listOfTestRunStarted.FirstOrDefault();
             livingDocProject.Date = testRunStarted.Timestamp.ToDateTime();
+
+            // Get Test Execution Duration...
+            var testRunFinished = listOfTestRunFinished.Last();
+            livingDocProject.Duration = testRunStarted.Timestamp.ToTimeSpan(testRunFinished.Timestamp);
 
             // Parse Gherkin Documents...
             foreach (var gherkinDocument in listOfGherkinDocuments)
@@ -98,15 +102,7 @@ namespace Expressium.LivingDoc.Messages
                                 if (testStepFinished == null)
                                     continue;
 
-                                step.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
-                                step.Message = testStepFinished.TestStepResult.Message;
-
-                                if (testStepFinished.TestStepResult.Exception != null)
-                                {
-                                    step.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
-                                    step.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
-                                    step.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
-                                }
+                                ParseTestStepResults(step, testStepFinished);
                             }
 
                             var testCaseStarted = listOfTestCaseStarted.Find(g => g.TestCaseId == testCase.Id);
@@ -117,10 +113,7 @@ namespace Expressium.LivingDoc.Messages
                             if (attachments.Count > 0)
                             {
                                 foreach (var attachment in attachments)
-                                {
-                                    if (attachment.MediaType == "text/uri-list")
-                                        example.Attachments.Add(attachment.Body);
-                                }
+                                    ParseExampleAttachments(example, attachment);
                             }
 
                             var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
@@ -133,43 +126,7 @@ namespace Expressium.LivingDoc.Messages
                 }
             }
 
-            var examples = livingDocProject.Features.SelectMany(feature => feature.Scenarios).SelectMany(scenario => scenario.Examples);
-
-            // Calculate Project Duration...
-            var duration = new TimeSpan(0, 0, 0, 0, 0);
-            foreach (var example in examples)
-                duration += example.Duration;
-            livingDocProject.Duration = duration;
-
-            // Handle Undefined and Ambiguous Step Messages...
-            foreach (var example in examples)
-            {
-                foreach (var step in example.Steps)
-                {
-                    if (step.Status == LivingDocStatuses.Undefined.ToString())
-                    {
-                        if (string.IsNullOrEmpty(step.ExceptionType))
-                        {
-                            step.ExceptionType = "Warning";
-                            step.ExceptionMessage = "Undefined Step Definition...";
-                        }
-                    }
-                    else if (step.Status == LivingDocStatuses.Ambiguous.ToString())
-                    {
-                        if (string.IsNullOrEmpty(step.ExceptionType))
-                        {
-                            step.ExceptionType = "Warning";
-                            step.ExceptionMessage = "Ambiguous Step Definition...";
-                        }
-                    }
-                }
-            }
-
-            // Assign Scenario Order...
-            int orderId = 1;
-            var listOfScenarios = livingDocProject.Features.SelectMany(feature => feature.Scenarios);
-            foreach (var scenario in listOfScenarios.OrderBy(o => o.Order))
-                scenario.Order = orderId++;
+            PostProcessingProject(livingDocProject);
 
             return livingDocProject;
         }
@@ -354,6 +311,60 @@ namespace Expressium.LivingDoc.Messages
             foreach (var tableBodyRowCell in tableBodyRow.Cells)
                 dataTableRow.Cells.Add(tableBodyRowCell.Value);
             livingDocExample.DataTable.Rows.Add(dataTableRow);
+        }
+
+        internal static void ParseTestStepResults(LivingDocStep livingDocStep, TestStepFinished testStepFinished)
+        {
+            livingDocStep.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
+            livingDocStep.Message = testStepFinished.TestStepResult.Message;
+
+            if (testStepFinished.TestStepResult.Exception != null)
+            {
+                livingDocStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
+                livingDocStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
+                livingDocStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+            }
+        }
+
+        internal static void ParseExampleAttachments(LivingDocExample livingDocExample, Attachment attachment)
+        {
+            if (attachment.MediaType == "text/uri-list")
+                livingDocExample.Attachments.Add(attachment.Body);
+        }
+
+        internal static void PostProcessingProject(LivingDocProject livingDocProject)
+        {
+            var examples = livingDocProject.Features.SelectMany(feature => feature.Scenarios).SelectMany(scenario => scenario.Examples);
+
+            // Work-around for Undefined and Ambiguous Step Messages...
+            foreach (var example in examples)
+            {
+                foreach (var step in example.Steps)
+                {
+                    if (step.Status == LivingDocStatuses.Undefined.ToString())
+                    {
+                        if (string.IsNullOrEmpty(step.ExceptionType))
+                        {
+                            step.ExceptionType = "Warning";
+                            step.ExceptionMessage = "Undefined Step Definition...";
+                        }
+                    }
+                    else if (step.Status == LivingDocStatuses.Ambiguous.ToString())
+                    {
+                        if (string.IsNullOrEmpty(step.ExceptionType))
+                        {
+                            step.ExceptionType = "Warning";
+                            step.ExceptionMessage = "Ambiguous Step Definition...";
+                        }
+                    }
+                }
+            }
+
+            // Assign Scenario Execution Order...
+            int orderId = 1;
+            var listOfScenarios = livingDocProject.Features.SelectMany(feature => feature.Scenarios);
+            foreach (var scenario in listOfScenarios.OrderBy(o => o.Order))
+                scenario.Order = orderId++;
         }
     }
 }
