@@ -195,7 +195,7 @@ namespace Expressium.LivingDoc.UnitTests.Messages
         [Test]
         public void Converting_Orders_Feature()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "Orders.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "orders.feature.ndjson");
 
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
 
