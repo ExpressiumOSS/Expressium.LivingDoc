@@ -1,5 +1,6 @@
 ﻿using Io.Cucumber.Messages.Types;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Expressium.LivingDoc.Messages
 {
@@ -22,6 +23,14 @@ namespace Expressium.LivingDoc.Messages
             var endTime = timestampEnd.ToDateTime();
 
             return endTime - startTime;
+        }
+
+        internal static string CapitalizeWords(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+
+            return Regex.Replace(value, @"(^\w)|(\s\w)", m => m.Value.ToUpper());
         }
     }
 }

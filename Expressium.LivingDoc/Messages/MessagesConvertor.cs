@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 
 namespace Expressium.LivingDoc.Messages
 {
@@ -355,14 +354,6 @@ namespace Expressium.LivingDoc.Messages
             foreach (var tableBodyRowCell in tableBodyRow.Cells)
                 dataTableRow.Cells.Add(tableBodyRowCell.Value);
             livingDocExample.DataTable.Rows.Add(dataTableRow);
-        }
-
-        internal static string CapitalizeWords(this string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return value;
-
-            return Regex.Replace(value, @"(^\w)|(\s\w)", m => m.Value.ToUpper());
         }
     }
 }
