@@ -18,8 +18,7 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(2));
 
-            // TODO - Missing message information ambiguous step...
-            //Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[0].Message, Is.EqualTo("Ambiguous Step Definition"));
+            Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[0].ExceptionMessage, Is.EqualTo("Ambiguous Step Definition..."));
             Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[0].Status, Is.EqualTo(LivingDocStatuses.Ambiguous.ToString()));
             Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[1].Status, Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
         }
@@ -101,6 +100,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].DataTable.Rows[0].Cells.Count, Is.EqualTo(3));
             Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].DataTable.Rows[0].Cells[0], Is.EqualTo("start"));
             Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].DataTable.Rows[0].Cells[1], Is.EqualTo("eat"));
+
+            Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[2].Steps[2].ExceptionMessage, Does.Contain("Expected values to be strictly equal"));
         }
 
         [Test]
@@ -131,8 +132,6 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(3));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(5));
 
-            // TODO - Missing message information pending step...
-            //Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[0].Message, Is.EqualTo("Pending Step Definition"));
             Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[0].Message, Is.EqualTo("TODO"));
             Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[0].Status, Is.EqualTo(LivingDocStatuses.Pending.ToString()));
         }
@@ -154,7 +153,7 @@ namespace Expressium.LivingDoc.UnitTests.Messages
         }
 
         [Test]
-        public void Converting_Stack_Traces_Feature()
+        public void Converting_StackTraces_Feature()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "stack-traces.feature.ndjson");
 
@@ -165,7 +164,7 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             Assert.That(livingDocProject.GetNumberOfRules(), Is.EqualTo(0));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(1));
 
-            // TODO - Missing message information stacktrace...
+            Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[0].ExceptionMessage, Is.EqualTo("BOOM"));
         }
 
         [Test]
@@ -190,18 +189,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(3));
-        }
 
-        [Test]
-        public void Converting_Orders_Feature()
-        {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "orders.feature.ndjson");
-
-            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
-
-            Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
-            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(9));
+            // TODO - Missing implementation and validation of hook errors...
         }
     }
 }

@@ -54,7 +54,4 @@ del .\Samples\HooksErrors.html
 Expressium.LivingDoc.exe -input .\Samples\hooks-errors.feature.ndjson --output .\Samples\HooksErrors.html --title "Compatibility Kit Hooks Errors"
 start .\Samples\HooksErrors.html
 
-del .\Samples\Orders.html
-Expressium.LivingDoc.exe -input .\Samples\orders.feature.ndjson --output .\Samples\Orders.html --title "Expressium Orders Tables"
-start .\Samples\Orders.html
 

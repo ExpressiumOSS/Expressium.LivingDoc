@@ -34,23 +34,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             objectContainer.RegisterInstanceAs(contextController);
         }
 
-        [BeforeTestRun]
-        public static void BeforeTestRun()
-        {
-            InitializeTestExecution();
-        }
-
-        [AfterTestRun]
-        public static void AfterTestRun()
-        {
-            FinalizeTestExecution();
-        }
-
         [BeforeScenario]
         public void BeforeScenario()
         {
-            AddTestExecutionBeforeScenario();
-
             InitializeFixture();
 
             InitializeDependencyInjection();
@@ -65,17 +51,13 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             {
                 var attachement = $"TestResults/{GetTestName()}/{GetTestName()}.log";
                 reqnrollOutputHelper.AddAttachmentAsLink(attachement);
-                AddTestExecutionScenarioAttachment(attachement);
             }
 
             if (File.Exists(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".png")))
             {
                 var attachement = $"TestResults/{GetTestName()}/{GetTestName()}.png";
                 reqnrollOutputHelper.AddAttachmentAsLink(attachement);
-                AddTestExecutionScenarioAttachment(attachement);
             }
-
-            AddTestExecutionAfterScenario();
         }
 
         [BeforeStep]
@@ -83,12 +65,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             logger.InfoFormat("");
             logger.InfoFormat("// " + scenarioContext.StepContext.StepInfo.StepDefinitionType + " " + scenarioContext.StepContext.StepInfo.Text);
-        }
-
-        [AfterStep]
-        public void AfterStep()
-        {
-            AddTestExecutionAfterStep();
         }
 
         protected override string GetTestId()
