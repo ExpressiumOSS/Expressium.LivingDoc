@@ -17,6 +17,7 @@ namespace Expressium.LivingDoc.Models
     public class LivingDocStep
     {
         public string Id { get; set; }
+        public string TableRowId { get; set; }
         public string Keyword { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }

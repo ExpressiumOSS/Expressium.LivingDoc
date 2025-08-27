@@ -103,5 +103,13 @@ namespace Expressium.LivingDoc.Models
         {
             return Order.ToString("D4");
         }
+
+        public bool HasDataTable()
+        {
+            if (Examples.Any(example => example.HasDataTable()))
+                return true;
+
+            return false;
+        }
     }
 }

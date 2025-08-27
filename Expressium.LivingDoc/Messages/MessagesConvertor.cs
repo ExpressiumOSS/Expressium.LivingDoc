@@ -79,9 +79,67 @@ namespace Expressium.LivingDoc.Messages
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id));
-                    if (pickle != null)
+                    if (scenario.HasDataTable())
                     {
+                        foreach (var example in scenario.Examples)
+                        {
+                            TestStepFinished testStepFinished = null;
+
+                            foreach (var step in example.Steps)
+                            {
+                                if (step.TableRowId != null)
+                                {
+                                    var pickleItemStep = listOfPickles
+                                        .SelectMany(p => p.Steps)
+                                        .Where(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableRowId))
+                                        .FirstOrDefault();
+
+                                    if (pickleItemStep == null)
+                                        continue;
+
+                                    foreach (var testCase in listOfTestCases)
+                                    {
+                                        var testCaseTestStep = testCase.TestSteps.Find(y => y.PickleStepId == pickleItemStep.Id);
+                                        if (testCaseTestStep == null)
+                                            continue;
+
+                                        testStepFinished = listOfTestStepFinished.Find(f => f.TestStepId == testCaseTestStep.Id);
+                                        if (testStepFinished == null)
+                                            continue;
+
+                                        ParseTestStepResults(step, testStepFinished);
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (testStepFinished == null)
+                                continue;
+
+                            var testCaseStarted = listOfTestCaseStarted.Find(g => g.Id == testStepFinished.TestCaseStartedId);
+                            if (testCaseStarted == null)
+                                continue;
+
+                            var attachments = listOftAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
+                            if (attachments.Count > 0)
+                            {
+                                foreach (var attachment in attachments)
+                                    ParseExampleAttachments(example, attachment);
+                            }
+
+                            var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testStepFinished.TestCaseStartedId);
+                            if (testCaseFinished == null)
+                                continue;
+
+                            example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
+                        }
+                    }
+                    else
+                    {
+                        var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id));
+                        if (pickle == null)
+                            continue;
+
                         var testCase = listOfTestCases.Find(y => y.PickleId == pickle.Id);
                         if (testCase == null)
                             continue;
@@ -248,7 +306,30 @@ namespace Expressium.LivingDoc.Messages
                         livingDocScenario.Examples.Add(livingDocExample);
 
                         ParseScenarioBackgroundSteps(livingDocExample, livingDocFeature);
-                        ParseScenarioExampleSteps(livingDocExample, scenario);
+
+                        //ParseScenarioExampleSteps(livingDocExample, scenario);
+                        foreach (var step in scenario.Steps)
+                        {
+                            var livingDocStep = new LivingDocStep();
+                            livingDocStep.Id = step.Id;
+                            livingDocStep.TableRowId = tableBodyRow.Id;
+                            livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
+                            livingDocStep.Keyword = step.Keyword.Trim();
+
+                            if (step.DataTable != null)
+                            {
+                                foreach (var row in step.DataTable.Rows)
+                                {
+                                    var dataTableRow = new LivingDocDataTableRow();
+                                    foreach (var cell in row.Cells)
+                                        dataTableRow.Cells.Add(cell.Value);
+                                    livingDocStep.DataTable.Rows.Add(dataTableRow);
+                                }
+                            }
+
+                            livingDocExample.Steps.Add(livingDocStep);
+                        }
+
                         ParseScenarioExampleTableHeaders(livingDocExample, examples);
                         ParseScenarioExampleTableData(livingDocExample, tableBodyRow);
                     }
@@ -332,7 +413,7 @@ namespace Expressium.LivingDoc.Messages
                 livingDocExample.Attachments.Add(attachment.Body);
             else if (attachment.MediaType == "text/x.cucumber.log+plain")
             {
-                if ( attachment.Body.StartsWith("[Attachment: ") && attachment.Body.EndsWith("]") )
+                if (attachment.Body.StartsWith("[Attachment: ") && attachment.Body.EndsWith("]"))
                 {
                     var attachmentFile = attachment.Body.Substring(13, attachment.Body.Length - 14);
                     livingDocExample.Attachments.Add(attachmentFile);
@@ -375,4 +456,27 @@ namespace Expressium.LivingDoc.Messages
                 scenario.Order = orderId++;
         }
     }
+
+    // Handling Hooks (Before/After) - Currently not implemented...
+    //var hookStatus = string.Empty;
+    //var hookType = string.Empty;
+    //var hookMessage = string.Empty;
+    //var hookStackTrace = string.Empty;
+    //foreach (var step in testCase.TestSteps)
+    //{
+    //    if (!string.IsNullOrEmpty(step.HookId))
+    //    {
+    //        var testStepFinished = listOfTestStepFinished.Find(f => f.TestStepId == step.Id);
+    //        if (testStepFinished != null)
+    //        {
+    //            if (testStepFinished.TestStepResult.Status.ToString() == "FAILED")
+    //            {
+    //                hookStatus = testStepFinished.TestStepResult.Status.ToString();
+    //                hookType = testStepFinished.TestStepResult.Exception.Type;
+    //                hookMessage = testStepFinished.TestStepResult.Exception.Message;
+    //                hookStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+    //            }
+    //        }
+    //    }
+    //}
 }

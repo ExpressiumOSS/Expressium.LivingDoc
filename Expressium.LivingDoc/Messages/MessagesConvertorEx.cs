@@ -81,48 +81,72 @@ namespace Expressium.LivingDoc.Messages
                 {
                     foreach (var example in scenario.Examples)
                     {
-                        foreach (var step in example.Steps)
+                        if (example.HasDataTable())
                         {
-                            if (step.TableRowId != null)
+                            TestStepFinished testStepFinished = null;
+
+                            foreach (var step in example.Steps)
                             {
-                                var pickleItem = listOfPickles.Find(y => y.AstNodeIds.Contains(step.TableRowId));
-                                if (pickleItem == null)
-                                    continue;
-
-                                var pickleItemStep = pickleItem.Steps.Find(x => x.AstNodeIds.Contains(step.TableRowId));
-                                if (pickleItemStep == null)
-                                    continue;
-
-                                foreach (var testCase in listOfTestCases)
+                                if (step.TableRowId != null)
                                 {
-                                    var testCaseTestStep = testCase.TestSteps.Find(y => y.PickleStepId == pickleItemStep.Id);
-                                    if (testCaseTestStep == null)
+                                    var pickleItemStep = listOfPickles
+                                    .SelectMany(p => p.Steps)  // flatten all steps across all pickles
+                                    .Where(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableRowId))
+                                    .FirstOrDefault();
+
+                                      //Pickle pickleItemStep = null;
+                                    //var pickleList = listOfPickles.FindAll(y => y.AstNodeIds.Contains(step.TableRowId));
+                                    //foreach (var pickle in pickleList)
+                                    //{
+                                    //    if (pickle.AstNodeIds.Contains(step.Id) && pickle.AstNodeIds.Contains(step.TableRowId))
+                                    //    {
+                                    //        pickleItemStep = pickle;
+                                    //        break;
+                                    //    }
+                                    //}
+
+                                    if (pickleItemStep == null)
                                         continue;
 
-                                    var testStepFinished = listOfTestStepFinished.Find(f => f.TestStepId == testCaseTestStep.Id);
-                                    if (testStepFinished == null)
-                                        continue;
+                                    //var pickleItemStep = pickle.Steps.Find(x => x.AstNodeIds.Contains(step.TableRowId));
+                                    //if (pickleItemStep == null)
+                                    //    continue;
 
-                                    MessagesConvertor.ParseTestStepResults(step, testStepFinished);
-
-                                    var testCaseStarted = listOfTestCaseStarted.Find(g => g.Id == testStepFinished.TestCaseStartedId);
-                                    if (testCaseStarted == null)
-                                        continue;
-
-                                    var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testStepFinished.TestCaseStartedId);
-                                    if (testCaseFinished == null)
-                                        continue;
-
-                                    var attachments = listOftAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
-                                    if (attachments.Count > 0)
+                                    foreach (var testCase in listOfTestCases)
                                     {
-                                        foreach (var attachment in attachments)
-                                            MessagesConvertor.ParseExampleAttachments(example, attachment);
-                                    }
+                                        var testCaseTestStep = testCase.TestSteps.Find(y => y.PickleStepId == pickleItemStep.Id);
+                                        if (testCaseTestStep == null)
+                                            continue;
 
-                                    example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
+                                        testStepFinished = listOfTestStepFinished.Find(f => f.TestStepId == testCaseTestStep.Id);
+                                        if (testStepFinished == null)
+                                            continue;
+
+                                        MessagesConvertor.ParseTestStepResults(step, testStepFinished);
+                                        break;
+                                    }
                                 }
                             }
+
+                            if (testStepFinished == null)
+                                continue;
+
+                            var testCaseStarted = listOfTestCaseStarted.Find(g => g.Id == testStepFinished.TestCaseStartedId);
+                            if (testCaseStarted == null)
+                                continue;
+
+                            var attachments = listOftAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
+                            if (attachments.Count > 0)
+                            {
+                                foreach (var attachment in attachments)
+                                    MessagesConvertor.ParseExampleAttachments(example, attachment);
+                            }
+
+                            var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testStepFinished.TestCaseStartedId);
+                            if (testCaseFinished == null)
+                                continue;
+
+                            example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
                         }
                     }
                 }
@@ -250,8 +274,8 @@ namespace Expressium.LivingDoc.Messages
                         livingDocScenario.Examples.Add(livingDocExample);
 
                         ParseScenarioBackgroundSteps(livingDocExample, livingDocFeature);
-                        //ParseScenarioExampleSteps(livingDocExample, scenario);
 
+                        //ParseScenarioExampleSteps(livingDocExample, scenario);
                         foreach (var step in scenario.Steps)
                         {
                             var livingDocStep = new LivingDocStep();

@@ -200,8 +200,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(9));
         }
     }
 }

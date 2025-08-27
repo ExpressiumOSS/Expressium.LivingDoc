@@ -42,7 +42,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocFeature = livingDocProject.Features[0];
 
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
-            Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
+            Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 063ms"));
         }
 
