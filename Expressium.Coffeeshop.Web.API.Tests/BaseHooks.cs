@@ -64,14 +64,14 @@ namespace Expressium.Coffeeshop.Web.API.Tests
             if (File.Exists(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".log")))
             {
                 var attachement = $"TestResults/{GetTestName()}/{GetTestName()}.log";
-                reqnrollOutputHelper.AddAttachment(attachement);
+                reqnrollOutputHelper.AddAttachmentAsLink(attachement);
                 AddTestExecutionScenarioAttachment(attachement);
             }
 
             if (File.Exists(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".png")))
             {
                 var attachement = $"TestResults/{GetTestName()}/{GetTestName()}.png";
-                reqnrollOutputHelper.AddAttachment(attachement);
+                reqnrollOutputHelper.AddAttachmentAsLink(attachement);
                 AddTestExecutionScenarioAttachment(attachement);
             }
 
