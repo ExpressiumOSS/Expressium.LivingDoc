@@ -1,6 +1,5 @@
 ﻿using Expressium.LivingDoc.Messages;
 using Expressium.LivingDoc.Models;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Expressium.LivingDoc.UnitTests.Models

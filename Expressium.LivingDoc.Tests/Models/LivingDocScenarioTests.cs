@@ -1,32 +1,40 @@
 ﻿using Expressium.LivingDoc.Models;
 using System.IO;
-using System.Linq;
 
 namespace Expressium.LivingDoc.UnitTests.Models
 {
     internal class LivingDocScenarioTests
     {
-        private LivingDocProject livingDocProject;
-
-        [OneTimeSetUp]
-        public void OnTimeSetup()
+        [Test]
+        public void LivingDocScenario_GetStatus_Skipped()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.json");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
-            livingDocProject.Features = livingDocProject.Features.OrderBy(f => f.Name).ToList();
+            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocScenario = livingDocProject.Features[0].Scenarios[0];
+
+            Assert.That(livingDocScenario.Id, Is.Not.Null);
+            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1002 @Ignored"));
+            Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
+            Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("0s 000ms"));
+            Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:00:000"));
+            Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(2));
+            Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0002"));
         }
 
         [Test]
         public void LivingDocScenario_GetStatus_Failed()
         {
-            var livingDocScenario = livingDocProject.Features[1].Scenarios[0];
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
+
+            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocScenario = livingDocProject.Features[0].Scenarios[1];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
-            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1001 @Done"));
+            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1003 @Done"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
-            Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("3s 042ms"));
-            Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:03:042"));
+            Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("3s 478ms"));
+            Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:03:478"));
             Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(2));
             Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0002"));
         }
@@ -34,29 +42,35 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocScenario_GetStatus_Incomplete()
         {
-            var livingDocScenario = livingDocProject.Features[1].Scenarios[1];
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
+
+            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocScenario = livingDocProject.Features[0].Scenarios[2];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
-            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1002 @Review"));
+            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1004 @Done"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
-            Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("3s 103ms"));
-            Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:03:103"));
-            Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(2));
-            Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0002"));
+            Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("5s 641ms"));
+            Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:05:641"));
+            Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(4));
+            Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0004"));
         }
 
         [Test]
         public void LivingDocScenario_GetStatus_Passed()
         {
-            var livingDocScenario = livingDocProject.Features[2].Scenarios[0];
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
+
+            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocScenario = livingDocProject.Features[0].Scenarios[3];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
-            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-4001 @Review"));
+            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1005 @Review"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
-            Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("8s 715ms"));
-            Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:08:715"));
-            Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(6));
-            Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0006"));
+            Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("4s 495ms"));
+            Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:04:495"));
+            Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(3));
+            Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0003"));
         }
     }
 }

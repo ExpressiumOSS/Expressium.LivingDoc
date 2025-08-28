@@ -1,26 +1,30 @@
 ﻿using Expressium.LivingDoc.Models;
 using System.IO;
-using System.Linq;
 
 namespace Expressium.LivingDoc.UnitTests.Models
 {
     internal class LivingDocStepsTests
     {
-        private LivingDocProject livingDocProject;
-
-        [OneTimeSetUp]
-        public void OnTimeSetup()
+        [Test]
+        public void LivingDocSteps_GetStatus_Skipped()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.json");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
-            livingDocProject.Features = livingDocProject.Features.OrderBy(f => f.Name).ToList();
+            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocSteps = livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[0];
+
+            Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
+            Assert.That(livingDocSteps.IsSkipped(), Is.True);
+            Assert.That(livingDocSteps.IsPassed(), Is.False);
         }
 
         [Test]
         public void LivingDocSteps_GetStatus_Failed()
         {
-            var livingDocSteps = livingDocProject.Features[1].Scenarios[0].Examples[0].Steps[1];
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
+
+            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocSteps = livingDocProject.Features[0].Scenarios[1].Examples[0].Steps[1];
 
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
             Assert.That(livingDocSteps.IsFailed(), Is.True);
@@ -31,7 +35,10 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocSteps_GetStatus_Incomplete()
         {
-            var livingDocSteps = livingDocProject.Features[1].Scenarios[1].Examples[0].Steps[1];
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
+
+            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocSteps = livingDocProject.Features[0].Scenarios[2].Examples[0].Steps[2];
 
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
             Assert.That(livingDocSteps.IsIncomplete(), Is.True);
@@ -42,7 +49,10 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocSteps_GetStatus_Passed()
         {
-            var livingDocSteps = livingDocProject.Features[1].Scenarios[0].Examples[0].Steps[0];
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
+
+            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocSteps = livingDocProject.Features[0].Scenarios[3].Examples[0].Steps[0];
 
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
             Assert.That(livingDocSteps.IsIncomplete(), Is.False);
