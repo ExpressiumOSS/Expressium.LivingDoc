@@ -2,7 +2,6 @@ using Expressium.Coffeeshop.Web.API.Models;
 using Expressium.Coffeeshop.Web.API.Pages;
 using Expressium.Coffeeshop.Web.API.Tests.Factories;
 using Reqnroll;
-using System;
 
 namespace Expressium.Coffeeshop.Web.API.Tests.Steps
 {
@@ -16,10 +15,6 @@ namespace Expressium.Coffeeshop.Web.API.Tests.Steps
         [When(@"I add (.*) coffee to the shopping cart")]
         public void WhenIAddCoffeeToTheShoppingCart(string brand)
         {
-            // Example of a failing step in a scenario with exmaple tables...
-            if (brand == "La Soledad Antioquia")
-                throw new ApplicationException("Just a test exception to see how it looks in LivingDoc report.");
-
             var mainMenuBar = new MainMenuBar(logger, driver);
             mainMenuBar.ClickProducts();
 
