@@ -14,9 +14,15 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
             var livingDocFeature = livingDocProject.Features[0];
 
+            Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(1));
+            Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0001"));
+            Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(0));
+            Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 003ms"));
+            Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:003"));
+            Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\stack-traces"));
         }
 
         [Test]
@@ -27,9 +33,15 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
             var livingDocFeature = livingDocProject.Features[0];
 
+            Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(3));
+            Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0003"));
+            Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(0));
+            Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 013ms"));
+            Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:013"));
+            Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\pending"));
         }
 
         [Test]
@@ -40,9 +52,15 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
             var livingDocFeature = livingDocProject.Features[0];
 
+            Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(2));
+            Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0002"));
+            Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(50));
+            Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0050"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 063ms"));
+            Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:063"));
+            Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\examples-tables"));
         }
 
         [Test]
@@ -53,9 +71,15 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
             var livingDocFeature = livingDocProject.Features[0];
 
+            Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(1));
+            Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0001"));
+            Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(0));
+            Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 001ms"));
+            Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:001"));
+            Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\empty"));
         }
     }
 }

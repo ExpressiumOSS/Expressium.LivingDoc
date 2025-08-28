@@ -27,16 +27,6 @@ namespace Expressium.LivingDoc.Models
             Scenarios = new List<LivingDocScenario>();
         }
 
-        public bool IsScenarioAdded(string title)
-        {
-            return Scenarios.Any(m => m.Name == title);
-        }
-
-        public LivingDocScenario GetScenario(string title)
-        {
-            return Scenarios.Find(x => x.Name == title);
-        }
-
         public string GetTags()
         {
             return string.Join(" ", Tags);

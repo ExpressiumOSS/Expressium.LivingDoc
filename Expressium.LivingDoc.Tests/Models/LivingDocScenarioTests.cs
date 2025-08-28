@@ -20,6 +20,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:00:000"));
             Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(2));
             Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0002"));
+            Assert.That(livingDocScenario.HasDataTable(), Is.False);
         }
 
         [Test]
@@ -37,6 +38,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:03:478"));
             Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(2));
             Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0002"));
+            Assert.That(livingDocScenario.HasDataTable(), Is.False);
         }
 
         [Test]
@@ -54,6 +56,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:05:641"));
             Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(4));
             Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0004"));
+            Assert.That(livingDocScenario.HasDataTable(), Is.False);
         }
 
         [Test]
@@ -71,6 +74,19 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:04:495"));
             Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(3));
             Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0003"));
+            Assert.That(livingDocScenario.HasDataTable(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocScenario_HasDataTable()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
+
+            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocScenario = livingDocProject.Features[0].Scenarios[4];
+
+            Assert.That(livingDocScenario.Name, Is.EqualTo("Ordering Coffee Confirmation Notification"));
+            Assert.That(livingDocScenario.HasDataTable(), Is.True);
         }
     }
 }

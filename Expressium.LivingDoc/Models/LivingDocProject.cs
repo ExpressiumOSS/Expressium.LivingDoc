@@ -18,16 +18,6 @@ namespace Expressium.LivingDoc.Models
             Features = new List<LivingDocFeature>();
         }
 
-        public bool IsFeatureAdded(string title)
-        {
-            return Features.Any(m => m.Name == title);
-        }
-
-        public LivingDocFeature GetFeature(string title)
-        {
-            return Features.Find(x => x.Name == title);
-        }
-
         public int GetNumberOfFeatures()
         {
             return Features.Count;
