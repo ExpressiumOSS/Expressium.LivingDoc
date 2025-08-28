@@ -1,6 +1,5 @@
 ﻿using Expressium.LivingDoc.Models;
 using Io.Cucumber.Messages.Types;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -62,17 +61,36 @@ namespace Expressium.LivingDoc.Messages
             var livingDocProject = new LivingDocProject();
             livingDocProject.Title = "LivingDoc";
 
-            // Get Test Execution Date...
+            // Assign Test Execution Date...
             var testRunStarted = listOfTestRunStarted.FirstOrDefault();
             livingDocProject.Date = testRunStarted.Timestamp.ToDateTime();
 
-            // Get Test Execution Duration...
+            // Assign Test Execution Duration...
             var testRunFinished = listOfTestRunFinished.Last();
             livingDocProject.Duration = testRunStarted.Timestamp.ToTimeSpan(testRunFinished.Timestamp);
 
             // Parse Gherkin Documents...
             foreach (var gherkinDocument in listOfGherkinDocuments)
                 ParseGherkinDocument(livingDocProject, gherkinDocument);
+
+            // Assign Scenario Execution Order...
+            int orderId = 1;
+            foreach (var testCase in listOfTestCases)
+            {
+                var pickle = listOfPickles.Find(x => x.Id == testCase.PickleId);
+                if (pickle == null)
+                    continue;
+
+                var astNodeId = pickle.AstNodeIds.FirstOrDefault();
+
+                var scenario = livingDocProject.Features
+                    .SelectMany(feature => feature.Scenarios)
+                    .FirstOrDefault(s => s.Id == astNodeId);
+
+                if (scenario != null)
+                    if (scenario.Order == 0)
+                        scenario.Order = orderId++;
+            }
 
             // Parse Test Results...
             foreach (var feature in livingDocProject.Features)
@@ -91,8 +109,7 @@ namespace Expressium.LivingDoc.Messages
                                 {
                                     var pickleItemStep = listOfPickles
                                         .SelectMany(p => p.Steps)
-                                        .Where(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableRowId))
-                                        .FirstOrDefault();
+                                        .FirstOrDefault(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableRowId));
 
                                     if (pickleItemStep == null)
                                         continue;
@@ -448,12 +465,6 @@ namespace Expressium.LivingDoc.Messages
                     }
                 }
             }
-
-            // Assign Scenario Execution Order...
-            int orderId = 1;
-            var listOfScenarios = livingDocProject.Features.SelectMany(feature => feature.Scenarios);
-            foreach (var scenario in listOfScenarios.OrderBy(o => o.Order))
-                scenario.Order = orderId++;
         }
     }
 

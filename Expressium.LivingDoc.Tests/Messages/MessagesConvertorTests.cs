@@ -273,6 +273,12 @@ namespace Expressium.LivingDoc.UnitTests.Messages
             Assert.That(scenario.Examples[0].Steps[0].ExceptionType, Is.EqualTo("Error"));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionMessage, Is.EqualTo("Exception in step"));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionStackTrace, Is.EqualTo(null));
+
+            Assert.That(feature.Scenarios[0].Order, Is.EqualTo(1));
+            Assert.That(feature.Scenarios[1].Order, Is.EqualTo(2));
+            Assert.That(feature.Scenarios[2].Order, Is.EqualTo(3));
+            Assert.That(feature.Scenarios[3].Order, Is.EqualTo(4));
+            Assert.That(feature.Scenarios[4].Order, Is.EqualTo(5));
         }
     }
 }
