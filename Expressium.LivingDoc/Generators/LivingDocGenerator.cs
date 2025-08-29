@@ -52,7 +52,8 @@ namespace Expressium.LivingDoc.Generators
 
         internal LivingDocProject ParseCucumberMessagesJsonFile()
         {
-            return MessagesConvertor.ConvertToLivingDoc(input);
+            var messagesConvertor = new MessagesConvertor();
+            return messagesConvertor.ConvertToLivingDoc(input);
         }
 
         internal LivingDocProject ParseLivingDocJsonFile()

@@ -11,7 +11,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "stack-traces.feature.ndjson");
 
-            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesConvertor = new MessagesConvertor();
+            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
@@ -24,7 +26,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "pending.feature.ndjson");
 
-            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesConvertor = new MessagesConvertor();
+            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
@@ -37,7 +41,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
 
-            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesConvertor = new MessagesConvertor();
+            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
@@ -50,7 +56,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "empty.feature.ndjson");
 
-            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesConvertor = new MessagesConvertor();
+            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));

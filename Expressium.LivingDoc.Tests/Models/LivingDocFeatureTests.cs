@@ -11,7 +11,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "stack-traces.feature.ndjson");
 
-            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesConvertor = new MessagesConvertor();
+            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+
             var livingDocFeature = livingDocProject.Features[0];
 
             Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(1));
@@ -30,7 +32,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "pending.feature.ndjson");
 
-            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesConvertor = new MessagesConvertor();
+            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+
             var livingDocFeature = livingDocProject.Features[0];
 
             Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(3));
@@ -49,7 +53,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
 
-            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesConvertor = new MessagesConvertor();
+            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+
             var livingDocFeature = livingDocProject.Features[0];
 
             Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(2));
@@ -68,7 +74,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "empty.feature.ndjson");
 
-            var livingDocProject = MessagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesConvertor = new MessagesConvertor();
+            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+
             var livingDocFeature = livingDocProject.Features[0];
 
             Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(1));
