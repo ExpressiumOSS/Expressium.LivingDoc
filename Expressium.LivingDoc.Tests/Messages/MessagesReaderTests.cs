@@ -6,7 +6,7 @@ namespace Expressium.LivingDoc.UnitTests.Messages
     public class MessagesReaderTests
     {
         [Test]
-        public void Reading_Example_Tables_Feature()
+        public void Reading_Cucumber_Messages_File()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
 
