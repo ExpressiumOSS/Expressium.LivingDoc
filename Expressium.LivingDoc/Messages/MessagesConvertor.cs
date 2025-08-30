@@ -32,6 +32,19 @@ namespace Expressium.LivingDoc.Messages
             listOftAttachment = new List<Attachment>();
         }
 
+        internal LivingDocProject ConvertToLivingDoc(string filePath)
+        {
+            var livingDocProject = new LivingDocProject();
+            livingDocProject.Title = "LivingDoc";
+
+            ParseCucumberMessagesFile(filePath);
+            ParseGherkinDocuments(livingDocProject);
+            ParseTestResults(livingDocProject);
+            PostProcessingProject(livingDocProject);
+
+            return livingDocProject;
+        }
+
         internal void ParseCucumberMessagesFile(string filePath)
         {
             using (FileStream fileStream = File.OpenRead(filePath))
@@ -69,19 +82,6 @@ namespace Expressium.LivingDoc.Messages
                         listOftAttachment.Add(envelope.Attachment);
                 }
             }
-        }
-
-        internal LivingDocProject ConvertToLivingDoc(string filePath)
-        {
-            var livingDocProject = new LivingDocProject();
-            livingDocProject.Title = "LivingDoc";
-
-            ParseCucumberMessagesFile(filePath);
-            ParseGherkinDocuments(livingDocProject);
-            ParseTestResults(livingDocProject);
-            PostProcessingProject(livingDocProject);
-
-            return livingDocProject;
         }
 
         internal void ParseGherkinDocuments(LivingDocProject livingDocProject)
@@ -330,11 +330,11 @@ namespace Expressium.LivingDoc.Messages
 
                             foreach (var step in example.Steps)
                             {
-                                if (step.TableRowId != null)
+                                if (step.TableBodyId != null)
                                 {
                                     var pickleItemStep = listOfPickles
                                         .SelectMany(p => p.Steps)
-                                        .FirstOrDefault(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableRowId));
+                                        .FirstOrDefault(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableBodyId));
 
                                     if (pickleItemStep == null)
                                         continue;
