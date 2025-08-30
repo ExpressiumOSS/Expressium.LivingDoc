@@ -47,9 +47,9 @@ namespace Expressium.Coffeeshop.Web.API.Tests
         {
             FinalizeFixture();
 
-            if (File.Exists(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".log")))
+            if (File.Exists(Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".txt")))
             {
-                var attachement = $"TestResults/{GetTestName()}/{GetTestName()}.log";
+                var attachement = $"TestResults/{GetTestName()}/{GetTestName()}.txt";
                 reqnrollOutputHelper.AddAttachmentAsLink(attachement);
             }
 

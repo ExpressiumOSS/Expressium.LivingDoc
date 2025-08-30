@@ -38,7 +38,7 @@ namespace Expressium.Coffeeshop.Web.API.Tests
                     Directory.Delete(loggingPath, true);
                 Directory.CreateDirectory(loggingPath);
 
-                var loggingFilePath = Path.Combine(loggingPath, GetTestName() + ".log");
+                var loggingFilePath = Path.Combine(loggingPath, GetTestName() + ".txt");
                 logger = Logger.Initialize(GetTestName(), loggingFilePath);
                 Asserts = new Asserts(logger);
             }
