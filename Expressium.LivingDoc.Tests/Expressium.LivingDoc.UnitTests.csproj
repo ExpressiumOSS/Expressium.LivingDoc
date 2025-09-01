@@ -45,6 +45,12 @@
 	  <None Update="Samples\backgrounds-examples.feature.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Samples\backgrounds-mixed.feature.ndjson">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Samples\backgrounds-mixed.feature">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Samples\backgrounds.feature">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

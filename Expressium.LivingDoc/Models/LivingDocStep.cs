@@ -17,6 +17,7 @@ namespace Expressium.LivingDoc.Models
     public class LivingDocStep
     {
         public string Id { get; set; }
+        public int TableIndexId { get; set; }
         public string TableBodyId { get; set; }
         public string Keyword { get; set; }
         public string Name { get; set; }
@@ -31,6 +32,7 @@ namespace Expressium.LivingDoc.Models
 
         public LivingDocStep()
         {
+            TableIndexId = -1;
             DataTable = new LivingDocDataTable();
         }
 
