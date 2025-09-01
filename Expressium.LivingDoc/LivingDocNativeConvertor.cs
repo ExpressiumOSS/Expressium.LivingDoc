@@ -22,7 +22,7 @@ namespace Expressium.LivingDoc
             {
                 var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputPath);
                 var livingDocProjectGenerator = new LivingDocProjectGenerator();
-                livingDocProjectGenerator.GenerateHtmlFile(livingDocProject, outputPath);
+                livingDocProjectGenerator.Generate(livingDocProject, outputPath);
             }
             catch (IOException ex)
             {

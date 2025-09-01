@@ -11,11 +11,7 @@ namespace Expressium.LivingDoc.Generators
 {
     internal class LivingDocProjectGenerator
     {
-        internal LivingDocProjectGenerator()
-        {
-        }
-
-        internal void GenerateHtmlFile(LivingDocProject project, string outputPath)
+        internal void Generate(LivingDocProject project, string outputPath)
         {
             project.Features = project.Features.OrderBy(f => f.Name).ToList();
 
@@ -74,8 +70,8 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var bodyGenerator = new LivingDocBodyGenerator();
-            listOfLines.AddRange(bodyGenerator.GenerateBody(project));
+            var generator = new LivingDocBodyGenerator();
+            listOfLines.AddRange(generator.Generate(project));
 
             return listOfLines;
         }

@@ -27,7 +27,7 @@ namespace Expressium.LivingDoc
                 if (!string.IsNullOrEmpty(title))
                     livingDocProject.Title = title;
                 var livingDocProjectGenerator = new LivingDocProjectGenerator();
-                livingDocProjectGenerator.GenerateHtmlFile(livingDocProject, outputPath);
+                livingDocProjectGenerator.Generate(livingDocProject, outputPath);
             }
             catch (IOException ex)
             {

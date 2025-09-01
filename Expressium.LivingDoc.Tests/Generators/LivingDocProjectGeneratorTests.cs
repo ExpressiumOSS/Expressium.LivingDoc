@@ -1,6 +1,5 @@
 ﻿using AngleSharp.Html.Parser;
 using Expressium.LivingDoc.Generators;
-using Expressium.LivingDoc.Models;
 using System.Collections.Generic;
 using System.IO;
 

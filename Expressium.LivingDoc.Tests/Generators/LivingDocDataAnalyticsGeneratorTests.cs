@@ -23,7 +23,7 @@ namespace Expressium.LivingDoc.Tests.Generators
         [TestCase(3, 3, ExpectedResult = 100)]
         [TestCase(0, 1, ExpectedResult = 0)]
         [TestCase(1, 1, ExpectedResult = 100)]
-        public int CalculatePercentage_ReturnsExpectedResult(int numberOfStatuses, int numberOfTests)
+        public int LivingDocDataAnalyticsGenerator_CalculatePercentage(int numberOfStatuses, int numberOfTests)
         {
             return dataAnalyticsGenerator.CalculatePercentage(numberOfStatuses, numberOfTests);
         }

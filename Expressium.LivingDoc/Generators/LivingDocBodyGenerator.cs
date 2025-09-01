@@ -10,7 +10,7 @@ namespace Expressium.LivingDoc.Generators
     {
         private bool includeEditor = false;
 
-        internal List<string> GenerateBody(LivingDocProject project)
+        internal List<string> Generate(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
@@ -20,7 +20,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateContent(project));
             listOfLines.AddRange(GenerateFooter(project));
             listOfLines.AddRange(GenerateDataOverview(project));
-            listOfLines.AddRange(GenerateDataListviews(project));
+            listOfLines.AddRange(GenerateDataListViews(project));
             listOfLines.AddRange(GenerateDataObjects(project));
             listOfLines.AddRange(GenerateDataAnalytics(project));
             listOfLines.AddRange(GenerateDataEditor(project));
@@ -163,18 +163,18 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var dataGenerator = new LivingDocDataOverviewGenerator();
-            listOfLines.AddRange(dataGenerator.Generate(project));
+            var generator = new LivingDocDataOverviewGenerator();
+            listOfLines.AddRange(generator.Generate(project));
 
             return listOfLines;
         }
 
-        internal List<string> GenerateDataListviews(LivingDocProject project)
+        internal List<string> GenerateDataListViews(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
-            var dataGenerator = new LivingDocDataListviewsGenerator();
-            listOfLines.AddRange(dataGenerator.Generate(project));
+            var generator = new LivingDocDataListViewsGenerator();
+            listOfLines.AddRange(generator.Generate(project));
 
             return listOfLines;
         }
@@ -183,8 +183,8 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var dataGenerator = new LivingDocDataObjectsGenerator();
-            listOfLines.AddRange(dataGenerator.Generate(project));
+            var generator = new LivingDocDataObjectsGenerator();
+            listOfLines.AddRange(generator.Generate(project));
 
             return listOfLines;
         }
@@ -193,8 +193,8 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var dataGenerator = new LivingDocDataAnalyticsGenerator();
-            listOfLines.AddRange(dataGenerator.Generate(project));
+            var generator = new LivingDocDataAnalyticsGenerator();
+            listOfLines.AddRange(generator.Generate(project));
 
             return listOfLines;
         }
@@ -203,8 +203,8 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var dataGenerator = new LivingDocDataEditorGenerator();
-            listOfLines.AddRange(dataGenerator.Generate(project));
+            var generator = new LivingDocDataEditorGenerator();
+            listOfLines.AddRange(generator.Generate(project));
 
             return listOfLines;
         }
