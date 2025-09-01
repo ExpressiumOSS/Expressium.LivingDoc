@@ -3,15 +3,15 @@ using System.IO;
 
 namespace Expressium.LivingDoc.UnitTests.Messages
 {
-    internal class MessagesConvertorDataTablesTests
+    internal class MessagesParserDataTablesTests
     {
         [Test]
         public void Converting_Step_DataTables()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "data-tables.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));

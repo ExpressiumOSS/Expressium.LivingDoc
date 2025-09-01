@@ -7,7 +7,7 @@ using System.Net;
 
 namespace Expressium.LivingDoc.Messages
 {
-    internal class MessagesConvertor
+    internal class MessagesParser
     {
         private List<GherkinDocument> listOfGherkinDocuments;
         private List<Pickle> listOfPickles;
@@ -19,7 +19,7 @@ namespace Expressium.LivingDoc.Messages
         private List<TestRunFinished> listOfTestRunFinished;
         private List<Attachment> listOftAttachment;
 
-        public MessagesConvertor()
+        public MessagesParser()
         {
             listOfGherkinDocuments = new List<GherkinDocument>();
             listOfPickles = new List<Pickle>();

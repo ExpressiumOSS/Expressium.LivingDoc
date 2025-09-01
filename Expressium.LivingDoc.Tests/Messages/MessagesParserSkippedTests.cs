@@ -4,15 +4,15 @@ using System.IO;
 
 namespace Expressium.LivingDoc.UnitTests.Messages
 {
-    internal class MessagesConvertorSkippedTests
+    internal class MessagesParserSkippedTests
     {
         [Test]
         public void Converting_Skipped_Step()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "skipped.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));

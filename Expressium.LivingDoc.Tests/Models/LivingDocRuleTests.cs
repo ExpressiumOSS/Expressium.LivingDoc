@@ -11,8 +11,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "rules.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             var livingDocFeature = livingDocProject.Features[0];
 

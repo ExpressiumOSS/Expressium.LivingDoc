@@ -4,15 +4,15 @@ using System.IO;
 
 namespace Expressium.LivingDoc.UnitTests.Messages
 {
-    internal class MessagesConvertorBackgroundTests
+    internal class MessagesParserBackgroundTests
     {
         [Test]
         public void Converting_Feature_Background()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "background.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
@@ -30,8 +30,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "backgrounds.features.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
@@ -54,8 +54,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "backgrounds-examples.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
@@ -78,8 +78,8 @@ namespace Expressium.LivingDoc.UnitTests.Messages
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "backgrounds-mixed.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));

@@ -11,8 +11,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "stack-traces.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
@@ -26,8 +26,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "pending.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
@@ -41,8 +41,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
@@ -56,8 +56,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "empty.feature.ndjson");
 
-            var messagesConvertor = new MessagesConvertor();
-            var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputFilePath);
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 

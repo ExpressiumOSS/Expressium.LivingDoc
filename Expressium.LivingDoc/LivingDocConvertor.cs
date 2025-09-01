@@ -22,8 +22,8 @@ namespace Expressium.LivingDoc
         {
             try
             {
-                var messagesConvertor = new MessagesConvertor();
-                var livingDocProject = messagesConvertor.ConvertToLivingDoc(inputPath);
+                var messagesParser = new MessagesParser();
+                var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
                 if (!string.IsNullOrEmpty(title))
                     livingDocProject.Title = title;
                 var livingDocProjectGenerator = new LivingDocProjectGenerator();
