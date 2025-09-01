@@ -1,0 +1,91 @@
+"Scenarios": [
+  {
+    "Id": "c7c4ec58-97b9-48e8-9347-b46340805e02",
+    "Tags": [
+      "@TA-3003",
+      "@Review"
+    ],
+    "Name": "Successful Resubmitting a Contact Us Inquiry",
+    "Examples": [
+      {
+        "Duration": "00:00:06.4255228",
+        "Steps": [
+          {
+            "Keyword": "Given",
+            "Name": "I have logged in with valid user credentials",
+            "Status": "Passed",
+            "Duration": "00:00:00",
+            "DataTable": {
+              "Rows": []
+            }
+          },
+          {
+            "Keyword": "When",
+            "Name": "I complete and submit the Contact Us formular",
+            "Status": "Passed",
+            "Duration": "00:00:00",
+            "DataTable": {
+              "Rows": []
+            }
+          }
+        ],
+        "DataTable": {
+          "Rows": []
+        },
+        "Attachments": [
+          "TestResults/SuccessfulResubmittingAContactUsInquiry/SuccessfulResubmittingAContactUsInquiry.log",
+          "TestResults/SuccessfulResubmittingAContactUsInquiry/SuccessfulResubmittingAContactUsInquiry.png"
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "7a2b0ed0-e7aa-4d7b-9699-04fadb413dda",
+    "Tags": [
+      "@TA-3001",
+      "@Done"
+    ],
+    "Name": "Successful Submitting a Contact Us Inquiry",
+    "Examples": [
+      {
+        "Duration": "00:00:05.5552265",
+        "Steps": [
+          {
+            "Keyword": "Given",
+            "Name": "I have logged in with valid user credentials",
+            "Status": "Passed",
+            "Duration": "00:00:00",
+            "DataTable": {
+              "Rows": []
+            }
+          },
+          {
+            "Keyword": "When",
+            "Name": "I complete and submit the Contact Us formular",
+            "Status": "Passed",
+            "Duration": "00:00:00",
+            "DataTable": {
+              "Rows": []
+            }
+          },
+          {
+            "Keyword": "Then",
+            "Name": "I should receive an inquiry confirmation message",
+            "Status": "Passed",
+            "Duration": "00:00:00",
+            "DataTable": {
+              "Rows": []
+            }
+          }
+        ],
+        "DataTable": {
+          "Rows": []
+        },
+        "Attachments": [
+          "TestResults/SuccessfulSubmittingAContactUsInquiry/SuccessfulSubmittingAContactUsInquiry.log",
+          "TestResults/SuccessfulSubmittingAContactUsInquiry/SuccessfulSubmittingAContactUsInquiry.png"
+        ]
+      }
+    ]
+  }
+]

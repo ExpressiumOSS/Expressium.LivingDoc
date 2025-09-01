@@ -1,6 +1,5 @@
 ﻿using AngleSharp.Html;
 using AngleSharp.Html.Parser;
-using Expressium.LivingDoc.Messages;
 using Expressium.LivingDoc.Models;
 using Expressium.LivingDoc.Properties;
 using System;
@@ -10,58 +9,13 @@ using System.Linq;
 
 namespace Expressium.LivingDoc.Generators
 {
-    public class LivingDocGenerator
+    internal class LivingDocProjectGenerator
     {
-        private string input;
-        private string output;
-        private string title;
-
-        public LivingDocGenerator(string inputPath, string outputPath, string title = null)
+        internal LivingDocProjectGenerator()
         {
-            this.input = inputPath;
-            this.output = outputPath;
-            this.title = title;
         }
 
-        public void Execute(bool useNativeFormat = false)
-        {
-            try
-            {
-                if (useNativeFormat)
-                {
-                    var project = ParseLivingDocJsonFile();
-                    GenerateDocument(project);
-                }
-                else
-                {
-                    var project = ParseCucumberMessagesJsonFile();
-                    if (!string.IsNullOrEmpty(title))
-                        project.Title = title;
-                    GenerateDocument(project);
-                }
-            }
-            catch (IOException ex)
-            {
-                throw new IOException($"IO error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                throw new IOException($"Unexpected error: {ex.Message}");
-            }
-        }
-
-        internal LivingDocProject ParseCucumberMessagesJsonFile()
-        {
-            var messagesConvertor = new MessagesConvertor();
-            return messagesConvertor.ConvertToLivingDoc(input);
-        }
-
-        internal LivingDocProject ParseLivingDocJsonFile()
-        {
-            return LivingDocSerializer.DeserializeAsJson<LivingDocProject>(input);
-        }
-
-        internal void GenerateDocument(LivingDocProject project)
+        internal void GenerateHtmlFile(LivingDocProject project, string outputPath)
         {
             project.Features = project.Features.OrderBy(f => f.Name).ToList();
 
@@ -72,7 +26,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateBody(project));
             listOfLines.AddRange(GenerateHtmlFooter());
 
-            var htmlFilePath = output;
+            var htmlFilePath = outputPath;
             SaveHtmlFile(htmlFilePath, listOfLines);
         }
 
