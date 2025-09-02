@@ -14,9 +14,9 @@ namespace Expressium.LivingDoc
                 Console.WriteLine("Input: " + args[1]);
                 Console.WriteLine("Output: " + args[3]);
                 Console.WriteLine("Title: " + args[5]);
-                Console.WriteLine("Executing LivingDoc Convertor");
+                Console.WriteLine("Executing LivingDoc Converter");
 
-                var livingDocGenerator = new LivingDocConvertor(args[1], args[3], args[5]);
+                var livingDocGenerator = new LivingDocConverter(args[1], args[3], args[5]);
                 livingDocGenerator.Execute();
 
                 Console.WriteLine("Generating LivingDoc Report Completed");
@@ -29,9 +29,9 @@ namespace Expressium.LivingDoc
                 Console.WriteLine("Generating LivingDoc Test Report...");
                 Console.WriteLine("Input: " + args[1]);
                 Console.WriteLine("Output: " + args[2]);
-                Console.WriteLine("Executing LivingDoc Convertor");
+                Console.WriteLine("Executing LivingDoc Converter");
 
-                var livingDocGenerator = new LivingDocNativeConvertor(args[1], args[2]);
+                var livingDocGenerator = new LivingDocNativeConverter(args[1], args[2]);
                 livingDocGenerator.Execute();
 
                 Console.WriteLine("Generating LivingDoc Report Completed");

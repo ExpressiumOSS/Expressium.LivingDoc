@@ -1,57 +1,57 @@
 ﻿using System;
 using System.IO;
 
-namespace Expressium.LivingDoc.UnitTests.Convertors
+namespace Expressium.LivingDoc.UnitTests.Converters
 {
-    public class LivingDocNativeConvertorTests
+    public class LivingDocNativeConvertersTests
     {
         [Test]
-        public void LivingDocNativeConvertor_Execute()
+        public void LivingDocNativeConverters_Execute()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.json");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "dummy.html");
 
             File.Delete(outputFilePath);
 
-            var livingDocNativeConvertor = new LivingDocNativeConvertor(inputFilePath, outputFilePath);
-            livingDocNativeConvertor.Execute();
+            var livingDocNativeConverters = new LivingDocNativeConverter(inputFilePath, outputFilePath);
+            livingDocNativeConverters.Execute();
 
             Assert.That(File.Exists(outputFilePath));
         }
 
         [Test]
-        public void LivingDocNativeConvertor_Execute_Invalid_Input_Path()
+        public void LivingDocNativeConverters_Execute_Invalid_Input_Path()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "unknown.json");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "dummy.html");
 
-            var livingDocNativeConvertor = new LivingDocNativeConvertor(inputFilePath, outputFilePath);
+            var livingDocNativeConverters = new LivingDocNativeConverter(inputFilePath, outputFilePath);
 
-            var exception = Assert.Throws<IOException>(() => livingDocNativeConvertor.Execute());
+            var exception = Assert.Throws<IOException>(() => livingDocNativeConverters.Execute());
             Assert.That(exception.Message.StartsWith("IO error: Could not find file"));
         }
 
         [Test]
-        public void LivingDocNativeConvertor_Execute_Invalid_Output_Path()
+        public void LivingDocNativeConverters_Execute_Invalid_Output_Path()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.json");
             var outputFilePath = Path.Combine($"G:\\Output\\dummy.html");
 
-            var livingDocNativeConvertor = new LivingDocNativeConvertor(inputFilePath, outputFilePath);
+            var livingDocNativeConverters = new LivingDocNativeConverter(inputFilePath, outputFilePath);
 
-            var exception = Assert.Throws<IOException>(() => livingDocNativeConvertor.Execute());
+            var exception = Assert.Throws<IOException>(() => livingDocNativeConverters.Execute());
             Assert.That(exception.Message.StartsWith("IO error: Could not find a part of the path"));
         }
 
         [Test]
-        public void LivingDocNativeConvertor_Execute_Invalid_Input_File()
+        public void LivingDocNativeConverters_Execute_Invalid_Input_File()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.json");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.html");
 
-            var livingDocNativeConvertor = new LivingDocNativeConvertor(inputFilePath, outputFilePath);
+            var livingDocNativeConverters = new LivingDocNativeConverter(inputFilePath, outputFilePath);
 
-            var exception = Assert.Throws<ApplicationException>(() => livingDocNativeConvertor.Execute());
+            var exception = Assert.Throws<ApplicationException>(() => livingDocNativeConverters.Execute());
             Assert.That(exception.Message.StartsWith("Unexpected error: The JSON value could not be converted"));
         }
     }

@@ -1,26 +1,31 @@
 ﻿using Expressium.LivingDoc.Generators;
-using Expressium.LivingDoc.Models;
+using Expressium.LivingDoc.Messages;
 using System;
 using System.IO;
 
 namespace Expressium.LivingDoc
 {
-    public class LivingDocNativeConvertor
+    public class LivingDocConverter
     {
         private string inputPath;
         private string outputPath;
+        private string title;
 
-        public LivingDocNativeConvertor(string inputPath, string outputPath)
+        public LivingDocConverter(string inputPath, string outputPath, string title)
         {
             this.inputPath = inputPath;
             this.outputPath = outputPath;
+            this.title = title;
         }
 
         public void Execute()
         {
             try
             {
-                var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputPath);
+                var messagesParser = new MessagesParser();
+                var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
+                if (!string.IsNullOrEmpty(title))
+                    livingDocProject.Title = title;
                 var livingDocProjectGenerator = new LivingDocProjectGenerator();
                 livingDocProjectGenerator.Generate(livingDocProject, outputPath);
             }

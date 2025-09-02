@@ -70,3 +70,23 @@
 
 ### Cucumber React Preview
 * https://cucumber-react-preview.netlify.app/?story=gherkin--gherkindocument--attachments
+
+
+## Sefl-Contained NuGet Packages
+```
+	<ItemGroup>
+	  <None Include="bin\Debug\net8.0\Expressium.LivingDoc.exe" Pack="true" 
+			PackagePath="lib\net8.0\Expressium.LivingDoc.exe"
+			CopyToOutput="true" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="bin\Debug\net8.0\Expressium.LivingDoc.pdb" Pack="true"
+			  PackagePath="lib\net8.0\Expressium.LivingDoc.pdb"
+			  CopyToOutput="true" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="bin\Debug\net8.0\Expressium.LivingDoc.runtimeconfig.json" Pack="true"
+			  PackagePath="lib\net8.0\Expressium.LivingDoc.runtimeconfig.json"
+			  CopyToOutput="true" />
+	</ItemGroup>
+```
