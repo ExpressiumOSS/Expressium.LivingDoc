@@ -4,16 +4,18 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net8.0</TargetFramework>
 		<PackageId>Expressium.LivingDoc</PackageId>
-		<Title>Expressium LivingDoc Test Report for ReqnRoll</Title>
+		<Title>Expressium LivingDoc Test Report for ReqnRoll Projects</Title>
 		<Version>1.0.0</Version>
 		<Authors>Soeren Andersen</Authors>
 		<Company>Expressium</Company>
 		<Product>LivingDoc</Product>
-		<Description>LivingDoc Test Report for ReqnRoll</Description>
+		<Description>LivingDoc Test Report for ReqnRoll Projects</Description>
 		<Copyright>© 2025 Expressium All Rights Reserved</Copyright>
-		<PackageProjectUrl>https://expressium.dev</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/ExpressiumOSS/Expressium.LivingDoc</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/ExpressiumOSS/Expressium.LivingDoc</PackageProjectUrl>
 		<PackageTags>expressium;reqnroll;bdd;livingdoc</PackageTags>
+		<PackageIcon>Expressium.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<StartupObject></StartupObject>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -42,4 +44,14 @@
 		</EmbeddedResource>
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="..\Expressium.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>	
 </Project>

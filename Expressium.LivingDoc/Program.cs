@@ -40,7 +40,7 @@ namespace Expressium.LivingDoc
             else
             {
                 Console.WriteLine("Expressium.LivingDoc.exe --input [INPUTFILE] --output [OUTPUTFILE] --title [TITLE]");
-                Console.WriteLine("Expressium.LivingDoc.exe --input .\\TestExecution.json --output .\\LivingDoc.html --title \"Expressium CoffeeShop\"");
+                Console.WriteLine("Expressium.LivingDoc.exe --input .\\ReqnRoll.ndjson --output .\\LivingDoc.html --title \"Expressium CoffeeShop Report\"");
             }
         }
     }
