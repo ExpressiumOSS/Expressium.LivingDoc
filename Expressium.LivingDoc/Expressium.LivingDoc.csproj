@@ -5,7 +5,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<PackageId>Expressium.LivingDoc</PackageId>
 		<Title>Expressium LivingDoc Test Report for ReqnRoll Projects</Title>
-		<Version>1.0.0</Version>
+		<Version>1.0.0-alpha</Version>
 		<Authors>Soeren Andersen</Authors>
 		<Company>Expressium</Company>
 		<Product>LivingDoc</Product>

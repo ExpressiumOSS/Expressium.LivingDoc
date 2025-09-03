@@ -2,7 +2,7 @@ echo off
 
 cd .\Expressium.Coffeeshop.Web.API.Tests\bin\Debug\net8.0
 
-del .\LivingDoc.html
-Expressium.LivingDoc.exe --native c:\Temp\TestExecutionEx.json .\LivingDoc.html
+del .\LivingDocPerago.html
+Expressium.LivingDoc.exe --native c:\Temp\TestExecutionEx.json .\LivingDocPerago.html
 
-start .\LivingDoc.html
+start .\LivingDocPerago.html

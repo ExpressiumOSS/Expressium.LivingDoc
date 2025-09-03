@@ -15,43 +15,74 @@ be distributed to a public location enabling easy access by the stackholders.
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 
 ## How-To-Use
-* Configure ReqnRoll to enable Cucumber Messages JSON file generation...
-* Create a Console App project in the solution for an Expressium LivingDoc program...
+* Create a Console App project in the solution for the custom LivingDoc program...
 * Add the Expressium LivingDoc NuGet package to the Console App project...
 * Add a project reference from the Console App project to the ReqnRoll test project...
-* Run the ReqnRoll BDD tests in the solution to generate Cucumber Messages output...
-* Run the Expressium LivingDoc Console App to generate a single HTML test report...
+* Configure Cucumber Messages output file path in the ReqnRoll test project...
+* Run the tests in the ReqnRoll test project to generate the Cucumber Messages file...
+* Run the custom LivingDoc program to generate a LivingDoc report in the output directory...
 
-## Console App Program
+### Console App Program
 ```
-using Expressium.LivingDoc.Generators;
 using System;
 
-namespace Expressium.LivingDoc
+namespace MyCompany.LivingDoc
 {
     public class Program
     {
         static void Main(string[] args)
         {
-            if (args.Length == 2)
+            if (args.Length == 6)
             {
-                var livingDocGenerator = new LivingDocGenerator(args[0], args[1]);
+                Console.WriteLine("");
+                Console.WriteLine("Generating LivingDoc Test Report...");
+                Console.WriteLine("Input: " + args[1]);
+                Console.WriteLine("Output: " + args[3]);
+                Console.WriteLine("Title: " + args[5]);
+
+                var livingDocGenerator = new LivingDocConverter(args[1], args[3], args[5]);
                 livingDocGenerator.Execute();
+
+                Console.WriteLine("Generating LivingDoc Report Completed");
+                Console.WriteLine("");
             }
             else
             {
-                Console.WriteLine("Expressium.LivingDoc.exe [INPUTPATH] [OUTPUTPATH]");
-                Console.WriteLine("Expressium.LivingDoc.exe C:\\SourceCode\\company-project-tests\\TestExecution.json C:\\SourceCode\\company-project-tests\\LivingDoc.html");
+                Console.WriteLine("MyCompany.LivingDoc.exe --input [INPUTFILE] --output [OUTPUTFILE] --title [TITLE]");
+                Console.WriteLine("MyCompany.LivingDoc.exe --input .\\ReqnRoll.ndjson --output .\\LivingDoc.html --title \"Expressium CoffeeShop Report\"");
             }
         }
     }
 }
 ```
 
-## Command Line Arguments
+### ReqnRoll Configuration
 ```
-Expressium.LivingDoc.exe stack-traces.feature.ndjson "Compatibility Kit Stack Traces.html"
+{
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
+  "formatters": {
+    "message": {
+      "outputFilePath": "ReqnRoll.ndjson"
+    }
+  }
+}
 ```
 
-## Demo Expressium LivingDoc Test Report
-Web: https://expressium.dev/reqnroll/LivingDoc.html
+### Attachments Work-Around
+```
+using Reqnroll;
+
+namespace MyCompany.Coffeeshop.Web.API.Tests
+{
+    internal static class ReqnRollExtensions
+    {
+        internal static void AddAttachmentAsLink(this IReqnrollOutputHelper outputHelper, string path)
+        {
+            outputHelper.WriteLine($"[Attachment: {path}]");
+        }
+    }
+}
+```
+
+## Expressium LivingDoc Demo Test Report
+**Web:** https://expressium.dev/reqnroll/LivingDoc.html
