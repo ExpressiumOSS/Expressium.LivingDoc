@@ -141,9 +141,9 @@ Scenario: Sort by Duration Column in the Features List
 	When I sort the features by Duration column in the Features List
 	Then I should have following visible objects in the Features List
 		| Features     |
-		| Contact Us   |
 		| Orders       |
 		| Login        |
+		| Contact Us   |
 		| Registration |
 
 Scenario: Sort by Status Column in the Features List
