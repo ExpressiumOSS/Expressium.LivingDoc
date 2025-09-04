@@ -2,7 +2,7 @@ using log4net;
 using NUnit.Framework;
 using System;
 
-namespace Expressium.LivingDoc.UITests
+namespace Expressium.LivingDoc.UITests.Utilities
 {
     public class Asserts
     {

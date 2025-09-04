@@ -1,4 +1,5 @@
 using Expressium.LivingDoc.UITests.Pages;
+using Expressium.LivingDoc.UITests.Utilities;
 using log4net.Filter;
 using Reqnroll;
 using System;

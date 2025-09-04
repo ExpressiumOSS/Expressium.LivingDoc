@@ -1,3 +1,4 @@
+using Expressium.LivingDoc.UITests.Utilities;
 using log4net;
 using OpenQA.Selenium;
 
@@ -7,16 +8,16 @@ namespace Expressium.LivingDoc.UITests.Steps
     {
         protected Configuration configuration;
         protected ILog logger;
-        protected WebDriverManager driverManager;
+        protected WebDriverController driverController;
         protected Asserts Asserts;
 
-        protected IWebDriver driver => driverManager.Driver;
+        protected IWebDriver driver => driverController.Driver;
 
         public BaseSteps(BaseContext baseContext)
         {
             configuration = baseContext.Configuration;
             logger = baseContext.Logger;
-            driverManager = baseContext.DriverManager;
+            driverController = baseContext.Controller;
             Asserts = baseContext.Asserts;
         }
     }

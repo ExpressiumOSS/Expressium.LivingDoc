@@ -4,7 +4,7 @@ using log4net.Config;
 using log4net.Core;
 using log4net.Layout;
 
-namespace Expressium.LivingDoc.UITests
+namespace Expressium.LivingDoc.UITests.Utilities
 {
     public class Logger
     {

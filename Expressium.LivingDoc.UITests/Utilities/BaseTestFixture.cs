@@ -7,22 +7,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Expressium.LivingDoc.UITests
+namespace Expressium.LivingDoc.UITests.Utilities
 {
     public class BaseTestFixture
     {
         protected readonly Configuration configuration;
-        protected readonly WebDriverManager driverManager;
+        protected readonly WebDriverController controller;
 
         protected ILog logger;
         protected Asserts Asserts;
 
-        protected IWebDriver driver => driverManager.Driver;
+        protected IWebDriver driver => controller.Driver;
 
         public BaseTestFixture()
         {
             configuration = Configuration.GetCurrentConfiguation();
-            driverManager = new WebDriverManager(configuration);
+            controller = new WebDriverController(configuration);
         }
 
         [OneTimeSetUp]
@@ -67,16 +67,16 @@ namespace Expressium.LivingDoc.UITests
             logger.Info("");
             logger.Info("// Finalize Test Fixture");
 
-            if (driverManager.IsInitialized())
+            if (controller.IsInitialized())
             {
                 if (configuration.Screenshot)
                 {
                     var filePath = Path.Combine(configuration.LoggingPath, GetTestName(), GetTestName() + ".png");
-                    driverManager.SaveScreenshot(filePath);
+                    controller.SaveScreenshot(filePath);
                     logger.Info($"Screenshot has been saved: {Path.GetFileName(filePath)}");
                 }
 
-                driverManager.Quit();
+                controller.Quit();
             }
 
             LogMessageAsError(GetTestResultMessage());

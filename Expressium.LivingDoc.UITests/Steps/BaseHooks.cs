@@ -1,3 +1,4 @@
+using Expressium.LivingDoc.UITests.Utilities;
 using Reqnroll;
 using Reqnroll.BoDi;
 using System.IO;
@@ -29,7 +30,7 @@ namespace Expressium.LivingDoc.UITests.Steps
             baseContext.Configuration = configuration;
             baseContext.Logger = logger;
             baseContext.Asserts = Asserts;
-            baseContext.DriverManager = driverManager;
+            baseContext.Controller = controller;
 
             objectContainer.RegisterInstanceAs(baseContext);
         }

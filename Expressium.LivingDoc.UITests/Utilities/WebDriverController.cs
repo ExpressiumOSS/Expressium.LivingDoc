@@ -1,13 +1,13 @@
 using OpenQA.Selenium;
 
-namespace Expressium.LivingDoc.UITests
+namespace Expressium.LivingDoc.UITests.Utilities
 {
-    public class WebDriverManager
+    public class WebDriverController
     {
         private Configuration configuration;
         private IWebDriver driver;
 
-        public WebDriverManager(Configuration configuration)
+        public WebDriverController(Configuration configuration)
         {
             this.configuration = configuration;
         }

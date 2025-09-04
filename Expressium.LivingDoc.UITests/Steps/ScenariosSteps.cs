@@ -1,4 +1,5 @@
 using Expressium.LivingDoc.UITests.Pages;
+using Expressium.LivingDoc.UITests.Utilities;
 using Reqnroll;
 using System;
 using System.Collections.Generic;

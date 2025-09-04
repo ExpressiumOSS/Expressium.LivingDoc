@@ -4,7 +4,7 @@ using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using System;
 
-namespace Expressium.LivingDoc.UITests
+namespace Expressium.LivingDoc.UITests.Utilities
 {
     public class WebDriverFactory
     {
