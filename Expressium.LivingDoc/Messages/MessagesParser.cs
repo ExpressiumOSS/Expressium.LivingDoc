@@ -453,27 +453,4 @@ namespace Expressium.LivingDoc.Messages
             }
         }
     }
-
-    // Handling Hooks (Before/After) - Currently not implemented...
-    //var hookStatus = string.Empty;
-    //var hookType = string.Empty;
-    //var hookMessage = string.Empty;
-    //var hookStackTrace = string.Empty;
-    //foreach (var step in testCase.TestSteps)
-    //{
-    //    if (!string.IsNullOrEmpty(step.HookId))
-    //    {
-    //        var testStepFinished = listOfTestStepFinished.Find(f => f.TestStepId == step.Id);
-    //        if (testStepFinished != null)
-    //        {
-    //            if (testStepFinished.TestStepResult.Status.ToString() == "FAILED")
-    //            {
-    //                hookStatus = testStepFinished.TestStepResult.Status.ToString();
-    //                hookType = testStepFinished.TestStepResult.Exception.Type;
-    //                hookMessage = testStepFinished.TestStepResult.Exception.Message;
-    //                hookStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
-    //            }
-    //        }
-    //    }
-    //}
 }
