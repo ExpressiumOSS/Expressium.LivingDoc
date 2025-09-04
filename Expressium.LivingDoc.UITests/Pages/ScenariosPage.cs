@@ -1,0 +1,34 @@
+using OpenQA.Selenium;
+using System;
+using System.Collections.Generic;
+using log4net;
+using Expressium.LivingDoc.UITests.Controls;
+
+namespace Expressium.LivingDoc.UITests.Pages
+{
+    public partial class ScenariosPage : BasePage
+    {
+        public FilterBar FilterBar { get; private set; }
+        public BaseTable Grid { get; private set; }
+
+        private readonly By Headline = By.XPath("//*[@id='view-title' and text()='Scenarios']");
+
+        public ScenariosPage(ILog logger, IWebDriver driver) : base(logger, driver)
+        {
+            FilterBar = new FilterBar(logger, driver);
+            Grid = new BaseTable(logger, driver, By.XPath("//*[@id='left-section']//*[@id='table-grid']"));
+
+            WaitForPageElementIsVisible(Headline);
+        }
+
+        public string GetHeadline()
+        {
+            logger.Info("GetHeadline()");
+            return Headline.GetText(driver);
+        }
+
+        #region Extensions
+
+        #endregion
+    }
+}
