@@ -72,7 +72,7 @@
 * https://cucumber-react-preview.netlify.app/?story=gherkin--gherkindocument--attachments
 
 
-## Sefl-Contained NuGet Packages
+## Self-Contained NuGet Packages
 ```
 	<ItemGroup>
 	  <None Include="bin\Debug\net8.0\Expressium.LivingDoc.exe" Pack="true" 
@@ -89,4 +89,26 @@
 			  PackagePath="lib\net8.0\Expressium.LivingDoc.runtimeconfig.json"
 			  CopyToOutput="true" />
 	</ItemGroup>
+```
+
+## Using NuGet Packages in Test Project
+
+#### Expressium.Coffeeshop.Web.API.Tests.csproj
+```
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Expressium.LivingDoc" Version="1.0.40" />
+	</ItemGroup>
+```
+
+#### Program.cs
+```
+using Expressium.LivingDoc;
+
+var livingDocGenerator = new LivingDocConverter("ReqnRoll.ndjson", "LivingDoc.html", "Expressium Coffeeshop Test Report");
+livingDocGenerator.Execute();
 ```

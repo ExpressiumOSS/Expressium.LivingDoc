@@ -30,7 +30,7 @@ namespace Expressium.LivingDoc
 
                 listOfLines.Add("<!-- Feature Section -->");
                 listOfLines.Add("<div class='section'>");
-                listOfLines.AddRange(GenerateDataFeaturesTags(feature));
+                listOfLines.AddRange(GenerateDataFeatureTags(feature));
                 listOfLines.AddRange(GenerateDataFeatureName(feature));
                 listOfLines.AddRange(GenerateDataFeatureDescription(feature));
                 listOfLines.AddRange(GenerateDataFeatureBackground(feature));
@@ -41,7 +41,7 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateDataFeaturesTags(LivingDocFeature feature)
+        internal List<string> GenerateDataFeatureTags(LivingDocFeature feature)
         {
             var listOfLines = new List<string>();
 
