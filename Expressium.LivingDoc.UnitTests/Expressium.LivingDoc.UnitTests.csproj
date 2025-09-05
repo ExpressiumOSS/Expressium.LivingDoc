@@ -57,6 +57,9 @@
 	  <None Update="Samples\backgrounds.features.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Samples\coffeeshop.feature.ndjson">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Samples\invalid.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

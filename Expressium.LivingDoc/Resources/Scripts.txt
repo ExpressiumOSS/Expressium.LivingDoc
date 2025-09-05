@@ -632,6 +632,15 @@
                     attachments[i].style.display = "none";
                 }
             }
+
+            var stacktraces = grandParent.getElementsByClassName('stacktraces');
+            for (var i = 0; i < stacktraces.length; i++) {
+                if (stacktraces[i].style.display === "none") {
+                    stacktraces[i].style.display = "block";
+                } else {
+                    stacktraces[i].style.display = "none";
+                }
+            }
         }
     </script>
     <script>

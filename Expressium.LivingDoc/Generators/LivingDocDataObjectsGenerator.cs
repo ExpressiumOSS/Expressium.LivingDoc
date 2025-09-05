@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Expressium.LivingDoc
 {
     internal class LivingDocDataObjectsGenerator
     {
-        private bool includeStackTraces = false;
+        private bool includeStackTraces = true;
 
         internal List<string> Generate(LivingDocProject project)
         {
@@ -235,7 +236,8 @@ namespace Expressium.LivingDoc
 
             listOfLines.Add($"<span class='duration'>&nbsp;{example.GetDuration()}</span>");
 
-            if (example.Attachments.Count > 0)
+            var hasStackTraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
+            if (example.Attachments.Count > 0 || hasStackTraces)
                 listOfLines.Add("<span style='color: gray;' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&nbsp;&#9776;</span>");
 
             listOfLines.Add("</div>");
@@ -288,27 +290,34 @@ namespace Expressium.LivingDoc
 
                 var exceptionType = step.ExceptionType;
                 var exceptionMessage = step.ExceptionMessage;
-                var exceptionStackTrace = step.ExceptionStackTrace;
-                if (!string.IsNullOrWhiteSpace(exceptionType) || !string.IsNullOrWhiteSpace(exceptionMessage))
+                if (!string.IsNullOrWhiteSpace(exceptionType) && !string.IsNullOrWhiteSpace(exceptionMessage))
                 {
                     listOfLines.Add("<!-- Data Step Message -->");
                     listOfLines.Add("<li>");
                     listOfLines.Add($"<div class='message-box'>");
                     listOfLines.Add($"<div class='message-{status}'>");
-
-                    if (!string.IsNullOrWhiteSpace(exceptionType))
-                        listOfLines.Add($"<b>{exceptionType}</b><br>");
-
-                    if (!string.IsNullOrWhiteSpace(exceptionMessage))
-                        listOfLines.Add($"{exceptionMessage.Replace("\n", "<br>")}<br>");
-
-                    if (includeStackTraces)
-                        if (!string.IsNullOrWhiteSpace(exceptionStackTrace))
-                            listOfLines.Add($"<div style='font-size: 0.875em; padding: 8px;'><b>StackTrace:</b><br>{exceptionStackTrace}</div>");
-
+                    listOfLines.Add($"<b>{exceptionType}</b><br>");
+                    listOfLines.Add($"{exceptionMessage.Replace("\n", "<br>")}<br>");
                     listOfLines.Add("</div>");
                     listOfLines.Add("</div>");
                     listOfLines.Add("</li>");
+                }
+
+                var exceptionStackTrace = step.ExceptionStackTrace;
+                if (!string.IsNullOrWhiteSpace(exceptionStackTrace))
+                {
+                    if (includeStackTraces)
+                    {
+                        listOfLines.Add("<!-- Data Step Message -->");
+                        listOfLines.Add("<li>");
+                        listOfLines.Add($"<div class='message-box stacktraces' style='display : none;'>");
+                        listOfLines.Add($"<div class='message-{status}'>");
+                        listOfLines.Add($"<b>StackTrace</b><br>");
+                        listOfLines.Add($"<div style='font-size: 0.75em;'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
+                        listOfLines.Add("</div>");
+                        listOfLines.Add("</div>");
+                        listOfLines.Add("</li>");
+                    }
                 }
             }
 
