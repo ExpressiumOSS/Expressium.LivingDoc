@@ -25,7 +25,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- Data Features View -->");
             listOfLines.Add($"<div class='data-item' id='features-view'>");
 
-            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<div class='section' style='padding-right: 4px;'>");
             listOfLines.Add("<table id='table-grid' class='grid-view'>");
 
             listOfLines.Add("<thead>");
@@ -69,7 +69,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- Data Scenarios View -->");
             listOfLines.Add($"<div class='data-item' id='scenarios-view'>");
 
-            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<div class='section' style='padding-right: 4px;'>");
             listOfLines.Add("<table id='table-grid' class='grid-view'>");
 
             listOfLines.Add("<thead>");
@@ -122,7 +122,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- Data Steps View -->");
             listOfLines.Add($"<div class='data-item' id='steps-view'>");
 
-            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<div class='section' style='padding-right: 4px;'>");
             listOfLines.Add("<table id='table-grid' class='grid-view'>");
 
             listOfLines.Add("<thead>");

@@ -108,11 +108,13 @@
             flex: 1;
             overflow: hidden;
             /* overflow: auto; */
+            scrollbar-color: #909090 #F8F9FA;
         }
 
         #right-section {
             flex: 1;
             overflow: auto;
+            scrollbar-color: #909090 #F8F9FA;
         }
 
         #list-view {
