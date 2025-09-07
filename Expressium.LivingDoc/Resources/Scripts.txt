@@ -53,14 +53,19 @@
             }
 
             filterView();
+            // loadAnalytics();
         }
     </script>
     <script>
-        function loadAnalyticsSection() {
-
+        function loadAnalytics() {
             var analytics = document.getElementById("analytics").innerHTML;
             document.getElementById('right-section').innerHTML = analytics;
 
+            // filterAnalytics();
+        }
+    </script>
+    <script>
+        function filterAnalytics() {
             var navLinkActive = document.querySelectorAll('a.navigation-link.navigation-active');
             if (navLinkActive.length > 0) {
                 var name = navLinkActive[0].textContent.toLowerCase();
@@ -82,12 +87,6 @@
                     sectionActive.style.display = "";
                 }
             }
-        }
-    </script>
-    <script>
-        function loadAnalytics() {
-            var analytics = document.getElementById("analytics").innerHTML;
-            document.getElementById('right-section').innerHTML = analytics;
         }
     </script>
     <script>
