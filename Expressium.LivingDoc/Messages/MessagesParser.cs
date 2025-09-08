@@ -140,6 +140,7 @@ namespace Expressium.LivingDoc.Messages
                 livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
                 livingDocStep.Keyword = step.Keyword.Trim();
                 livingDocStep.Id = step.Id;
+                livingDocStep.Type = LivingDocStepTypes.Background.ToString();
                 livingDocBackground.Steps.Add(livingDocStep);
             }
 
@@ -201,30 +202,7 @@ namespace Expressium.LivingDoc.Messages
                         livingDocScenario.Examples.Add(livingDocExample);
 
                         ParseScenarioBackgroundSteps(livingDocExample, livingDocFeature, tableIndexId++);
-
-                        //ParseScenarioExampleSteps(livingDocExample, scenario);
-                        foreach (var step in scenario.Steps)
-                        {
-                            var livingDocStep = new LivingDocStep();
-                            livingDocStep.Id = step.Id;
-                            livingDocStep.TableBodyId = tableBodyRow.Id;
-                            livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
-                            livingDocStep.Keyword = step.Keyword.Trim();
-
-                            if (step.DataTable != null)
-                            {
-                                foreach (var row in step.DataTable.Rows)
-                                {
-                                    var dataTableRow = new LivingDocDataTableRow();
-                                    foreach (var cell in row.Cells)
-                                        dataTableRow.Cells.Add(cell.Value);
-                                    livingDocStep.DataTable.Rows.Add(dataTableRow);
-                                }
-                            }
-
-                            livingDocExample.Steps.Add(livingDocStep);
-                        }
-
+                        ParseScenarioExampleTableSteps(livingDocExample, scenario, tableBodyRow.Id);
                         ParseScenarioExampleTableHeaders(livingDocExample, examples);
                         ParseScenarioExampleTableData(livingDocExample, tableBodyRow);
                     }
@@ -260,6 +238,32 @@ namespace Expressium.LivingDoc.Messages
                 var livingDocStep = new LivingDocStep();
                 livingDocStep.Id = step.Id;
                 livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
+                livingDocStep.Keyword = step.Keyword.Trim();
+
+                if (step.DataTable != null)
+                {
+                    foreach (var row in step.DataTable.Rows)
+                    {
+                        var dataTableRow = new LivingDocDataTableRow();
+                        foreach (var cell in row.Cells)
+                            dataTableRow.Cells.Add(cell.Value);
+                        livingDocStep.DataTable.Rows.Add(dataTableRow);
+                    }
+                }
+
+                livingDocExample.Steps.Add(livingDocStep);
+            }
+        }
+
+        internal static void ParseScenarioExampleTableSteps(LivingDocExample livingDocExample, Scenario scenario, string tableBodyRowId)
+        {
+            foreach (var step in scenario.Steps)
+            {
+                var livingDocStep = new LivingDocStep();
+                livingDocStep.Id = step.Id;
+                livingDocStep.TableBodyId = tableBodyRowId;
+                livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
+                livingDocStep.Type = LivingDocStepTypes.Scenario.ToString();
                 livingDocStep.Keyword = step.Keyword.Trim();
 
                 if (step.DataTable != null)
@@ -342,7 +346,7 @@ namespace Expressium.LivingDoc.Messages
                         if (attachments.Count > 0)
                         {
                             foreach (var attachment in attachments)
-                                ParseExampleAttachments(example, attachment);
+                                ParseTestResultsAttachments(example, attachment);
                         }
 
                         var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
@@ -390,14 +394,14 @@ namespace Expressium.LivingDoc.Messages
                             if (testStepFinished == null)
                                 continue;
 
-                            ParseTestStepResults(step, testStepFinished);
+                            ParseTestResultsSteps(step, testStepFinished);
                         }
                     }
                 }
             }
         }
 
-        internal static void ParseTestStepResults(LivingDocStep livingDocStep, TestStepFinished testStepFinished)
+        internal static void ParseTestResultsSteps(LivingDocStep livingDocStep, TestStepFinished testStepFinished)
         {
             livingDocStep.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
             livingDocStep.Message = testStepFinished.TestStepResult.Message;
@@ -410,7 +414,7 @@ namespace Expressium.LivingDoc.Messages
             }
         }
 
-        internal static void ParseExampleAttachments(LivingDocExample livingDocExample, Attachment attachment)
+        internal static void ParseTestResultsAttachments(LivingDocExample livingDocExample, Attachment attachment)
         {
             if (attachment.MediaType == "text/uri-list")
                 livingDocExample.Attachments.Add(attachment.Body);

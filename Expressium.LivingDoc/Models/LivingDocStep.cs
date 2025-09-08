@@ -14,6 +14,14 @@ namespace Expressium.LivingDoc.Models
         Unknown
     }
 
+    public enum LivingDocStepTypes
+    {
+        Background,
+        Rule,
+        Scenario,
+        Unknown
+    }
+
     public class LivingDocStep
     {
         public string Id { get; set; }
@@ -21,6 +29,7 @@ namespace Expressium.LivingDoc.Models
         public string TableBodyId { get; set; }
         public string Keyword { get; set; }
         public string Name { get; set; }
+        public string Type { get; set; }
         public string Status { get; set; }
         public TimeSpan Duration { get; set; }
         public string Message { get; set; }
@@ -43,6 +52,7 @@ namespace Expressium.LivingDoc.Models
                 Id = step.Id,
                 Keyword = step.Keyword,
                 Name = step.Name,
+                Type = step.Type,
                 Status = step.Status,
                 Duration = step.Duration,
                 Message = step.Message,
