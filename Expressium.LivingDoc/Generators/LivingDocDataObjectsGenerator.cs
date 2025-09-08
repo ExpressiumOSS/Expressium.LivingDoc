@@ -313,7 +313,7 @@ namespace Expressium.LivingDoc
                         listOfLines.Add($"<div class='message-box stacktraces' style='display : none;'>");
                         listOfLines.Add($"<div class='message-{status}'>");
                         listOfLines.Add($"<b>Stacktrace</b><br>");
-                        listOfLines.Add($"<div style='font-size: 0.75em;'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
+                        listOfLines.Add($"<div style='font-size: 0.875em;'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
                         listOfLines.Add("</div>");
                         listOfLines.Add("</div>");
                         listOfLines.Add("</li>");
