@@ -15,7 +15,6 @@
 		<PackageTags>expressium;reqnroll;bdd;livingdoc</PackageTags>
 		<PackageIcon>Expressium.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<StartupObject></StartupObject>
 	</PropertyGroup>
 
 	<ItemGroup>
