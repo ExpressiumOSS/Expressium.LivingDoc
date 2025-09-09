@@ -22,7 +22,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='editor'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<span class='page-name'>Gherkin Scenario Editor</span>");
+            listOfLines.Add("<span class='page-name'>Gherkin Editor</span>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<hr>");
@@ -34,6 +34,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<span class='chart-name'>Scenario</span>");
             listOfLines.Add("</div>");
 
+            /*
             listOfLines.Add("<div class='layout-column align-right'>");
             listOfLines.Add("<button title='Preview Scenario Script' class='editor-option' onclick='editorPreview()'>Preview</button>");
             listOfLines.Add("<button title='Copy Scenario Script' class='editor-option' onclick='editorCopy()'>Copy</button>");
@@ -41,11 +42,12 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<button title='Clear Scenario Script' class='editor-option' onclick=\"loadEditor(); filterStepDefinitions();\">Clear</button>");
             listOfLines.Add("<button title='Download Scenario Script' class='editor-option' onclick='editorDownload()'>Download</button>");
             listOfLines.Add("</div>");
+            */
 
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<textarea class='filter' id='script' rows='7'></textarea>");
+            listOfLines.Add("<textarea class='filter' id='script' rows='8'></textarea>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");

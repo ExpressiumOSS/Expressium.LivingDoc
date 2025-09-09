@@ -477,7 +477,7 @@
                 if (found)
                     numberOfFound++;
 
-                if (numberOfFound >= 6)
+                if (numberOfFound >= 7)
                     found = false;
 
                 tr[i].style.display = found ? "" : "none";

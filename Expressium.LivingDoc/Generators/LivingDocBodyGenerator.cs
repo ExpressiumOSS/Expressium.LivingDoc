@@ -203,8 +203,11 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var generator = new LivingDocDataEditorGenerator();
-            listOfLines.AddRange(generator.Generate(project));
+            if (includeEditor)
+            {
+                var generator = new LivingDocDataEditorGenerator();
+                listOfLines.AddRange(generator.Generate(project));
+            }
 
             return listOfLines;
         }
