@@ -15,54 +15,18 @@ be distributed to a public location enabling easy access by the stackholders.
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 
 ## How-To-Use
-* Create a Console App project in the solution for the custom LivingDoc program...
-* Add the Expressium LivingDoc NuGet package to the Console App project...
-* Add a project reference from the Console App project to the ReqnRoll test project...
-* Configure Cucumber Messages output file path in the ReqnRoll test project...
-* Run the tests in the ReqnRoll test project to generate the Cucumber Messages file...
-* Run the custom LivingDoc program to generate a LivingDoc report in the output directory...
-
-### Console App Program
-```
-using System;
-
-namespace MyCompany.LivingDoc
-{
-    public class Program
-    {
-        static void Main(string[] args)
-        {
-            if (args.Length == 6)
-            {
-                Console.WriteLine("");
-                Console.WriteLine("Generating LivingDoc Test Report...");
-                Console.WriteLine("Input: " + args[1]);
-                Console.WriteLine("Output: " + args[3]);
-                Console.WriteLine("Title: " + args[5]);
-
-                var livingDocGenerator = new LivingDocConverter(args[1], args[3], args[5]);
-                livingDocGenerator.Execute();
-
-                Console.WriteLine("Generating LivingDoc Report Completed");
-                Console.WriteLine("");
-            }
-            else
-            {
-                Console.WriteLine("MyCompany.LivingDoc.exe --input [INPUTFILE] --output [OUTPUTFILE] --title [TITLE]");
-                Console.WriteLine("MyCompany.LivingDoc.exe --input .\\ReqnRoll.ndjson --output .\\LivingDoc.html --title \"Expressium CoffeeShop Report\"");
-            }
-        }
-    }
-}
-```
+* Add the Expressium.LivingDoc.ReqnrollPlugin NuGet package to the ReqnRoll test project...
+* Setup the Expressium formatters properties in the configuration of ReqnRoll test project...
+* Run the tests in the ReqnRoll test project and open the HTML report in the output directory...
 
 ### ReqnRoll Configuration
 ```
 {
   "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
   "formatters": {
-    "message": {
-      "outputFilePath": "ReqnRoll.ndjson"
+    "expressium": {
+      "outputFilePath": "LivingDoc.ndjson",
+      "outputFileTitle": "Expressium.Coffeeshop.Web.API.Tests"
     }
   }
 }
@@ -72,7 +36,7 @@ namespace MyCompany.LivingDoc
 ```
 using Reqnroll;
 
-namespace MyCompany.Coffeeshop.Web.API.Tests
+namespace MyCompany.MyProject.Web.API.Tests
 {
     internal static class ReqnRollExtensions
     {
