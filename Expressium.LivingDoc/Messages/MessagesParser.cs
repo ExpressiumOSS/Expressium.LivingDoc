@@ -35,7 +35,7 @@ namespace Expressium.LivingDoc.Messages
         internal LivingDocProject ConvertToLivingDoc(string filePath)
         {
             var livingDocProject = new LivingDocProject();
-            livingDocProject.Title = "LivingDoc";
+            livingDocProject.Title = "Expressium LivingDoc";
 
             ParseCucumberMessagesFile(filePath);
             ParseGherkinDocuments(livingDocProject);
