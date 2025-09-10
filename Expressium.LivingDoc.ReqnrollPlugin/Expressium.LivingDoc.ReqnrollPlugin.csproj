@@ -11,6 +11,7 @@
 		<PackageIcon>Expressium.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryUrl>https://github.com/ExpressiumOSS/Expressium.LivingDoc</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
