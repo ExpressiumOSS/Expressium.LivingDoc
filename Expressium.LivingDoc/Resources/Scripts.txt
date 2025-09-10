@@ -53,7 +53,7 @@
             }
 
             filterView();
-            // loadAnalytics();
+            loadAnalytics();
         }
     </script>
     <script>
@@ -61,7 +61,7 @@
             var analytics = document.getElementById("analytics").innerHTML;
             document.getElementById('right-section').innerHTML = analytics;
 
-            // filterAnalytics();
+            filterAnalytics();
         }
     </script>
     <script>

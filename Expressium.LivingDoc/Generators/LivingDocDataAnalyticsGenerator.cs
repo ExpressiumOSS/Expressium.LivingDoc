@@ -52,7 +52,7 @@ namespace Expressium.LivingDoc.Generators
             var numberOfTests = project.Features.Count;
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Features", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
-            listOfLines.Add("<hr>");
+            //listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -68,7 +68,7 @@ namespace Expressium.LivingDoc.Generators
             var numberOfTests = project.GetNumberOfScenarios();
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Scenarios", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
-            listOfLines.Add("<hr>");
+            //listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -84,7 +84,7 @@ namespace Expressium.LivingDoc.Generators
             var numberOfTests = project.GetNumberOfSteps();
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Steps", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
-            listOfLines.Add("<hr>");
+            //listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -205,6 +205,8 @@ namespace Expressium.LivingDoc.Generators
         internal List<string> GenerateDataAnalyticsDuration(LivingDocProject project)
         {
             var listOfLines = new List<string>();
+
+            listOfLines.Add("<hr>");
 
             listOfLines.Add("<!-- Data Analytics Duration -->");
             listOfLines.Add("<div style='padding-top: 6px; text-align: center; justify-content: center; align-items: center; display: flex;'>");
