@@ -11,6 +11,8 @@
 		<PackageTags>expressium;reqnroll;bdd;livingdoc</PackageTags>
 		<PackageIcon>Expressium.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryUrl>https://github.com/ExpressiumOSS/Expressium.LivingDoc</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -21,6 +23,10 @@
 
 	<ItemGroup>
 	  <None Include="..\Expressium.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\LICENSE">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
