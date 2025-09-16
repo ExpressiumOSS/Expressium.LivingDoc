@@ -18,6 +18,15 @@ namespace Expressium.LivingDoc.Models
             Features = new List<LivingDocFeature>();
         }
 
+        internal void Merge(LivingDocProject project)
+        {
+            foreach (var feature in project.Features)
+            {
+                if (!Features.Any(x => x.Name == feature.Name))
+                    Features.Add(LivingDocSerializer.DeepClone(feature));
+            }
+        }
+
         public int GetNumberOfFeatures()
         {
             return Features.Count;

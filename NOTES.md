@@ -9,14 +9,14 @@ such as questions, comments, enhancement requests etc...
 * Visualization of stacktrace information as error messages or attachments...?
 * Include object list in report like Features, Scenarios and Steps...?
 * Show Analytics charts seperately for Features, Scenarios and Steps...?
-* Rename status Incomplete to Broken as in Allura test report...?
 
 ## Enhancements
-* Include scenario steps too during filtering...?
+* Include scenario steps too during keyword filtering...?
 * Export filtered lists to Spreadsheet or Clipboard...?
 * Gherkin Scenario Editor with intellisense for steps...?
-* Handling History Runs by List And Graph...?
+* Handling historical Test Runs as Charts in Analytics...?
 * Deep link to Features, Scenarios, Steps in Test Report...?
+* Merge multiple Parallel Test Runs as one Test Report...?
 
 ## Inspiration
 
