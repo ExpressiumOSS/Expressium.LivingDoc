@@ -135,7 +135,7 @@ namespace Expressium.LivingDoc.Generators
 
             {
                 listOfLines.Add("<!-- Data Analytics Status Chart -->");
-                listOfLines.Add($"<div class='section' style='text-align: center; max-width: 500px; margin: auto;'>");
+                listOfLines.Add($"<div class='section' style='text-align: center; margin: auto;'>");
                 listOfLines.Add($"    <svg width='160px' height='168px' viewBox='0 0 42 42'>");
                 listOfLines.Add($"        <g transform='rotate(-90, 21, 21)'>");
                 listOfLines.Add($"            <circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155'></circle>");
@@ -152,7 +152,7 @@ namespace Expressium.LivingDoc.Generators
             }
 
             {
-                listOfLines.Add("<div class='section' style='text-align: center; max-width: 700px; margin: auto;'>");
+                listOfLines.Add("<div class='section' style='text-align: center; margin: auto;'>");
                 listOfLines.Add("<table align='center'>");
                 listOfLines.Add("<tr>");
 
@@ -188,7 +188,7 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add($"<span class='chart-count-number'>{numberOfTests}</span><br />");
                 listOfLines.Add($"<span class='chart-count-percentage'>100%</span><br />");
                 listOfLines.Add($"<span class='chart-count-status'>Total</span><br />");
-                listOfLines.Add($"<div class='chart-count-bar' style='background-color: black;'></div>");
+                listOfLines.Add($"<div class='chart-count-bar bgcolor-total'></div>");
                 listOfLines.Add("</td>");
 
                 listOfLines.Add("</tr>");

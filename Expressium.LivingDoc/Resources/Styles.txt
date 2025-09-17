@@ -23,6 +23,12 @@
             initial-value: #A9A9A9;
         }
 
+        @property --total-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: black;
+        }
+
         @property --passed-background-color {
             syntax: "<color>";
             inherits: false;
@@ -74,7 +80,6 @@
         @property --keyword-color {
             syntax: "<color>";
             inherits: false;
-            initial-value: #326EA0;    
             initial-value: #2F6795;          
         }
 
@@ -228,11 +233,17 @@
             padding-right: 4px;
         }
 
+        .grid-folder {
+            font-size: 0.9375em;
+            padding: 2px;
+            text-align: center;
+        }
+
         button {
             border: 1px solid dimgray;
         }
 
-        button.status-option {
+        .status-option {
             border: 1px solid darkgray;
             color: darkgray;
         }
@@ -241,6 +252,11 @@
             border: 1px solid dimgray;
             background-color: var(--hover-color);
             color: black;
+        }
+
+        .grid-option {
+            color: gray;
+            font-size: 1.25em;
         }
 
         .gridline {
@@ -265,10 +281,6 @@
             font-weight: bold;
             line-height: 1;
             color: dimgray;
-        }
-
-        .duration {
-            color: gray;
         }
 
         .chart-outline {
@@ -366,6 +378,10 @@
 
         .bgcolor-skipped {
             background: var(--skipped-color);
+        }
+
+        .bgcolor-total {
+            background: var(--total-color);
         }
 
         .status-dot {
@@ -471,6 +487,10 @@
             font-style: italic;
         }
 
+        .feature-duration {
+            color: gray;
+        }
+
         .background-keyword {
             color: var(--keyword-color);
             font-weight: bold;
@@ -492,6 +512,14 @@
 
         .scenario-name {
             font-weight: bold;
+        }
+
+        .scenario-duration {
+            color: gray;
+        }
+
+        .scenario-attachments {
+            color: gray;
         }
 
         .step-marker {
@@ -564,6 +592,10 @@
             border-left: 8px solid var(--skipped-color);
         }
 
+        .message-stacktrace {
+            font-size: 0.875em;
+        }
+        
         .examples-keyword {
             font-weight: bold;
             color: gray;

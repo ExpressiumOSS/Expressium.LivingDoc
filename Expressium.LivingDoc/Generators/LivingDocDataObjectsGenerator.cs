@@ -62,7 +62,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<span class='feature-keyword'>Feature: </span><span class='feature-name'>{feature.Name}</span>");
-            //listOfLines.Add($"<span class='duration'>&nbsp;{feature.GetDuration()}</span>");
+            //listOfLines.Add($"<span class='feature-duration'>&nbsp;{feature.GetDuration()}</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -234,11 +234,11 @@ namespace Expressium.LivingDoc
             if (!string.IsNullOrEmpty(indexId))
                 listOfLines.Add($"<span class='circle-number'>{indexId}</span>");
 
-            listOfLines.Add($"<span class='duration'>&nbsp;{example.GetDuration()}</span>");
+            listOfLines.Add($"<span class='scenario-duration'>&nbsp;{example.GetDuration()}</span>");
 
             var hasStackTraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
             if (example.Attachments.Count > 0 || hasStackTraces)
-                listOfLines.Add("<span style='color: gray;' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&nbsp;&#9776;</span>");
+                listOfLines.Add("<span class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&nbsp;&#9776;</span>");
 
             listOfLines.Add("</div>");
 
@@ -313,7 +313,7 @@ namespace Expressium.LivingDoc
                         listOfLines.Add($"<div class='message-box stacktraces' style='display : none;'>");
                         listOfLines.Add($"<div class='message-{status}'>");
                         listOfLines.Add($"<b>Stacktrace</b><br>");
-                        listOfLines.Add($"<div style='font-size: 0.875em;'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
+                        listOfLines.Add($"<div class='message-stacktrace'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
                         listOfLines.Add("</div>");
                         listOfLines.Add("</div>");
                         listOfLines.Add("</li>");

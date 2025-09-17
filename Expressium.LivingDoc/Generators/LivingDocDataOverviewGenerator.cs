@@ -102,13 +102,13 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<tr class='gridline-header'>");
-            listOfLines.Add($"<td width='16px;' style='font-size: 0.940em; padding: 2px; text-align: center;'>📂</td>");
+            listOfLines.Add($"<td class='grid-folder' width='16px;'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - 1}'>");
             listOfLines.Add($"<span><b>{folder?.Split("\\").LastOrDefault() ?? string.Empty}</b></span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' colspan='2' align='right'>");
-            listOfLines.Add("<a class='tool-link' style='color: gray; font-size: 1.25em;' title='Expand All Features' href='#' onclick='loadExpandAll()'><b>&plus;</b></a>");
-            listOfLines.Add("<a class='tool-link' style='color: gray; font-size: 1.25em;' title='Collapse All Features' href='#' onclick='loadCollapseAll()'><b>&minus;</b></a>");
+            listOfLines.Add("<a class='grid-option' title='Expand All Features' href='#' onclick='loadExpandAll()'><b>&plus;</b></a>");
+            listOfLines.Add("<a class='grid-option' title='Collapse All Features' href='#' onclick='loadCollapseAll()'><b>&minus;</b></a>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"</tr>");
 
@@ -124,7 +124,7 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td width='16px;' style='font-size: 0.940em; padding: 2px; text-align: center;'>📂</td>");
+            listOfLines.Add($"<td class='grid-folder' width='16px;'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span><b>{folder?.Split("\\").LastOrDefault() ?? string.Empty}</b></span>");
             listOfLines.Add($"</td>");
