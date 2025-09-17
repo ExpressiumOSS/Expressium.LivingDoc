@@ -307,6 +307,61 @@ namespace Expressium.LivingDoc.Messages
             var testRunFinished = listOfTestRunFinished.Last();
             livingDocProject.Duration = testRunStarted.Timestamp.ToTimeSpan(testRunFinished.Timestamp);
 
+            // Assign Scenario Test Results....
+            ParseTestResultsScenarios(livingDocProject);
+        }
+
+        internal void ParseTestResultsScenarios(LivingDocProject livingDocProject)
+        {
+            foreach (var feature in livingDocProject.Features)
+            {
+                foreach (var scenario in feature.Scenarios)
+                {
+                    foreach (var example in scenario.Examples)
+                    {
+                        string testCaseStartedId = null;
+
+                        // Assign Scenario Example Test Step Results...
+                        foreach (var step in example.Steps)
+                        {
+                            var pickleStep = GetPickleStep(scenario, step);
+                            if (pickleStep == null)
+                                continue;
+
+                            var testStep = listOfTestCases.SelectMany(p => p.TestSteps).FirstOrDefault(s => s.PickleStepId == pickleStep.Id);
+                            if (testStep == null)
+                                continue;
+
+                            var testStepFinished = listOfTestStepFinished.Find(f => f.TestStepId == testStep.Id);
+                            if (testStepFinished == null)
+                                continue;
+
+                            ParseTestResultsSteps(step, testStepFinished);
+
+                            testCaseStartedId = testStepFinished.TestCaseStartedId;
+                        }
+
+                        // Assign Scenario Example Test Results...
+                        var testCaseStarted = listOfTestCaseStarted.Find(g => g.Id == testCaseStartedId);
+                        if (testCaseStarted == null)
+                            continue;
+
+                        var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
+                        if (testCaseFinished == null)
+                            continue;
+
+                        example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
+
+                        var attachments = listOftAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
+                        if (attachments.Count > 0)
+                        {
+                            foreach (var attachment in attachments)
+                                ParseTestResultsAttachments(example, attachment);
+                        }
+                    }
+                }
+            }
+
             // Assign Scenario Execution Order...
             int orderId = 1;
             foreach (var pickle in listOfPickles)
@@ -321,84 +376,44 @@ namespace Expressium.LivingDoc.Messages
                     if (scenario.Order == 0)
                         scenario.Order = orderId++;
             }
+        }
 
-            // Parse Test Results...
-            foreach (var feature in livingDocProject.Features)
+        internal PickleStep GetPickleStep(LivingDocScenario scenario, LivingDocStep step)
+        {
+            if (step.TableBodyId != null)
             {
-                foreach (var scenario in feature.Scenarios)
-                {
-                    var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id));
-                    if (pickle == null)
-                        continue;
+                // Normal Step in Scenario with Examples...
+                var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id) && x.AstNodeIds.Contains(step.TableBodyId));
+                if (pickle == null)
+                    return null;
 
-                    var testCase = listOfTestCases.Find(y => y.PickleId == pickle.Id);
-                    if (testCase == null)
-                        continue;
-
-                    foreach (var example in scenario.Examples)
-                    {
-                        // Assign Scenario Results...
-                        var testCaseStarted = listOfTestCaseStarted.Find(g => g.TestCaseId == testCase.Id);
-                        if (testCaseStarted == null)
-                            continue;
-
-                        var attachments = listOftAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
-                        if (attachments.Count > 0)
-                        {
-                            foreach (var attachment in attachments)
-                                ParseTestResultsAttachments(example, attachment);
-                        }
-
-                        var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
-                        if (testCaseFinished == null)
-                            continue;
-
-                        example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
-
-                        // Assign Scenario Test Step Results...
-                        foreach (var step in example.Steps)
-                        {
-                            PickleStep pickleStep = null;
-                            if (step.TableBodyId != null)
-                            {
-                                // Normal Step in Scenario with Examples...
-                                pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id) && x.AstNodeIds.Contains(step.TableBodyId));
-                                pickleStep = pickle.Steps.FirstOrDefault(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableBodyId));
-                            }
-                            else if (step.TableIndexId != -1)
-                            {
-                                // Background Step in Scenario with Examples...
-                                var pickleAll = listOfPickles.Where(x => x.AstNodeIds.Contains(scenario.Id));
-                                var pickleStepAll = pickleAll.SelectMany(p => p.Steps).Where(s => s.AstNodeIds.Contains(step.Id));
-
-                                if (pickleStepAll.Count() >= step.TableIndexId)
-                                    pickleStep = pickleStepAll.ElementAt(step.TableIndexId - 1);
-                            }
-                            else
-                            {
-                                // Normal Step in Scenario...
-                                pickleStep = pickle.Steps.FirstOrDefault(s => s.AstNodeIds.Contains(step.Id));
-                            }
-
-                            if (pickleStep == null)
-                                continue;
-
-                            var testCaseStep = listOfTestCases
-                                .SelectMany(p => p.TestSteps)
-                                .FirstOrDefault(s => s.PickleStepId == pickleStep.Id);
-
-                            if (testCaseStep == null)
-                                continue;
-
-                            var testStepFinished = listOfTestStepFinished.Find(f => f.TestStepId == testCaseStep.Id);
-                            if (testStepFinished == null)
-                                continue;
-
-                            ParseTestResultsSteps(step, testStepFinished);
-                        }
-                    }
-                }
+                return pickle.Steps.FirstOrDefault(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableBodyId));
             }
+            else if (step.TableIndexId != -1)
+            {
+                // Background Step in Scenario with Examples...
+                var ScenarioPickles = listOfPickles.Where(x => x.AstNodeIds.Contains(scenario.Id));
+                if (ScenarioPickles == null)
+                    return null;
+
+                var stepPickles = ScenarioPickles.SelectMany(p => p.Steps).Where(s => s.AstNodeIds.Contains(step.Id));
+                if (stepPickles == null)
+                    return null;
+
+                if (stepPickles.Count() >= step.TableIndexId)
+                    return stepPickles.ElementAt(step.TableIndexId - 1);
+            }
+            else
+            {
+                // Normal Step in Scenario...
+                var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id));
+                if (pickle == null)
+                    return null;
+
+                return pickle.Steps.FirstOrDefault(s => s.AstNodeIds.Contains(step.Id));
+            }
+
+            return null;
         }
 
         internal static void ParseTestResultsSteps(LivingDocStep livingDocStep, TestStepFinished testStepFinished)

@@ -85,8 +85,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
-            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 001ms"));
-            Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:001"));
+            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 000ms"));
+            Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:000"));
             Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\empty"));
         }
     }
