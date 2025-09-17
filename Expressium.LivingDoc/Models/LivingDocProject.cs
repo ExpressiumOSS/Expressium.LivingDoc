@@ -156,7 +156,7 @@ namespace Expressium.LivingDoc.Models
 
         public string GetDate()
         {
-            return Date.ToString("ddd dd. MMM yyyy HH':'mm':'ss \"GMT\"z");
+            return Date.ToString("ddd d. MMM yyyy HH':'mm':'ss \"GMT\"z");
         }
 
         public string GetDuration()
