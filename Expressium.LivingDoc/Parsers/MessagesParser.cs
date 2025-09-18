@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 
-namespace Expressium.LivingDoc.Messages
+namespace Expressium.LivingDoc.Parsers
 {
     internal class MessagesParser
     {

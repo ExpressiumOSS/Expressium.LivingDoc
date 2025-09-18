@@ -1,5 +1,5 @@
 ﻿using Expressium.LivingDoc.Generators;
-using Expressium.LivingDoc.Messages;
+using Expressium.LivingDoc.Parsers;
 using System;
 using System.IO;
 

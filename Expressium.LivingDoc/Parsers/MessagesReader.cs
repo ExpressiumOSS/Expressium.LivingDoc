@@ -1,7 +1,7 @@
 ﻿using Cucumber.Messages;
 using System.IO;
 
-namespace Expressium.LivingDoc.Messages
+namespace Expressium.LivingDoc.Parsers
 {
     internal class MessagesReader : NdjsonMessageReader
     {

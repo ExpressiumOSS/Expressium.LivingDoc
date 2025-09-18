@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Expressium.LivingDoc.Messages
+namespace Expressium.LivingDoc.Parsers
 {
     internal class CucumberMessageEnumConverter<T> : JsonConverter<T> where T : struct, Enum
     {

@@ -1,8 +1,8 @@
-﻿using Expressium.LivingDoc.Messages;
+﻿using Expressium.LivingDoc.Parsers;
 using Expressium.LivingDoc.Models;
 using System.IO;
 
-namespace Expressium.LivingDoc.UnitTests.Messages
+namespace Expressium.LivingDoc.UnitTests.Parsers
 {
     internal class MessagesParserBackgroundTests
     {

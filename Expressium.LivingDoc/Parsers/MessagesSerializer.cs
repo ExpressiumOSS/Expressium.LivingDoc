@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json;
 
-namespace Expressium.LivingDoc.Messages
+namespace Expressium.LivingDoc.Parsers
 {
     /// <summary>
     /// When using System.Text.Json to serialize a Cucumber Message Envelope, the following serialization options are used.

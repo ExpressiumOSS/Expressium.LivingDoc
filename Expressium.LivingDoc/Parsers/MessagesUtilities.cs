@@ -2,7 +2,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace Expressium.LivingDoc.Messages
+namespace Expressium.LivingDoc.Parsers
 {
     internal static class MessagesUtilities
     {
