@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace Expressium.LivingDoc.Generators
 {
@@ -18,6 +19,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.AddRange(GenerateHtmlHeader());
+            listOfLines.AddRange(GenerateProperties());
             listOfLines.AddRange(GenerateHead());
             listOfLines.AddRange(GenerateBody(project));
             listOfLines.AddRange(GenerateHtmlFooter());
@@ -54,6 +56,15 @@ namespace Expressium.LivingDoc.Generators
         internal List<string> GenerateHeads()
         {
             return Resources.Heads.Split(Environment.NewLine).ToList();
+        }
+
+        internal List<string> GenerateProperties()
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add($"<!-- Expressium LivingDoc Version: {GetVersionId()} -->");
+
+            return listOfLines;
         }
 
         internal List<string> GenerateStyles()
@@ -102,6 +113,11 @@ namespace Expressium.LivingDoc.Generators
 
                 File.WriteAllText(filePath, streamWriter.ToString());
             }
+        }
+
+        internal string GetVersionId()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version?.ToString();
         }
     }
 }
