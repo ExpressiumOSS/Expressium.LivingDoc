@@ -39,10 +39,7 @@ namespace Expressium.LivingDoc.Models
 
         public string GetDuration()
         {
-            if (Duration.Minutes > 0)
-                return $"{Duration.Minutes}min {Duration.Seconds}s";
-
-            return $"{Duration.Seconds}s {Duration.Milliseconds.ToString("D3")}ms";
+            return Duration.FormatAsString();
         }
 
         public bool HasDataTable()

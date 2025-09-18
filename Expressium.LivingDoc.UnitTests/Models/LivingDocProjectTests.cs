@@ -1,4 +1,5 @@
 ﻿using Expressium.LivingDoc.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -123,6 +124,20 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(listOfFolders[3], Is.EqualTo("Features\\Login\\Rtgs"));
             Assert.That(listOfFolders[4], Is.EqualTo("Features\\Products"));
             Assert.That(listOfFolders[5], Is.EqualTo(null));
+        }
+
+        [TestCase(0, 2, 43, 7, 587, "2h 43min")]
+        [TestCase(0, 0, 43, 7, 587, "43min 7s")]
+        [TestCase(0, 0, 0, 7, 587, "7s 587ms")]
+        [TestCase(0, 0, 0, 0, 587, "0s 587ms")]
+        public void LivingDocProject_GetDuration(int days, int hours, int minutes, int seconds, int milliseconds, string result)
+        {
+            var livingDocProject = new LivingDocProject
+            {
+                Duration = new TimeSpan(days, hours, minutes, seconds, milliseconds)
+            };
+
+            Assert.That(livingDocProject.GetDuration(), Is.EqualTo(result));
         }
     }
 }

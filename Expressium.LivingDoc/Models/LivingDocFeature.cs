@@ -83,10 +83,7 @@ namespace Expressium.LivingDoc.Models
                     duration += example.Duration;
             }
 
-            if (duration.Minutes > 0)
-                return $"{duration.Minutes}min {duration.Seconds}s";
-
-            return $"{duration.Seconds}s {duration.Milliseconds.ToString("D3")}ms";
+            return duration.FormatAsString();
         }
 
         public string GetDurationSortId()
