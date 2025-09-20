@@ -187,7 +187,6 @@
         input.filter {
             width: 100%;
             box-sizing: border-box;
-            background-color: whitesmoke;
             border-width: 1px;
             outline: none;
             background-color: #f1f1f1;
@@ -614,5 +613,16 @@
             font-weight: bold;
             color: gray;
             padding-left: 16px;
+        }
+
+        #script-view {
+            flex: 1;
+            overflow: auto;
+            height: calc(100% - 334px); /* Adjust for filter and search height */
+        }
+
+        #scenario-script {
+            field-sizing: content;
+            height: 96%;
         }
     </style>

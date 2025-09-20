@@ -71,7 +71,7 @@ namespace Expressium.LivingDoc.Generators
 
             if (includeEditor)
             {
-                listOfLines.Add("<a class='navigation-link' title='Gherkin Scenario Editor' href='#' onclick=\"loadEditor('editor'); filterStepDefinitions();\">Editor</a>");
+                listOfLines.Add("<a class='navigation-link' title='Gherkin Script Editor' href='#' onclick=\"loadEditor(); filterStepDefinitions();\">Editor</a>");
                 listOfLines.Add("<span>|</span>");
             }
 

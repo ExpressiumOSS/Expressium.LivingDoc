@@ -19,10 +19,10 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Editor -->");
-            listOfLines.Add($"<div class='data-item' id='editor'>");
+            listOfLines.Add($"<div class='data-item' id='editor-view'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<span class='page-name'>Gherkin Editor</span>");
+            listOfLines.Add("<span class='page-name'>Gherkin Script Editor</span>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<hr>");
@@ -46,9 +46,11 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("</div>");
 
-            listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<textarea class='filter' id='script' rows='8'></textarea>");
+            listOfLines.Add("<div id='script-view'>");
+            listOfLines.Add("<textarea class='filter' id='scenario-script'></textarea>");
             listOfLines.Add("</div>");
+
+            listOfLines.Add("<hr>");
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<span class='chart-name'>Step Definitions</span>");

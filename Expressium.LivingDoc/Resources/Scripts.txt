@@ -445,13 +445,13 @@
     </script>
     <script>
         function loadEditor() {
-            var editor = document.getElementById('editor').innerHTML;
+            var editor = document.getElementById('editor-view').innerHTML;
 
             document.getElementById('right-section').innerHTML = editor;
 
-            document.getElementById("script").value = "";
-            document.getElementById("script").value += "@TA-??? @Review";
-            document.getElementById("script").value += "\nScenario: Successfully Creating a new Gherkin Script";
+            document.getElementById("scenario-script").value = "";
+            document.getElementById("scenario-script").value += "@TA-??? @Review";
+            document.getElementById("scenario-script").value += "\nScenario: Successfully Creating a new Gherkin Script";
         }
     </script>
     <script>
@@ -477,7 +477,7 @@
                 if (found)
                     numberOfFound++;
 
-                if (numberOfFound >= 7)
+                if (numberOfFound >= 6)
                     found = false;
 
                 tr[i].style.display = found ? "" : "none";
@@ -489,11 +489,11 @@
             var link = row.querySelector("td a");
             var linkText = link.textContent || link.innerText;
 
-            var script = document.getElementById("script").value;
+            var script = document.getElementById("scenario-script").value;
             if (script.endsWith("\n") || script === "") {
-                document.getElementById("script").value += "    " + linkText;
+                document.getElementById("scenario-script").value += "    " + linkText;
             } else {
-                document.getElementById("script").value += "\n    " + linkText;
+                document.getElementById("scenario-script").value += "\n    " + linkText;
             }
         }
     </script>
@@ -514,7 +514,7 @@
     </script>
     <script>
         function editorCopy() {
-            var copyText = document.getElementById("script");
+            var copyText = document.getElementById("scenario-script");
             navigator.clipboard.writeText(copyText.value);
         }
     </script>
@@ -644,7 +644,7 @@
     </script>
     <script>
         function editorCopy() {
-            var textArea = document.getElementById("script");
+            var textArea = document.getElementById("scenario-script");
             textArea.select();
             navigator.clipboard.writeText(textArea.value);
             window.getSelection().removeAllRanges();

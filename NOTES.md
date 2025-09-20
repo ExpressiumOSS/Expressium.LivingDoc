@@ -13,10 +13,10 @@ such as questions, comments, enhancement requests etc...
 ## Enhancements
 * Include scenario steps too during keyword filtering...?
 * Export filtered lists to Spreadsheet or Clipboard...?
-* Gherkin Scenario Editor with intellisense for steps...?
-* Handling historical Test Runs as Charts in Analytics...?
+* Simple Gherkin Scenario Editor with step Intellisense...?
+* Include test results from historical Test Runs in Analytics...?
 * Deep link to Features, Scenarios, Steps in Test Report...?
-* Merge multiple Parallel Test Runs as one Test Report...?
+* Merge test results from multiple Test Runs in Test Report...?
 
 ## Inspiration
 
