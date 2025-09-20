@@ -53,5 +53,3 @@ start .\Samples\Skipped.html
 del .\Samples\HooksErrors.html
 Expressium.LivingDoc.exe -input .\Samples\hooks-errors.feature.ndjson --output .\Samples\HooksErrors.html --title "Compatibility Kit Hooks Errors"
 start .\Samples\HooksErrors.html
-
-

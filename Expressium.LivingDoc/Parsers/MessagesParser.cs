@@ -193,17 +193,17 @@ namespace Expressium.LivingDoc.Parsers
             if (scenario.Examples.Count > 0)
             {
                 // Consolidating Scenario Examples as Self-Contained...
-                foreach (var examples in scenario.Examples)
+                foreach (var example in scenario.Examples)
                 {
                     int tableIndexId = 1;
-                    foreach (var tableBodyRow in examples.TableBody)
+                    foreach (var tableBodyRow in example.TableBody)
                     {
                         var livingDocExample = new LivingDocExample();
                         livingDocScenario.Examples.Add(livingDocExample);
 
                         ParseScenarioBackgroundSteps(livingDocExample, livingDocFeature, tableIndexId++);
                         ParseScenarioExampleTableSteps(livingDocExample, scenario, tableBodyRow.Id);
-                        ParseScenarioExampleTableHeaders(livingDocExample, examples);
+                        ParseScenarioExampleTableHeaders(livingDocExample, example);
                         ParseScenarioExampleTableData(livingDocExample, tableBodyRow);
                     }
                 }
@@ -392,12 +392,12 @@ namespace Expressium.LivingDoc.Parsers
             else if (step.TableIndexId != -1)
             {
                 // Background Step in Scenario with Examples...
-                var ScenarioPickles = listOfPickles.Where(x => x.AstNodeIds.Contains(scenario.Id));
-                if (ScenarioPickles == null)
+                var scenarioPickles = listOfPickles.Where(x => x.AstNodeIds.Contains(scenario.Id));
+                if (!scenarioPickles.Any())
                     return null;
 
-                var stepPickles = ScenarioPickles.SelectMany(p => p.Steps).Where(s => s.AstNodeIds.Contains(step.Id));
-                if (stepPickles == null)
+                var stepPickles = scenarioPickles.SelectMany(p => p.Steps).Where(s => s.AstNodeIds.Contains(step.Id));
+                if (!stepPickles.Any())
                     return null;
 
                 if (stepPickles.Count() >= step.TableIndexId)
