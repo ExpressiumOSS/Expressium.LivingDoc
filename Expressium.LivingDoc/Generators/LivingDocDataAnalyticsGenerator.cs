@@ -24,7 +24,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='analytics'>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<span class='page-name'>Analytics</span>");
+            listOfLines.Add("<span class='page-name' data-testid='page-title'>Analytics</span>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");
@@ -130,7 +130,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<div class='section' id='{title.ToLower()}-analytics' style='width: fit-content; margin: auto;'>");
-            listOfLines.Add($"<span class='chart-name'>{title}</span>");
+            listOfLines.Add($"<span class='chart-name' data-testid='{title.ToLower()}-chart-title'>{title}</span>");
             listOfLines.Add("<div class='section chart-outline'>");
 
             {
@@ -144,7 +144,7 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add($"            <circle class='donut-segment-failed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfFailed} {100 - percentageOfFailed}' stroke-dashoffset='-{percentageOfPassed + percentageOfIncomplete}'></circle>");
                 listOfLines.Add($"        </g>");
                 listOfLines.Add($"        <g class='chart-text'>");
-                listOfLines.Add($"            <text x='50%' y='50%' class='chart-number'>{percentageOfPassed}%</text>");
+                listOfLines.Add($"            <text x='50%' y='50%' class='chart-number' data-testid='{title.ToLower()}-chart-passed'>{percentageOfPassed}%</text>");
                 listOfLines.Add($"            <text x='50%' y='50%' class='chart-label'>Passed</text>");
                 listOfLines.Add($"        </g>");
                 listOfLines.Add($"    </svg>");
@@ -213,7 +213,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<span style='font-size: 2.5em;'>&#9201;</span>");
             listOfLines.Add($"<span style='font-size: 1.25em; padding-top: 6px;'>");
             listOfLines.Add($"<span style='color: gray;'>Duration </span>");
-            listOfLines.Add($"<span>{project.GetDuration()}</span>");
+            listOfLines.Add($"<span data-testid='project-duration'>{project.GetDuration()}</span>");
             listOfLines.Add("</span>");
             listOfLines.Add("</div>");
 
