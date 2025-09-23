@@ -20,7 +20,7 @@ be distributed to a public location enabling easy access by the stackholders.
 * Run the tests in the ReqnRoll test project and open the HTML report in the output directory...
 
 ### ReqnRoll Configuration
-```
+```json
 {
   "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
   "formatters": {
@@ -33,10 +33,10 @@ be distributed to a public location enabling easy access by the stackholders.
 ```
 
 ### Attachments Work-Around
-Since the AddAttachment API in ReqnRoll doesn’t support adding attachments as links,
+Since the AddAttachment API in ReqnRoll doesnâ€™t support adding attachments as links,
 we need to use a workaround to enable attachments in the Expressium LivingDoc report.
 
-```
+```c#
 using Reqnroll;
 
 namespace MyCompany.MyProject.Web.API.Tests
