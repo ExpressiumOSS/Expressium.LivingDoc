@@ -1,5 +1,6 @@
-﻿using Expressium.LivingDoc.ReqnrollPlugin;
+using Expressium.LivingDoc.ReqnrollPlugin;
 using Reqnroll.Formatters;
+using Reqnroll.Formatters.RuntimeSupport;
 using Reqnroll.Plugins;
 using Reqnroll.UnitTestProvider;
 
@@ -14,6 +15,12 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
             runtimePluginEvents.RegisterGlobalDependencies += (_, args) =>
             {
                 args.ObjectContainer.RegisterTypeAs<ExpressiumFormatter, ICucumberMessageFormatter>("expressium");
+            };
+
+            runtimePluginEvents.CustomizeGlobalDependencies += (_, args) =>
+            {
+                args.ObjectContainer.RegisterTypeAs<TraceListenerFormatterLog, IFormatterLog>();
+
             };
         }
     }
