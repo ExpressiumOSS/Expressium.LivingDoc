@@ -58,33 +58,16 @@
     </script>
     <script>
         function loadAnalytics() {
-            var analytics = document.getElementById("analytics").innerHTML;
-            document.getElementById('right-section').innerHTML = analytics;
-
-            filterAnalytics();
-        }
-    </script>
-    <script>
-        function filterAnalytics() {
             var navLinkActive = document.querySelectorAll('a.navigation-link.navigation-active');
             if (navLinkActive.length > 0) {
                 var name = navLinkActive[0].textContent.toLowerCase();
 
-                var sectionFeatures = document.getElementById("features-analytics");
-                sectionFeatures.style.display = "none";
-
-                var sectionScenarios = document.getElementById("scenarios-analytics");
-                sectionScenarios.style.display = "none";
-
-                var sectionSteps = document.getElementById("steps-analytics");
-                sectionSteps.style.display = "none";
-
                 if (name == "overview") {
-                    var sectionActive = document.getElementById("scenarios-analytics");
-                    sectionActive.style.display = "";
+                    var analytics = document.getElementById("analytics-scenarios").innerHTML;
+                    document.getElementById('right-section').innerHTML = analytics;
                 } else {
-                    var sectionActive = document.getElementById(name + "-analytics");
-                    sectionActive.style.display = "";
+                    var analytics = document.getElementById("analytics-" + name).innerHTML;
+                    document.getElementById('right-section').innerHTML = analytics;
                 }
             }
         }

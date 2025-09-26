@@ -11,34 +11,74 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateDataAnalytics(project));
+            listOfLines.AddRange(GenerateDataAnalyticsFeaturesView(project));
+            listOfLines.AddRange(GenerateDataAnalyticsScenariosView(project));
+            listOfLines.AddRange(GenerateDataAnalyticsStepsView(project));
 
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalytics(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsFeaturesView(LivingDocProject project)
         {
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Analytics -->");
-            listOfLines.Add($"<div class='data-item' id='analytics'>");
+            listOfLines.Add($"<div class='data-item' id='analytics-features'>");
 
-            listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<span class='page-name' data-testid='page-title'>Analytics</span>");
-            listOfLines.Add("</div>");
-
-            listOfLines.Add("<div class='section'>");
-            listOfLines.Add("</div>");
-            listOfLines.Add("<hr>");
-
+            listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart(project));
+            listOfLines.AddRange(GenerateDataAnalyticsDuration(project));
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataAnalyticsScenariosView(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Data Analytics -->");
+            listOfLines.Add($"<div class='data-item' id='analytics-scenarios'>");
+
+            listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart(project));
+            listOfLines.AddRange(GenerateDataAnalyticsDuration(project));
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataAnalyticsStepsView(LivingDocProject project)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Data Analytics -->");
+            listOfLines.Add($"<div class='data-item' id='analytics-steps'>");
+
+            listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart(project));
             listOfLines.AddRange(GenerateDataAnalyticsDuration(project));
 
             listOfLines.Add("</div>");
 
             return listOfLines;
+        }
+
+        internal List<string> GenerateDataAnalyticsTitle()
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<span class='page-name' data-testid='page-title'>Analytics</span>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<hr>");
+            listOfLines.Add("<hr>");
+
+            return listOfLines;
+
         }
 
         internal List<string> GenerateDataAnalyticsFeaturesStatusChart(LivingDocProject project)
@@ -52,7 +92,6 @@ namespace Expressium.LivingDoc.Generators
             var numberOfTests = project.Features.Count;
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Features", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
-            //listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -68,7 +107,6 @@ namespace Expressium.LivingDoc.Generators
             var numberOfTests = project.GetNumberOfScenarios();
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Scenarios", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
-            //listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -84,7 +122,6 @@ namespace Expressium.LivingDoc.Generators
             var numberOfTests = project.GetNumberOfSteps();
 
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Steps", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
-            //listOfLines.Add("<hr>");
 
             return listOfLines;
         }
@@ -129,7 +166,7 @@ namespace Expressium.LivingDoc.Generators
 
             var listOfLines = new List<string>();
 
-            listOfLines.Add($"<div class='section' id='{title.ToLower()}-analytics' style='width: fit-content; margin: auto;'>");
+            listOfLines.Add($"<div class='section' style='width: fit-content; margin: auto;'>");
             listOfLines.Add($"<span class='chart-name' data-testid='{title.ToLower()}-chart-title'>{title}</span>");
             listOfLines.Add("<div class='section chart-outline'>");
 
