@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Expressium.LivingDoc.Generators;
+using Expressium.LivingDoc.Parsers;
+using System;
 
 namespace Expressium.LivingDoc
 {
@@ -31,6 +33,28 @@ namespace Expressium.LivingDoc
 
                 var livingDocGenerator = new LivingDocNativeConverter(args[1], args[2]);
                 livingDocGenerator.Execute();
+
+                Console.WriteLine("Generating LivingDoc Report Completed");
+                Console.WriteLine("");
+            }
+            else if (args.Length == 4 && args[0] == "--merge")
+            {
+                // Generating a LivingDoc Test Report based on Two Cucumber Messages JSON files...
+                Console.WriteLine("");
+                Console.WriteLine("Generating LivingDoc Test Report...");
+                Console.WriteLine("InputMaster: " + args[1]);
+                Console.WriteLine("InputSlave: " + args[2]);
+                Console.WriteLine("Output: " + args[3]);
+
+                var messagesParser = new MessagesParser();
+                var livingDocProjectMaster = messagesParser.ConvertToLivingDoc(args[1]);
+                var livingDocProjectSlave = messagesParser.ConvertToLivingDoc(args[2]);
+
+                livingDocProjectMaster.Title = args[3];
+                livingDocProjectMaster.Merge(livingDocProjectSlave);
+
+                var livingDocProjectGenerator = new LivingDocProjectGenerator();
+                livingDocProjectGenerator.Generate(livingDocProjectMaster, args[3]);
 
                 Console.WriteLine("Generating LivingDoc Report Completed");
                 Console.WriteLine("");
