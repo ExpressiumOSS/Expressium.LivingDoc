@@ -4,6 +4,11 @@ namespace Expressium.LivingDoc.Models
 {
     public static class LivingDocUtilities
     {
+        public static string FormatAsString(this DateTime date)
+        {
+            return date.ToString("ddd d. MMM yyyy HH':'mm':'ss \"GMT\"z");
+        }
+
         public static string FormatAsString(this TimeSpan timeSpan)
         {
             if (timeSpan.TotalMinutes > 60)

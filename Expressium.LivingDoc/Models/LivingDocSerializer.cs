@@ -16,9 +16,9 @@ namespace Expressium.LivingDoc.Models
             return JsonSerializer.Deserialize<T>(jsonString, options);
         }
 
-        public static void SerializeAsJson<T>(string filePath, T objectRepository)
+        public static void SerializeAsJson<T>(string filePath, T obj)
         {
-            var jsonString = JsonSerializer.Serialize(objectRepository, new JsonSerializerOptions() { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+            var jsonString = JsonSerializer.Serialize(obj, new JsonSerializerOptions() { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
             File.WriteAllText(filePath, jsonString);
         }
 

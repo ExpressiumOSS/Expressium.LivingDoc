@@ -24,8 +24,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateBody(project));
             listOfLines.AddRange(GenerateHtmlFooter());
 
-            var htmlFilePath = outputPath;
-            SaveHtmlFile(htmlFilePath, listOfLines);
+            SaveHtmlFile(outputPath, listOfLines);
         }
 
         internal List<string> GenerateHtmlHeader()
