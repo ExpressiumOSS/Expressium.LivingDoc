@@ -8,15 +8,14 @@ such as questions, comments, enhancement requests etc...
 * Visualization of consolidated scenarios with seperate examples...?
 * Visualization of stacktrace information as error messages or attachments...?
 * Include object list in report like Features, Scenarios and Steps...?
-* Show Analytics charts seperately for Features, Scenarios and Steps...?
 
 ## Enhancements
-* Include scenario steps too during keyword filtering...?
 * Export filtered lists to Spreadsheet or Clipboard...?
-* Simple Gherkin Scenario Editor with step Intellisense...?
-* Include test results from historical Test Runs in Analytics...?
+* Simple Gherkin Script Editor with step Intellisense...?
+* Merge test results from multiple Test Runs in Test Report...? 
+* Include Trends from historical Test Runs in Analytics...?
+* Include step definitions too during keyword filtering...?
 * Deep link to Features, Scenarios, Steps in Test Report...?
-* Merge test results from multiple Test Runs in Test Report...?
 
 ## Inspiration
 
