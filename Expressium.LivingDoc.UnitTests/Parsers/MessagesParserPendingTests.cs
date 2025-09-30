@@ -21,8 +21,11 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             var scenario = livingDocProject.Features[0].Scenarios[0];
 
-            Assert.That(scenario.Examples[0].Steps[0].Message, Is.EqualTo("TODO"));
+            Assert.That(scenario.Examples[0].Steps[0].Message, Is.EqualTo(null));
             Assert.That(scenario.Examples[0].Steps[0].Status, Is.EqualTo(LivingDocStatuses.Pending.ToString()));
+            Assert.That(scenario.Examples[0].Steps[0].ExceptionType, Is.EqualTo("Warning"));
+            Assert.That(scenario.Examples[0].Steps[0].ExceptionMessage, Is.EqualTo("Pending Step Definition..."));
+            Assert.That(scenario.Examples[0].Steps[0].ExceptionStackTrace, Is.EqualTo(null));
         }
     }
 }

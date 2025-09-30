@@ -23,7 +23,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             var scenario = livingDocProject.Features[0].Scenarios[3];
 
-            Assert.That(scenario.Examples[0].Steps[0].Message, Is.EqualTo("Exception in step\nsamples/retry/retry.feature:18"));
+            Assert.That(scenario.Examples[0].Steps[0].Message, Is.EqualTo(null));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionType, Is.EqualTo("Error"));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionMessage, Is.EqualTo("Exception in step"));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionStackTrace, Is.EqualTo(null));

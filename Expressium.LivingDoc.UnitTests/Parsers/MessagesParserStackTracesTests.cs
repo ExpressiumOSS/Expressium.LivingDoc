@@ -20,7 +20,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             var scenario = livingDocProject.Features[0].Scenarios[0];
 
-            Assert.That(scenario.Examples[0].Steps[0].Message, Is.EqualTo("BOOM\nsamples/stack-traces/stack-traces.feature:9"));
+            Assert.That(scenario.Examples[0].Steps[0].Message, Is.EqualTo(null));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionType, Is.EqualTo("Error"));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionMessage, Is.EqualTo("BOOM"));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionStackTrace, Is.EqualTo(null));
