@@ -51,5 +51,36 @@ namespace MyCompany.MyProject.Web.API.Tests
 }
 ```
 
+### Merge Test Reports
+The ReqnRoll test execution may run across multiple pipelines.
+To simplify analysis, it is desirable to produce a single consolidated test report.
+This can be achieved by merging individual test reports through a separate CLI tool.
+During the merge process, only new and previously unknown features will be included.
+
+```c#
+if (args.Length == 4 && args[0] == "--merge")
+{
+    // Generating a LivingDoc Test Report based on Two Cucumber Messages JSON files...
+    Console.WriteLine("");
+    Console.WriteLine("Generating LivingDoc Test Report...");
+    Console.WriteLine("InputMaster: " + args[1]);
+    Console.WriteLine("InputSlave: " + args[2]);
+    Console.WriteLine("Output: " + args[3]);
+
+    var messagesParser = new MessagesParser();
+    var livingDocProjectMaster = messagesParser.ConvertToLivingDoc(args[1]);
+    var livingDocProjectSlave = messagesParser.ConvertToLivingDoc(args[2]);
+
+    livingDocProjectMaster.Title = args[3];
+    livingDocProjectMaster.Merge(livingDocProjectSlave);
+
+    var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
+    livingDocProjectGenerator.Generate(args[3]);
+
+    Console.WriteLine("Generating LivingDoc Report Completed");
+    Console.WriteLine("");
+}
+```
+
 ## Expressium LivingDoc Demo Test Report
 **Web:** https://expressium.dev/reqnroll/LivingDoc.html
