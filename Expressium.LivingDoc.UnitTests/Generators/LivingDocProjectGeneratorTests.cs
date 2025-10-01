@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Html.Parser;
 using Expressium.LivingDoc.Generators;
+using Expressium.LivingDoc.Models;
 using System.Collections.Generic;
 using System.IO;
 
@@ -7,6 +8,52 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 {
     public class LivingDocProjectGeneratorTests
     {
+        [Test]
+        public void LivingDocProjectGenerator_GenerateContent()
+        {
+            var project = new LivingDocProject
+            {
+                Features = new List<LivingDocFeature>
+                {
+                    new LivingDocFeature
+                    {
+                        Scenarios = new List<LivingDocScenario>
+                        {
+                            new LivingDocScenario { Name = "Sample Scenario" }
+                        }
+                    }
+                }
+            };
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateContent();
+
+            Assert.That(listOfLines.Count, Is.GreaterThan(80));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_GenerateData()
+        {
+            var project = new LivingDocProject
+            {
+                Features = new List<LivingDocFeature>
+                {
+                    new LivingDocFeature
+                    {
+                        Scenarios = new List<LivingDocScenario>
+                        {
+                            new LivingDocScenario { Name = "Sample Scenario" }
+                        }
+                    }
+                }
+            };
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateData();
+
+            Assert.That(listOfLines.Count, Is.GreaterThan(300));
+        }
+
         [Test]
         public void LivingDocProjectGenerator_SaveHtmlFile()
         {
