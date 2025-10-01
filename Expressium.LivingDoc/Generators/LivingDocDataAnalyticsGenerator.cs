@@ -14,17 +14,6 @@ namespace Expressium.LivingDoc.Generators
             this.project = project;
         }
 
-        internal List<string> Generate()
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.AddRange(GenerateDataAnalyticsFeaturesView());
-            listOfLines.AddRange(GenerateDataAnalyticsScenariosView());
-            listOfLines.AddRange(GenerateDataAnalyticsStepsView());
-
-            return listOfLines;
-        }
-
         internal List<string> GenerateDataAnalyticsFeaturesView()
         {
             var listOfLines = new List<string>();

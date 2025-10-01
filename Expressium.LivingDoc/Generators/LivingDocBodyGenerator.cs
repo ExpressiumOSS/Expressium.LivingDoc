@@ -8,13 +8,13 @@ namespace Expressium.LivingDoc.Generators
 {
     internal class LivingDocBodyGenerator
     {
-        private bool includeEditor = false;
-
         private LivingDocProject project;
+        private LivingDocConfiguration configuration;
 
-        internal LivingDocBodyGenerator(LivingDocProject project)
+        internal LivingDocBodyGenerator(LivingDocProject project, LivingDocConfiguration configuration)
         {
             this.project = project;
+            this.configuration = configuration;
         }
 
         internal List<string> Generate()
@@ -65,22 +65,36 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- Project Navigation Section -->");
             listOfLines.Add("<nav class='navigation'>");
             listOfLines.Add("<span>|</span>");
+
             listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewmode('project-view','Overview');\">Overview</a>");
             listOfLines.Add("<span>|</span>");
-            listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewmode('features-view','Features');\">Features</a>");
-            listOfLines.Add("<span>|</span>");
-            listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewmode('scenarios-view','Scenarios');\">Scenarios</a>");
-            listOfLines.Add("<span>|</span>");
-            listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewmode('steps-view','Steps');\">Steps</a>");
-            listOfLines.Add("<span>|</span>");
-            listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
-            listOfLines.Add("<span>|</span>");
 
-            if (includeEditor)
+            if (configuration.FeaturesListView)
+            {
+                listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewmode('features-view','Features');\">Features</a>");
+                listOfLines.Add("<span>|</span>");
+            }
+
+            if (configuration.ScenariosListView)
+            {
+                listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewmode('scenarios-view','Scenarios');\">Scenarios</a>");
+                listOfLines.Add("<span>|</span>");
+            }
+
+            if (configuration.StepsListView)
+            {
+                listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewmode('steps-view','Steps');\">Steps</a>");
+                listOfLines.Add("<span>|</span>");
+            }
+
+            if (configuration.EditorView)
             {
                 listOfLines.Add("<a class='navigation-link' title='Gherkin Script Editor' href='#' onclick=\"loadEditor(); filterStepDefinitions();\">Editor</a>");
                 listOfLines.Add("<span>|</span>");
             }
+
+            listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
+            listOfLines.Add("<span>|</span>");
 
             listOfLines.Add("</nav>");
 
@@ -171,7 +185,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             var generator = new LivingDocDataOverviewGenerator(project);
-            listOfLines.AddRange(generator.Generate());
+            listOfLines.AddRange(generator.GenerateDataOverview());
 
             return listOfLines;
         }
@@ -181,7 +195,15 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             var generator = new LivingDocDataListViewsGenerator(project);
-            listOfLines.AddRange(generator.Generate());
+
+            if (configuration.FeaturesListView)
+                listOfLines.AddRange(generator.GenerateDataFeaturesView());
+
+            if (configuration.ScenariosListView)
+                listOfLines.AddRange(generator.GenerateDataScenariosView());
+
+            if (configuration.StepsListView)
+                listOfLines.AddRange(generator.GenerateDataStepsView());
 
             return listOfLines;
         }
@@ -190,11 +212,9 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var featuresGenerator = new LivingDocDataFeaturesGenerator(project);
-            listOfLines.AddRange(featuresGenerator.Generate());
-
-            var scenariosGenerator = new LivingDocDataScenariosGenerator(project);
-            listOfLines.AddRange(scenariosGenerator.Generate());
+            var generator = new LivingDocDataObjectsGenerator(project);
+            listOfLines.AddRange(generator.GenerateDataFeatures());
+            listOfLines.AddRange(generator.GenerateDataScenarios());
 
             return listOfLines;
         }
@@ -204,7 +224,15 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
-            listOfLines.AddRange(generator.Generate());
+
+            if (configuration.FeaturesListView)
+                listOfLines.AddRange(generator.GenerateDataAnalyticsFeaturesView());
+
+            if (configuration.ScenariosListView)
+                listOfLines.AddRange(generator.GenerateDataAnalyticsScenariosView());
+
+            if (configuration.ScenariosListView)
+                listOfLines.AddRange(generator.GenerateDataAnalyticsStepsView());
 
             return listOfLines;
         }
@@ -213,11 +241,10 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            if (includeEditor)
-            {
-                var generator = new LivingDocDataEditorGenerator(project);
-                listOfLines.AddRange(generator.Generate());
-            }
+            var generator = new LivingDocDataEditorGenerator(project);
+
+            if (configuration.EditorView)
+                listOfLines.AddRange(generator.GenerateDataEditor());
 
             return listOfLines;
         }

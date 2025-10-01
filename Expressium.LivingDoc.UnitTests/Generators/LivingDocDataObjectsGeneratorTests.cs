@@ -4,8 +4,49 @@ using System.Collections.Generic;
 
 namespace Expressium.LivingDoc.UnitTests.Generators
 {
-    internal class LivingDocDataScenariosGeneratorTests
+    internal class LivingDocDataObjectsGeneratorTests
     {
+        [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataFeaturesTags()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var feature = new LivingDocFeature
+            {
+                Tags = new List<string> { "@tag1", "@tag2" }
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataFeatureTags(feature);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(4));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Feature Tags -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='tag-names'>@tag1 @tag2</span>"));
+            Assert.That(listOfLines[3], Is.EqualTo("</div>"));
+        }
+
+        [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataFeaturesName()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var feature = new LivingDocFeature
+            {
+                Name = "Feature Name",
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataFeatureName(feature);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(5));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Feature Name -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='status-dot bgcolor-skipped'></span>"));
+            Assert.That(listOfLines[3], Is.EqualTo("<span class='feature-keyword'>Feature: </span><span class='feature-name'>Feature Name</span>"));
+            Assert.That(listOfLines[4], Is.EqualTo("</div>"));
+        }
+
         [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataRuleTags()
         {
@@ -16,8 +57,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 Tags = new List<string> { "@tag5", "@tag6" }
             };
 
-            var livingDocDataScenariosGenerator = new LivingDocDataScenariosGenerator(livingDocProject);
-            var listOfLines = livingDocDataScenariosGenerator.GenerateDataRuleTags(rule);
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataRuleTags(rule);
 
             Assert.That(listOfLines.Count, Is.EqualTo(4));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Rule Tags -->"));
@@ -36,8 +77,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 Tags = new List<string> { "@tag3", "@tag4" }
             };
 
-            var livingDocDataScenariosGenerator = new LivingDocDataScenariosGenerator(livingDocProject);
-            var listOfLines = livingDocDataScenariosGenerator.GenerateDataScenarioTags(scenario);
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataScenarioTags(scenario);
 
             Assert.That(listOfLines.Count, Is.EqualTo(4));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Tags -->"));
@@ -61,8 +102,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 Duration = new TimeSpan(0, 0, 0, 1, 500)
             };
 
-            var livingDocDataScenariosGenerator = new LivingDocDataScenariosGenerator(livingDocProject);
-            var listOfLines = livingDocDataScenariosGenerator.GenerateDataScenarioName(scenario, example, "5");
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataScenarioName(scenario, example, "5");
 
             Assert.That(listOfLines.Count, Is.EqualTo(8));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Name -->"));

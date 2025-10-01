@@ -14,18 +14,7 @@ namespace Expressium.LivingDoc.Generators
             this.project = project;
         }
 
-        internal List<string> Generate()
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.AddRange(GenerateDataFeaturesView(project));
-            listOfLines.AddRange(GenerateDataScenariosView(project));
-            listOfLines.AddRange(GenerateDataStepsView(project));
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataFeaturesView(LivingDocProject project)
+        internal List<string> GenerateDataFeaturesView()
         {
             var listOfLines = new List<string>();
 
@@ -69,7 +58,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataScenariosView(LivingDocProject project)
+        internal List<string> GenerateDataScenariosView()
         {
             var listOfLines = new List<string>();
 
@@ -122,7 +111,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataStepsView(LivingDocProject project)
+        internal List<string> GenerateDataStepsView()
         {
             var listOfLines = new List<string>();
 

@@ -13,10 +13,12 @@ namespace Expressium.LivingDoc.Generators
     internal class LivingDocProjectGenerator
     {
         private LivingDocProject project;
+        private LivingDocConfiguration configuration;
 
         internal LivingDocProjectGenerator(LivingDocProject project)
         {
             this.project = project;
+            this.configuration = new LivingDocConfiguration();
         }
 
         internal void Generate(string outputPath)
@@ -87,7 +89,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var generator = new LivingDocBodyGenerator(project);
+            var generator = new LivingDocBodyGenerator(project, configuration);
             listOfLines.AddRange(generator.Generate());
 
             return listOfLines;
