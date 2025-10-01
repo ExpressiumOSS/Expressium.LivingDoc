@@ -190,8 +190,11 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var generator = new LivingDocDataObjectsGenerator(project);
-            listOfLines.AddRange(generator.Generate());
+            var featuresGenerator = new LivingDocDataFeaturesGenerator(project);
+            listOfLines.AddRange(featuresGenerator.Generate());
+
+            var scenariosGenerator = new LivingDocDataScenariosGenerator(project);
+            listOfLines.AddRange(scenariosGenerator.Generate());
 
             return listOfLines;
         }
