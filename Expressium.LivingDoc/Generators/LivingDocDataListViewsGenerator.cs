@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace Expressium.LivingDoc.Generators
 {
-    internal class LivingDocDataListViewsXGenerator
+    internal class LivingDocDataListViewsGenerator
     {
         private LivingDocProject project;
 
-        internal LivingDocDataListViewsXGenerator(LivingDocProject project)
+        internal LivingDocDataListViewsGenerator(LivingDocProject project)
         {
             this.project = project;
         }

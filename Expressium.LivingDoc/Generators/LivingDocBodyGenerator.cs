@@ -180,7 +180,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var generator = new LivingDocDataListViewsXGenerator(project);
+            var generator = new LivingDocDataListViewsGenerator(project);
             listOfLines.AddRange(generator.Generate());
 
             return listOfLines;
