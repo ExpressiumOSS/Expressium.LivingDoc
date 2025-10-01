@@ -6,43 +6,15 @@ using System.Linq;
 
 namespace Expressium.LivingDoc.Generators
 {
-    internal class LivingDocBodyGenerator
+    internal class LivingDocContentGenerator
     {
         private LivingDocProject project;
         private LivingDocConfiguration configuration;
 
-        internal LivingDocBodyGenerator(LivingDocProject project, LivingDocConfiguration configuration)
+        internal LivingDocContentGenerator(LivingDocProject project, LivingDocConfiguration configuration)
         {
             this.project = project;
             this.configuration = configuration;
-        }
-
-        internal List<string> Generate()
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.AddRange(GenerateBodyHeader());
-            listOfLines.AddRange(GenerateHeader());
-            listOfLines.AddRange(GenerateNavigation());
-            listOfLines.AddRange(GenerateContent());
-            listOfLines.AddRange(GenerateFooter());
-            listOfLines.AddRange(GenerateDataOverview());
-            listOfLines.AddRange(GenerateDataListViews());
-            listOfLines.AddRange(GenerateDataObjects());
-            listOfLines.AddRange(GenerateDataAnalytics());
-            listOfLines.AddRange(GenerateDataEditor());
-            listOfLines.AddRange(GenerateBodyFooter());
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateBodyHeader()
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.Add("<body onload=\"loadViewmode('project-view','Overview'); loadAnalytics()\">");
-
-            return listOfLines;
         }
 
         internal List<string> GenerateHeader()
@@ -101,7 +73,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateContent()
+        internal List<string> GenerateSplitter()
         {
             var listOfLines = new List<string>();
 
@@ -176,84 +148,6 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<footer>");
             listOfLines.Add("©2025 Expressium All Rights Reserved");
             listOfLines.Add("</footer>");
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataOverview()
-        {
-            var listOfLines = new List<string>();
-
-            var generator = new LivingDocDataOverviewGenerator(project);
-            listOfLines.AddRange(generator.GenerateDataOverview());
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataListViews()
-        {
-            var listOfLines = new List<string>();
-
-            var generator = new LivingDocDataListViewsGenerator(project);
-
-            if (configuration.FeaturesListView)
-                listOfLines.AddRange(generator.GenerateDataFeaturesView());
-
-            if (configuration.ScenariosListView)
-                listOfLines.AddRange(generator.GenerateDataScenariosView());
-
-            if (configuration.StepsListView)
-                listOfLines.AddRange(generator.GenerateDataStepsView());
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataObjects()
-        {
-            var listOfLines = new List<string>();
-
-            var generator = new LivingDocDataObjectsGenerator(project);
-            listOfLines.AddRange(generator.GenerateDataFeatures());
-            listOfLines.AddRange(generator.GenerateDataScenarios());
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataAnalytics()
-        {
-            var listOfLines = new List<string>();
-
-            var generator = new LivingDocDataAnalyticsGenerator(project);
-
-            if (configuration.FeaturesListView)
-                listOfLines.AddRange(generator.GenerateDataAnalyticsFeaturesView());
-
-            if (configuration.ScenariosListView)
-                listOfLines.AddRange(generator.GenerateDataAnalyticsScenariosView());
-
-            if (configuration.ScenariosListView)
-                listOfLines.AddRange(generator.GenerateDataAnalyticsStepsView());
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataEditor()
-        {
-            var listOfLines = new List<string>();
-
-            var generator = new LivingDocDataEditorGenerator(project);
-
-            if (configuration.EditorView)
-                listOfLines.AddRange(generator.GenerateDataEditor());
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateBodyFooter()
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.Add("</body>");
 
             return listOfLines;
         }

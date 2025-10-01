@@ -30,7 +30,10 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateHtmlHeader());
             listOfLines.AddRange(GenerateProperties());
             listOfLines.AddRange(GenerateHead());
-            listOfLines.AddRange(GenerateBody());
+            listOfLines.AddRange(GenerateBodyHeader());
+            listOfLines.AddRange(GenerateContent());
+            listOfLines.AddRange(GenerateData());
+            listOfLines.AddRange(GenerateBodyFooter());
             listOfLines.AddRange(GenerateHtmlFooter());
 
             SaveHtmlFile(outputPath, listOfLines);
@@ -85,12 +88,47 @@ namespace Expressium.LivingDoc.Generators
             return Resources.Scripts.Split(Environment.NewLine).ToList();
         }
 
-        internal List<string> GenerateBody()
+        internal List<string> GenerateBodyHeader()
         {
             var listOfLines = new List<string>();
 
-            var generator = new LivingDocBodyGenerator(project, configuration);
-            listOfLines.AddRange(generator.Generate());
+            listOfLines.Add("<body onload=\"loadViewmode('project-view','Overview'); loadAnalytics()\">");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateContent()
+        {
+            var listOfLines = new List<string>();
+
+            var generator = new LivingDocContentGenerator(project, configuration);
+            listOfLines.AddRange(generator.GenerateHeader());
+            listOfLines.AddRange(generator.GenerateNavigation());
+            listOfLines.AddRange(generator.GenerateSplitter());
+            listOfLines.AddRange(generator.GenerateFooter());
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateData()
+        {
+            var listOfLines = new List<string>();
+
+            var generator = new LivingDocDataGenerator(project, configuration);
+            listOfLines.AddRange(generator.GenerateDataOverview());
+            listOfLines.AddRange(generator.GenerateDataListViews());
+            listOfLines.AddRange(generator.GenerateDataObjects());
+            listOfLines.AddRange(generator.GenerateDataAnalytics());
+            listOfLines.AddRange(generator.GenerateDataEditor());
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateBodyFooter()
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("</body>");
 
             return listOfLines;
         }

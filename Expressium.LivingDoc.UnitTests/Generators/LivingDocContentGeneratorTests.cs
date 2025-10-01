@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Expressium.LivingDoc.UnitTests.Generators
 {
-    public class LivingDocBodyGeneratorTests
+    public class LivingDocContentGeneratorTests
     {
         [Test]
-        public void LivingDocBodyGenerator_Generate()
+        public void LivingDocContentGenerator_Generate()
         {
             var project = new LivingDocProject
             {
@@ -23,10 +23,10 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 }
             };
 
-            var bodyGenerator = new LivingDocBodyGenerator(project, new LivingDocConfiguration());
-            var listOfLines = bodyGenerator.Generate();
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateContent();
 
-            Assert.That(listOfLines.Count, Is.GreaterThan(300));
+            Assert.That(listOfLines.Count, Is.GreaterThan(50));
         }
     }
 }
