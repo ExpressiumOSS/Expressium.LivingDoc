@@ -9,16 +9,23 @@ namespace Expressium.LivingDoc.Generators
         private int numberOfColumns = 10;
         private bool showFolderStructure = true;
 
-        internal List<string> Generate(LivingDocProject project)
+        private LivingDocProject project;
+
+        internal LivingDocDataOverviewGenerator(LivingDocProject project)
+        {
+            this.project = project;
+        }
+
+        internal List<string> Generate()
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateDataOverview(project));
+            listOfLines.AddRange(GenerateDataOverview());
 
             return listOfLines;
         }
 
-        internal List<string> GenerateDataOverview(LivingDocProject project)
+        internal List<string> GenerateDataOverview()
         {
             // Overview without folder structure...
             if (!showFolderStructure)
@@ -48,7 +55,7 @@ namespace Expressium.LivingDoc.Generators
                 if (listOfExcludeFolders.Contains(folder))
                     continue;
 
-                listOfLines.AddRange(GenerateOverview(project, listOfFolders, listOfExcludeFolders, folder, 1));
+                listOfLines.AddRange(GenerateOverview(listOfFolders, listOfExcludeFolders, folder, 1));
             }
 
             listOfLines.Add("</tbody>");
@@ -60,7 +67,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateOverview(LivingDocProject project, List<string> listOfFolders, List<string> listOfExcludeFolders, string folder, int indent)
+        internal List<string> GenerateOverview(List<string> listOfFolders, List<string> listOfExcludeFolders, string folder, int indent)
         {
             var listOfLines = new List<string>();
 
@@ -73,7 +80,7 @@ namespace Expressium.LivingDoc.Generators
                 var subFolderDepth = GetFolderDepth(subFolder);
                 if (subFolder != null && subFolder.StartsWith(folder + "\\") && folderDepth + 1 == subFolderDepth)
                 {
-                    listOfLines.AddRange(GenerateOverview(project, listOfFolders, listOfExcludeFolders, subFolder, indent + 1));
+                    listOfLines.AddRange(GenerateOverview(listOfFolders, listOfExcludeFolders, subFolder, indent + 1));
                     listOfExcludeFolders.Add(subFolder);
                 }
             }
@@ -182,7 +189,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal int GetFolderDepth(string folder)
+        internal static int GetFolderDepth(string folder)
         {
             var depth = 0;
 

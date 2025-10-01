@@ -21,8 +21,8 @@ namespace Expressium.LivingDoc
             try
             {
                 var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputPath);
-                var livingDocProjectGenerator = new LivingDocProjectGenerator();
-                livingDocProjectGenerator.Generate(livingDocProject, outputPath);
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject);
+                livingDocProjectGenerator.Generate(outputPath);
             }
             catch (IOException ex)
             {

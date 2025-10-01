@@ -5,16 +5,23 @@ namespace Expressium.LivingDoc.Generators
 {
     internal class LivingDocDataEditorGenerator
     {
-        internal List<string> Generate(LivingDocProject project)
+        private LivingDocProject project;
+
+        internal LivingDocDataEditorGenerator(LivingDocProject project)
+        {
+            this.project = project;
+        }
+
+        internal List<string> Generate()
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateDataEditor(project));
+            listOfLines.AddRange(GenerateDataEditor());
 
             return listOfLines;
         }
 
-        internal List<string> GenerateDataEditor(LivingDocProject project)
+        internal List<string> GenerateDataEditor()
         {
             var listOfLines = new List<string>();
 

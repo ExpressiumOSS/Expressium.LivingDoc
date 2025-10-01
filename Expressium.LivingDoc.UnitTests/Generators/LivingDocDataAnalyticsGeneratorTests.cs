@@ -1,4 +1,5 @@
 using Expressium.LivingDoc.Generators;
+using Expressium.LivingDoc.Models;
 
 namespace Expressium.LivingDoc.Tests.Generators
 {
@@ -10,7 +11,8 @@ namespace Expressium.LivingDoc.Tests.Generators
         [SetUp]
         public void SetUp()
         {
-            dataAnalyticsGenerator = new LivingDocDataAnalyticsGenerator();
+            var livingDocProject = new LivingDocProject();
+            dataAnalyticsGenerator = new LivingDocDataAnalyticsGenerator(livingDocProject);
         }
 
         [TestCase(0, 10, ExpectedResult = 0)]

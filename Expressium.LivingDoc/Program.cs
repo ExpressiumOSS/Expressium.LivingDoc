@@ -53,8 +53,8 @@ namespace Expressium.LivingDoc
                 livingDocProjectMaster.Title = args[3];
                 livingDocProjectMaster.Merge(livingDocProjectSlave);
 
-                var livingDocProjectGenerator = new LivingDocProjectGenerator();
-                livingDocProjectGenerator.Generate(livingDocProjectMaster, args[3]);
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
+                livingDocProjectGenerator.Generate(args[3]);
 
                 Console.WriteLine("Generating LivingDoc Report Completed");
                 Console.WriteLine("");

@@ -23,8 +23,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 }
             };
 
-            var bodyGenerator = new LivingDocBodyGenerator();
-            var listOfLines = bodyGenerator.Generate(project);
+            var bodyGenerator = new LivingDocBodyGenerator(project);
+            var listOfLines = bodyGenerator.Generate();
 
             Assert.That(listOfLines.Count, Is.GreaterThan(300));
         }

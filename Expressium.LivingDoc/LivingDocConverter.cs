@@ -26,8 +26,8 @@ namespace Expressium.LivingDoc
                 var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
                 if (!string.IsNullOrEmpty(title))
                     livingDocProject.Title = title;
-                var livingDocProjectGenerator = new LivingDocProjectGenerator();
-                livingDocProjectGenerator.Generate(livingDocProject, outputPath);
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject);
+                livingDocProjectGenerator.Generate(outputPath);
             }
             catch (IOException ex)
             {

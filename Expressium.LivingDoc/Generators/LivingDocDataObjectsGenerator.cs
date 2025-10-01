@@ -10,17 +10,24 @@ namespace Expressium.LivingDoc
     {
         private bool includeStackTraces = true;
 
-        internal List<string> Generate(LivingDocProject project)
+        private LivingDocProject project;
+
+        internal LivingDocDataObjectsGenerator(LivingDocProject project)
+        {
+            this.project = project;
+        }
+
+        internal List<string> Generate()
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateDataFeatures(project));
-            listOfLines.AddRange(GenerateDataScenarios(project));
+            listOfLines.AddRange(GenerateDataFeatures());
+            listOfLines.AddRange(GenerateDataScenarios());
 
             return listOfLines;
         }
 
-        internal List<string> GenerateDataFeatures(LivingDocProject project)
+        internal List<string> GenerateDataFeatures()
         {
             var listOfLines = new List<string>();
 
@@ -129,7 +136,7 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateDataScenarios(LivingDocProject project)
+        internal List<string> GenerateDataScenarios()
         {
             var listOfLines = new List<string>();
 

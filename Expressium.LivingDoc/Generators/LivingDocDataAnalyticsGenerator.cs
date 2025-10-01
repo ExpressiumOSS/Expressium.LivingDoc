@@ -7,18 +7,25 @@ namespace Expressium.LivingDoc.Generators
 {
     internal class LivingDocDataAnalyticsGenerator
     {
-        internal List<string> Generate(LivingDocProject project)
+        private LivingDocProject project;
+
+        internal LivingDocDataAnalyticsGenerator(LivingDocProject project)
+        {
+            this.project = project;
+        }
+
+        internal List<string> Generate()
         {
             var listOfLines = new List<string>();
 
-            listOfLines.AddRange(GenerateDataAnalyticsFeaturesView(project));
-            listOfLines.AddRange(GenerateDataAnalyticsScenariosView(project));
-            listOfLines.AddRange(GenerateDataAnalyticsStepsView(project));
+            listOfLines.AddRange(GenerateDataAnalyticsFeaturesView());
+            listOfLines.AddRange(GenerateDataAnalyticsScenariosView());
+            listOfLines.AddRange(GenerateDataAnalyticsStepsView());
 
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsFeaturesView(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsFeaturesView()
         {
             var listOfLines = new List<string>();
 
@@ -26,15 +33,15 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='analytics-features'>");
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
-            listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart(project));
-            listOfLines.AddRange(GenerateDataAnalyticsDuration(project));
+            listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart());
+            listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
             listOfLines.Add("</div>");
 
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsScenariosView(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsScenariosView()
         {
             var listOfLines = new List<string>();
 
@@ -42,15 +49,15 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='analytics-scenarios'>");
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
-            listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart(project));
-            listOfLines.AddRange(GenerateDataAnalyticsDuration(project));
+            listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart());
+            listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
             listOfLines.Add("</div>");
 
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsStepsView(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsStepsView()
         {
             var listOfLines = new List<string>();
 
@@ -58,8 +65,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<div class='data-item' id='analytics-steps'>");
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
-            listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart(project));
-            listOfLines.AddRange(GenerateDataAnalyticsDuration(project));
+            listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart());
+            listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
             listOfLines.Add("</div>");
 
@@ -81,7 +88,7 @@ namespace Expressium.LivingDoc.Generators
 
         }
 
-        internal List<string> GenerateDataAnalyticsFeaturesStatusChart(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsFeaturesStatusChart()
         {
             var listOfLines = new List<string>();
 
@@ -96,7 +103,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsScenariosStatusChart(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsScenariosStatusChart()
         {
             var listOfLines = new List<string>();
 
@@ -111,7 +118,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsStepsStatusChart(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsStepsStatusChart()
         {
             var listOfLines = new List<string>();
 
@@ -239,7 +246,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsDuration(LivingDocProject project)
+        internal List<string> GenerateDataAnalyticsDuration()
         {
             var listOfLines = new List<string>();
 

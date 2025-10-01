@@ -9,12 +9,14 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataFeaturesTags()
         {
+            var livingDocProject = new LivingDocProject();
+
             var feature = new LivingDocFeature
             {
                 Tags = new List<string> { "@tag1", "@tag2" }
             };
 
-            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator();
+            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator(livingDocProject);
             var listOfLines = livingDocDataObjectsGenerator.GenerateDataFeatureTags(feature);
 
             Assert.That(listOfLines.Count, Is.EqualTo(4));
@@ -27,12 +29,14 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataFeaturesName()
         {
+            var livingDocProject = new LivingDocProject();
+
             var feature = new LivingDocFeature
             {
                 Name = "Feature Name",
             };
 
-            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator();
+            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator(livingDocProject);
             var listOfLines = livingDocDataObjectsGenerator.GenerateDataFeatureName(feature);
 
             Assert.That(listOfLines.Count, Is.EqualTo(5));
@@ -46,12 +50,14 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataRuleTags()
         {
+            var livingDocProject = new LivingDocProject();
+
             var rule = new LivingDocRule
             {
                 Tags = new List<string> { "@tag5", "@tag6" }
             };
 
-            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator();
+            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator(livingDocProject);
             var listOfLines = livingDocDataObjectsGenerator.GenerateDataRuleTags(rule);
 
             Assert.That(listOfLines.Count, Is.EqualTo(4));
@@ -64,12 +70,14 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataScenarioTags()
         {
+            var livingDocProject = new LivingDocProject();
+
             var scenario = new LivingDocScenario
             {
                 Tags = new List<string> { "@tag3", "@tag4" }
             };
 
-            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator();
+            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator(livingDocProject);
             var listOfLines = livingDocDataObjectsGenerator.GenerateDataScenarioTags(scenario);
 
             Assert.That(listOfLines.Count, Is.EqualTo(4));
@@ -82,6 +90,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataScenarioName()
         {
+            var livingDocProject = new LivingDocProject();
+
             var scenario = new LivingDocScenario
             {
                 Name = "Scenario Name"
@@ -92,7 +102,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 Duration = new TimeSpan(0, 0, 0, 1, 500)
             };
 
-            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator();
+            var livingDocDataObjectsGenerator = new LivingDocDataObjectsGenerator(livingDocProject);
             var listOfLines = livingDocDataObjectsGenerator.GenerateDataScenarioName(scenario, example, "5");
 
             Assert.That(listOfLines.Count, Is.EqualTo(8));

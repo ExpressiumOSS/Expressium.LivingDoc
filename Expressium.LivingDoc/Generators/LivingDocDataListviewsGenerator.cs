@@ -7,7 +7,14 @@ namespace Expressium.LivingDoc.Generators
 {
     internal class LivingDocDataListViewsGenerator
     {
-        internal List<string> Generate(LivingDocProject project)
+        private LivingDocProject project;
+
+        internal LivingDocDataListViewsGenerator(LivingDocProject project)
+        {
+            this.project = project;
+        }
+
+        internal List<string> Generate()
         {
             var listOfLines = new List<string>();
 

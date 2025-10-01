@@ -23,8 +23,8 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             livingDocProjectOne.Merge(livingDocProjectTwo);
 
-            var livingDocProjectGenerator = new LivingDocProjectGenerator();
-            livingDocProjectGenerator.Generate(livingDocProjectOne, outputFilePath);
+            var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectOne);
+            livingDocProjectGenerator.Generate(outputFilePath);
 
             Assert.That(File.Exists(outputFilePath));
 
