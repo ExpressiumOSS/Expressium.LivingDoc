@@ -37,7 +37,7 @@ namespace Expressium.LivingDoc
                 Console.WriteLine("Generating LivingDoc Report Completed");
                 Console.WriteLine("");
             }
-            else if (args.Length == 4 && args[0] == "--merge")
+            else if (args.Length == 5 && args[0] == "--merge")
             {
                 // Generating a LivingDoc Test Report based on Two Cucumber Messages JSON files...
                 Console.WriteLine("");
@@ -50,7 +50,7 @@ namespace Expressium.LivingDoc
                 var livingDocProjectMaster = messagesParser.ConvertToLivingDoc(args[1]);
                 var livingDocProjectSlave = messagesParser.ConvertToLivingDoc(args[2]);
 
-                livingDocProjectMaster.Title = args[3];
+                livingDocProjectMaster.Title = args[4];
                 livingDocProjectMaster.Merge(livingDocProjectSlave);
 
                 var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);

@@ -58,7 +58,7 @@ A merging of test reports can be achieved through a separate CLI program.
 Only new and previously unknown features will be included during the merge process.
 
 ```c#
-if (args.Length == 4 && args[0] == "--merge")
+if (args.Length == 5 && args[0] == "--merge")
 {
     // Generating a LivingDoc Test Report based on Two Cucumber Messages JSON files...
     Console.WriteLine("");
@@ -71,7 +71,7 @@ if (args.Length == 4 && args[0] == "--merge")
     var livingDocProjectMaster = messagesParser.ConvertToLivingDoc(args[1]);
     var livingDocProjectSlave = messagesParser.ConvertToLivingDoc(args[2]);
 
-    livingDocProjectMaster.Title = args[3];
+    livingDocProjectMaster.Title = args[4];
     livingDocProjectMaster.Merge(livingDocProjectSlave);
 
     var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
