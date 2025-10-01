@@ -52,10 +52,10 @@ namespace MyCompany.MyProject.Web.API.Tests
 ```
 
 ### Merge Test Reports
-The ReqnRoll test execution may run across multiple pipelines.
-To simplify analysis, it is desirable to produce a single consolidated test report.
-This can be achieved by merging individual test reports through a separate CLI tool.
-During the merge process, only new and previously unknown features will be included.
+The ReqnRoll test execution may run across multiple pipelines
+and it is desirable to produce a single consolidated test report.
+A merging of test reports can be achieved through a separate CLI program.
+Only new and previously unknown features will be included during the merge process.
 
 ```c#
 if (args.Length == 4 && args[0] == "--merge")
