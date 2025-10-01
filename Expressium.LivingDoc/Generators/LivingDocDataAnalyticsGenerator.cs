@@ -122,19 +122,6 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal int CalculatePercentage(int numberOfStatuses, int numberOfTests)
-        {
-            if (numberOfStatuses == 0)
-                return 0;
-
-            var percentage = (int)Math.Round(100.0f / numberOfTests * numberOfStatuses);
-
-            if (numberOfStatuses > 0 && percentage == 0)
-                percentage = 1;
-
-            return percentage;
-        }
-
         internal List<string> GenerateDataAnalyticsStatusChart(string title, int numberOfPassed, int numberOfIncomplete, int numberOfFailed, int numberOfSkipped, int numberOfTests)
         {
             var percentageOfPassed = CalculatePercentage(numberOfPassed, numberOfTests);
@@ -233,6 +220,19 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</div>");
 
             return listOfLines;
+        }
+
+        internal int CalculatePercentage(int numberOfStatuses, int numberOfTests)
+        {
+            if (numberOfStatuses == 0)
+                return 0;
+
+            var percentage = (int)Math.Round(100.0f / numberOfTests * numberOfStatuses);
+
+            if (numberOfStatuses > 0 && percentage == 0)
+                percentage = 1;
+
+            return percentage;
         }
 
         internal List<string> GenerateDataAnalyticsDuration()

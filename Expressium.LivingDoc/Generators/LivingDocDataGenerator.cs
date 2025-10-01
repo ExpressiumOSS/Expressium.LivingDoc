@@ -31,13 +31,13 @@ namespace Expressium.LivingDoc.Generators
             var generator = new LivingDocDataListViewsGenerator(project);
 
             if (configuration.FeaturesListView)
-                listOfLines.AddRange(generator.GenerateDataFeaturesView());
+                listOfLines.AddRange(generator.GenerateDataFeaturesListView());
 
             if (configuration.ScenariosListView)
-                listOfLines.AddRange(generator.GenerateDataScenariosView());
+                listOfLines.AddRange(generator.GenerateDataScenariosListView());
 
             if (configuration.StepsListView)
-                listOfLines.AddRange(generator.GenerateDataStepsView());
+                listOfLines.AddRange(generator.GenerateDataStepsListView());
 
             return listOfLines;
         }

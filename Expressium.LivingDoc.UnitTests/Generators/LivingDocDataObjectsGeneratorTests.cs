@@ -48,6 +48,59 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataFeatures_Description()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var feature = new LivingDocFeature
+            {
+                Description = "Line One\nLine Two\nLine Three"
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataFeatureDescription(feature);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(9));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Feature Description -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<ul class='feature-description'>"));
+            Assert.That(listOfLines[3], Is.EqualTo("<li>Line One</li>"));
+            Assert.That(listOfLines[4], Is.EqualTo("<li>Line Two</li>"));
+            Assert.That(listOfLines[5], Is.EqualTo("<li>Line Three</li>"));
+            Assert.That(listOfLines[6], Is.EqualTo("</ul>"));
+            Assert.That(listOfLines[7], Is.EqualTo("</div>"));
+        }
+
+        [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataFeatures_Background()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var feature = new LivingDocFeature
+            {
+                Background = new LivingDocBackground
+                {
+                    Steps = new List<LivingDocStep>
+                    {
+                        new LivingDocStep
+                        {
+                            Keyword = "Given",
+                            Name = "I have logged in to the application"
+                        }
+                    }
+                }
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataFeatureBackground(feature);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(15));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Feature Background -->"));
+            Assert.That(listOfLines[8], Is.EqualTo("<span class='step-keyword'>Given</span>"));
+            Assert.That(listOfLines[9], Is.EqualTo("<span>I have logged in to the application</span>"));
+        }
+
+        [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataRuleTags()
         {
             var livingDocProject = new LivingDocProject();
@@ -114,6 +167,80 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[5], Is.EqualTo("<span class='circle-number'>5</span>"));
             Assert.That(listOfLines[6], Is.EqualTo("<span class='scenario-duration'>&nbsp;1s 500ms</span>"));
             Assert.That(listOfLines[7], Is.EqualTo("</div>"));
+        }
+
+        [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataScenarioSteps()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var steps = new List<LivingDocStep>
+            {
+                new LivingDocStep
+                {
+                    Keyword = "Given",
+                    Name = "I have logged in to the application"
+                }
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataScenarioSteps(steps);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(10));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Steps -->"));
+            Assert.That(listOfLines[5], Is.EqualTo("<span class='step-keyword'>Given</span>"));
+            Assert.That(listOfLines[6], Is.EqualTo("<span>I have logged in to the application</span>"));
+        }
+
+        [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataScenarioExamples()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var examples = new LivingDocExample
+            {
+                DataTable = new LivingDocDataTable
+                {
+                    Rows = new List<LivingDocDataTableRow>
+                    {
+                        new LivingDocDataTableRow
+                        {
+                            Cells = new List<string> { "username", "password" }
+                        },
+                    }
+                },
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataScenarioExamples(examples);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(17));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Examples -->"));
+            Assert.That(listOfLines[8], Is.EqualTo("<td>username</td>"));
+            Assert.That(listOfLines[10], Is.EqualTo("<td>password</td>"));
+        }
+
+        [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataScenarioAttachments()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var example = new LivingDocExample
+            {
+                Attachments = new List<string>
+                {
+                    "screenshot1.png",
+                    "logfile1.txt"
+                }
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataScenarioAttachments(example);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(8));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Attachments -->"));
+            Assert.That(listOfLines[4], Does.Contain("screenshot1.png"));
+            Assert.That(listOfLines[5], Does.Contain("logfile1.txt"));
         }
     }
 }

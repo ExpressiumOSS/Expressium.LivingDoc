@@ -74,9 +74,11 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<!-- Data Feature Description -->");
                 listOfLines.Add("<div>");
                 listOfLines.Add("<ul class='feature-description'>");
+
                 var listOfDescription = feature.Description.Trim().Split("\n");
                 foreach (var line in listOfDescription)
                     listOfLines.Add("<li>" + line.Trim() + "</li>");
+
                 listOfLines.Add("</ul>");
                 listOfLines.Add("</div>");
             }
