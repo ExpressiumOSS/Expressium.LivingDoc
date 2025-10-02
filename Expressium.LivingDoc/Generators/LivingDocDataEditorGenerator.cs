@@ -45,7 +45,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div id='script-view'>");
-            listOfLines.Add("<textarea class='filter' id='scenario-script'></textarea>");
+            listOfLines.Add("<textarea id='scenario-script'></textarea>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<hr>");
@@ -62,6 +62,26 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<table id='steps-grid' class='grid-view'>");
             listOfLines.Add("<tbody id='steps-table-list'>");
 
+            var mapOfSteps = GetMapOfSteps();
+            foreach (var step in mapOfSteps)
+            {
+                listOfLines.Add($"<tr class='gridline' onclick=\"loadStepDefinition(this);\">");
+                listOfLines.Add($"<td><a href='#'>{step.Key}</a></td>");
+                // listOfLines.Add($"<td><a title='{step.Value}' href='#'>{step.Key}</a></td>");
+                listOfLines.Add($"</tr>");
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal Dictionary<string, string> GetMapOfSteps()
+        {
             var mapOfSteps = new Dictionary<string, string>();
 
             foreach (var feature in project.Features)
@@ -77,27 +97,27 @@ namespace Expressium.LivingDoc.Generators
                             if (step.Keyword == "And")
                                 keywordType = previousKeyword;
 
+                            previousKeyword = step.Keyword;
+
                             var fullName = keywordType + " " + step.Name;
                             if (!mapOfSteps.ContainsKey(fullName))
                             {
-                                listOfLines.Add($"<tr class='gridline' onclick=\"loadStepDefinition(this);\">");
-                                listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
-                                listOfLines.Add($"</tr>");
-
-                                mapOfSteps.Add(fullName, step.GetStatus());
+                                mapOfSteps.Add(fullName, "Features: " + feature.Name);
+                            }
+                            else
+                            {
+                                if (mapOfSteps[fullName].Length < 100)
+                                {
+                                    if (!mapOfSteps[fullName].Contains(feature.Name))
+                                        mapOfSteps[fullName] += $", {feature.Name}";
+                                }
                             }
                         }
                     }
                 }
             }
 
-            listOfLines.Add("</tbody>");
-            listOfLines.Add("</table>");
-            listOfLines.Add("</div>");
-
-            listOfLines.Add("</div>");
-
-            return listOfLines;
+            return mapOfSteps;
         }
     }
 }
