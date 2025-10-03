@@ -38,8 +38,8 @@ namespace Expressium.LivingDoc.UITests.Steps
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            var livingDocGenerator = new LivingDocConverter("LivingDoc.ndjson", "LivingDoc.html", "Expressium.Coffeeshop.Web.API.Tests");
-            livingDocGenerator.Execute();
+            var livingDocConverter = new LivingDocConverter();
+            livingDocConverter.Generate("LivingDoc.ndjson", "LivingDoc.html", "Expressium.Coffeeshop.Web.API.Tests");
         }
 
         [BeforeScenario]

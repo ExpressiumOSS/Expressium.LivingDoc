@@ -13,8 +13,8 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             File.Delete(outputFilePath);
 
-            var livingDocConverters = new LivingDocConverter(inputFilePath, outputFilePath, "MyProjectTitle");
-            livingDocConverters.Execute();
+            var livingDocConverters = new LivingDocConverter();
+            livingDocConverters.Generate(inputFilePath, outputFilePath, "MyProjectTitle");
 
             Assert.That(File.Exists(outputFilePath));
         }
@@ -25,9 +25,9 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "unknown.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "dummy.html");
 
-            var livingDocConverters = new LivingDocConverter(inputFilePath, outputFilePath, "MyProjectTitle");
+            var livingDocConverters = new LivingDocConverter();
 
-            var exception = Assert.Throws<IOException>(() => livingDocConverters.Execute());
+            var exception = Assert.Throws<IOException>(() => livingDocConverters.Generate(inputFilePath, outputFilePath, null));
             Assert.That(exception.Message.StartsWith("IO error: Could not find file"));
         }
 
@@ -37,9 +37,9 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
             var outputFilePath = Path.Combine($"G:\\Output\\dummy.html");
 
-            var livingDocConverters = new LivingDocConverter(inputFilePath, outputFilePath, "MyProjectTitle");
+            var livingDocConverters = new LivingDocConverter();
 
-            var exception = Assert.Throws<IOException>(() => livingDocConverters.Execute());
+            var exception = Assert.Throws<IOException>(() => livingDocConverters.Generate(inputFilePath, outputFilePath, null));
             Assert.That(exception.Message.StartsWith("IO error: Could not find a part of the path"));
         }
 
@@ -49,9 +49,9 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.html");
 
-            var livingDocConverters = new LivingDocConverter(inputFilePath, outputFilePath, "MyProjectTitle");
+            var livingDocConverters = new LivingDocConverter();
 
-            var exception = Assert.Throws<ApplicationException>(() => livingDocConverters.Execute());
+            var exception = Assert.Throws<ApplicationException>(() => livingDocConverters.Generate(inputFilePath, outputFilePath, null));
             Assert.That(exception.Message.StartsWith("Unexpected error: Object reference not set to an instance of an object."));
         }
     }

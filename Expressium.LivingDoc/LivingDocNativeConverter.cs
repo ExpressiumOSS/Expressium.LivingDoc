@@ -7,16 +7,27 @@ namespace Expressium.LivingDoc
 {
     public class LivingDocNativeConverter
     {
-        private string inputPath;
-        private string outputPath;
-
-        public LivingDocNativeConverter(string inputPath, string outputPath)
+        public LivingDocNativeConverter()
         {
-            this.inputPath = inputPath;
-            this.outputPath = outputPath;
         }
 
-        public void Execute()
+        public LivingDocProject Convert(string inputPath)
+        {
+            try
+            {
+                return LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputPath);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"IO error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Unexpected error: {ex.Message}", ex);
+            }
+        }
+
+        public void Generate(string inputPath, string outputPath)
         {
             try
             {

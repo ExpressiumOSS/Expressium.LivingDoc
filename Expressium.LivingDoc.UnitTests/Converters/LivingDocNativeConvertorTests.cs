@@ -13,8 +13,8 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             File.Delete(outputFilePath);
 
-            var livingDocNativeConverters = new LivingDocNativeConverter(inputFilePath, outputFilePath);
-            livingDocNativeConverters.Execute();
+            var livingDocNativeConverters = new LivingDocNativeConverter();
+            livingDocNativeConverters.Generate(inputFilePath, outputFilePath);
 
             Assert.That(File.Exists(outputFilePath));
         }
@@ -25,9 +25,9 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "unknown.json");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "dummy.html");
 
-            var livingDocNativeConverters = new LivingDocNativeConverter(inputFilePath, outputFilePath);
+            var livingDocNativeConverters = new LivingDocNativeConverter();
 
-            var exception = Assert.Throws<IOException>(() => livingDocNativeConverters.Execute());
+            var exception = Assert.Throws<IOException>(() => livingDocNativeConverters.Generate(inputFilePath, outputFilePath));
             Assert.That(exception.Message.StartsWith("IO error: Could not find file"));
         }
 
@@ -37,9 +37,9 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.json");
             var outputFilePath = Path.Combine($"G:\\Output\\dummy.html");
 
-            var livingDocNativeConverters = new LivingDocNativeConverter(inputFilePath, outputFilePath);
+            var livingDocNativeConverters = new LivingDocNativeConverter();
 
-            var exception = Assert.Throws<IOException>(() => livingDocNativeConverters.Execute());
+            var exception = Assert.Throws<IOException>(() => livingDocNativeConverters.Generate(inputFilePath, outputFilePath));
             Assert.That(exception.Message.StartsWith("IO error: Could not find a part of the path"));
         }
 
@@ -49,9 +49,9 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.json");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.html");
 
-            var livingDocNativeConverters = new LivingDocNativeConverter(inputFilePath, outputFilePath);
+            var livingDocNativeConverters = new LivingDocNativeConverter();
 
-            var exception = Assert.Throws<ApplicationException>(() => livingDocNativeConverters.Execute());
+            var exception = Assert.Throws<ApplicationException>(() => livingDocNativeConverters.Generate(inputFilePath, outputFilePath));
             Assert.That(exception.Message.StartsWith("Unexpected error: The JSON value could not be converted"));
         }
     }

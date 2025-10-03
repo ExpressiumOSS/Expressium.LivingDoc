@@ -19,7 +19,7 @@ namespace Expressium.LivingDoc.Parsers
         private List<TestRunFinished> listOfTestRunFinished;
         private List<Attachment> listOftAttachment;
 
-        public MessagesParser()
+        internal MessagesParser()
         {
             listOfGherkinDocuments = new List<GherkinDocument>();
             listOfPickles = new List<Pickle>();

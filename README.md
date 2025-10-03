@@ -66,16 +66,10 @@ if (args.Length == 5 && args[0] == "--merge")
     Console.WriteLine("InputMaster: " + args[1]);
     Console.WriteLine("InputSlave: " + args[2]);
     Console.WriteLine("Output: " + args[3]);
+    Console.WriteLine("Title: " + args[4]);
 
-    var messagesParser = new MessagesParser();
-    var livingDocProjectMaster = messagesParser.ConvertToLivingDoc(args[1]);
-    var livingDocProjectSlave = messagesParser.ConvertToLivingDoc(args[2]);
-
-    livingDocProjectMaster.Title = args[4];
-    livingDocProjectMaster.Merge(livingDocProjectSlave);
-
-    var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
-    livingDocProjectGenerator.Generate(args[3]);
+    var livingDocConverter = new LivingDocConverter();
+    livingDocConverter.Generate(new List<string>() { args[1], args[2] }, args[3], args[4]);
 
     Console.WriteLine("Generating LivingDoc Report Completed");
     Console.WriteLine("");
