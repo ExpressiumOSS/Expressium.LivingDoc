@@ -11,6 +11,13 @@ namespace Expressium.LivingDoc
         {
         }
 
+        /// <summary>
+        /// Converts a single native LivingDoc Json file to a LivingDocProject object.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <returns></returns>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
         public LivingDocProject Convert(string inputPath)
         {
             try
@@ -27,6 +34,13 @@ namespace Expressium.LivingDoc
             }
         }
 
+        /// <summary>
+        /// Generates a LivingDoc test report from a single LivingDoc Json file.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="outputPath"></param>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
         public void Generate(string inputPath, string outputPath)
         {
             try

@@ -13,6 +13,13 @@ namespace Expressium.LivingDoc
         {
         }
 
+        /// <summary>
+        /// Converts a single Cucumber Messages NdJson file to a LivingDocProject object.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <returns></returns>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
         public LivingDocProject Convert(string inputPath)
         {
             try
@@ -30,6 +37,14 @@ namespace Expressium.LivingDoc
             }
         }
 
+        /// <summary>
+        /// Generates a LivingDoc test report from a single Cucumber Messages NdJson file.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="title"></param>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
         public void Generate(string inputPath, string outputPath, string title)
         {
             try
@@ -51,6 +66,14 @@ namespace Expressium.LivingDoc
             }
         }
 
+        /// <summary>
+        /// Generates a LivingDoc test report from multiple Cucumber Messages NdJson files.    
+        /// </summary>
+        /// <param name="inputPaths"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="title"></param>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
         public void Generate(List<string> inputPaths, string outputPath, string title)
         {
             try
