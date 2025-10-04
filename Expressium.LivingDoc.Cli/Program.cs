@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Expressium.LivingDoc
+namespace Expressium.LivingDoc.Cli
 {
     public class Program
     {
@@ -54,8 +54,8 @@ namespace Expressium.LivingDoc
             }
             else
             {
-                Console.WriteLine("Expressium.LivingDoc.exe --input [INPUTFILE] --output [OUTPUTFILE] --title [TITLE]");
-                Console.WriteLine("Expressium.LivingDoc.exe --input .\\ReqnRoll.ndjson --output .\\LivingDoc.html --title \"Expressium CoffeeShop Report\"");
+                Console.WriteLine("Expressium.LivingDoc.Cli.exe --input [INPUTFILE] --output [OUTPUTFILE] --title [TITLE]");
+                Console.WriteLine("Expressium.LivingDoc.Cli.exe --input .\\ReqnRoll.ndjson --output .\\LivingDoc.html --title \"Expressium CoffeeShop Report\"");
             }
         }
     }
