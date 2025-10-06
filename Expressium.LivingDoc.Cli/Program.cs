@@ -7,7 +7,7 @@ namespace Expressium.LivingDoc.Cli
     {
         static void Main(string[] args)
         {
-            if (args.Length == 6)
+            if (args.Length == 6 && args[0] == "--input")
             {
                 // Generating a LivingDoc Test Report based on a Cucumber Messages JSON file...
                 Console.WriteLine("");
@@ -28,26 +28,26 @@ namespace Expressium.LivingDoc.Cli
                 Console.WriteLine("");
                 Console.WriteLine("Generating LivingDoc Test Report...");
                 Console.WriteLine("Input: " + args[1]);
-                Console.WriteLine("Output: " + args[2]);
+                Console.WriteLine("Output: " + args[3]);
 
                 var livingDocNativeConverter = new LivingDocNativeConverter();
-                livingDocNativeConverter.Generate(args[1], args[2]);
+                livingDocNativeConverter.Generate(args[1], args[3]);
 
                 Console.WriteLine("Generating LivingDoc Report Completed");
                 Console.WriteLine("");
             }
-            else if (args.Length == 5 && args[0] == "--merge")
+            else if (args.Length == 7 && args[0] == "--merge")
             {
                 // Generating a LivingDoc Test Report based on Two Cucumber Messages JSON files...
                 Console.WriteLine("");
                 Console.WriteLine("Generating LivingDoc Test Report...");
                 Console.WriteLine("InputMaster: " + args[1]);
                 Console.WriteLine("InputSlave: " + args[2]);
-                Console.WriteLine("Output: " + args[3]);
-                Console.WriteLine("Title: " + args[4]);
+                Console.WriteLine("Output: " + args[4]);
+                Console.WriteLine("Title: " + args[6]);
 
                 var livingDocConverter = new LivingDocConverter();
-                livingDocConverter.Generate(new List<string>() { args[1], args[2] }, args[3], args[4]);
+                livingDocConverter.Generate(new List<string>() { args[1], args[2] }, args[4], args[6]);
 
                 Console.WriteLine("Generating LivingDoc Report Completed");
                 Console.WriteLine("");
