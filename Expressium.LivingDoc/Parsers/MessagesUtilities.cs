@@ -17,7 +17,7 @@ namespace Expressium.LivingDoc.Parsers
             return dateTime.ToLocalTime();
         }
 
-        public static TimeSpan ToTimeSpan(this Timestamp timestampStart, Timestamp timestampEnd)
+        internal static TimeSpan ToTimeSpan(this Timestamp timestampStart, Timestamp timestampEnd)
         {
             var startTime = timestampStart.ToDateTime();
             var endTime = timestampEnd.ToDateTime();

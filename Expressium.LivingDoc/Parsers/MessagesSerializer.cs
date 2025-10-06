@@ -28,24 +28,6 @@ namespace Expressium.LivingDoc.Parsers
             return options;
         });
 
-        private static JsonSerializerOptions JsonOptions
-        {
-            get
-            {
-                return _jsonOptions.Value;
-            }
-        }
-
-        internal static string Serialize(Envelope message)
-        {
-            return Serialize<Envelope>(message);
-        }
-
-        internal static string Serialize<T>(T message)
-        {
-            return JsonSerializer.Serialize(message, JsonOptions);
-        }
-
         internal static Envelope Deserialize(string json)
         {
             return Deserialize<Envelope>(json);
@@ -54,6 +36,14 @@ namespace Expressium.LivingDoc.Parsers
         internal static T Deserialize<T>(string json)
         {
             return JsonSerializer.Deserialize<T>(json, JsonOptions);
+        }
+
+        private static JsonSerializerOptions JsonOptions
+        {
+            get
+            {
+                return _jsonOptions.Value;
+            }
         }
     }
 }

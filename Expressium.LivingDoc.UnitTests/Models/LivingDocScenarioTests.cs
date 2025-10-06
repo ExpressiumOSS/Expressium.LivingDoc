@@ -10,7 +10,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocConverter = new LivingDocNativeConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath);
             var livingDocScenario = livingDocProject.Features[0].Scenarios[0];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
@@ -28,7 +29,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocConverter = new LivingDocNativeConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath);
             var livingDocScenario = livingDocProject.Features[0].Scenarios[1];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
@@ -46,7 +48,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocConverter = new LivingDocNativeConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath);
             var livingDocScenario = livingDocProject.Features[0].Scenarios[2];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
@@ -64,7 +67,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocConverter = new LivingDocNativeConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath);
             var livingDocScenario = livingDocProject.Features[0].Scenarios[3];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
@@ -82,7 +86,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputFilePath);
+            var livingDocConverter = new LivingDocNativeConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath);
             var livingDocScenario = livingDocProject.Features[0].Scenarios[4];
 
             Assert.That(livingDocScenario.Name, Is.EqualTo("Ordering Coffee Confirmation Notification"));

@@ -62,10 +62,9 @@ namespace Expressium.LivingDoc.Generators
             if (configuration.FeaturesListView)
                 listOfLines.AddRange(generator.GenerateDataAnalyticsFeaturesView());
 
-            if (configuration.ScenariosListView)
-                listOfLines.AddRange(generator.GenerateDataAnalyticsScenariosView());
+            listOfLines.AddRange(generator.GenerateDataAnalyticsScenariosView());
 
-            if (configuration.ScenariosListView)
+            if (configuration.StepsListView)
                 listOfLines.AddRange(generator.GenerateDataAnalyticsStepsView());
 
             return listOfLines;

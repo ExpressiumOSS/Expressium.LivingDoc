@@ -1,4 +1,4 @@
-﻿using Expressium.LivingDoc.Generators;
+using Expressium.LivingDoc.Generators;
 using Expressium.LivingDoc.Parsers;
 using System;
 using System.CommandLine;
@@ -119,32 +119,16 @@ namespace Expressium.LivingDoc
         private static void GenerateStandardReport(List<string> inputs, string output, string title)
         {
             PrintReportStart(string.Join(", ", inputs), output, title);
-            if (inputs.Count == 1)
-            {
-                var livingDocGenerator = new LivingDocConverter(inputs[0], output, title);
-                livingDocGenerator.Execute();
-            }
-            else if (inputs.Count > 1)
-            {
-                var messagesParser = new MessagesParser();
-                var livingDocProjectMaster = messagesParser.ConvertToLivingDoc(inputs[0]);
-                for (var i = 1; i < inputs.Count; i++)
-                {
-                    var livingDocProjectSlave = messagesParser.ConvertToLivingDoc(inputs[i]);
-                    livingDocProjectMaster.Merge(livingDocProjectSlave);
-                }
-                livingDocProjectMaster.Title = title;
-                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
-                livingDocProjectGenerator.Generate(output);
-            }
+            var livingDocConverter = new LivingDocConverter();
+            livingDocConverter.Generate(inputs, output, title);
             PrintReportEnd();
         }
 
         private static void GenerateNativeReport(string input, string output)
         {
             PrintReportStart(input, output);
-            var livingDocGenerator = new LivingDocNativeConverter(input, output);
-            livingDocGenerator.Execute();
+            var livingDocGenerator = new LivingDocNativeConverter();
+            livingDocGenerator.Generate(input, output);
             PrintReportEnd();
         }
     }

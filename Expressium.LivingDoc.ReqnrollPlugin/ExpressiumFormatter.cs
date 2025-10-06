@@ -31,8 +31,8 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
 
             var outputHtmlFilePath = Path.GetFileNameWithoutExtension(OutputFilePath) + ".html";
 
-            var livingDocGenerator = new LivingDocConverter(OutputFilePath, outputHtmlFilePath, OutputFileTitle);
-            livingDocGenerator.Execute();
+            var livingDocConverter = new LivingDocConverter();
+            livingDocConverter.Generate(OutputFilePath, outputHtmlFilePath, OutputFileTitle);
         }
     }
 }

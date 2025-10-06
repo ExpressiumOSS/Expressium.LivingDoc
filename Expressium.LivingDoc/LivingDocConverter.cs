@@ -1,24 +1,51 @@
 ﻿using Expressium.LivingDoc.Generators;
+using Expressium.LivingDoc.Models;
 using Expressium.LivingDoc.Parsers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Expressium.LivingDoc
 {
     public class LivingDocConverter
     {
-        private string inputPath;
-        private string outputPath;
-        private string title;
-
-        public LivingDocConverter(string inputPath, string outputPath, string title)
+        public LivingDocConverter()
         {
-            this.inputPath = inputPath;
-            this.outputPath = outputPath;
-            this.title = title;
         }
 
-        public void Execute()
+        /// <summary>
+        /// Converts a single Cucumber Messages NdJson file to a LivingDocProject object.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <returns></returns>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
+        public LivingDocProject Convert(string inputPath)
+        {
+            try
+            {
+                var messagesParser = new MessagesParser();
+                return messagesParser.ConvertToLivingDoc(inputPath);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"IO error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Unexpected error: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Generates a LivingDoc test report from a single Cucumber Messages NdJson file.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="title"></param>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
+        public void Generate(string inputPath, string outputPath, string title)
         {
             try
             {
@@ -27,6 +54,43 @@ namespace Expressium.LivingDoc
                 if (!string.IsNullOrEmpty(title))
                     livingDocProject.Title = title;
                 var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject);
+                livingDocProjectGenerator.Generate(outputPath);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"IO error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Unexpected error: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Generates a LivingDoc test report from multiple Cucumber Messages NdJson files.    
+        /// </summary>
+        /// <param name="inputPaths"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="title"></param>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
+        public void Generate(List<string> inputPaths, string outputPath, string title)
+        {
+            try
+            {
+                var messagesParser = new MessagesParser();
+                var livingDocProjectMaster = messagesParser.ConvertToLivingDoc(inputPaths[0]);
+                if (!string.IsNullOrEmpty(title))
+                    livingDocProjectMaster.Title = title;
+
+                for (int i = 1; i < inputPaths.Count; i++)
+                {
+                    var messagesParserSlave = new MessagesParser();
+                    var livingDocProjectSlave = messagesParserSlave.ConvertToLivingDoc(inputPaths[i]);
+                    livingDocProjectMaster.Merge(livingDocProjectSlave);
+                }
+
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
                 livingDocProjectGenerator.Generate(outputPath);
             }
             catch (IOException ex)
