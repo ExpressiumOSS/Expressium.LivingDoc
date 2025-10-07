@@ -1,62 +1,132 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.CommandLine;
 
 namespace Expressium.LivingDoc.Cli
 {
     public class Program
     {
-        static void Main(string[] args)
+          static int Main(string[] args)
         {
-            if (args.Length == 6 && args[0] == "--input")
+            var inputOption = CreateInputOption("Input ndjson file(s) or native JSON file");
+            var outputOption = CreateOutputOption("Output html file");
+            var titleOption = CreateTitleOption("Report title");
+            var nativeOption = new Option<bool>(
+                name: "--native",
+                description: "Use native JSON input mode"
+            );
+
+            var rootCommand = new RootCommand("Expressium LivingDoc CLI")
             {
-                // Generating a LivingDoc Test Report based on a Cucumber Messages JSON file...
-                Console.WriteLine("");
-                Console.WriteLine("Generating LivingDoc Test Report...");
-                Console.WriteLine("Input: " + args[1]);
-                Console.WriteLine("Output: " + args[3]);
-                Console.WriteLine("Title: " + args[5]);
+                inputOption,
+                outputOption,
+                titleOption,
+                nativeOption
+            };
 
-                var livingDocConverter = new LivingDocConverter();
-                livingDocConverter.Generate(args[1], args[3], args[5]);
-
-                Console.WriteLine("Generating LivingDoc Report Completed");
-                Console.WriteLine("");
-            }
-            else if (args.Length == 3 && args[0] == "--native")
+            rootCommand.SetHandler((inputs, output, title, native) =>
             {
-                // Generating a LivingDoc Test Report based on a Native JSON file...
-                Console.WriteLine("");
-                Console.WriteLine("Generating LivingDoc Test Report...");
-                Console.WriteLine("Input: " + args[1]);
-                Console.WriteLine("Output: " + args[3]);
+                if (native)
+                {
+                    if (inputs == null || inputs.Count != 1)
+                    {
+                        Console.Error.WriteLine("Error: --native requires exactly one --input file.");
+                        Environment.Exit(1);
+                    }
+                    if (!string.IsNullOrEmpty(title))
+                    {
+                        Console.Error.WriteLine("Error: --native cannot be combined with --title.");
+                        Environment.Exit(1);
+                    }
+                    GenerateNativeReport(inputs[0], output);
+                }
+                else
+                {
+                    if (inputs == null || inputs.Count < 1)
+                    {
+                        Console.Error.WriteLine("Error: At least one --input file is required.");
+                        Environment.Exit(1);
+                    }
+                    if (title == null)
+                    {
+                        title = string.Empty;
+                    }
+                    GenerateStandardReport(inputs, output, title);
+                }
+            }, inputOption, outputOption, titleOption, nativeOption);
 
-                var livingDocNativeConverter = new LivingDocNativeConverter();
-                livingDocNativeConverter.Generate(args[1], args[3]);
+            return rootCommand.InvokeAsync(args).Result;
+        }
+        
+        private static void PrintReportStart(string input, string output, string title = null)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Generating LivingDoc Test Report...");
+            Console.WriteLine("Input: " + input);
+            Console.WriteLine("Output: " + output);
+            if (!string.IsNullOrEmpty(title))
+                Console.WriteLine("Title: " + title);
+        }
 
-                Console.WriteLine("Generating LivingDoc Report Completed");
-                Console.WriteLine("");
-            }
-            else if (args.Length == 7 && args[0] == "--merge")
+        private static void PrintReportEnd()
+        {
+            Console.WriteLine("LivingDoc Report generation completed");
+            Console.WriteLine("");
+        }
+
+        private static Option<List<string>> CreateInputOption(string description)
+        {
+            var opt = new Option<List<string>>(
+                name: "--input",
+                description: description
+            )
             {
-                // Generating a LivingDoc Test Report based on Two Cucumber Messages JSON files...
-                Console.WriteLine("");
-                Console.WriteLine("Generating LivingDoc Test Report...");
-                Console.WriteLine("InputMaster: " + args[1]);
-                Console.WriteLine("InputSlave: " + args[2]);
-                Console.WriteLine("Output: " + args[4]);
-                Console.WriteLine("Title: " + args[6]);
+                Arity = ArgumentArity.OneOrMore,
+                IsRequired = true
+            };
+            return opt;
+        }
 
-                var livingDocConverter = new LivingDocConverter();
-                livingDocConverter.Generate(new List<string>() { args[1], args[2] }, args[4], args[6]);
-
-                Console.WriteLine("Generating LivingDoc Report Completed");
-                Console.WriteLine("");
-            }
-            else
+        private static Option<string> CreateOutputOption(string description)
+        {
+            var opt = new Option<string>(
+                name: "--output",
+                description: description
+            )
             {
-                Console.WriteLine("Expressium.LivingDoc.Cli.exe --input [INPUTFILE] --output [OUTPUTFILE] --title [TITLE]");
-                Console.WriteLine("Expressium.LivingDoc.Cli.exe --input .\\ReqnRoll.ndjson --output .\\LivingDoc.html --title \"Expressium CoffeeShop Report\"");
-            }
+                Arity = ArgumentArity.ExactlyOne,
+                IsRequired = true
+            };
+            return opt;
+        }
+
+        private static Option<string> CreateTitleOption(string description)
+        {
+            var opt = new Option<string>(
+                name: "--title",
+                description: description
+            )
+            {
+                Arity = ArgumentArity.ZeroOrOne,
+                IsRequired = false
+            };
+            return opt;
+        }
+
+        private static void GenerateStandardReport(List<string> inputs, string output, string title)
+        {
+            PrintReportStart(string.Join(", ", inputs), output, title);
+            var livingDocConverter = new LivingDocConverter();
+            livingDocConverter.Generate(inputs, output, title);
+            PrintReportEnd();
+        }
+
+        private static void GenerateNativeReport(string input, string output)
+        {
+            PrintReportStart(input, output);
+            var livingDocGenerator = new LivingDocNativeConverter();
+            livingDocGenerator.Generate(input, output);
+            PrintReportEnd();
         }
     }
 }
