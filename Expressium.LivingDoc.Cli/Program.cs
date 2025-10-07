@@ -1,10 +1,8 @@
-using Expressium.LivingDoc.Generators;
-using Expressium.LivingDoc.Parsers;
 using System;
-using System.CommandLine;
 using System.Collections.Generic;
+using System.CommandLine;
 
-namespace Expressium.LivingDoc
+namespace Expressium.LivingDoc.Cli
 {
     public class Program
     {
@@ -49,10 +47,9 @@ namespace Expressium.LivingDoc
                         Console.Error.WriteLine("Error: At least one --input file is required.");
                         Environment.Exit(1);
                     }
-                    if (string.IsNullOrEmpty(title))
+                    if (title == null)
                     {
-                        Console.Error.WriteLine("Error: --title is required (except with --native).");
-                        Environment.Exit(1);
+                        title = string.Empty;
                     }
                     GenerateStandardReport(inputs, output, title);
                 }
@@ -110,8 +107,8 @@ namespace Expressium.LivingDoc
                 description: description
             )
             {
-                Arity = ArgumentArity.ExactlyOne,
-                IsRequired = true
+                Arity = ArgumentArity.ZeroOrOne,
+                IsRequired = false
             };
             return opt;
         }
