@@ -129,23 +129,7 @@ namespace Expressium.LivingDoc.Generators
             var percentageOfFailed = CalculatePercentage(numberOfFailed, numberOfTests);
             var percentageOfSkipped = CalculatePercentage(numberOfSkipped, numberOfTests);
 
-            var totalPercentage = percentageOfPassed + percentageOfIncomplete + percentageOfFailed + percentageOfSkipped;
-
-            // Adjust the percentages at discrepancy...
-            int difference = 100 - totalPercentage;
-            if (totalPercentage != 0 && difference != 0)
-            {
-                var percentages = new List<(int value, Action<int> setter)>
-                {
-                    (percentageOfPassed, val => percentageOfPassed = val),
-                    (percentageOfIncomplete, val => percentageOfIncomplete = val),
-                    (percentageOfFailed, val => percentageOfFailed = val),
-                    (percentageOfSkipped, val => percentageOfSkipped = val)
-                };
-
-                var maxCategory = percentages.OrderByDescending(p => p.value).First();
-                maxCategory.setter(maxCategory.value + difference);
-            }
+            AdjustPercentagesDiscrepancy(ref percentageOfPassed, ref percentageOfIncomplete, ref percentageOfFailed, ref percentageOfSkipped);
 
             var listOfLines = new List<string>();
 
@@ -222,7 +206,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal int CalculatePercentage(int numberOfStatuses, int numberOfTests)
+        internal static int CalculatePercentage(int numberOfStatuses, int numberOfTests)
         {
             if (numberOfStatuses == 0)
                 return 0;
@@ -233,6 +217,25 @@ namespace Expressium.LivingDoc.Generators
                 percentage = 1;
 
             return percentage;
+        }
+
+        internal static void AdjustPercentagesDiscrepancy(ref int percentageOfPassed, ref int percentageOfIncomplete, ref int percentageOfFailed, ref int percentageOfSkipped)
+        {
+            var totalPercentage = percentageOfPassed + percentageOfIncomplete + percentageOfFailed + percentageOfSkipped;
+
+            int discrepancy = 100 - totalPercentage;
+            if (totalPercentage != 0 && discrepancy != 0)
+            {
+                int[] percentages = { percentageOfPassed, percentageOfIncomplete, percentageOfFailed, percentageOfSkipped };
+
+                int maxIndex = Array.IndexOf(percentages, percentages.Max());
+                percentages[maxIndex] += discrepancy;
+
+                percentageOfPassed = percentages[0];
+                percentageOfIncomplete = percentages[1];
+                percentageOfFailed = percentages[2];
+                percentageOfSkipped = percentages[3];
+            }
         }
 
         internal List<string> GenerateDataAnalyticsDuration()
