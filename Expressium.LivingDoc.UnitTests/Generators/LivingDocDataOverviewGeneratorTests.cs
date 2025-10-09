@@ -4,6 +4,19 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 {
     public class LivingDocDataOverviewGeneratorTests
     {
+        [TestCase(null, "")]
+        [TestCase("", "")]
+        [TestCase("\\Root", "Root")]
+        [TestCase("\\Root\\", "")]
+        [TestCase("\\Root\\SubFolder", "SubFolder")]
+        [TestCase("\\Root\\Folder\\SubFolder", "SubFolder")]
+        public void LivingDocDataOverviewGenerator_GenerateOverviewHeaderFolder(string value, string expected)
+        {
+            var result = LivingDocDataOverviewGenerator.GetFolderName(value);
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
         [Test]
         public void LivingDocDataOverviewGenerator_GetFolderDepth_No_Locators()
         {
