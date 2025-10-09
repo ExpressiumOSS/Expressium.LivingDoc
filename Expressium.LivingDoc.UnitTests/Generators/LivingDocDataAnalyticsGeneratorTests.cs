@@ -1,10 +1,26 @@
 using Expressium.LivingDoc.Generators;
+using Expressium.LivingDoc.Models;
+using System.Collections.Generic;
 
 namespace Expressium.LivingDoc.Tests.Generators
 {
     [TestFixture]
     public class LivingDocDataAnalyticsGeneratorTests
     {
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsDuration()
+        {
+            var livingDocProject = new LivingDocProject();
+            livingDocProject.Duration = new System.TimeSpan(0, 4, 12, 30, 0);
+
+            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataAnalyticsDuration();
+
+            Assert.That(listOfLines.Count, Is.EqualTo(9));
+            Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Duration -->"));
+            Assert.That(listOfLines[6], Is.EqualTo("<span data-testid='project-duration'>4h 12min</span>"));
+        }
+
         [TestCase(0, 10, ExpectedResult = 0)]
         [TestCase(5, 10, ExpectedResult = 50)]
         [TestCase(1, 100, ExpectedResult = 1)]

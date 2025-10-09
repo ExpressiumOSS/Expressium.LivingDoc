@@ -122,6 +122,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
+        // TODO - Refactory & UnitTests is missing...
         internal List<string> GenerateDataAnalyticsStatusChart(string title, int numberOfPassed, int numberOfIncomplete, int numberOfFailed, int numberOfSkipped, int numberOfTests)
         {
             var percentageOfPassed = CalculatePercentage(numberOfPassed, numberOfTests);
@@ -206,6 +207,24 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
+        internal List<string> GenerateDataAnalyticsDuration()
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<hr>");
+
+            listOfLines.Add("<!-- Data Analytics Duration -->");
+            listOfLines.Add("<div style='padding-top: 6px; text-align: center; justify-content: center; align-items: center; display: flex;'>");
+            listOfLines.Add($"<span style='font-size: 2.5em;'>&#9201;</span>");
+            listOfLines.Add($"<span style='font-size: 1.25em; padding-top: 6px;'>");
+            listOfLines.Add($"<span style='color: gray;'>Duration </span>");
+            listOfLines.Add($"<span data-testid='project-duration'>{project.GetDuration()}</span>");
+            listOfLines.Add("</span>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
         internal static int CalculatePercentage(int numberOfStatuses, int numberOfTests)
         {
             if (numberOfStatuses == 0)
@@ -236,24 +255,6 @@ namespace Expressium.LivingDoc.Generators
                 percentageOfFailed = percentages[2];
                 percentageOfSkipped = percentages[3];
             }
-        }
-
-        internal List<string> GenerateDataAnalyticsDuration()
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.Add("<hr>");
-
-            listOfLines.Add("<!-- Data Analytics Duration -->");
-            listOfLines.Add("<div style='padding-top: 6px; text-align: center; justify-content: center; align-items: center; display: flex;'>");
-            listOfLines.Add($"<span style='font-size: 2.5em;'>&#9201;</span>");
-            listOfLines.Add($"<span style='font-size: 1.25em; padding-top: 6px;'>");
-            listOfLines.Add($"<span style='color: gray;'>Duration </span>");
-            listOfLines.Add($"<span data-testid='project-duration'>{project.GetDuration()}</span>");
-            listOfLines.Add("</span>");
-            listOfLines.Add("</div>");
-
-            return listOfLines;
         }
     }
 }
