@@ -48,7 +48,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        public void LivingDocDataObjectsGenerator_GenerateDataFeatures_Description()
+        public void LivingDocDataObjectsGenerator_GenerateDataFeatureDescription()
         {
             var livingDocProject = new LivingDocProject();
 
@@ -72,7 +72,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        public void LivingDocDataObjectsGenerator_GenerateDataFeatures_Background()
+        public void LivingDocDataObjectsGenerator_GenerateDataFeatureBackground()
         {
             var livingDocProject = new LivingDocProject();
 
@@ -101,6 +101,35 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataFeatureBackgroundSteps()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var feature = new LivingDocFeature
+            {
+                Background = new LivingDocBackground
+                {
+                    Steps = new List<LivingDocStep>
+                    {
+                        new LivingDocStep
+                        {
+                            Keyword = "Given",
+                            Name = "I have logged in to the application"
+                        }
+                    }
+                }
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataFeatureBackgroundSteps(feature.Background.Steps);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(10));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Background Steps -->"));
+            Assert.That(listOfLines[5], Is.EqualTo("<span class='step-keyword'>Given</span>"));
+            Assert.That(listOfLines[6], Is.EqualTo("<span>I have logged in to the application</span>"));
+        }
+
+        [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataRuleTags()
         {
             var livingDocProject = new LivingDocProject();
@@ -118,6 +147,26 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[1], Is.EqualTo("<div>"));
             Assert.That(listOfLines[2], Is.EqualTo("<span class='tag-names'>@tag5 @tag6</span>"));
             Assert.That(listOfLines[3], Is.EqualTo("</div>"));
+        }
+
+        [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataScenarioRule()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var rule = new LivingDocRule
+            {
+                Name = "Orders",
+                Tags = new List<string> { "@tag5", "@tag6" }
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataScenarioRule(rule, null);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(13));
+            Assert.That(listOfLines[6], Is.EqualTo("<!-- Data Rule Name -->"));
+            Assert.That(listOfLines[8], Does.Contain("Rule:"));
+            Assert.That(listOfLines[9], Does.Contain("Orders"));
         }
 
         [Test]
