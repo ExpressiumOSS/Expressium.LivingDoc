@@ -66,31 +66,6 @@ namespace Expressium.LivingDoc.Models
             return $"{duration.Minutes.ToString("D2")}:{duration.Seconds.ToString("D2")}:{duration.Milliseconds.ToString("D3")}";
         }
 
-        public int GetNumberOfSteps()
-        {
-            var numberOfSteps = 0;
-
-            foreach (var example in Examples)
-                numberOfSteps += example.Steps.Count;
-
-            return numberOfSteps;
-        }
-
-        public string GetNumberOfStepsSortId()
-        {
-            return GetNumberOfSteps().ToString("D4");
-        }
-
-        public int GetNumberOfTests()
-        {
-            return Examples.Count;
-        }
-
-        public string GetNumberOfTestsSortId()
-        {
-            return Examples.Count.ToString("D4");
-        }
-
         public int GetOrder()
         {
             return Order;

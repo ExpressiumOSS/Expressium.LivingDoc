@@ -19,8 +19,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("0s 000ms"));
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:00:000"));
-            Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(2));
-            Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0002"));
             Assert.That(livingDocScenario.HasDataTable(), Is.False);
         }
 
@@ -38,8 +36,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("3s 478ms"));
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:03:478"));
-            Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(2));
-            Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0002"));
             Assert.That(livingDocScenario.HasDataTable(), Is.False);
         }
 
@@ -57,8 +53,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("5s 641ms"));
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:05:641"));
-            Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(4));
-            Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0004"));
             Assert.That(livingDocScenario.HasDataTable(), Is.False);
         }
 
@@ -76,8 +70,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("4s 495ms"));
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:04:495"));
-            Assert.That(livingDocScenario.GetNumberOfSteps(), Is.EqualTo(3));
-            Assert.That(livingDocScenario.GetNumberOfStepsSortId(), Is.EqualTo("0003"));
             Assert.That(livingDocScenario.HasDataTable(), Is.False);
         }
 
