@@ -134,7 +134,14 @@ namespace Expressium.LivingDoc.Generators
 
             var mapOfSteps = new Dictionary<string, string>();
 
-            var listOfStatuses = new List<string> { "Failed", "Incomplete", "Skipped", "Passed", "All" };
+            var listOfStatuses = new List<string>
+            {
+                LivingDocStatuses.Failed.ToString(),
+                LivingDocStatuses.Incomplete.ToString(),
+                LivingDocStatuses.Skipped.ToString(),
+                LivingDocStatuses.Passed.ToString(),
+            };
+
             foreach (var status in listOfStatuses)
             {
                 foreach (var feature in project.Features)
@@ -145,7 +152,7 @@ namespace Expressium.LivingDoc.Generators
                         {
                             foreach (var step in example.Steps)
                             {
-                                if (status != "All" && status != step.GetStatus())
+                                if (status != step.GetStatus())
                                     continue;
 
                                 var fullName = step.Keyword + " " + step.Name;
