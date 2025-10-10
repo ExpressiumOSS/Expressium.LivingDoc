@@ -1,8 +1,6 @@
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using log4net;
 using Expressium.LivingDoc.UITests.Controls;
+using log4net;
+using OpenQA.Selenium;
 
 namespace Expressium.LivingDoc.UITests.Pages
 {
