@@ -9,8 +9,11 @@ namespace Expressium.LivingDoc
 {
     public class LivingDocNativeConverter
     {
-        public LivingDocNativeConverter()
+        private LivingDocConfiguration configuration;
+
+        public LivingDocNativeConverter(LivingDocConfiguration configuration = null)
         {
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -48,7 +51,7 @@ namespace Expressium.LivingDoc
             try
             {
                 var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputPath);
-                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject);
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject, configuration);
                 livingDocProjectGenerator.Generate(outputPath);
             }
             catch (IOException ex)
@@ -83,31 +86,8 @@ namespace Expressium.LivingDoc
                     livingDocProjectMaster.Merge(livingDocProjectSlave);
                 }
 
-                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster, configuration);
                 livingDocProjectGenerator.Generate(outputPath);
-            }
-            catch (IOException ex)
-            {
-                throw new IOException($"IO error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException($"Unexpected error: {ex.Message}", ex);
-            }
-        }
-
-        /// <summary>
-        /// Saves a LivingDoc project as a LivingDoc Json file.
-        /// </summary>
-        /// <param name="project"></param>
-        /// <param name="outputPath"></param>
-        /// <exception cref="IOException"></exception>
-        /// <exception cref="ApplicationException"></exception>
-        public void Save(LivingDocProject project, string outputPath)
-        {
-            try
-            {
-                LivingDocSerializer.SerializeAsJson(outputPath, project);
             }
             catch (IOException ex)
             {

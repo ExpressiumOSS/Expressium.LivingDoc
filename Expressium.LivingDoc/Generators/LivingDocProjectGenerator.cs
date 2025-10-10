@@ -15,10 +15,14 @@ namespace Expressium.LivingDoc.Generators
         private LivingDocProject project;
         private LivingDocConfiguration configuration;
 
-        internal LivingDocProjectGenerator(LivingDocProject project)
+        internal LivingDocProjectGenerator(LivingDocProject project, LivingDocConfiguration configuration = null)
         {
             this.project = project;
-            this.configuration = new LivingDocConfiguration();
+
+            if (configuration != null)
+                this.configuration = configuration;
+            else
+                this.configuration = new LivingDocConfiguration();
         }
 
         internal void Generate(string outputPath)

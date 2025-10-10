@@ -9,8 +9,11 @@ namespace Expressium.LivingDoc
 {
     public class LivingDocConverter
     {
-        public LivingDocConverter()
+        private LivingDocConfiguration configuration;
+
+        public LivingDocConverter(LivingDocConfiguration configuration = null)
         {
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -53,7 +56,7 @@ namespace Expressium.LivingDoc
                 var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
                 if (!string.IsNullOrEmpty(title))
                     livingDocProject.Title = title;
-                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject);
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject, configuration);
                 livingDocProjectGenerator.Generate(outputPath);
             }
             catch (IOException ex)
@@ -90,7 +93,7 @@ namespace Expressium.LivingDoc
                     livingDocProjectMaster.Merge(livingDocProjectSlave);
                 }
 
-                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster, configuration);
                 livingDocProjectGenerator.Generate(outputPath);
             }
             catch (IOException ex)

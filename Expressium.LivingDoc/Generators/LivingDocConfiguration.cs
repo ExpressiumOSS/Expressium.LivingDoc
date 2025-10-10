@@ -2,7 +2,7 @@
 
 namespace Expressium.LivingDoc.Generators
 {
-    internal class LivingDocConfiguration
+    public class LivingDocConfiguration
     {
         public bool Overview { get; set; }
         public bool FeaturesListView { get; set; }

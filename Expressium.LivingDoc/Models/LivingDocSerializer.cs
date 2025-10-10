@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Expressium.LivingDoc.Models
 {
-    internal static class LivingDocSerializer
+    public static class LivingDocSerializer
     {
-        internal static T DeserializeAsJson<T>(string filePath)
+        public static T DeserializeAsJson<T>(string filePath)
         {
             var options = new JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;
@@ -16,13 +16,13 @@ namespace Expressium.LivingDoc.Models
             return JsonSerializer.Deserialize<T>(jsonString, options);
         }
 
-        internal static void SerializeAsJson<T>(string filePath, T obj)
+        public static void SerializeAsJson<T>(string filePath, T obj)
         {
             var jsonString = JsonSerializer.Serialize(obj, new JsonSerializerOptions() { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
             File.WriteAllText(filePath, jsonString);
         }
 
-        internal static T DeepClone<T>(this T obj)
+        public static T DeepClone<T>(this T obj)
         {
             if (obj is null)
                 throw new ArgumentNullException(nameof(obj));
