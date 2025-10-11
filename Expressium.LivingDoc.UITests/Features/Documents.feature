@@ -32,6 +32,16 @@ Scenario: Loading a scenario from the Overview List in Document View
 		| Tags           | Name                                         |
 		| @TA-1001 @Done | Successful User Login with Valid Credentials |
 
+Scenario: Loading a scenario with rule from the Overview List in Document View
+	Given I have navigated to the Overview List
+	When I filter by following keywords in the Filter Bar
+		| Keywords       |
+		| TA-4001 Orders |
+	And I load the scenario document in the Overview List
+	Then I should have following rule properties in the Document View
+		| Tags     | Name                               |
+		| @TR-4001 | Ordering Confirmation Notification |
+
 Rule: Loading Features List Test Results in Document View
 
 Scenario: Loading a feature from the Features List in Document View
@@ -67,6 +77,19 @@ Scenario: Loading a scenario from the Scenarios List in Document View
 		| Name                                            |
 		| I complete and cancel the Registration formular |
 		| I should be redirected to the Login page        |
+
+Scenario: Loading a scenario with exmaples from the Scenarios List in Document View
+	Given I have navigated to the Scenarios List
+	When I filter by following keywords in the Filter Bar
+		| Keywords       |
+		| TA-4001 Orders |
+	And I load the scenario document in the Scenarios List
+	Then I should have following number of scenarios in the Document View
+		| Numbers |
+		| 2       |
+	And I should have following scenario properties in the Document View
+		| Tags             | Name                                      |
+		| @TA-4001 @Review | Ordering Coffee Confirmation Notification |
 
 Rule: Loading Steps List Test Results in Document View
 

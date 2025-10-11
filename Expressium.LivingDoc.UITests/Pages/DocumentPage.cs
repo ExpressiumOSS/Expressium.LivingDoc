@@ -10,6 +10,8 @@ namespace Expressium.LivingDoc.UITests.Pages
         private readonly By FeatureTags = By.XPath("//*[@id='right-section']//span[@class='feature-tag-names']");
         private readonly By FeatureDescription = By.XPath("//*[@id='right-section']//ul[@class='feature-description']");
         private readonly By FeatureName = By.XPath("//*[@id='right-section']//span[@class='feature-name']");
+        private readonly By RuleTags = By.XPath("//*[@id='right-section']//span[@class='rule-tag-names']");
+        private readonly By RuleNames = By.XPath("//*[@id='right-section']//span[@class='rule-name']");
         private readonly By ScenarioTags = By.XPath("//*[@id='right-section']//span[@class='scenario-tag-names']");
         private readonly By ScenarioNames = By.XPath("//*[@id='right-section']//span[@class='scenario-name']");
         private readonly By StepNames = By.XPath("//*[@id='right-section']//span[@class='step-name']");
@@ -34,6 +36,18 @@ namespace Expressium.LivingDoc.UITests.Pages
         {
             logger.Info("GetFeatureName()");
             return FeatureName.GetText(driver);
+        }
+
+        public List<string> GetRuleTags()
+        {
+            logger.Info("GetRuleTags()");
+            return RuleTags.GetTexts(driver);
+        }
+
+        public List<string> GetRuleNames()
+        {
+            logger.Info("GetRuleNames()");
+            return RuleNames.GetTexts(driver);
         }
 
         public List<string> GetScenarioTags()

@@ -11,6 +11,19 @@ namespace Expressium.LivingDoc.UITests.Steps
         {
         }
 
+        [Then("I should have following number of scenarios in the Document View")]
+        public void ThenIShouldHaveFollowingNumberOfScenariosInTheDocumentView(DataTable dataTable)
+        {
+            var documentPage = new DocumentPage(logger, driver);
+
+            var objects = dataTable.CreateSet<Objects>();
+
+            foreach (var item in objects)
+            {
+                Asserts.EqualTo(item.Numbers, documentPage.GetScenarioNames().Count, "Validating the DocumentPage Scenario Numbers...");
+            }
+        }
+
         [Then("I should have following feature properties in the Document View")]
         public void ThenIShouldHaveFollowingFeaturePropertiesInTheDocumentView(DataTable dataTable)
         {
@@ -48,6 +61,23 @@ namespace Expressium.LivingDoc.UITests.Steps
             }
         }
 
+        [Then("I should have following rule properties in the Document View")]
+        public void ThenIShouldHaveFollowingRulePropertiesInTheDocumentView(DataTable dataTable)
+        {
+            var documentPage = new DocumentPage(logger, driver);
+
+            var objects = dataTable.CreateSet<Objects>();
+
+            foreach (var item in objects)
+            {
+                if (!string.IsNullOrWhiteSpace(item.Tags))
+                    Asserts.IsTrue(documentPage.GetRuleTags().Contains(item.Tags), "Validating the DocumentPage Rule Tags...");
+
+                if (!string.IsNullOrWhiteSpace(item.Name))
+                    Asserts.IsTrue(documentPage.GetRuleNames().Contains(item.Name), "Validating the DocumentPage Rule Name...");
+            }
+        }
+
         [Then("I should have following step properties in the Document View")]
         public void ThenIShouldHaveFollowingStepPropertiesInTheDocumentView(DataTable dataTable)
         {
@@ -64,6 +94,7 @@ namespace Expressium.LivingDoc.UITests.Steps
 
         private class Objects
         {
+            public int Numbers { get; set; }
             public string Tags { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
