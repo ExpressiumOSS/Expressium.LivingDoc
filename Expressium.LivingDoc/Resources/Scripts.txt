@@ -70,6 +70,10 @@
                     document.getElementById('right-section').innerHTML = analytics;
                 }
             }
+            else {
+                var analytics = document.getElementById("analytics-scenarios").innerHTML;
+                document.getElementById('right-section').innerHTML = analytics;
+            }
         }
     </script>
     <script>
