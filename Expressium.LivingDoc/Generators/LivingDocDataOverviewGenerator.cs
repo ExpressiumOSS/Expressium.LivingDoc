@@ -99,7 +99,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add($"<tr class='gridline-header'>");
+            listOfLines.Add($"<tr class='gridline-header' onclick='loadAnalytics()'>");
             listOfLines.Add($"<td class='grid-folder' width='16px;'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - 1}'>");
             listOfLines.Add($"<span><b>{GetFolderName(folder)}</b></span>");
