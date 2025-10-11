@@ -114,12 +114,16 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
+            listOfLines.Add("<data style='display: none;'>");
+
             var generator = new LivingDocDataGenerator(project, configuration);
             listOfLines.AddRange(generator.GenerateDataOverview());
             listOfLines.AddRange(generator.GenerateDataListViews());
             listOfLines.AddRange(generator.GenerateDataObjects());
             listOfLines.AddRange(generator.GenerateDataAnalytics());
             listOfLines.AddRange(generator.GenerateDataEditor());
+
+            listOfLines.Add("</data>");
 
             return listOfLines;
         }
