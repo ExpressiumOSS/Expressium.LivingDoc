@@ -97,7 +97,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Count, Is.EqualTo(15));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Feature Background -->"));
             Assert.That(listOfLines[8], Is.EqualTo("<span class='step-keyword'>Given</span>"));
-            Assert.That(listOfLines[9], Is.EqualTo("<span>I have logged in to the application</span>"));
+            Assert.That(listOfLines[9], Is.EqualTo("<span class='step-name'>I have logged in to the application</span>"));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Count, Is.EqualTo(10));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Background Steps -->"));
             Assert.That(listOfLines[5], Is.EqualTo("<span class='step-keyword'>Given</span>"));
-            Assert.That(listOfLines[6], Is.EqualTo("<span>I have logged in to the application</span>"));
+            Assert.That(listOfLines[6], Is.EqualTo("<span class='step-name'>I have logged in to the application</span>"));
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Count, Is.EqualTo(10));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Steps -->"));
             Assert.That(listOfLines[5], Is.EqualTo("<span class='step-keyword'>Given</span>"));
-            Assert.That(listOfLines[6], Is.EqualTo("<span>I have logged in to the application</span>"));
+            Assert.That(listOfLines[6], Is.EqualTo("<span class='step-name'>I have logged in to the application</span>"));
         }
 
         [Test]

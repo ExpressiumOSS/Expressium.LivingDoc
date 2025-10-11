@@ -40,8 +40,9 @@ namespace Expressium.LivingDoc.UITests.Pages
         {
             logger.Info($"ClickCellByDataRole({dataRole})");
 
-            var element = baseLocator.GetChildElement(driver, By.XPath($"./tbody/tr[@data-role='{dataRole}']"));
-            element.Click(driver);
+            var elements = baseLocator.GetChildElements(driver, By.CssSelector($"tr[data-role='{dataRole}']")).Where(row => row.Displayed).ToList();
+            if (elements.Count > 0)
+                elements[0].Click(driver);
         }
 
         public virtual void SetCellTextBox(object rowId, object columnId, string value)

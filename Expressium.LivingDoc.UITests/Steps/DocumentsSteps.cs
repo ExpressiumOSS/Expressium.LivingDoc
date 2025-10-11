@@ -48,6 +48,20 @@ namespace Expressium.LivingDoc.UITests.Steps
             }
         }
 
+        [Then("I should have following step properties in the Document View")]
+        public void ThenIShouldHaveFollowingStepPropertiesInTheDocumentView(DataTable dataTable)
+        {
+            var documentPage = new DocumentPage(logger, driver);
+
+            var objects = dataTable.CreateSet<Objects>();
+
+            foreach (var item in objects)
+            {
+                if (!string.IsNullOrWhiteSpace(item.Name))
+                    Asserts.IsTrue(documentPage.GetStepNames().Contains(item.Name), "Validating the DocumentPage Step Name...");
+            }
+        }
+
         private class Objects
         {
             public string Tags { get; set; }

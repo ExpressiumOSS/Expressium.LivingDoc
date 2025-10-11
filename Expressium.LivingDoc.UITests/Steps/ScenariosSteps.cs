@@ -58,6 +58,13 @@ namespace Expressium.LivingDoc.UITests.Steps
             scenariosPage.Grid.SortByColumn(value);
         }
 
+        [When("I load the scenario document in the Scenarios List")]
+        public void WhenILoadTheScenarioDocumentInTheScenariosList()
+        {
+            var scenariosPage = new ScenariosPage(logger, driver);
+            scenariosPage.Grid.ClickCellByDataRole("scenario");
+        }
+
         private class Objects
         {
             public string Scenarios { get; set; }

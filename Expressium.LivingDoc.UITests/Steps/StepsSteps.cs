@@ -58,6 +58,13 @@ namespace Expressium.LivingDoc.UITests.Steps
             stepsPage.Grid.SortByColumn(value);
         }
 
+        [When("I load the step document in the Steps List")]
+        public void WhenILoadTheStepDocumentInTheStepsList()
+        {
+            var stepsPage = new StepsPage(logger, driver);
+            stepsPage.Grid.ClickCellByDataRole("step");
+        }
+
         private class Objects
         {
             public string Steps { get; set; }

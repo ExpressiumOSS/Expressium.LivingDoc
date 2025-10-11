@@ -12,6 +12,7 @@ namespace Expressium.LivingDoc.UITests.Pages
         private readonly By FeatureName = By.XPath("//*[@id='right-section']//span[@class='feature-name']");
         private readonly By ScenarioTags = By.XPath("//*[@id='right-section']//span[@class='scenario-tag-names']");
         private readonly By ScenarioNames = By.XPath("//*[@id='right-section']//span[@class='scenario-name']");
+        private readonly By StepNames = By.XPath("//*[@id='right-section']//span[@class='step-name']");
 
         public DocumentPage(ILog logger, IWebDriver driver) : base(logger, driver)
         {
@@ -45,6 +46,12 @@ namespace Expressium.LivingDoc.UITests.Pages
         {
             logger.Info("GetScenarioNames()");
             return ScenarioNames.GetTexts(driver);
+        }
+
+        public List<string> GetStepNames()
+        {
+            logger.Info("GetStepNames()");
+            return StepNames.GetTexts(driver);
         }
     }
 }

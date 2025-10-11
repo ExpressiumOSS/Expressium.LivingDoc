@@ -118,7 +118,7 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<li>");
                 listOfLines.Add($"<span class='color-skipped'></span>");
                 listOfLines.Add($"<span class='step-keyword'>" + step.Keyword + "</span>");
-                listOfLines.Add($"<span>" + step.Name + "</span>");
+                listOfLines.Add($"<span class='step-name'>" + step.Name + "</span>");
                 listOfLines.Add("</li>");
             }
 
@@ -264,7 +264,7 @@ namespace Expressium.LivingDoc
 
                 listOfLines.Add($"<span class='step-marker color-{status}'>{stepMarker}</span>");
                 listOfLines.Add($"<span class='step-keyword'>{step.Keyword}</span>");
-                listOfLines.Add($"<span>{step.Name}</span>");
+                listOfLines.Add($"<span class='step-name'>{step.Name}</span>");
 
                 if (step.DataTable.Rows.Count > 0)
                 {

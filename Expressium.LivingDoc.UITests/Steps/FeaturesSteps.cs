@@ -58,6 +58,13 @@ namespace Expressium.LivingDoc.UITests.Steps
             featuresPage.Grid.SortByColumn(value);
         }
 
+        [When("I load the feature document in the Feature List")]
+        public void WhenILoadTheFeatureDocumentInTheFeatureList()
+        {
+            var featuresPage = new FeaturesPage(logger, driver);
+            featuresPage.Grid.ClickCellByDataRole("feature");
+        }
+
         private class Objects
         {
             public string Features { get; set; }
