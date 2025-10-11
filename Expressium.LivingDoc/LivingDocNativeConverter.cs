@@ -1,6 +1,5 @@
 ﻿using Expressium.LivingDoc.Generators;
 using Expressium.LivingDoc.Models;
-using Expressium.LivingDoc.Parsers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,11 +8,8 @@ namespace Expressium.LivingDoc
 {
     public class LivingDocNativeConverter
     {
-        private LivingDocConfiguration configuration;
-
-        public LivingDocNativeConverter(LivingDocConfiguration configuration = null)
+        public LivingDocNativeConverter()
         {
-            this.configuration = configuration;
         }
 
         /// <summary>
@@ -51,7 +47,7 @@ namespace Expressium.LivingDoc
             try
             {
                 var livingDocProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(inputPath);
-                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject, configuration);
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject);
                 livingDocProjectGenerator.Generate(outputPath);
             }
             catch (IOException ex)
@@ -86,7 +82,7 @@ namespace Expressium.LivingDoc
                     livingDocProjectMaster.Merge(livingDocProjectSlave);
                 }
 
-                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster, configuration);
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
                 livingDocProjectGenerator.Generate(outputPath);
             }
             catch (IOException ex)
