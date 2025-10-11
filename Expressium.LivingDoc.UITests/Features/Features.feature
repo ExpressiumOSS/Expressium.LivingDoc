@@ -50,15 +50,6 @@ Scenario: Filter by Feature Tag Keywords in the Features List
 		| Features |
 		| Login    |
 
-#Scenario: Filter by Scenario Tag Keywords in the Features List
-#	Given I have navigated to the Features List
-#	When I filter by following keywords in the Filter Bar
-#		| Keywords |
-#		| @TA-3001 |
-#	Then I should have following visible objects in the Features List
-#		| Features   |
-#		| Contact Us |
-
 Rule: Filter by Status in Features List
 
 Scenario: Filter by Status Passed in the Features List

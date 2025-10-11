@@ -36,6 +36,14 @@ namespace Expressium.LivingDoc.UITests.Pages
             element.Click(driver);
         }
 
+        public virtual void ClickCellByDataRole(string dataRole)
+        {
+            logger.Info($"ClickCellByDataRole({dataRole})");
+
+            var element = baseLocator.GetChildElement(driver, By.XPath($"./tbody/tr[@data-role='{dataRole}']"));
+            element.Click(driver);
+        }
+
         public virtual void SetCellTextBox(object rowId, object columnId, string value)
         {
             logger.Info($"SetCellTextBox({rowId}, {columnId})");

@@ -466,7 +466,9 @@
             display: inline-block; /* Allows the circle to be displayed inline */
         }
 
-        .tag-names {
+        .feature-tag-names,
+        .rule-tag-names,
+        .scenario-tag-names {
             color: #5F9EA0;
         }
 

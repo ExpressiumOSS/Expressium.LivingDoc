@@ -6,14 +6,12 @@ namespace Expressium.LivingDoc.UITests.Pages
 {
     public partial class StepsPage : BasePage
     {
-        public FilterBar FilterBar { get; private set; }
         public BaseTable Grid { get; private set; }
 
         private readonly By Headline = By.XPath("//*[@id='view-title' and text()='Steps']");
 
         public StepsPage(ILog logger, IWebDriver driver) : base(logger, driver)
         {
-            FilterBar = new FilterBar(logger, driver);
             Grid = new BaseTable(logger, driver, By.XPath("//*[@id='left-section']//*[@id='table-grid']"));
 
             WaitForPageElementIsVisible(Headline);

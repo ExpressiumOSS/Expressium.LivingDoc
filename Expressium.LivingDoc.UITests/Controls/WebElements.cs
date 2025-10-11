@@ -344,5 +344,18 @@ namespace Expressium.LivingDoc.UITests.Controls
                 throw new ApplicationException($"Page child element '{childLocator}' was expected to be found within {ElementTimeOut} milliseconds...");
             }
         }
+
+        public static List<IWebElement> GetElements(this IWebDriver driver, By locator)
+        {
+            try
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(ElementTimeOut));
+                return wait.Until(_ => driver.FindElements(locator).ToList());
+            }
+            catch
+            {
+                throw new ApplicationException($"Page child element '{locator}' was expected to be found within {ElementTimeOut} milliseconds...");
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.Generic;
 
 namespace Expressium.LivingDoc.UITests.Controls
 {
@@ -305,6 +306,20 @@ namespace Expressium.LivingDoc.UITests.Controls
             element.HighlightValidation(driver);
 
             return element.Text.Trim();
+        }
+
+        public static List<string> GetTexts(this By locator, IWebDriver driver)
+        {
+            var listOfTexts = new List<string>();
+
+            var elements = driver.GetElements(locator);
+            foreach (var element in elements)
+            {
+                element.HighlightValidation(driver);
+                listOfTexts.Add(element.Text.Trim());
+            }
+
+            return listOfTexts;
         }
     }
 }

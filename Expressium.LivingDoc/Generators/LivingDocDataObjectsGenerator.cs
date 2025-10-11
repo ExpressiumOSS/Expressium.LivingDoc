@@ -45,7 +45,7 @@ namespace Expressium.LivingDoc
 
             listOfLines.Add("<!-- Data Feature Tags -->");
             listOfLines.Add("<div>");
-            listOfLines.Add("<span class='tag-names'>" + feature.GetTags() + "</span>");
+            listOfLines.Add("<span class='feature-tag-names'>" + feature.GetTags() + "</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -202,7 +202,7 @@ namespace Expressium.LivingDoc
 
             listOfLines.Add("<!-- Data Rule Tags -->");
             listOfLines.Add("<div>");
-            listOfLines.Add("<span class='tag-names'>" + rule.GetTags() + "</span>");
+            listOfLines.Add("<span class='rule-tag-names'>" + rule.GetTags() + "</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -214,7 +214,7 @@ namespace Expressium.LivingDoc
 
             listOfLines.Add("<!-- Data Scenario Tags -->");
             listOfLines.Add("<div>");
-            listOfLines.Add("<span class='tag-names'>" + scenario.GetTags() + "</span>");
+            listOfLines.Add("<span class='scenario-tag-names'>" + scenario.GetTags() + "</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;

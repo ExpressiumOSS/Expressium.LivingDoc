@@ -50,8 +50,6 @@ namespace Expressium.LivingDoc.UITests.Steps
                     listOfFolders.Add(item.Folders);
             }
 
-            var xxx = overviewPage.Grid.GetFolderDataNames();
-
             Asserts.EqualTo(overviewPage.Grid.GetNumberOfFolders(), listOfFolders.Count, "Validating the OverviewPage Number Of Folders...");
             Asserts.EqualTo(overviewPage.Grid.GetFolderDataNames(), listOfFolders, "Validating the OverviewPage Folder Data Names...");
 
@@ -104,6 +102,20 @@ namespace Expressium.LivingDoc.UITests.Steps
         {
             var overviewPage = new OverviewPage(logger, driver);
             overviewPage.Grid.ToggleExpandFeatures();
+        }
+
+        [When("I load the feature document in the Overview List")]
+        public void WhenILoadTheFeatureDocumentInTheOverviewList()
+        {
+            var overviewPage = new OverviewPage(logger, driver);
+            overviewPage.Grid.ClickCellByDataRole("feature");
+        }
+
+        [When("I load the scenario document in the Overview List")]
+        public void WhenILoadTheScenarioDocumentInTheOverviewList()
+        {
+            var overviewPage = new OverviewPage(logger, driver);
+            overviewPage.Grid.ClickCellByDataRole("scenario");
         }
 
         private class Objects
