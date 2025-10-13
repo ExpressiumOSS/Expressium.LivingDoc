@@ -143,7 +143,7 @@
         }
 
         .navigation {
-            background-color: #909090;
+            background-color: #858585;
             color: white;
             padding: 8px;
             padding-left: 16px;
@@ -202,7 +202,7 @@
         }
 
         th {
-            background-color: #909090;
+            background-color: #858585;
             color: white;
             border: solid;
             border-width: 1px;
