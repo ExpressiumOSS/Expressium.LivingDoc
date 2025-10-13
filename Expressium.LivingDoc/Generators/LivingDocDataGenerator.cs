@@ -16,6 +16,12 @@ namespace Expressium.LivingDoc.Generators
 
         internal List<string> GenerateDataOverview()
         {
+            if (!configuration.OverviewFolders)
+            {
+                foreach (var feature in project.Features)
+                    feature.Uri = string.Empty;
+            }
+
             var listOfLines = new List<string>();
 
             var generator = new LivingDocDataOverviewGenerator(project);
