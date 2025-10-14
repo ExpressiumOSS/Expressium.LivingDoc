@@ -8,8 +8,6 @@ namespace Expressium.LivingDoc
 {
     internal class LivingDocDataObjectsGenerator
     {
-        private bool includeStackTraces = true;
-
         private LivingDocProject project;
 
         internal LivingDocDataObjectsGenerator(LivingDocProject project)
@@ -305,18 +303,15 @@ namespace Expressium.LivingDoc
                 var exceptionStackTrace = step.ExceptionStackTrace;
                 if (!string.IsNullOrWhiteSpace(exceptionStackTrace))
                 {
-                    if (includeStackTraces)
-                    {
-                        listOfLines.Add("<!-- Data Step Message -->");
-                        listOfLines.Add("<li>");
-                        listOfLines.Add($"<div class='message-box stacktraces' style='display : none;'>");
-                        listOfLines.Add($"<div class='message-{status}'>");
-                        listOfLines.Add($"<b>Stacktrace</b><br>");
-                        listOfLines.Add($"<div class='message-stacktrace'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
-                        listOfLines.Add("</div>");
-                        listOfLines.Add("</div>");
-                        listOfLines.Add("</li>");
-                    }
+                    listOfLines.Add("<!-- Data Step Message -->");
+                    listOfLines.Add("<li>");
+                    listOfLines.Add($"<div class='message-box stacktraces' style='display : none;'>");
+                    listOfLines.Add($"<div class='message-{status}'>");
+                    listOfLines.Add($"<b>Stacktrace</b><br>");
+                    listOfLines.Add($"<div class='message-stacktrace'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
+                    listOfLines.Add("</div>");
+                    listOfLines.Add("</div>");
+                    listOfLines.Add("</li>");
                 }
             }
 

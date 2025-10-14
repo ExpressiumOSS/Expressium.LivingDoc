@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace Expressium.LivingDoc.Cli
 {
+    /// <summary>
+    /// Be Aware
+    /// This program file is provided as an example to help you create a custom CLI version of LivingDoc.
+    /// It is not included in the distributed NuGet packages and may change in future releases.
+    /// </summary>
     public class Program
     {
         static void Main(string[] args)
