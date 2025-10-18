@@ -20,11 +20,19 @@ namespace Expressium.LivingDoc.Models
 
         public void Merge(LivingDocProject project)
         {
+            var hasNewFeatures = false;
+
             foreach (var feature in project.Features)
             {
                 if (!Features.Any(x => x.Name == feature.Name))
+                {
                     Features.Add(LivingDocSerializer.DeepClone(feature));
+                    hasNewFeatures = true;
+                }
             }
+
+            if (hasNewFeatures)
+                Duration = Duration.Add(project.Duration);
         }
 
         public int GetNumberOfFeatures()

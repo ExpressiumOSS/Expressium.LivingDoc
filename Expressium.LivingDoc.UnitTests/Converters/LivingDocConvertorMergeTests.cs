@@ -20,6 +20,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var messagesParser = new MessagesParser();
             var livingDocProjectOne = messagesParser.ConvertToLivingDoc(inputFilePathOne);
             var livingDocProjectTwo = messagesParser.ConvertToLivingDoc(inputFilePathTwo);
+            var expectedDuration = livingDocProjectOne.Duration.Add(livingDocProjectTwo.Duration);
 
             livingDocProjectOne.Merge(livingDocProjectTwo);
 
@@ -31,6 +32,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             Assert.That(livingDocProjectOne.GetNumberOfFeatures(), Is.EqualTo(2));
             Assert.That(livingDocProjectOne.GetNumberOfScenarios(), Is.EqualTo(3));
             Assert.That(livingDocProjectOne.GetNumberOfSteps(), Is.EqualTo(7));
+            Assert.That(livingDocProjectOne.Duration, Is.EqualTo(expectedDuration));
         }
     }
 }
