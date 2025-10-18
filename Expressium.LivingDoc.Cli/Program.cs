@@ -27,7 +27,7 @@ namespace Expressium.LivingDoc.Cli
                 Console.WriteLine("Generating LivingDoc Report Completed");
                 Console.WriteLine("");
             }
-            else if (args.Length == 3 && args[0] == "--native")
+            else if (args.Length == 4 && args[0] == "--native")
             {
                 // Generating a LivingDoc Test Report based on a Native JSON file...
                 Console.WriteLine("");
