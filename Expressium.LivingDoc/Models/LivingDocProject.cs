@@ -25,6 +25,8 @@ namespace Expressium.LivingDoc.Models
                 if (!Features.Any(x => x.Name == feature.Name))
                     Features.Add(LivingDocSerializer.DeepClone(feature));
             }
+
+            Duration += project.Duration;
         }
 
         public int GetNumberOfFeatures()
