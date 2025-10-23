@@ -76,5 +76,12 @@ if (args.Length == 5 && args[0] == "--merge")
 }
 ```
 
-## Expressium LivingDoc Demo Test Report
-**Web:** https://expressium.dev/reqnroll/LivingDoc.html
+## The LivingDoc Process
+<br />
+<img src="Process.png"
+     alt="The Expressium LivingDoc Process"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+
+The Expressium LivingDoc Process uses the Reqnroll PlugIn to capture test execution results and output them as Cucumber Messages (NDJSON).
+These messages are parsed into an object-oriented model, which the Generator transforms into a self-contained HTML LivingDoc Report.
+
