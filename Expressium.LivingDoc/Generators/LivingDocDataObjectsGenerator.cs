@@ -187,6 +187,21 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<div>");
             listOfLines.Add("<span class='rule-keyword'>Rule: </span>");
             listOfLines.Add("<span class='rule-name'>" + rule.Name + "</span>");
+
+            if (rule.Description != null)
+            {
+                listOfLines.Add("<!-- Data Rule Description -->");
+                listOfLines.Add("<div>");
+                listOfLines.Add("<ul class='feature-description'>");
+
+                var listOfDescription = rule.Description.Trim().Split("\n");
+                foreach (var line in listOfDescription)
+                    listOfLines.Add("<li>" + line.Trim() + "</li>");
+
+                listOfLines.Add("</ul>");
+                listOfLines.Add("</div>");
+            }
+
             listOfLines.Add("</div>");
             listOfLines.Add("<hr>");
             listOfLines.Add("</div>");

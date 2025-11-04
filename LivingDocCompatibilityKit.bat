@@ -46,6 +46,10 @@ del .\Rules.html
 Expressium.LivingDoc.Cli.exe --input .\Samples\rules.feature.ndjson --output .\Rules.html --title "Compatibility Kit Rules"
 start .\Rules.html
 
+del .\RulesBackground.html
+Expressium.LivingDoc.Cli.exe --input .\Samples\rules-background.feature.ndjson --output .\RulesBackground.html --title "Compatibility Kit Rules Background"
+start .\RulesBackground.html
+
 del .\Samples\Skipped.html
 Expressium.LivingDoc.Cli.exe --input .\Samples\skipped.feature.ndjson --output .\Samples\Skipped.html --title "Compatibility Kit Skipped"
 start .\Samples\Skipped.html
