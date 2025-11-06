@@ -246,11 +246,11 @@ namespace Expressium.LivingDoc
             if (!string.IsNullOrEmpty(indexId))
                 listOfLines.Add($"<span class='circle-number'>{indexId}</span>");
 
-            listOfLines.Add($"<span class='scenario-duration'>&nbsp;{example.GetDuration()}</span>");
+            listOfLines.Add($"<span class='scenario-duration'>{example.GetDuration()}</span>");
 
             var hasStackTraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
             if (example.Attachments.Count > 0 || hasStackTraces)
-                listOfLines.Add("<span class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&nbsp;&#9776;</span>");
+                listOfLines.Add("<span class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&#9776;</span>");
 
             listOfLines.Add("</div>");
 
@@ -272,6 +272,8 @@ namespace Expressium.LivingDoc
                 var stepMarker = "&cross;";
                 if (step.IsPassed())
                     stepMarker = "&check;";
+                // else if (step.IsSkipped())
+                    // stepMarker = "&minus;";
 
                 listOfLines.Add("<li>");
 

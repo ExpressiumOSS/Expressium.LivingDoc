@@ -518,10 +518,13 @@
 
         .scenario-duration {
             color: gray;
+            padding-left: 4px;
         }
 
         .scenario-attachments {
-            color: gray;
+            color: dimgray;
+            padding-left: 4px;
+            cursor: pointer;
         }
 
         .step-marker {
