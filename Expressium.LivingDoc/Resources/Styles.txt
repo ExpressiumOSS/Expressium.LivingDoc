@@ -521,6 +521,10 @@
             padding-left: 4px;
         }
 
+        .feature-expand {
+            cursor: pointer;
+        }
+
         .scenario-attachments {
             color: dimgray;
             padding-left: 4px;
