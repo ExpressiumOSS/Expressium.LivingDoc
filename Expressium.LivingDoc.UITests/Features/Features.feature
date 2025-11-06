@@ -12,7 +12,7 @@ Scenario: Filter with Unknown Keywords in the Features List
 		| Gibberish |
 	Then I should have following number of visible objects in the Features List
 		| Features |
-		| 0        |
+		|        0 |
 
 Scenario: Filter by Multiple Keywords in the Features List
 	Given I have navigated to the Features List
@@ -64,7 +64,7 @@ Scenario: Filter by Status Incomplete in the Features List
 	When I enable the status prefilter Incomplete in the Filter Bar
 	Then I should have following number of visible objects in the Features List
 		| Features |
-		| 1        |
+		|        1 |
 
 Scenario: Filter by Status Failed in the Features List
 	Given I have navigated to the Features List
@@ -79,7 +79,7 @@ Scenario: Filter by Status Skipped in the Features List
 	When I enable the status prefilter Skipped in the Filter Bar
 	Then I should have following number of visible objects in the Features List
 		| Features |
-		| 0        |
+		|        0 |
 
 Rule: Clear Keywords and Status Filters in Features List
 
@@ -91,7 +91,7 @@ Scenario: Clear All PreFilters in the Features List
 	Then I should have all status prefilters disabled in the Filter Bar
 	And I should have following number of visible objects in the Features List
 		| Features |
-		| 4        |
+		|        4 |
 
 Scenario: Clear Keyword Filter in the Features List
 	Given I have navigated to the Features List
@@ -103,7 +103,7 @@ Scenario: Clear Keyword Filter in the Features List
 	Then I should have an emtpy keyword filter in the Filter Bar
 	And I should have following number of visible objects in the Features List
 		| Features |
-		| 4        |
+		|        4 |
 
 Rule: Sort by Columns in Features List
 

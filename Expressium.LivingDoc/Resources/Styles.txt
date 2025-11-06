@@ -481,7 +481,8 @@
             font-weight: bold;
         }
 
-        .feature-description {
+        .feature-description,
+        .rule-description {
             font-family: Consolas;
             font-size: 0.875em;
             color: gray;
@@ -563,6 +564,7 @@
             padding-left: 2px;
             padding-right: 2px;
             max-width: inherit;
+            word-wrap: break-word;
         }
 
         .message-passed {

@@ -86,7 +86,7 @@ Scenario: Loading a scenario with exmaples from the Scenarios List in Document V
 	And I load the scenario document in the Scenarios List
 	Then I should have following number of scenarios in the Document View
 		| Numbers |
-		| 2       |
+		|       2 |
 	And I should have following scenario properties in the Document View
 		| Tags             | Name                                      |
 		| @TA-4001 @Review | Ordering Coffee Confirmation Notification |

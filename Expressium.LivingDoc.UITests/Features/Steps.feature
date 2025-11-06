@@ -12,7 +12,7 @@ Scenario: Filter with Unknown Keywords in the Steps List
 		| Gibberish |
 	Then I should have following number of visible objects in the Steps List
 		| Steps |
-		| 0     |
+		|     0 |
 
 Scenario: Filter by Multiple Keywords in the Steps List
 	Given I have navigated to the Steps List
@@ -73,7 +73,7 @@ Scenario: Filter by Status Passed in the Steps List
 	Then I should have following visible objects in the Steps List
 		| Steps                                                |
 		| When I complete and submit the Registration formular |
-		| And I complete and submit the Registration formular |
+		| And I complete and submit the Registration formular  |
 
 Scenario: Filter by Status Incomplete in the Steps List
 	Given I have navigated to the Steps List
@@ -96,7 +96,7 @@ Scenario: Filter by Status Skipped in the Steps List
 	When I enable the status prefilter Skipped in the Filter Bar
 	Then I should have following number of visible objects in the Steps List
 		| Steps |
-		| 4     |
+		|     4 |
 
 Rule: Clear Keywords and Status Filters in Steps List
 
@@ -108,7 +108,7 @@ Scenario: Clear All PreFilters in the Steps List
 	Then I should have all status prefilters disabled in the Filter Bar
 	And I should have following number of visible objects in the Steps List
 		| Steps |
-		| 15    |
+		|    15 |
 
 Scenario: Clear Keyword Filter in the Steps List
 	Given I have navigated to the Steps List
@@ -120,7 +120,7 @@ Scenario: Clear Keyword Filter in the Steps List
 	Then I should have an emtpy keyword filter in the Filter Bar
 	And I should have following number of visible objects in the Steps List
 		| Steps |
-		| 15    |
+		|    15 |
 
 Rule: Sort by Columns in Steps List
 

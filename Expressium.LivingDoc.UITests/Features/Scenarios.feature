@@ -12,7 +12,7 @@ Scenario: Filter with Unknown Keywords in the Scenarios List
 		| Gibberish |
 	Then I should have following number of visible objects in the Scenarios List
 		| Scenarios |
-		| 0         |
+		|         0 |
 
 Scenario: Filter by Multiple Keywords in the Scenarios List
 	Given I have navigated to the Scenarios List
@@ -97,7 +97,7 @@ Scenario: Filter by Status Skipped in the Scenarios List
 	When I enable the status prefilter Skipped in the Filter Bar
 	Then I should have following number of visible objects in the Scenarios List
 		| Scenarios |
-		| 1         |
+		|         1 |
 
 Rule: Clear Keywords and Status Filters in Scenarios List
 
@@ -109,7 +109,7 @@ Scenario: Clear All PreFilters in the Scenarios List
 	Then I should have all status prefilters disabled in the Filter Bar
 	And I should have following number of visible objects in the Scenarios List
 		| Scenarios |
-		| 10        |
+		|        10 |
 
 Scenario: Clear Keyword Filter in the Scenarios List
 	Given I have navigated to the Scenarios List
@@ -121,7 +121,7 @@ Scenario: Clear Keyword Filter in the Scenarios List
 	Then I should have an emtpy keyword filter in the Filter Bar
 	And I should have following number of visible objects in the Scenarios List
 		| Scenarios |
-		| 10        |
+		|        10 |
 
 Rule: Sort by Columns in Scenarios List
 

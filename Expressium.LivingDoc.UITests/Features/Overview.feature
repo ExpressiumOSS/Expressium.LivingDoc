@@ -12,7 +12,7 @@ Scenario: Filter with Unknown Keywords in Overview List
 		| Gibberish |
 	Then I should have following number of visible objects in the Overview
 		| Folders | Features | Scenarios |
-		| 0       | 0        | 0         |
+		|       0 |        0 |         0 |
 
 Scenario: Filter by Multiple Keywords in Overview List
 	Given I have navigated to the Overview List
@@ -104,7 +104,7 @@ Scenario: Filter by Status Skipped in Overview List
 	When I enable the status prefilter Skipped in the Filter Bar
 	Then I should have following number of visible objects in the Overview
 		| Folders | Features | Scenarios |
-		| 2       | 1        | 1         |
+		|       2 |        1 |         1 |
 
 Rule: Filter by Levels in Overview List
 
@@ -161,7 +161,7 @@ Scenario: Filter by Collapse All Features in Overview List
 	When I select the collapse all features in the Overview
 	Then I should have following number of visible objects in the Overview
 		| Folders | Features | Scenarios |
-		| 5       | 4        | 0         |
+		|       5 |        4 |         0 |
 
 Scenario: Filter by Expand All Features in Overview List
 	Given I have navigated to the Overview List
@@ -169,7 +169,7 @@ Scenario: Filter by Expand All Features in Overview List
 	And I select the expand all features in the Overview
 	Then I should have following number of visible objects in the Overview
 		| Folders | Features | Scenarios |
-		| 5       | 4        | 10        |
+		|       5 |        4 |        10 |
 
 Scenario: Filter by Collapse a Feature in Overview List
 	Given I have navigated to the Overview List
@@ -206,7 +206,7 @@ Scenario: Clear All PreFilters in Overview List
 	Then I should have all status prefilters disabled in the Filter Bar
 	And I should have following number of visible objects in the Overview
 		| Folders | Features | Scenarios |
-		| 5       | 4        | 10        |
+		|       5 |        4 |        10 |
 
 Scenario: Clear Keyword Filter in Overview List
 	Given I have navigated to the Overview List
@@ -218,5 +218,5 @@ Scenario: Clear Keyword Filter in Overview List
 	Then I should have an emtpy keyword filter in the Filter Bar
 	And I should have following number of visible objects in the Overview
 		| Folders | Features | Scenarios |
-		| 5       | 4        | 10        |
+		|       5 |        4 |        10 |
 
