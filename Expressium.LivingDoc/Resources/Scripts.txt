@@ -511,11 +511,11 @@
             var parent = x.parentElement;
 
             if (collapse == "false") {
-                x.innerHTML = "<span class='feature-expand'>&#11208;</span>";
+                x.innerHTML = "&#11208;";
                 x.setAttribute('data-collapse', 'true');
                 parent.setAttribute('data-collapse', 'true');
             } else {
-                x.innerHTML = "<span class='feature-expand'>&#11206;</span>";
+                x.innerHTML = "&#11206;";
                 x.setAttribute('data-collapse', 'false');
                 parent.setAttribute('data-collapse', 'false');
             }

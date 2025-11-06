@@ -521,8 +521,9 @@
             padding-left: 4px;
         }
 
-        .feature-expand {
+        .feature-folder {
             cursor: pointer;
+            text-align: center;
         }
 
         .scenario-attachments {
