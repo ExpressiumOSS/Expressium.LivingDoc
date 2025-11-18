@@ -12,7 +12,7 @@ namespace Expressium.LivingDoc.UITests.Pages
         private readonly By Failed = By.XPath("//button[text()='Failed']");
         private readonly By Skipped = By.XPath("//button[text()='Skipped']");
         private readonly By Clear = By.XPath("//button[@title='Clear Filters']");
-        private readonly By FilterByKeywords = By.Id("scenario-filter");
+        private readonly By FilterByKeywords = By.Id("filter-by-keywords");
 
         public FilterBar(ILog logger, IWebDriver driver) : base(logger, driver)
         {

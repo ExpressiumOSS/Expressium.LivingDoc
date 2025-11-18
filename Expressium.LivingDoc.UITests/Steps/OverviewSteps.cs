@@ -24,6 +24,15 @@ namespace Expressium.LivingDoc.UITests.Steps
             Asserts.EqualTo(overviewPage.GetHeadline(), "Overview", "The Overview page headline is valid");
         }
 
+        [Given("I have navigated with deep link argument to the Overview List")]
+        public void GivenIHaveNavigatedWithDeepLinkArgumentToTheOverviewList(DataTable dataTable)
+        {
+            var filters = dataTable.CreateSet<Filters>();
+
+            foreach (var filter in filters)
+                driver.Navigate().GoToUrl(driver.Url + "?filterByKeywords=" + filter.Keywords);
+        }
+
         [Then("I should have following number of visible objects in the Overview")]
         public void ThenIShouldHaveFollowingNumberOfVisibleObjectsInTheOverview(DataTable dataTable)
         {
@@ -123,6 +132,11 @@ namespace Expressium.LivingDoc.UITests.Steps
             public string Folders { get; set; }
             public string Features { get; set; }
             public string Scenarios { get; set; }
+        }
+
+        private class Filters
+        {
+            public string Keywords { get; set; }
         }
     }
 }

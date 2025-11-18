@@ -92,7 +92,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<body onload=\"loadViewmode('project-view','Overview'); loadAnalytics()\">");
+            listOfLines.Add("<body onload=\"loadViewmode('project-view','Overview'); loadAnalytics(); onloadFilter()\">");
 
             return listOfLines;
         }

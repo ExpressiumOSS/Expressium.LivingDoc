@@ -220,3 +220,35 @@ Scenario: Clear Keyword Filter in Overview List
 		| Folders | Features | Scenarios |
 		|       5 |        4 |        10 |
 
+
+Scenario: Filter with Deep Link Argument in Overview List
+	Given I have navigated with deep link argument to the Overview List
+		| Keywords |
+		| TA-3001  |
+	Then I should have following number of visible objects in the Overview
+		| Folders | Features | Scenarios |
+		|       2 |        1 |         1 |
+
+Scenario: Filter with Empty Deep Link Argument in Overview List
+	Given I have navigated with deep link argument to the Overview List
+		| Keywords |
+		|          |
+	Then I should have following number of visible objects in the Overview
+		| Folders | Features | Scenarios |
+		|       5 |        4 |        10 |
+
+Scenario: Filter with Unknown Deep Link Argument in Overview List
+	Given I have navigated with deep link argument to the Overview List
+		| Keywords |
+		| unknown  |
+	Then I should have following number of visible objects in the Overview
+		| Folders | Features | Scenarios |
+		|       0 |        0 |         0 |
+
+Scenario: Filter with Multiple Deep Link Arguments in Overview List
+	Given I have navigated with deep link argument to the Overview List
+		| Keywords          |
+		| successful failed |
+	Then I should have following number of visible objects in the Overview
+		| Folders | Features | Scenarios |
+		|       2 |        2 |         2 |

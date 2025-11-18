@@ -76,6 +76,20 @@ if (args.Length == 5 && args[0] == "--merge")
 }
 ```
 
+### Deep Link Filtering
+When the Expressium LivingDoc report is opened in a browser,
+the onload event automatically reads URL query parameters and applies filters accordingly.
+This enables direct linking to specific scenarios or features filtered by keywords within the LivingDoc report.
+
+```bat
+start chrome "file:///C://Company/Coffeeshop.html?filterByKeywords=TA-3001"
+```
+
+<br />
+<img src="DeepLink.png"
+     alt="Deep Link URL Arguments"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+
 ## The LivingDoc Process
 <br />
 <img src="Process.png"

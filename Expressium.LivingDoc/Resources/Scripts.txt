@@ -103,7 +103,7 @@
     </script>
     <script>
         function filterDataByRole(roleType) {
-            var input = document.getElementById("scenario-filter");
+            var input = document.getElementById("filter-by-keywords");
             var filterTokens = input.value.toUpperCase().split(/\s+/);
             var table = document.getElementById("table-list");
             var tr = table.getElementsByTagName("tr");
@@ -599,7 +599,7 @@
                 }
             }
 
-            var input = document.getElementById("scenario-filter");
+            var input = document.getElementById("filter-by-keywords");
             input.value = '';
 
             filterView();
@@ -635,5 +635,37 @@
             textArea.select();
             navigator.clipboard.writeText(textArea.value);
             window.getSelection().removeAllRanges();
+        }
+    </script>
+    <script>
+        function onloadFilter() {
+            const filter = new URLSearchParams(window.location.search).get('filterByKeywords');
+            if (!filter) 
+                return;
+
+            var input = document.getElementById("filter-by-keywords");
+            if (input) {
+                input.value = filter;
+                filterView();
+
+                var table = document.getElementById("table-list");
+                var tr = table.getElementsByTagName("tr");
+
+                for (var i = 0; i < tr.length; i++) {
+                    var role = tr[i].getAttribute("data-role");
+                    if (role == "scenario") {
+                        if (tr[i].style.display == "") {
+                            var featureId = tr[i].getAttribute('data-featureid');
+                            var scenarioId = tr[i].getAttribute('data-scenarioid');
+                            var feature = document.getElementById(featureId).innerHTML;
+                            var scenario = document.getElementById(scenarioId).innerHTML;
+
+                            document.getElementById('right-section').innerHTML = feature + scenario;
+
+                            break;
+                        }
+                    }
+                }
+            }
         }
     </script>
