@@ -87,6 +87,7 @@
             syntax: "<color>";
             inherits: false;
             initial-value: #C7D9E9;
+            initial-value: #d9e5f0;
         }
 
         body, html {
@@ -245,6 +246,12 @@
         .status-option {
             border: 1px solid darkgray;
             color: darkgray;
+        }
+
+        .status-option:hover {
+            border: 1px solid dimgray;
+            background-color: var(--hover-color);
+            color: black;
         }
 
         button.active {
@@ -470,6 +477,7 @@
         .rule-tag-names,
         .scenario-tag-names {
             color: #5F9EA0;
+            font-size: 0.9375em;
         }
 
         .feature-keyword {
@@ -487,6 +495,7 @@
             font-size: 0.875em;
             color: gray;
             font-style: italic;
+            padding-top: 2px;
         }
 
         .feature-duration {
@@ -544,6 +553,10 @@
 
         .step-keyword-skipped {
             font-weight: bold;
+        }
+
+        .scenario-steps {
+            padding-top: 2px;
         }
 
         ul.scenario-steps li {
