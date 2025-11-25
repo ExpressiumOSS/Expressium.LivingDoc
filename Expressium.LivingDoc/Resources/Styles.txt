@@ -477,7 +477,6 @@
         .rule-tag-names,
         .scenario-tag-names {
             color: #5F9EA0;
-            font-size: 0.9375em;
         }
 
         .feature-keyword {
