@@ -261,16 +261,24 @@
         }
 
         .grid-option {
-            color: gray;
+            color: dimgray;
             font-size: 1.25em;
+            font-weight: bold;
         }
 
         .gridline {
             border-bottom: 1px solid lightgray;
         }
 
-        .gridline-header {
+        .gridline-heading {
             color: dimgray;
+            font-weight: bold;
+        }
+
+        .gridline-toggle {
+            color: dimgray;
+            cursor: pointer;
+            text-align: center;
         }
 
         .project-name {
@@ -527,11 +535,6 @@
         .scenario-duration {
             color: gray;
             padding-left: 4px;
-        }
-
-        .feature-folder {
-            cursor: pointer;
-            text-align: center;
         }
 
         .scenario-attachments {
