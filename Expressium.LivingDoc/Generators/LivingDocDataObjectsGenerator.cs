@@ -250,7 +250,7 @@ namespace Expressium.LivingDoc
 
             var hasStackTraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
             if (example.Attachments.Count > 0 || hasStackTraces)
-                listOfLines.Add("<span class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&#9776;</span>");
+                listOfLines.Add("<a href='#' class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&#9776;</a>");
 
             listOfLines.Add("</div>");
 
@@ -321,8 +321,8 @@ namespace Expressium.LivingDoc
                 if (!string.IsNullOrWhiteSpace(exceptionStackTrace))
                 {
                     listOfLines.Add("<!-- Data Step Message -->");
-                    listOfLines.Add("<li>");
-                    listOfLines.Add($"<div class='message-box stacktraces' style='display : none;'>");
+                    listOfLines.Add("<li class='stacktraces' style='display : none;'>");
+                    listOfLines.Add($"<div class='message-box'>");
                     listOfLines.Add($"<div class='message-{status}'>");
                     listOfLines.Add($"<b>Stacktrace</b><br>");
                     listOfLines.Add($"<div class='message-stacktrace'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
