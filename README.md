@@ -1,5 +1,7 @@
 # Expressium LivingDoc
 
+## Introduction
+
 Expressium LivingDoc is an open-source tool that generates a single
 HTML test report in a Living Documentation style for ReqnRoll projects.
 
@@ -14,12 +16,11 @@ be distributed to a public location enabling easy access by the stackholders.
      alt="Expressium LivingDoc"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 
-## How-To-Use
+## Getting Started
 * Add the Expressium.LivingDoc.ReqnrollPlugin NuGet package to the ReqnRoll test project...
 * Setup the Expressium formatters properties in the configuration of ReqnRoll test project...
 * Run the tests in the ReqnRoll test project and open the HTML report in the output directory...
 
-### ReqnRoll Configuration
 ```json
 {
   "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
@@ -32,7 +33,7 @@ be distributed to a public location enabling easy access by the stackholders.
 }
 ```
 
-### Attachments Work-Around
+## Attachments
 Since the AddAttachment API in ReqnRoll doesn’t support adding attachments as links,
 we need to use a workaround to enable attachments in the Expressium LivingDoc report.
 
@@ -51,7 +52,7 @@ namespace MyCompany.MyProject.Web.API.Tests
 }
 ```
 
-### Merge Test Reports
+## Merging Reports
 The ReqnRoll test execution may run across multiple pipelines
 and it is desirable to produce a single consolidated test report.
 A merging of test reports can be achieved through a separate CLI program.
@@ -76,7 +77,7 @@ if (args.Length == 5 && args[0] == "--merge")
 }
 ```
 
-### Deep Link Filtering
+## Deep Linking
 When the Expressium LivingDoc report is opened in a browser,
 the onload event automatically reads URL query parameters and applies filters accordingly.
 This enables direct linking to specific scenarios or features filtered by keywords within the LivingDoc report.
@@ -96,6 +97,5 @@ start chrome "file:///C://Company/Coffeeshop.html?filterByKeywords=TA-3001"
      alt="The Expressium LivingDoc Process"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 
-The Expressium LivingDoc Process uses the Reqnroll PlugIn to capture test execution results and output them as Cucumber Messages (NDJSON).
-These messages are parsed into an object-oriented model, which the Generator transforms into a self-contained HTML LivingDoc Report.
-
+The Expressium LivingDoc process uses the Reqnroll PlugIn to capture test execution results and output them as Cucumber Messages (NDJSON).
+These messages are parsed into an object-oriented model, which the Generator transforms into a self-contained HTML LivingDoc test report.
