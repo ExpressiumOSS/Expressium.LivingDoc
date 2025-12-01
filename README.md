@@ -77,6 +77,39 @@ if (args.Length == 5 && args[0] == "--merge")
 }
 ```
 
+## Command Line Interface
+For many different purposes, it may be desirable to customize the final Expressium LivingDoc test report.
+You can achieve this by creating a separate custom CLI project, adding a project reference to the ReqnRoll test project
+and implementing any logic needed to handle your specific reporting requirements.
+
+```c#
+if (args.Length == 7 && args[0] == "--custom")
+{
+    // Generating a custom LivingDoc Test Report based on a Cucumber Messages JSON file...
+    Console.WriteLine("");
+    Console.WriteLine("Generating LivingDoc Test Report...");
+    Console.WriteLine("Input: " + args[2]);
+    Console.WriteLine("Output: " + args[4]);
+    Console.WriteLine("Title: " + args[6]);
+
+    var livingDocConverter = new LivingDocConverter();
+    var livingDocProject = livingDocConverter.Convert(args[2], args[6]);
+
+    foreach (var step in livingDocProject.Features
+            .SelectMany(f => f.Scenarios)
+            .SelectMany(s => s.Examples)
+            .SelectMany(e => e.Steps))
+    {
+        step.ExceptionStackTrace = null;
+    }
+
+    livingDocConverter.Generate(livingDocProject, args[4]);
+
+    Console.WriteLine("Generating LivingDoc Report Completed");
+    Console.WriteLine("");
+}
+```
+
 ## Deep Linking
 When the Expressium LivingDoc report is opened in a browser,
 the onload event automatically reads URL query parameters and applies filters accordingly.

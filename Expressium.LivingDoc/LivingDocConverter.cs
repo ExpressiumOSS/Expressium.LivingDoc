@@ -20,12 +20,39 @@ namespace Expressium.LivingDoc
         /// <returns></returns>
         /// <exception cref="IOException"></exception>
         /// <exception cref="ApplicationException"></exception>
-        public LivingDocProject Convert(string inputPath)
+        public LivingDocProject Convert(string inputPath, string title)
         {
             try
             {
                 var messagesParser = new MessagesParser();
-                return messagesParser.ConvertToLivingDoc(inputPath);
+                var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
+                if (!string.IsNullOrEmpty(title))
+                    livingDocProject.Title = title;
+                return livingDocProject;
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"IO error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Unexpected error: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Generates a LivingDoc test report from an existing LivingDoc project.
+        /// </summary>
+        /// <param name="livingDocProject"></param>
+        /// <param name="outputPath"></param>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
+        public void Generate(LivingDocProject livingDocProject, string outputPath)
+        {
+            try
+            {
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject);
+                livingDocProjectGenerator.Generate(outputPath);
             }
             catch (IOException ex)
             {
