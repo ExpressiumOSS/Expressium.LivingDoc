@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Expressium.LivingDoc.Models
 {
@@ -6,7 +7,7 @@ namespace Expressium.LivingDoc.Models
     {
         public static string FormatAsString(this DateTime date)
         {
-            return date.ToString("ddd d. MMM yyyy HH':'mm':'ss \"GMT\"z");
+            return date.ToString("ddd d. MMM yyyy HH':'mm':'ss 'GMT'z", CultureInfo.InvariantCulture);
         }
 
         public static string FormatAsString(this TimeSpan timeSpan)
