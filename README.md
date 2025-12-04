@@ -95,13 +95,9 @@ if (args.Length == 7 && args[0] == "--custom")
     var livingDocConverter = new LivingDocConverter();
     var livingDocProject = livingDocConverter.Convert(args[2], args[6]);
 
-    foreach (var step in livingDocProject.Features
-            .SelectMany(f => f.Scenarios)
-            .SelectMany(s => s.Examples)
-            .SelectMany(e => e.Steps))
-    {
-        step.ExceptionStackTrace = null;
-    }
+    // Omitting overview folders...
+    foreach (var feature in livingDocProject.Features)
+        feature.Uri = null;
 
     livingDocConverter.Generate(livingDocProject, args[4]);
 
