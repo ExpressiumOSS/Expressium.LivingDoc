@@ -35,7 +35,7 @@
         }
     </script>
     <script>
-        function loadViewmode(x, y) {
+        function loadViewMode(x, y) {
             var listview = document.getElementById(x).innerHTML;
 
             document.getElementById('list-view').innerHTML = listview;
@@ -434,11 +434,22 @@
         function loadEditor() {
             var editor = document.getElementById('editor-view').innerHTML;
 
-            document.getElementById('right-section').innerHTML = editor;
+            document.getElementById('left-section').innerHTML = editor;
+            document.getElementById('right-section').remove();
 
             document.getElementById("scenario-script").value = "";
             document.getElementById("scenario-script").value += "@TA-??? @Review";
             document.getElementById("scenario-script").value += "\nScenario: Successfully Creating a new Gherkin Script";
+
+            filterStepDefinitions();
+
+            var navLinks = document.querySelectorAll('.navigation-link');
+            for (var i = 0; i < navLinks.length; i++) {
+                if (navLinks[i].textContent == "Editor")
+                    navLinks[i].classList.add('navigation-active');
+                else
+                    navLinks[i].classList.remove('navigation-active');
+            }
         }
     </script>
     <script>
@@ -482,6 +493,9 @@
             } else {
                 document.getElementById("scenario-script").value += "\n    " + linkText;
             }
+
+            document.getElementById("stepdefinition-filter").value = "";
+            filterStepDefinitions();
         }
     </script>
     <script>
@@ -639,6 +653,12 @@
     </script>
     <script>
         function onloadFilter() {
+            const viewMode = new URLSearchParams(window.location.search).get('viewMode');
+            if (viewMode == "Editor") { 
+                loadEditor();
+                return;
+            }
+
             const filter = new URLSearchParams(window.location.search).get('filterByKeywords');
             if (!filter) 
                 return;
@@ -670,4 +690,20 @@
 
             window.history.replaceState({}, document.title, window.location.pathname);
         }
+    </script>
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "e") {
+          event.preventDefault();
+
+          const url = new URL(window.location.href);
+          url.searchParams.set("viewMode", "Editor");
+
+          window.open(
+            url.toString(),
+            "newwindow",
+            "width=700,height=700,left=100,top=100"
+          );
+        }
+      });
     </script>

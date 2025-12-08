@@ -38,30 +38,30 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<nav class='navigation'>");
             listOfLines.Add("<span>|</span>");
 
-            listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewmode('project-view','Overview');\">Overview</a>");
+            listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewMode('project-view','Overview');\">Overview</a>");
             listOfLines.Add("<span>|</span>");
 
             if (configuration.FeaturesListView)
             {
-                listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewmode('features-view','Features');\">Features</a>");
+                listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewMode('features-view','Features');\">Features</a>");
                 listOfLines.Add("<span>|</span>");
             }
 
             if (configuration.ScenariosListView)
             {
-                listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewmode('scenarios-view','Scenarios');\">Scenarios</a>");
+                listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewMode('scenarios-view','Scenarios');\">Scenarios</a>");
                 listOfLines.Add("<span>|</span>");
             }
 
             if (configuration.StepsListView)
             {
-                listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewmode('steps-view','Steps');\">Steps</a>");
+                listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewMode('steps-view','Steps');\">Steps</a>");
                 listOfLines.Add("<span>|</span>");
             }
 
             if (configuration.EditorView)
             {
-                listOfLines.Add("<a class='navigation-link' title='Gherkin Script Editor' href='#' onclick=\"loadEditor(); filterStepDefinitions();\">Editor</a>");
+                listOfLines.Add("<a class='navigation-link' title='Gherkin Script Editor' href='#' onclick=\"window.open(window.location.pathname + '?viewMode=Editor', 'newwindow', 'width=700,height=700,top=100,left=100'); return false;\">Editor</a>");
                 listOfLines.Add("<span>|</span>");
             }
 

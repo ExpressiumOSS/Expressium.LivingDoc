@@ -88,7 +88,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var listOfLines = generator.GenerateDataEditor();
 
             Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(0));
+            Assert.That(listOfLines.Count, Is.EqualTo(29));
         }
 
         [Test]
