@@ -79,8 +79,9 @@
 
         @property --keyword-color {
             syntax: "<color>";
-            inherits: false;
-            initial-value: #2F6795;          
+            inherits: false;  
+            initial-value: #2F6795; 
+            initial-value: #2D638F;
         }
 
         @property --hover-color {
@@ -268,6 +269,11 @@
 
         .gridline {
             border-bottom: 1px solid lightgray;
+        }
+
+        .gridline-folder {
+            color: dimgray;
+            font-weight: bold;
         }
 
         .gridline-heading {
@@ -491,6 +497,7 @@
         .rule-tag-names,
         .scenario-tag-names {
             color: #5F9EA0;
+            color: #348F91;
         }
 
         .feature-keyword {
@@ -498,7 +505,9 @@
             font-weight: bold;
         }
 
-        .feature-name {
+        .feature-name,
+        .rule-name,
+        .scenario-name {
             font-weight: bold;
         }
 
@@ -525,16 +534,8 @@
             font-weight: bold;
         }
 
-        .rule-name {
-            font-weight: bold;
-        }
-
         .scenario-keyword {
             color: var(--keyword-color);
-            font-weight: bold;
-        }
-
-        .scenario-name {
             font-weight: bold;
         }
 
@@ -639,6 +640,11 @@
 
         .attachments {
             padding-top: 4px;
+        }
+
+        ul.attachments-files li {
+            padding-top: 1px;
+            padding-bottom: 1px;
         }
 
         .attachments-keyword {

@@ -94,7 +94,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<tr>");
             listOfLines.Add($"<td class='grid-folder' width='16px;'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - 1}'>");
-            listOfLines.Add($"<span class='gridline-heading'>{GetFolderName(folder)}</span>");
+            listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' colspan='2' align='right'>");
             listOfLines.Add("<a class='grid-option' title='Expand All Features' href='#' onclick='loadExpandAll()'>&plus;</a>");
@@ -116,7 +116,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add($"<td class='grid-folder' width='16px;'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
-            listOfLines.Add($"<span class='gridline-heading'>{GetFolderName(folder)}</span>");
+            listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' align='right'></td>");
 
@@ -140,6 +140,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<a class='gridline-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' align='right'></td>");
+
             listOfLines.Add($"</tr>");
 
             return listOfLines;
@@ -167,6 +168,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' align='right'></td>");
+
             listOfLines.Add($"</tr>");
 
             return listOfLines;
