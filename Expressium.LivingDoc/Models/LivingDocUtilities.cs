@@ -7,7 +7,7 @@ namespace Expressium.LivingDoc.Models
     {
         public static string FormatAsString(this DateTime date)
         {
-            return date.ToString("ddd d. MMM yyyy HH':'mm':'ss 'GMT'z", CultureInfo.InvariantCulture);
+            return date.ToString("ddd d MMM yyyy HH':'mm':'ss 'GMT'z", CultureInfo.GetCultureInfo("en-US"));
         }
 
         public static string FormatAsString(this TimeSpan timeSpan)
