@@ -24,7 +24,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Header Section -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<header>"));
             Assert.That(listOfLines[2], Is.EqualTo("<span class='project-name'>Test Project</span><br />"));
-            Assert.That(listOfLines[3], Is.EqualTo("<span class='project-date'>Generated Sat 1. Jun 2024 13:05:37 GMT+2</span>"));
+            Assert.That(listOfLines[3], Is.EqualTo("<span class='project-date'>Generated Sat 1 Jun 2024 13:05:37 GMT+2</span>"));
             Assert.That(listOfLines[4], Is.EqualTo("</header>"));
         }
 
