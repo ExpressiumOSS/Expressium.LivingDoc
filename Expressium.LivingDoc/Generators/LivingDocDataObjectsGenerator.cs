@@ -273,9 +273,20 @@ namespace Expressium.LivingDoc
                 if (step.IsPassed())
                     stepMarker = "&check;";
                 // else if (step.IsSkipped())
-                    // stepMarker = "&minus;";
+                // stepMarker = "&minus;";
 
                 listOfLines.Add("<li>");
+
+                //if (step.IsPassed())
+                //    listOfLines.Add($"<span class='bi bi-check-circle-fill step-marker color-{status}'></span>");
+                //else if (step.IsFailed())
+                //    listOfLines.Add($"<span class='bi bi-x-circle-fill step-marker color-{status}'></span>");
+                //else if (step.IsIncomplete())
+                //    listOfLines.Add($"<span class='bi bi-exclamation-circle-fill step-marker color-{status}'></span>");
+                //else if (step.IsSkipped())
+                //    listOfLines.Add($"<span class='bi bi-dash-circle-fill step-marker color-{status}'></span>");
+                //else
+                //    listOfLines.Add($"<span class='bi bi-question-circle-fill step-marker color-{status}'></span>");
 
                 listOfLines.Add($"<span class='step-marker color-{status}'>{stepMarker}</span>");
                 listOfLines.Add($"<span class='step-keyword'>{step.Keyword}</span>");

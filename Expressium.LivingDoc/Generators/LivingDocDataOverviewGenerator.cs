@@ -134,7 +134,7 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td data-collapse='false' width='16px;' class='gridline-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\">&#11206;</td>");
+            listOfLines.Add($"<td data-collapse='false' width='16px;' class='gridline-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<a class='gridline-heading' href='#'>{feature.Name}</a>");

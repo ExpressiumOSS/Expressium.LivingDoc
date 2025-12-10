@@ -525,11 +525,11 @@
             var parent = x.parentElement;
 
             if (collapse == "false") {
-                x.innerHTML = "&#11208;";
+                x.innerHTML = "<span class='bi bi-chevron-right'></span>";
                 x.setAttribute('data-collapse', 'true');
                 parent.setAttribute('data-collapse', 'true');
             } else {
-                x.innerHTML = "&#11206;";
+                x.innerHTML = "<span class='bi bi-chevron-down'></span>";
                 x.setAttribute('data-collapse', 'false');
                 parent.setAttribute('data-collapse', 'false');
             }
@@ -552,7 +552,7 @@
                         var collapse = cells[a].getAttribute('data-collapse');
 
                         if (collapse == "false") {
-                            cells[a].innerHTML = "&#11208;";
+                            cells[a].innerHTML = "<span class='bi bi-chevron-right'></span>";
                             cells[a].setAttribute('data-collapse', 'true');
                             tr[i].setAttribute('data-collapse', 'true');
                         }
@@ -578,7 +578,7 @@
                         var collapse = cells[a].getAttribute('data-collapse');
 
                         if (collapse == "true") {
-                            cells[a].innerHTML = "&#11206;";
+                            cells[a].innerHTML = "<span class='bi bi-chevron-down'></span>";
                             cells[a].setAttribute('data-collapse', 'false');
                             tr[i].setAttribute('data-collapse', 'false');
                         }

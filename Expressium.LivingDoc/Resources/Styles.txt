@@ -263,8 +263,7 @@
 
         .grid-option {
             color: dimgray;
-            font-size: 1.25em;
-            font-weight: bold;
+            font-size: 1.35em;
         }
 
         .gridline {
