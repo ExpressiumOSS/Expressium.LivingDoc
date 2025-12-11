@@ -260,14 +260,10 @@
 
     button {
         border: 1px solid gray;
-    }
-
-    .status-option {
-        border: 1px solid gray;
         color: gray;
     }
 
-    .status-option:hover {
+    button:hover {
         border: 1px solid dimgray;
         background-color: var(--hover-color);
         color: black;
