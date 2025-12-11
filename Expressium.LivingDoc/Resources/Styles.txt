@@ -1,221 +1,239 @@
-﻿    <style>
-        @property --passed-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #48A84F;
-        }
+﻿<style>
+    @property --passed-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #48A84F;
+    }
 
-        @property --incomplete-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #F5BB00;
-        }
+    @property --incomplete-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #F5BB00;
+    }
 
-        @property --failed-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #EB4431;
-        }
+    @property --failed-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #EB4431;
+    }
 
-        @property --skipped-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #A9A9A9;
-        }
+    @property --skipped-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #A9A9A9;
+    }
 
-        @property --total-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: black;
-        }
+    @property --total-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: black;
+    }
 
-        @property --passed-background-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #E5F4E6;
-        }
+    @property --passed-background-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #E5F4E6;
+    }
 
-        @property --incomplete-background-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #FFF6D6;
-        }
+    @property --incomplete-background-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #FFF6D6;
+    }
 
-        @property --failed-background-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #FBE6E3;
-        }
+    @property --failed-background-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #FBE6E3;
+    }
 
-        @property --skipped-background-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #F0F0F0;
-        }
+    @property --skipped-background-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #F0F0F0;
+    }
 
-        @property --passed-text-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #2B672F;
-        }
+    @property --passed-text-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #2B672F;
+    }
 
-        @property --incomplete-text-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #7A5E00;
-        }
+    @property --incomplete-text-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #7A5E00;
+    }
 
-        @property --failed-text-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #99271E;
-        }
+    @property --failed-text-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #99271E;
+    }
 
-        @property --skipped-text-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #000000;
-        }
+    @property --skipped-text-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #000000;
+    }
 
-        @property --keyword-color {
-            syntax: "<color>";
-            inherits: false;  
-            initial-value: #2F6795; 
-            initial-value: #2D638F;
-        }
+    @property --keyword-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #2F6795;
+        initial-value: #2D638F;
+    }
 
-        @property --hover-color {
-            syntax: "<color>";
-            inherits: false;
-            initial-value: #C7D9E9;
-            initial-value: #d9e5f0;
-        }
+    @property --hover-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #C7D9E9;
+        initial-value: #d9e5f0;
+    }
 
-        body, html {
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-			/* font-family: "Segoe UI Variable Small"; */
-            /* font-family: system-ui, "Segoe UI Variable Small", "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
-        }
+    @property --dark-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #808080; /* gray */
+    }
+    
+    body, html {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        /* font-family: "Segoe UI Variable Small"; */
+        /* font-family: system-ui, "Segoe UI Variable Small", "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+    }
 
-        #content-wrapper {
-            display: flex;
-            height: calc(100% - 156px); /* Adjust for header and footer height */
-            flex-direction: row; /* Change to row for vertical splitter */
-        }
+    #content-wrapper {
+        display: flex;
+        height: calc(100% - 160px); /* Adjust for header and footer height */
+        flex-direction: row; /* Change to row for vertical splitter */
+    }
 
-        #splitter {
-            width: 2px;
-            background: #ddd;
-            cursor: col-resize;
-        }
+    #splitter {
+        width: 2px;
+        background: #ddd;
+        cursor: col-resize;
+    }
 
-        #left-section {
-            flex: 1;
-            overflow: hidden;
-            /* overflow: auto; */
-            scrollbar-color: #909090 #F8F9FA;
-        }
+    #left-section {
+        flex: 1;
+        overflow: hidden;
+        /* overflow: auto; */
+        scrollbar-color: #909090 #F8F9FA;
+    }
 
-        #right-section {
-            flex: 1;
-            overflow: auto;
-            scrollbar-color: #909090 #F8F9FA;
-        }
+    #right-section {
+        flex: 1;
+        overflow: auto;
+        scrollbar-color: #909090 #F8F9FA;
+    }
 
-        #list-view {
-            flex: 1;
-            overflow: auto;
-            height: calc(100% - 68px); /* Adjust for filter and search height */
-        }
+    #list-view {
+        flex: 1;
+        overflow: auto;
+        height: calc(100% - 68px); /* Adjust for filter and search height */
+    }
 
-        header {
-            padding: 8px;
-            padding-left: 16px;
-            background-color: #C7D9E9;
-        }
+    header {
+        padding: 8px;
+        padding-left: 16px;
+        background-color: #C7D9E9;
+    }
 
-        footer {
-            background-color: #f1f1f1;
-            color: #555;
-            text-align: center;
-            padding: 10px;
-            font-size: 0.875em;
-        }
+    footer {
+        background-color: #f1f1f1;
+        color: #555;
+        text-align: center;
+        padding: 10px;
+        font-size: 0.875em;
+    }
 
-        .navigation {
-            background-color: #858585;
-            color: white;
-            padding: 8px;
-            padding-left: 16px;
-            padding-right: 16px;         
-        }
+    .navigation {
+        background-color: var(--dark-color);
+        color: white;
+        padding: 8px;
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-bottom: 12px;
+    }
 
-        a.navigation-link {
-            color: whitesmoke;        
-        }
+    a.navigation-link {
+        color: white;
+        margin-right: 6px;
+        position: relative;
+    }
 
-        a.navigation-active {
-            font-weight: bold;
-            color: white;        
-        }
+    a.navigation-active {
+        font-weight: bold;
+    }
 
-        .section {
-            padding-bottom: 8px;
-        }
+    a.navigation-active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 1px;
+        background-color: lightgray;
+    }
 
-        .layout-row {
-            display: flex;
-            width: 100%;
-        }
+    .section {
+        padding-bottom: 8px;
+    }
 
-        .layout-column {
-            flex: auto;
-        }
+    .layout-row {
+        display: flex;
+        width: 100%;
+    }
 
-        .align-left {
-            text-align: left;
-        }
+    .layout-column {
+        flex: auto;
+    }
 
-        .align-center {
-            text-align: center;
-        }
+    .align-left {
+        text-align: left;
+    }
 
-        .align-right {
-            text-align: right;
-        }
+    .align-center {
+        text-align: center;
+    }
 
-        input.filter {
-            width: 100%;
-            box-sizing: border-box;
-            border-width: 1px;
-            outline: none;
-            background-color: #f1f1f1;
-            border: hidden;
-            padding: 8px;
-        }
+    .align-right {
+        text-align: right;
+    }
 
-        th, td {
-            padding-left: 4px;
-            padding-right: 4px;
-            padding-top: 3px;
-            padding-bottom: 3px;
-        }
+    input.filter {
+        width: 100%;
+        box-sizing: border-box;
+        border-width: 1px;
+        outline: none;
+        background-color: #f1f1f1;
+        border: hidden;
+        padding: 8px;
+    }
 
-        th {
-            background-color: #858585;
-            color: white;
-            border: solid;
-            border-width: 1px;
-            font-weight: 600;
-        }
+    th, td {
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
 
-        table.grid-view,
-        table.tree-view {
-            border: 1px;
-            width: 100%;
-        }
+    th {
+        background-color: var(--dark-color);
+        color: white;
+        border: solid;
+        border-width: 1px;
+        font-weight: 600;
+    }
+
+    table.grid-view,
+    table.tree-view {
+        border: 1px;
+        width: 100%;
+    }
 
         table.grid-view tr:hover,
         table.tree-view tr:hover {
@@ -234,432 +252,420 @@
             padding-right: 4px;
         }
 
-        .grid-folder {
-            font-size: 0.9375em;
-            padding: 2px;
-            text-align: center;
-        }
+    .grid-folder {
+        font-size: 0.9375em;
+        padding: 2px;
+        text-align: center;
+    }
 
-        button {
-            border: 1px solid dimgray;
-        }
+    button {
+        border: 1px solid gray;
+    }
 
-        .status-option {
-            border: 1px solid darkgray;
-            color: darkgray;
-        }
+    .status-option {
+        border: 1px solid gray;
+        color: gray;
+    }
 
-        .status-option:hover {
-            border: 1px solid dimgray;
-            background-color: var(--hover-color);
-            color: black;
-        }
+    .status-option:hover {
+        border: 1px solid dimgray;
+        background-color: var(--hover-color);
+        color: black;
+    }
 
-        button.active {
-            border: 1px solid dimgray;
-            background-color: var(--hover-color);
-            color: black;
-        }
+    button.active {
+        border: 1px solid dimgray;
+        background-color: var(--hover-color);
+        color: black;
+    }
 
-        .grid-option {
-            color: dimgray;
-            font-size: 1.35em;
-        }
+    .grid-option {
+        color: dimgray;
+        font-size: 1.35em;
+    }
 
-        .gridline {
-            border-bottom: 1px solid lightgray;
-        }
+    .gridline {
+        border-bottom: 1px solid lightgray;
+    }
 
-        .gridline-folder {
-            color: dimgray;
-            font-weight: bold;
-        }
+    .gridline-folder {
+        color: dimgray;
+        font-weight: bold;
+    }
 
-        .gridline-heading {
-            color: dimgray;
-            font-weight: bold;
-        }
+    .gridline-heading {
+        color: dimgray;
+        font-weight: bold;
+    }
 
-        .gridline-toggle {
-            color: dimgray;
-            cursor: pointer;
-            text-align: center;
-        }
+    .gridline-toggle {
+        color: dimgray;
+        cursor: pointer;
+        text-align: center;
+    }
 
-        .project-name {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
+    .project-name {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
 
-        .project-date {
-            color: dimgray;
-        }
+    .project-date {
+        color: dimgray;
+        padding-left: 2px;
+    }
 
-        .page-name {
-            font-size: 1.50em;
-            font-weight: bold;
-            line-height: 1;
-            color: dimgray;
-        }
+    .page-name {
+        font-size: 1.50em;
+        font-weight: bold;
+        line-height: 1;
+        color: dimgray;
+    }
 
-        .chart-outline {
-            width: fit-content;
-            margin: auto;
-            padding: 16px;
-            padding-left: 24px;
-            padding-right: 24px;
-            background-color: whitesmoke;
-        }
+    .chart-outline {
+        width: fit-content;
+        margin: auto;
+        padding: 16px;
+        padding-left: 24px;
+        padding-right: 24px;
+        background-color: whitesmoke;
+    }
 
-        .chart-name {
-            font-size: 1.25em;
-            font-weight: bold;
-            line-height: 1;
-            color: dimgray;
-        }
+    .chart-name {
+        font-size: 1.25em;
+        font-weight: bold;
+        line-height: 1;
+        color: dimgray;
+    }
 
-        .chart-percentage {
-            font-size: 2.25em;
-            line-height: 1.0;
-        }
+    .chart-percentage {
+        font-size: 2.25em;
+        line-height: 1.0;
+    }
 
-        .chart-status {
-            font-size: 2em;
-            color: gray;
-            line-height: 1.0;
-        }
+    .chart-status {
+        font-size: 2em;
+        color: gray;
+        line-height: 1.0;
+    }
 
-        .chart-bar {
-             height: 0.8em;
-             float: left
-        }
+    .chart-bar {
+        height: 0.8em;
+        float: left
+    }
 
-        .chart-count {
-            text-align: center;
-        }
+    .chart-count {
+        text-align: center;
+    }
 
-        .chart-count-number {
-            font-size: 1.25em;
-            line-height: 1.0;
-        }
+    .chart-count-number {
+        font-size: 1.25em;
+        line-height: 1.0;
+    }
 
-        .chart-count-percentage {
-            font-size: 1.125em;
-            line-height: 1.0;
-        }
+    .chart-count-percentage {
+        font-size: 1.125em;
+        line-height: 1.0;
+    }
 
-        .chart-count-status {
-            font-size: 1.125em;
-            line-height: 1.0;
-        }
+    .chart-count-status {
+        font-size: 1.125em;
+        line-height: 1.0;
+    }
 
-        .chart-count-bar {
-            width: 110px;
-            height: 0.4em;
-        }
+    .chart-count-bar {
+        width: 110px;
+        height: 0.4em;
+    }
 
-        data-item {
-            visibility: hidden;
-        }
+    data-item {
+        visibility: hidden;
+    }
 
-        a {
-            color: var(--keyword-color);
-            text-decoration: none;
-        }
+    a {
+        color: var(--keyword-color);
+        text-decoration: none;
+    }
 
-        .color-passed {
-            color: var(--passed-color);
-        }
+    .color-passed {
+        color: var(--passed-color);
+    }
 
-        .bgcolor-passed {
-            background: var(--passed-color);
-        }
+    .bgcolor-passed {
+        background: var(--passed-color);
+    }
 
-        .color-incomplete {
-            color: var(--incomplete-color);
-        }
+    .color-incomplete {
+        color: var(--incomplete-color);
+    }
 
-        .bgcolor-incomplete {
-            background: var(--incomplete-color);
-        }
+    .bgcolor-incomplete {
+        background: var(--incomplete-color);
+    }
 
-        .color-failed {
-            color: var(--failed-color);
-        }
+    .color-failed {
+        color: var(--failed-color);
+    }
 
-        .bgcolor-failed {
-            background: var(--failed-color);
-        }
+    .bgcolor-failed {
+        background: var(--failed-color);
+    }
 
-        .color-skipped {
-            color: var(--skipped-color);
-        }
+    .color-skipped {
+        color: var(--skipped-color);
+    }
 
-        .bgcolor-skipped {
-            background: var(--skipped-color);
-        }
+    .bgcolor-skipped {
+        background: var(--skipped-color);
+    }
 
-        .bgcolor-total {
-            background: var(--total-color);
-        }
+    .bgcolor-total {
+        background: var(--total-color);
+    }
 
-        .status-dot {
-            height: 10px;
-            width: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-left: 2px;
-            margin-right: 2px;
-        }
+    .status-dot {
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
 
-        .sort-column {
-            float: right;
-            font-weight: normal;
-        }
-        
-        ul {
-          list-style-type: none;
-          margin-bottom: 0px;
-        }
+    .sort-column {
+        float: right;
+        font-weight: normal;
+    }
 
-        .chart-text {
-            transform: translateY(0.15em);
-        }
+    ul {
+        list-style-type: none;
+        margin-bottom: 0px;
+    }
 
-        .chart-number {
-            font-size: 0.5em;
-            text-anchor: middle;
-            transform: translateY(-0.25em);
-        }
+    .chart-text {
+        transform: translateY(0.15em);
+    }
 
-        .chart-label {
-            font-size: 0.3em;
-            text-anchor: middle;
-            transform: translateY(0.7em);
-        }
+    .chart-number {
+        font-size: 0.5em;
+        text-anchor: middle;
+        transform: translateY(-0.25em);
+    }
 
-        .donut-segment-passed {
-            stroke: var(--passed-color);
-            fill: transparent;
-            stroke-width: 3.2px;
-        }
+    .chart-label {
+        font-size: 0.3em;
+        text-anchor: middle;
+        transform: translateY(0.7em);
+    }
 
-        .donut-segment-incomplete {
-            stroke: var(--incomplete-color);
-            fill: transparent;
-            stroke-width: 3.2px;
-        }
+    .donut-segment-passed {
+        stroke: var(--passed-color);
+        fill: transparent;
+        stroke-width: 3.2px;
+    }
 
-        .donut-segment-failed {
-            stroke: var(--failed-color);
-            fill: transparent;
-            stroke-width: 3.2px;
-        }
+    .donut-segment-incomplete {
+        stroke: var(--incomplete-color);
+        fill: transparent;
+        stroke-width: 3.2px;
+    }
 
-        .donut-segment-skipped {
-            stroke: var(--skipped-color);
-            fill: transparent;
-            stroke-width: 3.2px;
-        }
+    .donut-segment-failed {
+        stroke: var(--failed-color);
+        fill: transparent;
+        stroke-width: 3.2px;
+    }
 
-        textarea {
-           resize: none;
-           width: 100%;
-           padding: 8px;
-           border: 1px solid dimgray;
-        }
+    .donut-segment-skipped {
+        stroke: var(--skipped-color);
+        fill: transparent;
+        stroke-width: 3.2px;
+    }
+
+    textarea {
+        resize: none;
+        width: 100%;
+        padding: 8px;
+        border: 1px solid dimgray;
+    }
 
         textarea:focus {
             border-color: black;
             outline: none;
         }
 
-        hr {
-            border: 0 none;
-            margin-top: 6px;
-            margin-bottom: 6px;
-        }
+    hr {
+        border: 0 none;
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
 
-        .circle-number {
-            width: 1.5em;
-            height: 1.5em;
-            border-radius: 50%;
-            background-color: darkgray;
-            color:  white;
-            text-align: center;
-            line-height: 1.5em; /* Centers the text vertically */
-            font-size: 0.875em;
-            display: inline-block; /* Allows the circle to be displayed inline */
-        }
+    .circle-number {
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 50%;
+        background-color: var(--dark-color);
+        color: white;
+        text-align: center;
+        line-height: 1.5em; /* Centers the text vertically */
+        font-size: 0.875em;
+        display: inline-block; /* Allows the circle to be displayed inline */
+    }
 
-        .feature-tag-names,
-        .rule-tag-names,
-        .scenario-tag-names {
-            color: #5F9EA0;
-            color: #348F91;
-        }
+    .feature-tag-names,
+    .rule-tag-names,
+    .scenario-tag-names {
+        color: #348F91;
+    }
 
-        .feature-keyword {
-            color: var(--keyword-color);
-            font-weight: bold;
-        }
+    .feature-keyword,
+    .background-keyword,
+    .rule-keyword,
+    .scenario-keyword {
+        color: var(--keyword-color);
+        font-weight: bold;
+    }
 
-        .feature-name,
-        .rule-name,
-        .scenario-name {
-            font-weight: bold;
-        }
+    .feature-name,
+    .rule-name,
+    .scenario-name {
+        font-weight: bold;
+    }
 
-        .feature-description,
-        .rule-description {
-            font-family: Consolas;
-            font-size: 0.875em;
-            color: gray;
-            font-style: italic;
-            padding-top: 2px;
-        }
+    .feature-description,
+    .rule-description {
+        font-family: Consolas;
+        font-size: 0.875em;
+        color: gray;
+        font-style: italic;
+        padding-top: 2px;
+    }
 
-        .feature-duration {
-            color: gray;
-        }
+    .feature-duration {
+        color: gray;
+    }
 
-        .background-keyword {
-            color: var(--keyword-color);
-            font-weight: bold;
-        }
+    .scenario-duration {
+        color: gray;
+        padding-left: 4px;
+    }
 
-        .rule-keyword {
-            color: var(--keyword-color);
-            font-weight: bold;
-        }
+    .scenario-attachments {
+        color: dimgray;
+        padding-left: 4px;
+    }
 
-        .scenario-keyword {
-            color: var(--keyword-color);
-            font-weight: bold;
-        }
+    .step-marker {
+        font-weight: bold;
+        text-align: center;
+    }
 
-        .scenario-duration {
-            color: gray;
-            padding-left: 4px;
-        }
+    .step-keyword {
+        color: var(--keyword-color);
+        font-weight: bold;
+    }
 
-        .scenario-attachments {
-            color: dimgray;
-            padding-left: 4px;
-        }
+    .step-keyword-skipped {
+        font-weight: bold;
+    }
 
-        .step-marker {
-            font-weight: bold;
-            text-align: center;
-        }
+    .scenario-steps {
+        padding-top: 2px;
+    }
 
-        .step-keyword {
-            color: var(--keyword-color);
-            font-weight: bold;
-        }
+    ul.scenario-steps li {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
 
-        .step-keyword-skipped {
-            font-weight: bold;
-        }
+    .steps-datatable {
+        padding-left: 32px;
+    }
 
-        .scenario-steps {
-            padding-top: 2px;
-        }
+    .datatable {
+        color: var(--dark-color);
+    }
 
-        ul.scenario-steps li {
-            padding-top: 2px;
-            padding-bottom: 2px;
-        }
+    table.datatable td {
+        padding-top: 1px;
+        padding-bottom: 1px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
 
-        .steps-datatable {
-            padding-left: 32px;
-        }
+    .message-box {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 2px;
+        padding-right: 2px;
+        max-width: inherit;
+        word-wrap: break-word;
+    }
 
-        .datatable {
-            color: gray;
-        }
+    .message-passed {
+        color: var(--passed-text-color);
+        background-color: var(--passed-background-color);
+        padding: 8px;
+        border-left: 8px solid var(--passed-color);
+    }
 
-        table.datatable td {
-            padding-top: 1px;
-            padding-bottom: 1px;
-            padding-left: 4px;
-            padding-right: 4px;
-        }
+    .message-failed {
+        color: var(--failed-text-color);
+        background-color: var(--failed-background-color);
+        padding: 8px;
+        border-left: 8px solid var(--failed-color);
+    }
 
-        .message-box {
-            padding-top: 4px;
-            padding-bottom: 4px;
-            padding-left: 2px;
-            padding-right: 2px;
-            max-width: inherit;
-            word-wrap: break-word;
-        }
+    .message-incomplete {
+        color: var(--incomplete-text-color);
+        background-color: var(--incomplete-background-color);
+        padding: 8px;
+        border-left: 8px solid var(--incomplete-color);
+    }
 
-        .message-passed {
-            color: var(--passed-text-color);
-            background-color: var(--passed-background-color);      
-            padding: 8px;
-            border-left: 8px solid var(--passed-color);
-        }
+    .message-skipped {
+        color: var(--skipped-text-color);
+        background-color: var(--skipped-background-color);
+        padding: 8px;
+        border-left: 8px solid var(--skipped-color);
+    }
 
-        .message-failed {
-            color: var(--failed-text-color);
-            background-color: var(--failed-background-color);      
-            padding: 8px;
-            border-left: 8px solid var(--failed-color);
-        }
+    .message-stacktrace {
+        font-size: 0.875em;
+    }
 
-        .message-incomplete {
-            color: var(--incomplete-text-color);
-            background-color: var(--incomplete-background-color);;
-            padding: 8px;
-            border-left: 8px solid var(--incomplete-color);
-        }
+    .examples-keyword {
+        font-weight: bold;
+        color: gray;
+        padding-left: 16px;
+    }
 
-        .message-skipped {
-            color: var(--skipped-text-color);
-            background-color: var(--skipped-background-color);;
-            padding: 8px;
-            border-left: 8px solid var(--skipped-color);
-        }
+    .examples-datatable {
+        padding-left: 32px;
+    }
 
-        .message-stacktrace {
-            font-size: 0.875em;
-        }
-        
-        .examples-keyword {
-            font-weight: bold;
-            color: gray;
-            padding-left: 16px;
-        }
+    .attachments {
+        padding-top: 4px;
+    }
 
-        .examples-datatable {
-            padding-left: 32px;
-        }
+    ul.attachments-files li {
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
 
-        .attachments {
-            padding-top: 4px;
-        }
+    .attachments-keyword {
+        font-weight: bold;
+        color: gray;
+        padding-left: 16px;
+    }
 
-        ul.attachments-files li {
-            padding-top: 1px;
-            padding-bottom: 1px;
-        }
+    #script-view {
+        flex: 1;
+        overflow: auto;
+        height: calc(100% - 334px); /* Adjust for filter and search height */
+    }
 
-        .attachments-keyword {
-            font-weight: bold;
-            color: gray;
-            padding-left: 16px;
-        }
-
-        #script-view {
-            flex: 1;
-            overflow: auto;
-            height: calc(100% - 334px); /* Adjust for filter and search height */
-        }
-
-        #scenario-script {
-            field-sizing: content;
-            height: 96%;
-        }
-    </style>
+    #scenario-script {
+        field-sizing: content;
+        height: 96%;
+    }
+</style>

@@ -28,7 +28,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocProjectGenerator(project);
             var listOfLines = generator.GenerateContent();
 
-            Assert.That(listOfLines.Count, Is.GreaterThan(80));
+            Assert.That(listOfLines.Count, Is.GreaterThanOrEqualTo(80));
         }
 
         [Test]

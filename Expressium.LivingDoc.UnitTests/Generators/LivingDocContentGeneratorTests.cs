@@ -39,13 +39,13 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var listOfLines = generator.GenerateNavigation();
 
             Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(14));
+            Assert.That(listOfLines.Count, Is.EqualTo(8));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Project Navigation Section -->"));
-            Assert.That(listOfLines[3], Does.Contain("title='Overview'"));
-            Assert.That(listOfLines[5], Does.Contain("title='Features List View'"));
-            Assert.That(listOfLines[7], Does.Contain("title='Scenarios List View'"));
-            Assert.That(listOfLines[9], Does.Contain("title='Steps List View'"));
-            Assert.That(listOfLines[11], Does.Contain("title='Analytics'"));
+            Assert.That(listOfLines[2], Does.Contain("title='Overview'"));
+            Assert.That(listOfLines[3], Does.Contain("title='Features List View'"));
+            Assert.That(listOfLines[4], Does.Contain("title='Scenarios List View'"));
+            Assert.That(listOfLines[5], Does.Contain("title='Steps List View'"));
+            Assert.That(listOfLines[6], Does.Contain("title='Analytics'"));
         }
 
         [Test]
@@ -67,10 +67,10 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var listOfLines = generator.GenerateNavigation();
 
             Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(8));
+            Assert.That(listOfLines.Count, Is.EqualTo(5));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Project Navigation Section -->"));
-            Assert.That(listOfLines[3], Does.Contain("title='Overview'"));
-            Assert.That(listOfLines[5], Does.Contain("title='Analytics'"));
+            Assert.That(listOfLines[2], Does.Contain("title='Overview'"));
+            Assert.That(listOfLines[3], Does.Contain("title='Analytics'"));
         }
 
         [Test]

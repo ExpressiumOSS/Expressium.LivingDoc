@@ -44,7 +44,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!DOCTYPE html>");
-            listOfLines.Add("<html>");
+            listOfLines.Add("<html lang='en'>");
 
             return listOfLines;
         }
