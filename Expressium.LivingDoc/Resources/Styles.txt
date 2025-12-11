@@ -253,20 +253,25 @@
     }
 
     button {
+        border: 1px solid black;
+        color: black;
+    }
+
+    button.prefilter {
         border: 1px solid gray;
         color: gray;
     }
 
-    button:hover {
-        border: 1px solid dimgray;
-        background-color: var(--hover-color);
+    button.prefilter:hover {
+        border: 1px solid black;
         color: black;
+        background-color: var(--hover-color);
     }
 
-    button.active {
-        border: 1px solid dimgray;
-        background-color: var(--hover-color);
+    button.prefilter.active {
+        border: 1px solid black;
         color: black;
+        background-color: var(--hover-color);
     }
 
     .grid-option {

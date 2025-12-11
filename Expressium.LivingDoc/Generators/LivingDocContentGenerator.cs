@@ -101,10 +101,10 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- PreFilters Section -->");
             listOfLines.Add("<div class='layout-column align-right'>");
-            listOfLines.Add("<button data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'>Passed</button>");
-            listOfLines.Add("<button data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'>Incomplete</button>");
-            listOfLines.Add("<button data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'>Failed</button>");
-            listOfLines.Add("<button data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'>Skipped</button>");
+            listOfLines.Add("<button class='prefilter' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'>Passed</button>");
+            listOfLines.Add("<button class='prefilter' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'>Incomplete</button>");
+            listOfLines.Add("<button class='prefilter' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'>Failed</button>");
+            listOfLines.Add("<button class='prefilter' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'>Skipped</button>");
             listOfLines.Add("<button title='Clear Filters' onclick='clearPrefilters()'>Clear</button>");
             listOfLines.Add("</div>");
 
