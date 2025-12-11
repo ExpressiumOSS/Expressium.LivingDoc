@@ -119,7 +119,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Filter Section -->");
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<input class='filter' onkeyup='filterView()' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
+            listOfLines.Add("<input class='text-filter' onkeyup='filterView()' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
             listOfLines.Add("</div>");
 
             return listOfLines;

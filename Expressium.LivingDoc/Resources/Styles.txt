@@ -204,7 +204,7 @@
         text-align: right;
     }
 
-    input.filter {
+    .text-filter {
         width: 100%;
         box-sizing: border-box;
         border-width: 1px;

@@ -55,7 +55,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<input type='text' class='filter' onKeydown=\"Javascript: if (event.keyCode == 13) loadStepDefinitionByEnter();\" onkeyup='filterStepDefinitions()' id='stepdefinition-filter' placeholder='Filter by Keywords'>");
+            listOfLines.Add("<input type='text' class='text-filter' onKeydown=\"Javascript: if (event.keyCode == 13) loadStepDefinitionByEnter();\" onkeyup='filterStepDefinitions()' id='stepdefinition-filter' placeholder='Filter by Keywords'>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");
