@@ -90,13 +90,7 @@
         initial-value: #C7D9E9;
         initial-value: #d9e5f0;
     }
-
-    @property --dark-color {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #808080; /* gray */
-    }
-    
+  
     body, html {
         height: 100%;
         margin: 0;
@@ -151,7 +145,7 @@
     }
 
     .navigation {
-        background-color: var(--dark-color);
+        background-color: #787878;
         color: white;
         padding: 8px;
         padding-left: 16px;
@@ -222,7 +216,7 @@
     }
 
     th {
-        background-color: var(--dark-color);
+        background-color: #787878;
         color: white;
         border: solid;
         border-width: 1px;
@@ -499,7 +493,7 @@
         width: 1.5em;
         height: 1.5em;
         border-radius: 50%;
-        background-color: var(--dark-color);
+        background-color: gray;
         color: white;
         text-align: center;
         line-height: 1.5em; /* Centers the text vertically */
@@ -578,7 +572,7 @@
     }
 
     .datatable {
-        color: var(--dark-color);
+        color: dimgray;
     }
 
     table.datatable td {
