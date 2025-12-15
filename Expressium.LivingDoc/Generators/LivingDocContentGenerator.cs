@@ -134,8 +134,19 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Filter Section -->");
+
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<input class='text-filter' onkeyup='filterView()' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
+            listOfLines.Add("<div class='layout-row filter-group'>");
+
+            listOfLines.Add("<div class='filter-group-text'>");
+            listOfLines.Add("<span class='bi bi-search'></span>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<div style='width: 100%'>");
+            listOfLines.Add("<input onkeyup='filterView()' class='filter-group-input' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
             listOfLines.Add("</div>");
 
             return listOfLines;

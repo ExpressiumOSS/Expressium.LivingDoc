@@ -95,7 +95,6 @@
         height: 100%;
         margin: 0;
         overflow: hidden;
-        /* font-family: "Segoe UI Variable Small"; */
         /* font-family: system-ui, "Segoe UI Variable Small", "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
     }
 
@@ -114,7 +113,6 @@
     #left-section {
         flex: 1;
         overflow: hidden;
-        /* overflow: auto; */
         scrollbar-color: #909090 #F8F9FA;
     }
 
@@ -147,9 +145,7 @@
     .navigation {
         background-color: #787878;
         color: white;
-        padding: 8px;
-        padding-left: 16px;
-        padding-right: 16px;
+        padding: 8px 16px;
     }
 
     a.navigation-link {
@@ -189,14 +185,25 @@
         text-align: right;
     }
 
-    .text-filter {
+    .filter-group {
+        background-color: #f1f1f1;
+        padding: 8px;
+        align-items: center;
+    }
+
+    .filter-group-text {
+        padding-left: 4px;
+        padding-right: 4px;
+        color: gray;
+    }
+
+    .filter-group-input {
         width: 100%;
         box-sizing: border-box;
         border-width: 1px;
         outline: none;
         background-color: #f1f1f1;
         border: hidden;
-        padding: 8px;
     }
 
     th, td {
@@ -220,22 +227,22 @@
         width: 100%;
     }
 
-        table.grid-view tr:hover,
-        table.tree-view tr:hover {
-            background-color: var(--hover-color);
-        }
+    table.grid-view tr:hover,
+    table.tree-view tr:hover {
+        background-color: var(--hover-color);
+    }
 
-        table.grid-view th,
-        table.grid-view td {
-            padding-left: 6px;
-            padding-right: 6px;
-        }
+    table.grid-view th,
+    table.grid-view td {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
 
-        table.tree-view th,
-        table.tree-view td {
-            padding-left: 2px;
-            padding-right: 4px;
-        }
+    table.tree-view th,
+    table.tree-view td {
+        padding-left: 2px;
+        padding-right: 4px;
+    }
 
     .grid-folder {
         font-size: 0.9375em;
@@ -474,10 +481,10 @@
         border: 1px solid dimgray;
     }
 
-        textarea:focus {
-            border-color: black;
-            outline: none;
-        }
+    textarea:focus {
+        border-color: black;
+        outline: none;
+    }
 
     hr {
         border: 0 none;

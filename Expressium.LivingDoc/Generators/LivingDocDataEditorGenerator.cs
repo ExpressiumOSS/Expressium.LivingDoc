@@ -54,8 +54,21 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<span class='chart-name'>Step Definitions</span>");
             listOfLines.Add("</div>");
 
+
+            listOfLines.Add("<!-- Filter Section -->");
+
             listOfLines.Add("<div class='section'>");
-            listOfLines.Add("<input type='text' class='text-filter' onKeydown=\"Javascript: if (event.keyCode == 13) loadStepDefinitionByEnter();\" onkeyup='filterStepDefinitions()' id='stepdefinition-filter' placeholder='Filter by Keywords'>");
+            listOfLines.Add("<div class='layout-row filter-group'>");
+
+            listOfLines.Add("<div class='filter-group-text'>");
+            listOfLines.Add("<span class='bi bi-search'></span>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<div style='width: 100%'>");
+            listOfLines.Add("<input class='filter-group-input' onKeydown=\"Javascript: if (event.keyCode == 13) loadStepDefinitionByEnter();\" onkeyup='filterStepDefinitions()' id='stepdefinition-filter' type='text' placeholder='Filter by Keywords'>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='section'>");
