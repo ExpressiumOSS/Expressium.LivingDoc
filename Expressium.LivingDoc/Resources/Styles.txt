@@ -100,7 +100,7 @@
 
     #content-wrapper {
         display: flex;
-        height: calc(100% - 159px); /* Adjust for header and footer height */
+        height: calc(100% - 156px); /* Adjust for header and footer height */
         flex-direction: row; /* Change to row for vertical splitter */
     }
 
@@ -156,7 +156,7 @@
     }
 
     a.navigation-active {
-        font-weight: bold;
+        font-weight: 600;
         font-size: 1.0625em;
     }
 
@@ -298,7 +298,7 @@
     }
 
     .project-name {
-        font-size: 1.5em;
+        font-size: 1.40em;
         font-weight: bold;
     }
 
@@ -308,7 +308,7 @@
     }
 
     .page-name {
-        font-size: 1.50em;
+        font-size: 1.40em;
         font-weight: bold;
         line-height: 1;
         color: dimgray;
@@ -496,7 +496,7 @@
         width: 1.5em;
         height: 1.5em;
         border-radius: 50%;
-        background-color: gray;
+        background-color: #909090;
         color: white;
         text-align: center;
         line-height: 1.5em; /* Centers the text vertically */
@@ -554,10 +554,6 @@
 
     .step-keyword {
         color: var(--keyword-color);
-        font-weight: bold;
-    }
-
-    .step-keyword-skipped {
         font-weight: bold;
     }
 
