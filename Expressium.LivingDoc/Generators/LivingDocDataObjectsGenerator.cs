@@ -31,6 +31,7 @@ namespace Expressium.LivingDoc
                 listOfLines.AddRange(GenerateDataFeatureDescription(feature));
                 listOfLines.AddRange(GenerateDataFeatureBackground(feature));
                 listOfLines.Add("</div>");
+
                 listOfLines.Add("</div>");
             }
 
@@ -43,7 +44,7 @@ namespace Expressium.LivingDoc
 
             listOfLines.Add("<!-- Data Feature Tags -->");
             listOfLines.Add("<div>");
-            listOfLines.Add("<span class='feature-tag-names'>" + feature.GetTags() + "</span>");
+            listOfLines.Add("<span class='feature-tags'>" + feature.GetTags() + "</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -57,7 +58,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<div>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<span class='feature-keyword'>Feature: </span><span class='feature-name'>{feature.Name}</span>");
-            //listOfLines.Add($"<span class='feature-duration'>&nbsp;{feature.GetDuration()}</span>");
+            //listOfLines.Add($"<span class='feature-duration'>{feature.GetDuration()}</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -96,8 +97,9 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<div>");
                 listOfLines.Add("<span class='background-keyword'>Background:</span>");
                 listOfLines.AddRange(GenerateDataFeatureBackgroundSteps(feature.Background.Steps));
-                listOfLines.Add("<hr>");
                 listOfLines.Add("</div>");
+
+                listOfLines.Add("<hr>");
             }
 
             return listOfLines;
@@ -160,8 +162,8 @@ namespace Expressium.LivingDoc
                         listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
                         listOfLines.AddRange(GenerateDataScenarioAttachments(example));
-                        listOfLines.Add("<hr>");
                         listOfLines.Add("</div>");
+                        listOfLines.Add("<hr>");
                     }
 
                     listOfLines.Add("</div>");
@@ -182,11 +184,44 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<div class='section' data-rule-replica>");
 
             listOfLines.AddRange(GenerateDataRuleTags(rule));
+            listOfLines.AddRange(GenerateDataRuleName(rule));
+            listOfLines.AddRange(GenerateDataRuleDescription(rule));
+
+            listOfLines.Add("<hr>");
+            listOfLines.Add("</div>");
+
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataRuleTags(LivingDocRule rule)
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Data Rule Tags -->");
+            listOfLines.Add("<div>");
+            listOfLines.Add("<span class='rule-tags'>" + rule.GetTags() + "</span>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataRuleName(LivingDocRule rule)
+        {
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Rule Name -->");
             listOfLines.Add("<div>");
             listOfLines.Add("<span class='rule-keyword'>Rule: </span>");
             listOfLines.Add("<span class='rule-name'>" + rule.Name + "</span>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataRuleDescription(LivingDocRule rule)
+        {
+            var listOfLines = new List<string>();
 
             if (rule.Description != null)
             {
@@ -202,22 +237,6 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("</div>");
             }
 
-            listOfLines.Add("</div>");
-            listOfLines.Add("<hr>");
-            listOfLines.Add("</div>");
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataRuleTags(LivingDocRule rule)
-        {
-            var listOfLines = new List<string>();
-
-            listOfLines.Add("<!-- Data Rule Tags -->");
-            listOfLines.Add("<div>");
-            listOfLines.Add("<span class='rule-tag-names'>" + rule.GetTags() + "</span>");
-            listOfLines.Add("</div>");
-
             return listOfLines;
         }
 
@@ -227,7 +246,7 @@ namespace Expressium.LivingDoc
 
             listOfLines.Add("<!-- Data Scenario Tags -->");
             listOfLines.Add("<div>");
-            listOfLines.Add("<span class='scenario-tag-names'>" + scenario.GetTags() + "</span>");
+            listOfLines.Add("<span class='scenario-tags'>" + scenario.GetTags() + "</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -272,11 +291,12 @@ namespace Expressium.LivingDoc
                 var stepMarker = "&cross;";
                 if (step.IsPassed())
                     stepMarker = "&check;";
-                // else if (step.IsSkipped())
-                // stepMarker = "&minus;";
 
                 listOfLines.Add("<li>");
 
+                ///////////////////////////////////////////////////////
+                // Alternative visualization with Bootstrap icons...
+                ///////////////////////////////////////////////////////
                 //if (step.IsPassed())
                 //    listOfLines.Add($"<span class='bi bi-check-circle-fill step-marker color-{status}'></span>");
                 //else if (step.IsFailed())
@@ -287,6 +307,7 @@ namespace Expressium.LivingDoc
                 //    listOfLines.Add($"<span class='bi bi-dash-circle-fill step-marker color-{status}'></span>");
                 //else
                 //    listOfLines.Add($"<span class='bi bi-question-circle-fill step-marker color-{status}'></span>");
+                ///////////////////////////////////////////////////////
 
                 listOfLines.Add($"<span class='step-marker color-{status}'>{stepMarker}</span>");
                 listOfLines.Add($"<span class='step-keyword'>{step.Keyword}</span>");
@@ -296,7 +317,7 @@ namespace Expressium.LivingDoc
                 {
                     listOfLines.Add("<!-- Scenario Steps Data Table Section -->");
                     listOfLines.Add($"<div class='steps-datatable'>");
-                    listOfLines.AddRange(GenerateDataTable(step.DataTable));
+                    listOfLines.AddRange(GenerateDataScenarioDataTable(step.DataTable));
                     listOfLines.Add("</div>");
                 }
 
@@ -359,7 +380,7 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("<div>");
                 listOfLines.Add("<span class='examples-keyword'>Examples:</span>");
                 listOfLines.Add("<div class='examples-datatable'>");
-                listOfLines.AddRange(GenerateDataTable(example.DataTable));
+                listOfLines.AddRange(GenerateDataScenarioDataTable(example.DataTable));
                 listOfLines.Add("</div>");
                 listOfLines.Add("</div>");
             }
@@ -367,11 +388,11 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateDataTable(LivingDocDataTable dataTable)
+        internal List<string> GenerateDataScenarioDataTable(LivingDocDataTable dataTable)
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<table class='datatable'>");
+            listOfLines.Add("<table class='scenario-datatable'>");
             listOfLines.Add("<tbody>");
 
             foreach (var row in dataTable.Rows)

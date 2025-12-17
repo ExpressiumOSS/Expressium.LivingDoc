@@ -504,9 +504,9 @@
         display: inline-block; /* Allows the circle to be displayed inline */
     }
 
-    .feature-tag-names,
-    .rule-tag-names,
-    .scenario-tag-names {
+    .feature-tags,
+    .rule-tags,
+    .scenario-tags {
         color: #348F91;
     }
 
@@ -533,10 +533,7 @@
         padding-top: 2px;
     }
 
-    .feature-duration {
-        color: gray;
-    }
-
+    .feature-duration,
     .scenario-duration {
         color: gray;
         padding-left: 4px;
@@ -570,11 +567,11 @@
         padding-left: 32px;
     }
 
-    .datatable {
+    .scenario-datatable {
         color: dimgray;
     }
 
-    table.datatable td {
+    table.scenario-datatable td {
         padding-top: 1px;
         padding-bottom: 1px;
         padding-left: 4px;
