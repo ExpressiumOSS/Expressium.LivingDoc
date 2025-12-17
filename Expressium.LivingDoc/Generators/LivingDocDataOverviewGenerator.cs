@@ -97,8 +97,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' colspan='2' align='right'>");
-            listOfLines.Add("<a class='grid-option' title='Expand All Features' href='#' onclick='loadExpandAll()'>&plus;</a>");
-            listOfLines.Add("<a class='grid-option' title='Collapse All Features' href='#' onclick='loadCollapseAll()'>&minus;</a>");
+            listOfLines.Add("<a class='grid-option bi bi-plus-lg' title='Expand All Features' href='#' onclick='loadExpandAll()'></a>");
+            listOfLines.Add("<a class='grid-option bi bi-dash-lg' title='Collapse All Features' href='#' onclick='loadCollapseAll()'></a>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"</tr>");
 

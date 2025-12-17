@@ -274,7 +274,7 @@
 
     .grid-option {
         color: dimgray;
-        font-size: 1.35em;
+        font-size: 1.125em;
     }
 
     .gridline {
@@ -633,15 +633,15 @@
         padding-top: 4px;
     }
 
-    ul.attachments-files li {
-        padding-top: 1px;
-        padding-bottom: 1px;
-    }
-
     .attachments-keyword {
         font-weight: bold;
         color: gray;
         padding-left: 16px;
+    }
+
+    ul.attachments-files li {
+        padding-top: 1px;
+        padding-bottom: 1px;
     }
 
     #script-view {
