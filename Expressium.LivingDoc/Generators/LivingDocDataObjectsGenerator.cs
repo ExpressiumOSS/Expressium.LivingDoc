@@ -267,6 +267,13 @@ namespace Expressium.LivingDoc
 
             listOfLines.Add($"<span class='scenario-duration'>{example.GetDuration()}</span>");
 
+            //var hasStacktraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
+            //if (hasStacktraces)
+            //    listOfLines.Add("<a href='#' class='scenario-attachments bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></a>");
+
+            //if (example.Attachments.Count > 0)
+            //    listOfLines.Add("<a href='#' class='scenario-attachments bi bi-list' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></a>");
+
             var hasStackTraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
             if (example.Attachments.Count > 0 || hasStackTraces)
                 listOfLines.Add("<a href='#' class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&#9776;</a>");
