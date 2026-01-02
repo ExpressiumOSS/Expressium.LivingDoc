@@ -632,6 +632,12 @@
                     attachments[i].style.display = "none";
                 }
             }
+        }
+    </script>
+    <script>
+        function toggleStacktraces(x) {
+            var grandParent = x.parentElement?.parentElement;
+            if (!grandParent) return;
 
             var stacktraces = grandParent.getElementsByClassName('stacktraces');
             for (var i = 0; i < stacktraces.length; i++) {

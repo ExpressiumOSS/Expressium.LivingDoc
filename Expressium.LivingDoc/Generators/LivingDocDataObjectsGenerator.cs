@@ -263,20 +263,24 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<span class='scenario-name'>" + scenario.Name + "</span>");
 
             if (!string.IsNullOrEmpty(indexId))
+            {
+                listOfLines.Add($"<span style='padding-left: 2px;'></span>");
                 listOfLines.Add($"<span class='circle-number'>{indexId}</span>");
+            }
 
             listOfLines.Add($"<span class='scenario-duration'>{example.GetDuration()}</span>");
 
-            //var hasStacktraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
-            //if (hasStacktraces)
-            //    listOfLines.Add("<a href='#' class='scenario-attachments bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></a>");
+            var hasStacktraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
+            if (hasStacktraces)
+                listOfLines.Add("<a href='#' class='scenario-stacktraces bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></a>");
 
-            //if (example.Attachments.Count > 0)
-            //    listOfLines.Add("<a href='#' class='scenario-attachments bi bi-list' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></a>");
-
-            var hasStackTraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
-            if (example.Attachments.Count > 0 || hasStackTraces)
+            if (example.Attachments.Count > 0)
                 listOfLines.Add("<a href='#' class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&#9776;</a>");
+                //listOfLines.Add("<a href='#' class='scenario-attachments bi bi-list-ul' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></a>");
+
+            //var hasStackTraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
+            //if (example.Attachments.Count > 0 || hasStackTraces)
+            //    listOfLines.Add("<a href='#' class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this); toggleStacktraces(this)\">&#9776;</a>");
 
             listOfLines.Add("</div>");
 

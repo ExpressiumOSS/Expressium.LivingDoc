@@ -536,11 +536,17 @@
     .scenario-duration {
         color: gray;
         padding-left: 4px;
+        padding-right: 4px;
     }
 
+    .scenario-stacktraces,
     .scenario-attachments {
         color: dimgray;
-        padding-left: 4px;
+        /* padding: 2px; */
+        /* background-color: #F0F0F0; */
+        /* text-align: center; */
+        /* border-radius: 4px;  */
+        /* border: 1px solid lightgray; */
     }
 
     .step-marker {
@@ -555,6 +561,7 @@
 
     .scenario-steps {
         padding-top: 2px;
+        padding-bottom: 2px;
     }
 
     ul.scenario-steps li {
