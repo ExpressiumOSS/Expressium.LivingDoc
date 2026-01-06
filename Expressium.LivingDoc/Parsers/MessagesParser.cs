@@ -424,7 +424,7 @@ namespace Expressium.LivingDoc.Parsers
             if (testStepFinished.TestStepResult.Exception != null)
             {
                 livingDocStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
-                livingDocStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
+                livingDocStep.ExceptionMessage = WebUtility.HtmlEncode(testStepFinished.TestStepResult.Exception.Message);
                 livingDocStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
             }
         }
