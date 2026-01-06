@@ -419,7 +419,7 @@ namespace Expressium.LivingDoc.Parsers
         internal static void ParseTestResultsSteps(LivingDocStep livingDocStep, TestStepFinished testStepFinished)
         {
             livingDocStep.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
-            livingDocStep.Message = testStepFinished.TestStepResult.Message;
+            livingDocStep.Message = WebUtility.HtmlEncode(testStepFinished.TestStepResult.Message);
 
             if (testStepFinished.TestStepResult.Exception != null)
             {
