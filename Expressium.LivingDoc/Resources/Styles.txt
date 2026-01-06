@@ -501,6 +501,7 @@
         line-height: 1.5em; /* Centers the text vertically */
         font-size: 0.875em;
         display: inline-block; /* Allows the circle to be displayed inline */
+        margin-left: 2px;
     }
 
     .feature-tags,

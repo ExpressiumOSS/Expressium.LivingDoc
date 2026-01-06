@@ -263,10 +263,7 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<span class='scenario-name'>" + scenario.Name + "</span>");
 
             if (!string.IsNullOrEmpty(indexId))
-            {
-                listOfLines.Add($"<span style='padding-left: 2px;'></span>");
                 listOfLines.Add($"<span class='circle-number'>{indexId}</span>");
-            }
 
             listOfLines.Add($"<span class='scenario-duration'>{example.GetDuration()}</span>");
 
