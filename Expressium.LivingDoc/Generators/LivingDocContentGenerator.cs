@@ -158,7 +158,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Footer Section -->");
             listOfLines.Add("<footer>");
-            listOfLines.Add("©2025 Expressium All Rights Reserved");
+            listOfLines.Add("©2026 Expressium All Rights Reserved");
             listOfLines.Add("</footer>");
 
             return listOfLines;
