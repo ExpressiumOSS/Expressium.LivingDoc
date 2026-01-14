@@ -193,7 +193,7 @@
 
     .filter-group-text {
         padding-left: 4px;
-        padding-right: 4px;
+        padding-right: 6px;
         color: gray;
     }
 
@@ -281,13 +281,13 @@
     }
 
     .gridline-folder {
-        color: dimgray;
-        font-weight: bold;
+        color: gray;
+        font-weight: 600;
     }
 
     .gridline-heading {
-        color: dimgray;
-        font-weight: bold;
+        color: var(--keyword-color);
+        font-weight: normal;
     }
 
     .gridline-toggle {

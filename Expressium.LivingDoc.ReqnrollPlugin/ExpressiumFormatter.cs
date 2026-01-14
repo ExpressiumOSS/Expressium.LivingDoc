@@ -29,7 +29,7 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
         {
             base.Dispose();
 
-            var outputHtmlFilePath = Path.GetFileNameWithoutExtension(OutputFilePath) + ".html";
+            var outputHtmlFilePath = OutputFilePath.Replace(Path.GetExtension(OutputFilePath), ".html");
 
             var livingDocConverter = new LivingDocConverter();
             livingDocConverter.Generate(OutputFilePath, outputHtmlFilePath, OutputFileTitle);
