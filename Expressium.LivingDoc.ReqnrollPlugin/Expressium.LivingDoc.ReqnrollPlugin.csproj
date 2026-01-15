@@ -30,7 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Reqnroll.CustomPlugin" Version="3.3.1" />
+		<PackageReference Include="Reqnroll.CustomPlugin" Version="3.3.2" />
 	</ItemGroup>
 
 	<ItemGroup>
