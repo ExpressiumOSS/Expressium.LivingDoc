@@ -90,7 +90,13 @@
         initial-value: #C7D9E9;
         initial-value: #d9e5f0;
     }
-  
+
+    @property --darkgray-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #787878;
+    }
+    
     body, html {
         height: 100%;
         margin: 0;
@@ -143,7 +149,7 @@
     }
 
     .navigation {
-        background-color: #787878;
+        background-color: var(--darkgray-color);
         color: white;
         padding: 8px 16px;
     }
@@ -214,7 +220,7 @@
     }
 
     th {
-        background-color: #787878;
+        background-color: var(--darkgray-color);
         color: white;
         border: solid;
         border-width: 1px;
@@ -281,8 +287,8 @@
     }
 
     .gridline-folder {
-        color: gray;
-        font-weight: 600;
+        color: var(--darkgray-color);
+        font-weight: bold;
     }
 
     .gridline-heading {
