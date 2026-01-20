@@ -96,6 +96,13 @@
         inherits: false;
         initial-value: #787878;
     }
+
+    @property --lightgray-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: gray;
+        initial-value: #737373;
+    }
     
     body, html {
         height: 100%;
@@ -200,7 +207,7 @@
     .filter-group-text {
         padding-left: 4px;
         padding-right: 6px;
-        color: gray;
+        color: var(--lightgray-color);
     }
 
     .filter-group-input {
@@ -262,8 +269,8 @@
     }
 
     button.prefilter {
-        border: 1px solid gray;
-        color: gray;
+        border: 1px solid var(--lightgray-color);
+        color: var(--lightgray-color);
     }
 
     button.prefilter:hover {
@@ -342,7 +349,7 @@
 
     .chart-status {
         font-size: 2em;
-        color: gray;
+        color: var(--lightgray-color);
         line-height: 1.0;
     }
 
@@ -534,14 +541,14 @@
     .rule-description {
         font-family: Consolas;
         font-size: 0.875em;
-        color: gray;
+        color: var(--lightgray-color);
         font-style: italic;
         padding-top: 2px;
     }
 
     .feature-duration,
     .scenario-duration {
-        color: gray;
+        color: var(--lightgray-color);
         padding-left: 4px;
         padding-right: 4px;
     }
@@ -634,7 +641,7 @@
 
     .examples-keyword {
         font-weight: bold;
-        color: gray;
+        color: var(--lightgray-color);
         padding-left: 16px;
     }
 
@@ -648,7 +655,7 @@
 
     .attachments-keyword {
         font-weight: bold;
-        color: gray;
+        color: var(--lightgray-color);
         padding-left: 16px;
     }
 
