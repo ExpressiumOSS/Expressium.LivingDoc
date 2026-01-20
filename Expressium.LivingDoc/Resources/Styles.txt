@@ -667,4 +667,19 @@
         field-sizing: content;
         height: 96%;
     }
+
+    .duration-icon {
+        color: dimgray;
+        font-size: 2.5em;
+    }
+
+    .duration-text {
+        font-size: 1.25em;
+        padding-left: 8px;
+        padding-top: 4px;
+    }
+
+    .duration-keyword {
+        color: dimgray;
+    }
 </style>
