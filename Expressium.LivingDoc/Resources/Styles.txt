@@ -95,13 +95,14 @@
         syntax: "<color>";
         inherits: false;
         initial-value: #787878;
+        initial-value: #707070;
     }
 
     @property --lightgray-color {
         syntax: "<color>";
         inherits: false;
         initial-value: gray;
-        initial-value: #737373;
+        initial-value: #707070;
     }
     
     body, html {
