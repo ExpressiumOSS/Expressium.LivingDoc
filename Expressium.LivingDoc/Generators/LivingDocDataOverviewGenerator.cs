@@ -92,7 +92,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<tr>");
-            listOfLines.Add($"<td class='grid-folder' width='16px;'>📂</td>");
+            listOfLines.Add($"<td class='grid-folder' width='16'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - 1}'>");
             listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
@@ -114,7 +114,7 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td class='grid-folder' width='16px;'>📂</td>");
+            listOfLines.Add($"<td class='grid-folder' width='16'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
@@ -134,7 +134,7 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td data-collapse='false' width='16px;' class='gridline-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
+            listOfLines.Add($"<td data-collapse='false' width='16' class='gridline-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<a class='gridline-heading' href='#'>{feature.Name}</a>");
@@ -162,7 +162,7 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td width='16px;'></td>");
+            listOfLines.Add($"<td width='16'></td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
