@@ -199,6 +199,8 @@ namespace Expressium.LivingDoc.Parsers
                     foreach (var tableBodyRow in example.TableBody)
                     {
                         var livingDocExample = new LivingDocExample();
+                        livingDocExample.Name = example.Name;
+                        livingDocExample.Description = example.Description;
                         livingDocScenario.Examples.Add(livingDocExample);
 
                         ParseScenarioBackgroundSteps(livingDocExample, livingDocFeature, tableIndexId++);

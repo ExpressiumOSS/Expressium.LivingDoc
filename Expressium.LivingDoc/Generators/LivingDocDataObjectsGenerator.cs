@@ -408,7 +408,10 @@ namespace Expressium.LivingDoc
             {
                 listOfLines.Add("<!-- Data Scenario Examples -->");
                 listOfLines.Add("<div>");
-                listOfLines.Add("<span class='examples-keyword'>Examples:</span>");
+                listOfLines.Add("<span class='examples-keyword'>Examples: </span>");
+                //listOfLines.Add($"<span class='examples-name'>{example.Name}</span>");
+                if (!string.IsNullOrEmpty(example.Description))
+                    listOfLines.Add($"<br><span class='examples-description'>{example.Description}</span>");
                 listOfLines.Add("<div class='examples-datatable'>");
                 listOfLines.AddRange(GenerateDataScenarioDataTable(example.DataTable));
                 listOfLines.Add("</div>");

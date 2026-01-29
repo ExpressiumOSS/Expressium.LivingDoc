@@ -6,6 +6,8 @@ namespace Expressium.LivingDoc.Models
 {
     public class LivingDocExample
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
         public string Stacktrace { get; set; }
         public TimeSpan Duration { get; set; }
 

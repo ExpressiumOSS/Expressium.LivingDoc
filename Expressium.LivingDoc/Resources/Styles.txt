@@ -647,6 +647,18 @@
         padding-left: 16px;
     }
 
+    .examples-name {
+        color: var(--lightgray-color);
+    }
+
+    .examples-description {
+        font-family: Consolas;
+        font-size: 0.875em;
+        color: var(--lightgray-color);
+        font-style: italic;
+        padding-left: 32px;
+    }
+
     .examples-datatable {
         padding-left: 32px;
     }
