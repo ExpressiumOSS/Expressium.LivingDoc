@@ -303,8 +303,6 @@ namespace Expressium.LivingDoc
                 listOfLines.Add("</div>");
             }
 
-            listOfLines.Add("<hr>");
-
             return listOfLines;
         }
 
