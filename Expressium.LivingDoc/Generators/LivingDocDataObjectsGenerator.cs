@@ -159,6 +159,7 @@ namespace Expressium.LivingDoc
                         listOfLines.Add("<div class='section' style='width: fit-content; max-width: 98%'>");
                         listOfLines.AddRange(GenerateDataScenarioTags(scenario));
                         listOfLines.AddRange(GenerateDataScenarioName(scenario, example, indexId));
+                        listOfLines.AddRange(GenerateDataScenarioDescription(scenario));
                         listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
                         listOfLines.AddRange(GenerateDataScenarioAttachments(example));
@@ -273,13 +274,36 @@ namespace Expressium.LivingDoc
 
             if (example.Attachments.Count > 0)
                 listOfLines.Add("<a href='#' class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&#9776;</a>");
-                //listOfLines.Add("<a href='#' class='scenario-attachments bi bi-list-ul' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></a>");
+            //listOfLines.Add("<a href='#' class='scenario-attachments bi bi-list-ul' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></a>");
 
             //var hasStackTraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
             //if (example.Attachments.Count > 0 || hasStackTraces)
             //    listOfLines.Add("<a href='#' class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this); toggleStacktraces(this)\">&#9776;</a>");
 
             listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataScenarioDescription(LivingDocScenario scenario)
+        {
+            var listOfLines = new List<string>();
+
+            if (scenario.Description != null)
+            {
+                listOfLines.Add("<!-- Data Scenario Description -->");
+                listOfLines.Add("<div>");
+                listOfLines.Add("<ul class='scenario-description'>");
+
+                var listOfDescription = scenario.Description.Trim().Split("\n");
+                foreach (var line in listOfDescription)
+                    listOfLines.Add("<li>" + line.Trim() + "</li>");
+
+                listOfLines.Add("</ul>");
+                listOfLines.Add("</div>");
+            }
+
+            listOfLines.Add("<hr>");
 
             return listOfLines;
         }
