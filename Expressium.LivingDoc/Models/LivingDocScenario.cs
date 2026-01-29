@@ -34,16 +34,17 @@ namespace Expressium.LivingDoc.Models
         {
             if (Examples.Any(example => example.GetStatus() == LivingDocStatuses.Failed.ToString()))
                 return LivingDocStatuses.Failed.ToString();
-            else if (Examples.Any(example => example.GetStatus() == LivingDocStatuses.Incomplete.ToString()))
+
+            if (Examples.Any(example => example.GetStatus() == LivingDocStatuses.Incomplete.ToString()))
                 return LivingDocStatuses.Incomplete.ToString();
-            else if (Examples.Count == 0 || Examples.Any(example => example.GetStatus() == LivingDocStatuses.Skipped.ToString()))
+
+            if (Examples.Count == 0 || Examples.Any(example => example.GetStatus() == LivingDocStatuses.Skipped.ToString()))
                 return LivingDocStatuses.Skipped.ToString();
-            else if (Examples.Count > 0 && Examples.TrueForAll(example => example.GetStatus() == LivingDocStatuses.Passed.ToString()))
+
+            if (Examples.Count > 0 && Examples.TrueForAll(example => example.GetStatus() == LivingDocStatuses.Passed.ToString()))
                 return LivingDocStatuses.Passed.ToString();
-            else
-            {
-                return LivingDocStatuses.Unknown.ToString();
-            }
+
+            return LivingDocStatuses.Unknown.ToString();
         }
 
         public string GetDuration()

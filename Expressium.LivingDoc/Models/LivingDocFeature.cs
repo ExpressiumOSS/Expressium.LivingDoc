@@ -36,16 +36,17 @@ namespace Expressium.LivingDoc.Models
         {
             if (Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Failed.ToString()))
                 return LivingDocStatuses.Failed.ToString();
-            else if (Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Incomplete.ToString()))
+
+            if (Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Incomplete.ToString()))
                 return LivingDocStatuses.Incomplete.ToString();
-            else if (Scenarios.Count == 0 || Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Skipped.ToString()))
+
+            if (Scenarios.Count == 0 || Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Skipped.ToString()))
                 return LivingDocStatuses.Skipped.ToString();
-            else if (Scenarios.Count > 0 && Scenarios.TrueForAll(example => example.GetStatus() == LivingDocStatuses.Passed.ToString()))
+
+            if (Scenarios.Count > 0 && Scenarios.TrueForAll(example => example.GetStatus() == LivingDocStatuses.Passed.ToString()))
                 return LivingDocStatuses.Passed.ToString();
-            else
-            {
-                return LivingDocStatuses.Unknown.ToString();
-            }
+
+            return LivingDocStatuses.Unknown.ToString();
         }
 
         public int GetNumberOfScenarios()

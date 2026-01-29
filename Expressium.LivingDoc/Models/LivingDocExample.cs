@@ -25,16 +25,17 @@ namespace Expressium.LivingDoc.Models
         {
             if (Steps.Any(step => step.IsFailed()))
                 return LivingDocStatuses.Failed.ToString();
-            else if (Steps.Any(step => step.IsIncomplete()))
+
+            if (Steps.Any(step => step.IsIncomplete()))
                 return LivingDocStatuses.Incomplete.ToString();
-            else if (Steps.Count == 0 || Steps.Any(step => step.IsSkipped()))
+
+            if (Steps.Count == 0 || Steps.Any(step => step.IsSkipped()))
                 return LivingDocStatuses.Skipped.ToString();
-            else if (Steps.Count > 0 && Steps.TrueForAll(step => step.IsPassed()))
+
+            if (Steps.Count > 0 && Steps.TrueForAll(step => step.IsPassed()))
                 return LivingDocStatuses.Passed.ToString();
-            else
-            {
-                return LivingDocStatuses.Unknown.ToString();
-            }
+
+            return LivingDocStatuses.Unknown.ToString();
         }
 
         public string GetDuration()

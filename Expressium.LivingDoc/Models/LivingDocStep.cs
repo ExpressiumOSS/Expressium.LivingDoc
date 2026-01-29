@@ -102,16 +102,17 @@ namespace Expressium.LivingDoc.Models
         {
             if (IsFailed())
                 return LivingDocStatuses.Failed.ToString();
-            else if (IsIncomplete())
+
+            if (IsIncomplete())
                 return LivingDocStatuses.Incomplete.ToString();
-            else if (IsSkipped())
+
+            if (IsSkipped())
                 return LivingDocStatuses.Skipped.ToString();
-            else if (IsPassed())
+
+            if (IsPassed())
                 return LivingDocStatuses.Passed.ToString();
-            else
-            {
-                return LivingDocStatuses.Undefined.ToString();
-            }
+
+            return LivingDocStatuses.Undefined.ToString();
         }
     }
 }
