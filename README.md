@@ -11,6 +11,7 @@ during the execution of Behavior-Driven Development (BDD) tests.
 The final HTML test report may along with linked attachments
 be distributed to a public location enabling easy access by the stackholders.
 
+<br />
 <p align="center">
 <img src="ExpressiumLivingDoc.png"
      alt="Expressium LivingDoc"
@@ -119,15 +120,19 @@ start chrome "file:///C://Company/Coffeeshop.html?filterByKeywords=TA-3001"
 ```
 
 <br />
+<p align="center">
 <img src="DeepLink.png"
      alt="Deep Link URL Arguments"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
 
 ## The LivingDoc Process
 <br />
+<p align="center">
 <img src="Process.png"
      alt="The Expressium LivingDoc Process"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
 
 The Expressium LivingDoc process uses the Reqnroll PlugIn to capture test execution results and output them as Cucumber Messages (NDJSON).
 These messages are parsed into an object-oriented model, which the Generator transforms into a self-contained HTML LivingDoc test report.
