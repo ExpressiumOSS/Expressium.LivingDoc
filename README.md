@@ -11,13 +11,13 @@ during the execution of Behavior-Driven Development (BDD) tests.
 The final HTML test report may along with linked attachments
 be distributed to a public location enabling easy access by the stackholders.
 
-<br />
+<p align="center">
 <img src="ExpressiumLivingDoc.png"
      alt="Expressium LivingDoc"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
 
-### Example:
-* https://expressium.dev/reqnroll/LivingDoc.html
+**Example:** [https://expressium.dev/reqnroll/LivingDoc.html](https://expressium.dev/reqnroll/LivingDoc.html){:target="_blank"}
 
 ## Getting Started
 * Add the Expressium.LivingDoc.ReqnrollPlugin NuGet package to the ReqnRoll test project...

@@ -338,22 +338,26 @@ namespace Expressium.LivingDoc.Parsers
                             if (testStepFinished == null)
                                 continue;
 
+                            // Assign Scenario Step Test Results...
                             ParseTestResultsSteps(step, testStepFinished);
 
                             testCaseStartedId = testStepFinished.TestCaseStartedId;
                         }
 
-                        // Assign Scenario Example Test Results...
+                        // Find Scenario TestCaseStarted...
                         var testCaseStarted = listOfTestCaseStarted.Find(g => g.Id == testCaseStartedId);
                         if (testCaseStarted == null)
                             continue;
 
+                        // Find Scenario TestCaseFinished...
                         var testCaseFinished = listOfTestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
                         if (testCaseFinished == null)
                             continue;
 
+                        // Assign Scenario Duration...
                         example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
 
+                        // Assign Scenario Attachments...
                         var attachments = listOftAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
                         if (attachments.Count > 0)
                         {
@@ -435,7 +439,7 @@ namespace Expressium.LivingDoc.Parsers
         {
             if (attachment.MediaType == "text/uri-list")
                 livingDocExample.Attachments.Add(attachment.Body);
-            else if (attachment.MediaType == "text/x.cucumber.log+plain")
+            else if (attachment.MediaType == "text/x.cucumber.log+plain" && attachment.ContentEncoding.ToString() == "IDENTITY")
             {
                 if (attachment.Body.StartsWith("[Attachment: ") && attachment.Body.EndsWith("]"))
                 {
