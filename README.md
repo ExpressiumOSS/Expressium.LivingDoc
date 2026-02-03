@@ -17,7 +17,7 @@ be distributed to a public location enabling easy access by the stackholders.
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 
-**Example:** [https://expressium.dev/reqnroll/LivingDoc.html](https://expressium.dev/reqnroll/LivingDoc.html){:target="_blank"}
+**Example:** [https://expressium.dev/reqnroll/LivingDoc.html](https://expressium.dev/reqnroll/LivingDoc.html)
 
 ## Getting Started
 * Add the Expressium.LivingDoc.ReqnrollPlugin NuGet package to the ReqnRoll test project...
