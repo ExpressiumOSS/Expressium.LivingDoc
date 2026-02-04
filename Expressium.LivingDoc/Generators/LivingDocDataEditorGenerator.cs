@@ -106,6 +106,9 @@ namespace Expressium.LivingDoc.Generators
                         var previousKeyword = "Given";
                         foreach (var step in example.Steps)
                         {
+                            if (string.IsNullOrEmpty(step.Keyword))
+                                continue;
+
                             var keywordType = step.Keyword;
                             if (step.Keyword == "And")
                                 keywordType = previousKeyword;

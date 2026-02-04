@@ -76,7 +76,7 @@ namespace Expressium.LivingDoc.Generators
 
             var generator = new LivingDocDataEditorGenerator(project);
 
-            //if (configuration.EditorView)
+            if (configuration.EditorView)
                 listOfLines.AddRange(generator.GenerateDataEditor());
 
             return listOfLines;

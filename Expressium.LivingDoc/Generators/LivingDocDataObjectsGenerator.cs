@@ -224,7 +224,7 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
-            if (rule.Description != null)
+            if (!string.IsNullOrWhiteSpace(rule.Description))
             {
                 listOfLines.Add("<!-- Data Rule Description -->");
                 listOfLines.Add("<div>");
@@ -289,7 +289,7 @@ namespace Expressium.LivingDoc
         {
             var listOfLines = new List<string>();
 
-            if (scenario.Description != null)
+            if (!string.IsNullOrWhiteSpace(scenario.Description))
             {
                 listOfLines.Add("<!-- Data Scenario Description -->");
                 listOfLines.Add("<div>");
