@@ -37,6 +37,23 @@ be distributed to a public location enabling easy access by the stackholders.
 }
 ```
 
+<br />
+The ReqnRoll configuration may include a relative path and known substitution variables...
+<br />
+<br />
+
+```json
+{
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
+  "formatters": {
+    "expressium": {
+      "outputFilePath": "TestReport/LivingDoc{timestamp}.ndjson",
+      "outputFileTitle": "My Special Test Report"
+    }
+  }
+}
+```
+
 ## Attachments
 Since the AddAttachment API in ReqnRoll doesn’t support adding attachments as links,
 we need to use a workaround to enable attachments in the Expressium LivingDoc report.
