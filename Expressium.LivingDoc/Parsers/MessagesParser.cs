@@ -453,39 +453,13 @@ namespace Expressium.LivingDoc.Parsers
         {
             var examples = livingDocProject.Features.SelectMany(feature => feature.Scenarios).SelectMany(scenario => scenario.Examples);
 
-            // Work-around for Failing, Pending, Undefined and Ambiguous Step Messages...
+            // Work-around for duplicated Failing, Pending and Ambiguous step messages...
             foreach (var example in examples)
             {
                 foreach (var step in example.Steps)
                 {
-                    if (step.Status == LivingDocStatuses.Failed.ToString())
-                    {
-                        if (!string.IsNullOrEmpty(step.ExceptionType) && !string.IsNullOrEmpty(step.ExceptionMessage))
-                        {
-                            step.Message = null;
-                        }
-                    }
-                    else if (step.Status == LivingDocStatuses.Pending.ToString())
-                    {
+                    if (!string.IsNullOrEmpty(step.ExceptionType) && !string.IsNullOrEmpty(step.ExceptionMessage))
                         step.Message = null;
-                        step.ExceptionType = "Warning";
-                        step.ExceptionMessage = "Pending Step Definition...";
-                        step.ExceptionStackTrace = null;
-                    }
-                    else if (step.Status == LivingDocStatuses.Undefined.ToString())
-                    {
-                        step.Message = null;
-                        step.ExceptionType = "Warning";
-                        step.ExceptionMessage = "Undefined Step Definition...";
-                        step.ExceptionStackTrace = null;
-                    }
-                    else if (step.Status == LivingDocStatuses.Ambiguous.ToString())
-                    {
-                        step.Message = null;
-                        step.ExceptionType = "Warning";
-                        step.ExceptionMessage = "Ambiguous Step Definition...";
-                        step.ExceptionStackTrace = null;
-                    }
                 }
             }
         }
