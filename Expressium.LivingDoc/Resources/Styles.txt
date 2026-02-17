@@ -94,15 +94,13 @@
     @property --darkgray-color {
         syntax: "<color>";
         inherits: false;
-        initial-value: #787878;
         initial-value: #707070;
     }
 
     @property --lightgray-color {
         syntax: "<color>";
         inherits: false;
-        initial-value: gray;
-        initial-value: #707070;
+        initial-value: #787878;
     }
     
     body, html {
@@ -208,7 +206,7 @@
     .filter-group-text {
         padding-left: 4px;
         padding-right: 6px;
-        color: var(--lightgray-color);
+        color: var(--darkgray-color);
     }
 
     .filter-group-input {
@@ -270,8 +268,8 @@
     }
 
     button.prefilter {
-        border: 1px solid var(--lightgray-color);
-        color: var(--lightgray-color);
+        border: 1px solid var(--darkgray-color);
+        color: var(--darkgray-color);
     }
 
     button.prefilter:hover {
@@ -295,7 +293,7 @@
     }
 
     .gridline-folder {
-        color: var(--darkgray-color);
+        color: var(--lightgray-color);
         font-weight: bold;
     }
 
@@ -350,7 +348,7 @@
 
     .chart-status {
         font-size: 2em;
-        color: var(--lightgray-color);
+        color: var(--darkgray-color);
         line-height: 1.0;
     }
 
@@ -543,14 +541,14 @@
     .scenario-description {
         font-family: Consolas;
         font-size: 0.875em;
-        color: var(--lightgray-color);
+        color: var(--darkgray-color);
         font-style: italic;
         padding-top: 2px;
     }
 
     .feature-duration,
     .scenario-duration {
-        color: var(--lightgray-color);
+        color: var(--darkgray-color);
         padding-left: 4px;
         padding-right: 4px;
     }
@@ -643,18 +641,18 @@
 
     .examples-keyword {
         font-weight: bold;
-        color: var(--lightgray-color);
+        color: var(--darkgray-color);
         padding-left: 16px;
     }
 
     .examples-name {
-        color: var(--lightgray-color);
+        color: var(--darkgray-color);
     }
 
     .examples-description {
         font-family: Consolas;
         font-size: 0.875em;
-        color: var(--lightgray-color);
+        color: var(--darkgray-color);
         font-style: italic;
         padding-left: 32px;
     }
@@ -669,7 +667,7 @@
 
     .attachments-keyword {
         font-weight: bold;
-        color: var(--lightgray-color);
+        color: var(--darkgray-color);
         padding-left: 16px;
     }
 
