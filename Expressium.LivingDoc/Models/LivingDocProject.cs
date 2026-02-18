@@ -204,7 +204,7 @@ namespace Expressium.LivingDoc.Models
             return listOfFolders;
         }
 
-        public void MergeHistory(LivingDocProject livingDocProject, string url)
+        public void MergeHistory(LivingDocProject livingDocProject)
         {
             try
             {
@@ -213,7 +213,6 @@ namespace Expressium.LivingDoc.Models
 
                 var livingDocHistory = new LivingDocHistory();
                 livingDocHistory.Date = livingDocProject.Date;
-                livingDocHistory.Url = url;
 
                 foreach (var feature in livingDocProject.Features)
                 {

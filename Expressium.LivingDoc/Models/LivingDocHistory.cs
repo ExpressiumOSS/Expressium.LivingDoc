@@ -5,7 +5,6 @@ namespace Expressium.LivingDoc.Models
     public class LivingDocHistory
     {
         public DateTime Date { get; set; }
-        public string Url { get; set; }
 
         public LivingDocHistoryResults Features { get; set; }
         public LivingDocHistoryResults Scenarios { get; set; }

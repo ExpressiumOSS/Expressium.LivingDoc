@@ -157,13 +157,9 @@ namespace Expressium.LivingDoc
                 var historyFile = file.Replace(Path.GetDirectoryName(Path.GetFullPath(historyPath)), ".");
                 Console.WriteLine("    " + historyFile.ToString() + "...");
 
-                string reportUrl = historyFile.Replace("ndjson", "html");
-                if (!File.Exists(reportUrl))
-                    reportUrl = null;
-
                 var livingDocConverterSlave = new LivingDocConverter();
                 var livingDocProjectSlave = livingDocConverterSlave.Convert(file, null);
-                livingDocProject.MergeHistory(livingDocProjectSlave, null);
+                livingDocProject.MergeHistory(livingDocProjectSlave);
 
                 if (livingDocProject.Histories.Count >= historyLimit)
                     break;

@@ -335,11 +335,7 @@ namespace Expressium.LivingDoc.Generators
 
                 listOfLines.Add($"<tr title='{history.GetDate()}'>");
                 listOfLines.Add($"<td width='24px' style='text-align: center'>{rowIndex}</td>");
-
-                if (string.IsNullOrEmpty(history.Url))
-                    listOfLines.Add($"<td width='45%'>{history.GetDate()}</td>");
-                else
-                    listOfLines.Add($"<td width='45%'><a target='_blank' href='{history.Url}'>{history.GetDate()}</a></td>");
+                listOfLines.Add($"<td width='45%'>{history.GetDate()}</td>");
 
                 listOfLines.Add("<td>");
                 listOfLines.Add("<div style='width: 100%; height: 0.80em;'>");

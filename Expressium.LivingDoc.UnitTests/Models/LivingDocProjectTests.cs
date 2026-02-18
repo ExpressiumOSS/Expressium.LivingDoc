@@ -180,17 +180,16 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var skippedFeature = new LivingDocFeature { Name = "SkippedFeature" };
             livingDocProjectSlave.Features.Add(skippedFeature);
 
-            livingDocProjectMaster.MergeHistory(livingDocProjectSlave, "http://history-url");
+            livingDocProjectMaster.MergeHistory(livingDocProjectSlave);
             Assert.That(livingDocProjectMaster.Histories.Count, Is.EqualTo(1));
             Assert.That(livingDocProjectMaster.Histories[0].Date, Is.EqualTo(livingDocProjectSlave.Date));
-            Assert.That(livingDocProjectMaster.Histories[0].Url, Is.EqualTo("http://history-url"));
             Assert.That(livingDocProjectMaster.Histories[0].Features.Passed, Does.Contain("PassedFeature"));
             Assert.That(livingDocProjectMaster.Histories[0].Features.Failed, Does.Contain("FailedFeature"));
             Assert.That(livingDocProjectMaster.Histories[0].Features.Incomplete, Does.Contain("IncompleteFeature"));
             Assert.That(livingDocProjectMaster.Histories[0].Features.Skipped, Does.Contain("SkippedFeature"));
 
             // Calling MergeHistory again should omit duplicates...
-            livingDocProjectMaster.MergeHistory(livingDocProjectSlave, "http://history-url");
+            livingDocProjectMaster.MergeHistory(livingDocProjectSlave);
             Assert.That(livingDocProjectMaster.Histories.Count, Is.EqualTo(1));
         }
 
