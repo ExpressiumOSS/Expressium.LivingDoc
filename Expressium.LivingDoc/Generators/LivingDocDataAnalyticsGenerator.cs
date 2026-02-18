@@ -25,8 +25,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart());
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
-            listOfLines.AddRange(GenerateDataHistoryTrends(project, "Features"));
-            listOfLines.AddRange(GenerateDataHistoryFailures(project, "Features"));
+            listOfLines.AddRange(GenerateDataAnalyticsTrends("Features"));
+            listOfLines.AddRange(GenerateDataAnalyticsFailures("Features"));
 
             listOfLines.Add("</div>");
 
@@ -44,8 +44,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart());
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
-            listOfLines.AddRange(GenerateDataHistoryTrends(project, "Scenarios"));
-            listOfLines.AddRange(GenerateDataHistoryFailures(project, "Scenarios"));
+            listOfLines.AddRange(GenerateDataAnalyticsTrends("Scenarios"));
+            listOfLines.AddRange(GenerateDataAnalyticsFailures("Scenarios"));
 
             listOfLines.Add("</div>");
 
@@ -63,8 +63,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart());
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
-            listOfLines.AddRange(GenerateDataHistoryTrends(project, "Steps"));
-            listOfLines.AddRange(GenerateDataHistoryFailures(project, "Steps"));
+            listOfLines.AddRange(GenerateDataAnalyticsTrends("Steps"));
+            listOfLines.AddRange(GenerateDataAnalyticsFailures("Steps"));
 
             listOfLines.Add("</div>");
 
@@ -131,7 +131,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        // TODO - Refactory & UnitTests is missing...
+        // TODO - UnitTests is missing...
         internal List<string> GenerateDataAnalyticsStatusChart(string title, int numberOfPassed, int numberOfIncomplete, int numberOfFailed, int numberOfSkipped, int numberOfTests)
         {
             var percentageOfPassed = CalculatePercentage(numberOfPassed, numberOfTests);
@@ -266,7 +266,8 @@ namespace Expressium.LivingDoc.Generators
             }
         }
 
-        internal List<string> GenerateDataHistoryTrends(LivingDocProject project, string type)
+        // TODO - UnitTests is missing...
+        internal List<string> GenerateDataAnalyticsTrends(string type)
         {
             var listOfLines = new List<string>();
 
@@ -286,7 +287,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<hr>");
 
-            listOfLines.Add("<!-- Data Analytics History Trend Chart -->");
+            listOfLines.Add("<!-- Data Analytics Trend Chart -->");
             listOfLines.Add($"<div class='section chart-history-trends' id='{type.ToLower()}-history-trends'>");
             listOfLines.Add($"<span class='chart-name'>Trends</span>");
             listOfLines.Add("<div class='section'>");
@@ -365,7 +366,8 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataHistoryFailures(LivingDocProject project, string type)
+        // TODO - UnitTests is missing...
+        internal List<string> GenerateDataAnalyticsFailures(string type)
         {
             var listOfLines = new List<string>();
 
@@ -385,7 +387,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<hr>");
 
-            listOfLines.Add("<!-- Data Analytics History Failures Chart -->");
+            listOfLines.Add("<!-- Data Analytics Failures Chart -->");
             listOfLines.Add($"<div class='section chart-history-failures' id='{type.ToLower()}-history-failures'>");
             listOfLines.Add($"<span class='chart-name'>Failures</span>");
             listOfLines.Add("<div class='section'>");
