@@ -37,15 +37,14 @@ namespace Expressium.LivingDoc.Parsers
             var livingDocProject = new LivingDocProject();
             livingDocProject.Title = "Expressium LivingDoc";
 
-            ParseCucumberMessagesFile(filePath);
+            ParseCucumberMessages(filePath);
             ParseGherkinDocuments(livingDocProject);
             ParseTestResults(livingDocProject);
-            PostProcessingProject(livingDocProject);
 
             return livingDocProject;
         }
 
-        internal void ParseCucumberMessagesFile(string filePath)
+        internal void ParseCucumberMessages(string filePath)
         {
             using (FileStream fileStream = File.OpenRead(filePath))
             {
@@ -188,6 +187,7 @@ namespace Expressium.LivingDoc.Parsers
             livingDocScenario.Description = scenario.Description;
             livingDocScenario.Name = scenario.Name;
             livingDocScenario.Keyword = scenario.Keyword;
+
             livingDocFeature.Scenarios.Add(livingDocScenario);
 
             if (scenario.Examples.Count > 0)
@@ -311,6 +311,21 @@ namespace Expressium.LivingDoc.Parsers
 
             // Assign Scenario Test Results....
             ParseTestResultsScenarios(livingDocProject);
+
+            // Assign Scenario Execution Order...
+            int orderId = 1;
+            foreach (var pickle in listOfPickles)
+            {
+                var astNodeId = pickle.AstNodeIds.FirstOrDefault();
+
+                var scenario = livingDocProject.Features
+                    .SelectMany(feature => feature.Scenarios)
+                    .FirstOrDefault(s => s.Id == astNodeId);
+
+                if (scenario != null)
+                    if (scenario.Order == 0)
+                        scenario.Order = orderId++;
+            }
         }
 
         internal void ParseTestResultsScenarios(LivingDocProject livingDocProject)
@@ -367,21 +382,6 @@ namespace Expressium.LivingDoc.Parsers
                     }
                 }
             }
-
-            // Assign Scenario Execution Order...
-            int orderId = 1;
-            foreach (var pickle in listOfPickles)
-            {
-                var astNodeId = pickle.AstNodeIds.FirstOrDefault();
-
-                var scenario = livingDocProject.Features
-                    .SelectMany(feature => feature.Scenarios)
-                    .FirstOrDefault(s => s.Id == astNodeId);
-
-                if (scenario != null)
-                    if (scenario.Order == 0)
-                        scenario.Order = orderId++;
-            }
         }
 
         internal PickleStep GetPickleStep(LivingDocScenario scenario, LivingDocStep step)
@@ -433,6 +433,10 @@ namespace Expressium.LivingDoc.Parsers
                 livingDocStep.ExceptionMessage = WebUtility.HtmlEncode(testStepFinished.TestStepResult.Exception.Message);
                 livingDocStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
             }
+
+            // Work-around for duplicated step messages...
+            if (!string.IsNullOrEmpty(livingDocStep.ExceptionType) && !string.IsNullOrEmpty(livingDocStep.ExceptionMessage))
+                livingDocStep.Message = null;
         }
 
         internal static void ParseTestResultsAttachments(LivingDocExample livingDocExample, Attachment attachment)
@@ -445,21 +449,6 @@ namespace Expressium.LivingDoc.Parsers
                 {
                     var attachmentFile = attachment.Body.Substring(13, attachment.Body.Length - 14);
                     livingDocExample.Attachments.Add(attachmentFile);
-                }
-            }
-        }
-
-        internal static void PostProcessingProject(LivingDocProject livingDocProject)
-        {
-            var examples = livingDocProject.Features.SelectMany(feature => feature.Scenarios).SelectMany(scenario => scenario.Examples);
-
-            // Work-around for duplicated Failing, Pending and Ambiguous step messages...
-            foreach (var example in examples)
-            {
-                foreach (var step in example.Steps)
-                {
-                    if (!string.IsNullOrEmpty(step.ExceptionType) && !string.IsNullOrEmpty(step.ExceptionMessage))
-                        step.Message = null;
                 }
             }
         }
