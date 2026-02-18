@@ -83,7 +83,6 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<hr>");
 
             return listOfLines;
-
         }
 
         internal List<string> GenerateDataAnalyticsFeaturesStatusChart()
@@ -131,7 +130,6 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        // TODO - UnitTests is missing...
         internal List<string> GenerateDataAnalyticsStatusChart(string title, int numberOfPassed, int numberOfIncomplete, int numberOfFailed, int numberOfSkipped, int numberOfTests)
         {
             var percentageOfPassed = CalculatePercentage(numberOfPassed, numberOfTests);
@@ -266,7 +264,6 @@ namespace Expressium.LivingDoc.Generators
             }
         }
 
-        // TODO - UnitTests is missing...
         internal List<string> GenerateDataAnalyticsTrends(string type)
         {
             var listOfLines = new List<string>();
@@ -366,7 +363,6 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        // TODO - UnitTests is missing...
         internal List<string> GenerateDataAnalyticsFailures(string type)
         {
             var listOfLines = new List<string>();
