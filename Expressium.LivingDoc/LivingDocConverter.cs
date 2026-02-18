@@ -18,6 +18,7 @@ namespace Expressium.LivingDoc
         /// Converts a single Cucumber Messages NdJson file to a LivingDocProject object.
         /// </summary>
         /// <param name="inputPath"></param>
+        /// <param name="title"></param>
         /// <returns></returns>
         /// <exception cref="IOException"></exception>
         /// <exception cref="ApplicationException"></exception>
@@ -29,6 +30,7 @@ namespace Expressium.LivingDoc
                 var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
                 if (!string.IsNullOrEmpty(title))
                     livingDocProject.Title = title;
+
                 return livingDocProject;
             }
             catch (IOException ex)
@@ -136,7 +138,7 @@ namespace Expressium.LivingDoc
             }
         }
 
-        private void MergeHistory(LivingDocProject livingDocProject, string historyPath)
+        public void MergeHistory(LivingDocProject livingDocProject, string historyPath)
         {
             Console.WriteLine("  Merging History...");
 

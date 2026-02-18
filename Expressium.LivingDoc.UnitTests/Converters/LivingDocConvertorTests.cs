@@ -6,7 +6,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
     public class LivingDocConvertersTests
     {
         [Test]
-        public void LivingDocConverters_Execute()
+        public void LivingDocConverters_Generate()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "dummy.html");
@@ -20,7 +20,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         }
 
         [Test]
-        public void LivingDocConverters_Execute_Invalid_Input_Path()
+        public void LivingDocConverters_Generate_Invalid_Input_Path()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "unknown.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "dummy.html");
@@ -32,7 +32,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         }
 
         [Test]
-        public void LivingDocConverters_Execute_Invalid_Output_Path()
+        public void LivingDocConverters_Generate_Invalid_Output_Path()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
             var outputFilePath = Path.Combine($"G:\\Output\\dummy.html");
@@ -44,7 +44,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         }
 
         [Test]
-        public void LivingDocConverters_GenerateDocument_Invalid_Input_File()
+        public void LivingDocConverters_Generate_Invalid_Input_File()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.html");
@@ -53,6 +53,21 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             var exception = Assert.Throws<ApplicationException>(() => livingDocConverters.Generate(inputFilePath, outputFilePath, null));
             Assert.That(exception.Message.StartsWith("Unexpected error: Object reference not set to an instance of an object."));
+        }
+
+        [Test]
+        public void LivingDocConverters_Convert_And_Merge_History()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+            var historyFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "History/coffeeshop*.ndjson");
+
+            var livingDocConverters = new LivingDocConverter();
+            var livingDocProject = livingDocConverters.Convert(inputFilePath, "Expressium.Coffeeshop.Web.API.Tests");
+
+            livingDocConverters.MergeHistory(livingDocProject, historyFilePath);
+
+            var livingDocHistories = livingDocProject.Histories;
+            Assert.That(livingDocHistories.Count, Is.EqualTo(4));
         }
     }
 }
