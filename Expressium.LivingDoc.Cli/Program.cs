@@ -28,6 +28,22 @@ namespace Expressium.LivingDoc.Cli
                 Console.WriteLine("Generating LivingDoc Report Completed");
                 Console.WriteLine("");
             }
+            else if (args.Length == 8 && args[0] == "--input")
+            {
+                // Generating a LivingDoc Test Report with History based on a Cucumber Messages JSON file...
+                Console.WriteLine("");
+                Console.WriteLine("Generating LivingDoc Test Report...");
+                Console.WriteLine("Input: " + args[1]);
+                Console.WriteLine("History: " + args[3]);
+                Console.WriteLine("Output: " + args[5]);
+                Console.WriteLine("Title: " + args[7]);
+
+                var livingDocConverter = new LivingDocConverter();
+                livingDocConverter.Generate(args[1], args[5], args[7], args[3]);
+
+                Console.WriteLine("Generating LivingDoc Report Completed");
+                Console.WriteLine("");
+            }
             else if (args.Length == 4 && args[0] == "--native")
             {
                 // Generating a LivingDoc Test Report based on a Native JSON file...

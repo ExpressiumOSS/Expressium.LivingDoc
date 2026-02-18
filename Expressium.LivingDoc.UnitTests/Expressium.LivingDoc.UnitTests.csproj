@@ -61,6 +61,18 @@
 	  <None Update="Samples\coffeeshop.feature.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Samples\History\coffeeshop.feature1.ndjson">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Samples\History\coffeeshop.feature2.ndjson">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Samples\History\coffeeshop.feature3.ndjson">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Samples\History\coffeeshop.feature4.ndjson">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Samples\invalid.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

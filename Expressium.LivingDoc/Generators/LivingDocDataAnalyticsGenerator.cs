@@ -25,6 +25,9 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart());
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
+            listOfLines.AddRange(GenerateDataHistoryTrends(project, "Features"));
+            listOfLines.AddRange(GenerateDataHistoryFailures(project, "Features"));
+
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -41,6 +44,9 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart());
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
+            listOfLines.AddRange(GenerateDataHistoryTrends(project, "Scenarios"));
+            listOfLines.AddRange(GenerateDataHistoryFailures(project, "Scenarios"));
+
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -56,6 +62,9 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart());
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
+
+            listOfLines.AddRange(GenerateDataHistoryTrends(project, "Steps"));
+            listOfLines.AddRange(GenerateDataHistoryFailures(project, "Steps"));
 
             listOfLines.Add("</div>");
 
@@ -255,6 +264,203 @@ namespace Expressium.LivingDoc.Generators
                 percentageOfFailed = percentages[2];
                 percentageOfSkipped = percentages[3];
             }
+        }
+
+        internal List<string> GenerateDataHistoryTrends(LivingDocProject project, string type)
+        {
+            var listOfLines = new List<string>();
+
+            if (project.Histories.Count < 2)
+                return listOfLines;
+
+            int numberOfTotals = 0;
+
+            if (type == "Features")
+                numberOfTotals = project.GetMaximumNumberOfHistoryFeatures();
+            else if (type == "Scenarios")
+                numberOfTotals = project.GetMaximumNumberOfHistoryScenarios();
+            else if (type == "Steps")
+                numberOfTotals = project.GetMaximumNumberOfHistorySteps();
+
+            var sortedHistories = project.Histories.OrderBy(x => x.Date);
+
+            listOfLines.Add("<hr>");
+
+            listOfLines.Add("<!-- Data Analytics History Trend Chart -->");
+            listOfLines.Add($"<div class='section chart-history-trends' id='{type.ToLower()}-history-trends'>");
+            listOfLines.Add($"<span class='chart-name'>Trends</span>");
+            listOfLines.Add("<div class='section'>");
+
+            listOfLines.Add("<table class='chart-history-grid'>");
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<th>Id</th>");
+            listOfLines.Add("<th>Date</th>");
+
+            listOfLines.Add("<th style='min-width: 300px;'>Status</th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+            listOfLines.Add("<tbody>");
+            listOfLines.Add($"<tr><td></td></tr>");
+
+            int rowIndex = 1;
+            foreach (var history in sortedHistories)
+            {
+                var percentageOfPassed = 0;
+                var percentageOfIncomplete = 0;
+                var percentageOfFailed = 0;
+                var percentageOfSkipped = 0;
+
+                if (type == "Features")
+                {
+                    percentageOfPassed = CalculatePercentage(history.Features.GetNumberOfPassed(), numberOfTotals);
+                    percentageOfIncomplete = CalculatePercentage(history.Features.GetNumberOfIncomplete(), numberOfTotals);
+                    percentageOfFailed = CalculatePercentage(history.Features.GetNumberOfFailed(), numberOfTotals);
+                    percentageOfSkipped = CalculatePercentage(history.Features.GetNumberOfSkipped(), numberOfTotals);
+                }
+                else if (type == "Scenarios")
+                {
+                    percentageOfPassed = CalculatePercentage(history.Scenarios.GetNumberOfPassed(), numberOfTotals);
+                    percentageOfIncomplete = CalculatePercentage(history.Scenarios.GetNumberOfIncomplete(), numberOfTotals);
+                    percentageOfFailed = CalculatePercentage(history.Scenarios.GetNumberOfFailed(), numberOfTotals);
+                    percentageOfSkipped = CalculatePercentage(history.Scenarios.GetNumberOfSkipped(), numberOfTotals);
+                }
+                else if (type == "Steps")
+                {
+                    percentageOfPassed = CalculatePercentage(history.Steps.GetNumberOfPassed(), numberOfTotals);
+                    percentageOfIncomplete = CalculatePercentage(history.Steps.GetNumberOfIncomplete(), numberOfTotals);
+                    percentageOfFailed = CalculatePercentage(history.Steps.GetNumberOfFailed(), numberOfTotals);
+                    percentageOfSkipped = CalculatePercentage(history.Steps.GetNumberOfSkipped(), numberOfTotals);
+                }
+
+                AdjustPercentagesDiscrepancy(ref percentageOfPassed, ref percentageOfIncomplete, ref percentageOfFailed, ref percentageOfSkipped);
+
+                listOfLines.Add($"<tr title='{history.GetDate()}'>");
+                listOfLines.Add($"<td width='24px' style='text-align: center'>{rowIndex}</td>");
+
+                if (string.IsNullOrEmpty(history.Url))
+                    listOfLines.Add($"<td width='45%'>{history.GetDate()}</td>");
+                else
+                    listOfLines.Add($"<td width='45%'><a target='_blank' href='{history.Url}'>{history.GetDate()}</a></td>");
+
+                listOfLines.Add("<td>");
+                listOfLines.Add("<div style='width: 100%; height: 0.80em;'>");
+                listOfLines.Add($"<div class='bgcolor-passed' title='{percentageOfPassed}%' style='width: {percentageOfPassed}%; height: 0.80em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-incomplete' title='{percentageOfIncomplete}%' style='width: {percentageOfIncomplete}%; height: 0.80em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-failed' title='{percentageOfFailed}%' style='width: {percentageOfFailed}%; height: 0.80em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-skipped' title='{percentageOfSkipped}%' style='width: {percentageOfSkipped}%; height: 0.80em; float: left'></div>");
+                listOfLines.Add("</div>");
+                listOfLines.Add("</td>");
+                listOfLines.Add("</tr>");
+
+                rowIndex++;
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+
+            listOfLines.Add("</div>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataHistoryFailures(LivingDocProject project, string type)
+        {
+            var listOfLines = new List<string>();
+
+            if (project.Histories.Count < 2)
+                return listOfLines;
+
+            var historyFailureNames = new List<string>();
+            if (type == "Features")
+                historyFailureNames = project.GetHistoryFeatureFailures();
+            else if (type == "Scenarios")
+                historyFailureNames = project.GetHistoryScenarioFailures();
+            else if (type == "Steps")
+                historyFailureNames = project.GetHistoryStepFailures();
+
+            if (historyFailureNames.Count == 0)
+                return listOfLines;
+
+            listOfLines.Add("<hr>");
+
+            listOfLines.Add("<!-- Data Analytics History Failures Chart -->");
+            listOfLines.Add($"<div class='section chart-history-failures' id='{type.ToLower()}-history-failures'>");
+            listOfLines.Add($"<span class='chart-name'>Failures</span>");
+            listOfLines.Add("<div class='section'>");
+
+            listOfLines.Add("<table class='chart-history-grid'>");
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<th>Name</th>");
+
+            for (int i = 1; i < project.Histories.Count + 1; i++)
+                listOfLines.Add($"<th align='center' style='text-align: center'>{i}</th>");
+
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+            listOfLines.Add("<tbody>");
+
+            var orderedHistories = project.Histories.OrderBy(x => x.Date);
+
+            foreach (var failureName in historyFailureNames)
+            {
+                listOfLines.Add($"<tr>");
+                listOfLines.Add($"<td>{failureName}</td>");
+
+                foreach (var history in orderedHistories)
+                {
+                    var listOfPassed = new List<string>();
+                    var listOfIncomplete = new List<string>();
+                    var listOfFailed = new List<string>();
+                    var listOfSkipped = new List<string>();
+
+                    if (type == "Features")
+                    {
+                        listOfPassed = history.Features.Passed;
+                        listOfIncomplete = history.Features.Incomplete;
+                        listOfFailed = history.Features.Failed;
+                        listOfSkipped = history.Features.Skipped;
+                    }
+                    else if (type == "Scenarios")
+                    {
+                        listOfPassed = history.Scenarios.Passed;
+                        listOfIncomplete = history.Scenarios.Incomplete;
+                        listOfFailed = history.Scenarios.Failed;
+                        listOfSkipped = history.Scenarios.Skipped;
+                    }
+                    else if (type == "Steps")
+                    {
+                        listOfPassed = history.Steps.Passed;
+                        listOfIncomplete = history.Steps.Incomplete;
+                        listOfFailed = history.Steps.Failed;
+                        listOfSkipped = history.Steps.Skipped;
+                    }
+
+                    if (listOfFailed.Contains(failureName))
+                        listOfLines.Add($"<td class='history-failed'>Failed</td>");
+                    else if (listOfPassed.Contains(failureName))
+                        listOfLines.Add($"<td class='history-passed'>Passed</td>");
+                    else if (listOfIncomplete.Contains(failureName))
+                        listOfLines.Add($"<td class='history-incomplete'>Incomplete</td>");
+                    else if (listOfSkipped.Contains(failureName))
+                        listOfLines.Add($"<td class='history-skipped'>Skipped</td>");
+                    else
+                    {
+                        listOfLines.Add($"<td class='history-unknown'></td>");
+                    }
+                }
+
+                listOfLines.Add("</tr>");
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
         }
     }
 }
