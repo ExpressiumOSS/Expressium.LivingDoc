@@ -1,86 +1,23 @@
 ﻿using Expressium.LivingDoc.Models;
 using Io.Cucumber.Messages.Types;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 
 namespace Expressium.LivingDoc.Parsers
 {
-    internal class MessagesParser
+    internal class MessagesParser : MessagesLoader
     {
-        private List<GherkinDocument> listOfGherkinDocuments;
-        private List<Pickle> listOfPickles;
-        private List<TestCase> listOfTestCases;
-        private List<TestStepFinished> listOfTestStepFinished;
-        private List<TestCaseStarted> listOfTestCaseStarted;
-        private List<TestCaseFinished> listOfTestCaseFinished;
-        private List<TestRunStarted> listOfTestRunStarted;
-        private List<TestRunFinished> listOfTestRunFinished;
-        private List<Attachment> listOftAttachment;
-
-        internal MessagesParser()
-        {
-            listOfGherkinDocuments = new List<GherkinDocument>();
-            listOfPickles = new List<Pickle>();
-            listOfTestCases = new List<TestCase>();
-            listOfTestStepFinished = new List<TestStepFinished>();
-            listOfTestCaseStarted = new List<TestCaseStarted>();
-            listOfTestCaseFinished = new List<TestCaseFinished>();
-            listOfTestRunStarted = new List<TestRunStarted>();
-            listOfTestRunFinished = new List<TestRunFinished>();
-            listOftAttachment = new List<Attachment>();
-        }
-
         internal LivingDocProject ConvertToLivingDoc(string filePath)
         {
+            LoadCucumberMessages(filePath);
+
             var livingDocProject = new LivingDocProject();
             livingDocProject.Title = "Expressium LivingDoc";
 
-            ParseCucumberMessages(filePath);
             ParseGherkinDocuments(livingDocProject);
             ParseTestResults(livingDocProject);
 
             return livingDocProject;
-        }
-
-        internal void ParseCucumberMessages(string filePath)
-        {
-            using (FileStream fileStream = File.OpenRead(filePath))
-            {
-                var enumerator = new MessagesReader(fileStream).GetEnumerator();
-                while (enumerator.MoveNext())
-                {
-                    var envelope = enumerator.Current;
-
-                    if (envelope.GherkinDocument != null)
-                        listOfGherkinDocuments.Add(envelope.GherkinDocument);
-
-                    if (envelope.Pickle != null)
-                        listOfPickles.Add(envelope.Pickle);
-
-                    if (envelope.TestCase != null)
-                        listOfTestCases.Add(envelope.TestCase);
-
-                    if (envelope.TestStepFinished != null)
-                        listOfTestStepFinished.Add(envelope.TestStepFinished);
-
-                    if (envelope.TestCaseStarted != null)
-                        listOfTestCaseStarted.Add(envelope.TestCaseStarted);
-
-                    if (envelope.TestCaseFinished != null)
-                        listOfTestCaseFinished.Add(envelope.TestCaseFinished);
-
-                    if (envelope.TestRunStarted != null)
-                        listOfTestRunStarted.Add(envelope.TestRunStarted);
-
-                    if (envelope.TestRunFinished != null)
-                        listOfTestRunFinished.Add(envelope.TestRunFinished);
-
-                    if (envelope.Attachment != null)
-                        listOftAttachment.Add(envelope.Attachment);
-                }
-            }
         }
 
         internal void ParseGherkinDocuments(LivingDocProject livingDocProject)
