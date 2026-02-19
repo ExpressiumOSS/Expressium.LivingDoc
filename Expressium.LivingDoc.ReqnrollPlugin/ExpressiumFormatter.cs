@@ -11,6 +11,7 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
     {
         public string OutputFilePath { get; private set; }
         public string OutputFileTitle { get; private set; }
+        public string HistoryFilePath { get; private set; }
 
         public ExpressiumFormatter(IFormattersConfigurationProvider configurationProvider, IFormatterLog logger, IFileSystem fileSystem) : base(configurationProvider, logger, fileSystem, "expressium")
         {
@@ -23,16 +24,40 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
 
             if (formatterConfiguration.ContainsKey("outputFileTitle"))
                 OutputFileTitle = formatterConfiguration["outputFileTitle"].ToString();
+
+            if (formatterConfiguration.ContainsKey("historyFilePath"))
+                HistoryFilePath = formatterConfiguration["historyFilePath"].ToString();
         }
 
         public override void Dispose()
         {
             base.Dispose();
 
-            var outputHtmlFilePath = OutputFilePath.Replace(Path.GetExtension(OutputFilePath), ".html");
+            if (!string.IsNullOrWhiteSpace(HistoryFilePath))
+            {
+                var livingDocConverter = new LivingDocConverter();
+                var livingDocProject = livingDocConverter.Convert(OutputFilePath, OutputFileTitle);
 
-            var livingDocConverter = new LivingDocConverter();
-            livingDocConverter.Generate(OutputFilePath, outputHtmlFilePath, OutputFileTitle);
+                var historyDirectory = Path.GetDirectoryName(Path.GetFullPath(HistoryFilePath));
+                if (!Directory.Exists(historyDirectory))
+                    Directory.CreateDirectory(historyDirectory);
+
+                var historyFileName = Path.Combine(historyDirectory, livingDocProject.Date.ToString("yyyyMMddHHmmss") + ".ndjson");
+                File.Copy(OutputFilePath, historyFileName, true);
+
+                livingDocConverter.MergeHistory(livingDocProject, HistoryFilePath);
+
+                var outputHtmlFilePath = OutputFilePath.Replace(Path.GetExtension(OutputFilePath), ".html");
+                livingDocConverter.Generate(livingDocProject, outputHtmlFilePath);
+            }
+            else
+            {
+                var outputHtmlFilePath = OutputFilePath.Replace(Path.GetExtension(OutputFilePath), ".html");
+
+                var livingDocConverter = new LivingDocConverter();
+                var livingDocProject = livingDocConverter.Convert(OutputFilePath, OutputFileTitle);
+                livingDocConverter.Generate(livingDocProject, outputHtmlFilePath);
+            }
         }
     }
 }

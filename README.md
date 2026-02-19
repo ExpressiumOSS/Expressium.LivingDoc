@@ -80,33 +80,70 @@ A merging of test reports can be achieved through a separate CLI program.
 Only new and previously unknown features will be included during the merge process.
 
 ```c#
-if (args.Length == 5 && args[0] == "--merge")
+if (args.Length == 8 && args[0] == "--merge")
 {
-    // Generating a LivingDoc Test Report based on Two Cucumber Messages JSON files...
+    // Generating a LivingDoc Test Report based on Two Cucumber Messages NDJSON files...
+    // E.g. Expressium.LivingDoc.Cli.exe --merge --input [INPUTPATHMASTER] [INPUTPATHSLAVE] --output [OUTPUTPATH] --title [TITLE]
     Console.WriteLine("");
     Console.WriteLine("Generating LivingDoc Test Report...");
-    Console.WriteLine("InputMaster: " + args[1]);
-    Console.WriteLine("InputSlave: " + args[2]);
-    Console.WriteLine("Output: " + args[3]);
-    Console.WriteLine("Title: " + args[4]);
+    Console.WriteLine("InputMaster: " + args[2]);
+    Console.WriteLine("InputSlave: " + args[3]);
+    Console.WriteLine("Output: " + args[5]);
+    Console.WriteLine("Title: " + args[7]);
 
     var livingDocConverter = new LivingDocConverter();
-    livingDocConverter.Generate(new List<string>() { args[1], args[2] }, args[3], args[4]);
+    var livingDocProject = livingDocConverter.Convert(args[2], args[7]);
+    livingDocConverter.MergeProject(livingDocProject, args[3]);
+    livingDocConverter.Generate(livingDocProject, args[5]);
 
     Console.WriteLine("Generating LivingDoc Report Completed");
     Console.WriteLine("");
 }
 ```
 
+## History Analysis
+The Expressium LivingDoc report may optionally include historical test results 
+based on previous Cucumber Messages files.
+Historical test results are visualized as trends and failures 
+in the Analyze section of the LivingDoc report
+and includes a maximum of four of the most recent previous test executions.
+In a pipeline, the previous Cucumber message files in the history folder
+must be preserved before executing the next test run.
+
+```json
+{
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
+  "formatters": {
+    "expressium": {
+      "outputFilePath": "LivingDoc.ndjson",
+      "outputFileTitle": "Expressium.Coffeeshop.Web.API.Tests",
+      "historyFilePath": "History/*.ndjson"
+    }
+  }
+}
+```
+
+<br />
+<p align="center">
+<img src="HistoryAnalysis.png"
+     alt="History Analysis"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
+
+
 ## Command Line Interface
 For many different purposes, it may be desirable to customize the final Expressium LivingDoc test report.
 You can achieve this by creating a separate custom CLI project, adding a project reference to the ReqnRoll test project
 and implementing any logic needed to handle your specific reporting requirements.
+For other examples of custom CLI implementations, 
+please refer to the Expressium LivingDoc CLI project and batch files in this repository.
+
 
 ```c#
 if (args.Length == 7 && args[0] == "--custom")
 {
-    // Generating a custom LivingDoc Test Report based on a Cucumber Messages JSON file...
+    // Generating a custom LivingDoc Test Report based on a Cucumber Messages NDJSON file...
+    // E.g. Expressium.LivingDoc.Cli.exe --custom --input [INPUTPATH] --output [OUTPUTPATH] --title [TITLE]
     Console.WriteLine("");
     Console.WriteLine("Generating LivingDoc Test Report...");
     Console.WriteLine("Input: " + args[2]);

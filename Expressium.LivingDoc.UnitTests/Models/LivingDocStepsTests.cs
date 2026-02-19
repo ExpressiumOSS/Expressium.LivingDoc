@@ -10,8 +10,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocConverter = new LivingDocNativeConverter();
-            var livingDocProject = livingDocConverter.Convert(inputFilePath);
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Import(inputFilePath);
             var livingDocSteps = livingDocProject.Features[0].Scenarios[0].Examples[0].Steps[0];
 
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
@@ -24,8 +24,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocConverter = new LivingDocNativeConverter();
-            var livingDocProject = livingDocConverter.Convert(inputFilePath);
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Import(inputFilePath);
             var livingDocSteps = livingDocProject.Features[0].Scenarios[1].Examples[0].Steps[1];
 
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
@@ -39,8 +39,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocConverter = new LivingDocNativeConverter();
-            var livingDocProject = livingDocConverter.Convert(inputFilePath);
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Import(inputFilePath);
             var livingDocSteps = livingDocProject.Features[0].Scenarios[2].Examples[0].Steps[2];
 
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
@@ -54,8 +54,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocConverter = new LivingDocNativeConverter();
-            var livingDocProject = livingDocConverter.Convert(inputFilePath);
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Import(inputFilePath);
             var livingDocSteps = livingDocProject.Features[0].Scenarios[3].Examples[0].Steps[0];
 
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));

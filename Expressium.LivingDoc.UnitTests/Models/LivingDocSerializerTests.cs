@@ -10,8 +10,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
 
-            var livingDocConverter = new LivingDocNativeConverter();
-            var livingDocProject = livingDocConverter.Convert(inputFilePath);
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Import(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(5));
@@ -28,8 +28,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             File.Delete(outputFilePath);
 
-            var livingDocConverter = new LivingDocNativeConverter();
-            var livingDocProject = livingDocConverter.Convert(inputFilePath);
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Import(inputFilePath);
             LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(File.Exists(outputFilePath));

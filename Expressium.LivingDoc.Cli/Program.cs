@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 
 namespace Expressium.LivingDoc.Cli
 {
     /// <summary>
-    /// Be Aware
     /// This program file is provided as an example to help you create a custom CLI version of LivingDoc.
     /// It is not included in the distributed NuGet packages and may change in future releases.
     /// </summary>
@@ -12,70 +11,43 @@ namespace Expressium.LivingDoc.Cli
     {
         static void Main(string[] args)
         {
-            if (args.Length == 6 && args[0] == "--input")
+            if (args.Length == 7 && args[0] == "--generate")
             {
-                // Generating a LivingDoc Test Report based on a Cucumber Messages JSON file...
+                // Generating a LivingDoc Test Report based on a Cucumber Messages NDJSON file...
+                // E.g. Expressium.LivingDoc.Cli.exe --generate --input [INPUTPATH] --output [OUTPUTPATH] --title [TITLE]
                 Console.WriteLine("");
                 Console.WriteLine("Generating LivingDoc Test Report...");
-                Console.WriteLine("Input: " + args[1]);
-                Console.WriteLine("Output: " + args[3]);
-                Console.WriteLine("Title: " + args[5]);
-
-                var livingDocConverter = new LivingDocConverter();
-                livingDocConverter.Generate(args[1], args[3], args[5]);
-
-                Console.WriteLine("Generating LivingDoc Report Completed");
-                Console.WriteLine("");
-            }
-            else if (args.Length == 8 && args[0] == "--input")
-            {
-                // Generating a LivingDoc Test Report with History based on a Cucumber Messages JSON file...
-                Console.WriteLine("");
-                Console.WriteLine("Generating LivingDoc Test Report...");
-                Console.WriteLine("Input: " + args[1]);
-                Console.WriteLine("History: " + args[3]);
-                Console.WriteLine("Output: " + args[5]);
-                Console.WriteLine("Title: " + args[7]);
-
-                var livingDocConverter = new LivingDocConverter();
-                livingDocConverter.Generate(args[1], args[5], args[7], args[3]);
-
-                Console.WriteLine("Generating LivingDoc Report Completed");
-                Console.WriteLine("");
-            }
-            else if (args.Length == 4 && args[0] == "--native")
-            {
-                // Generating a LivingDoc Test Report based on a Native JSON file...
-                Console.WriteLine("");
-                Console.WriteLine("Generating LivingDoc Test Report...");
-                Console.WriteLine("Input: " + args[1]);
-                Console.WriteLine("Output: " + args[3]);
-
-                var livingDocNativeConverter = new LivingDocNativeConverter();
-                livingDocNativeConverter.Generate(args[1], args[3]);
-
-                Console.WriteLine("Generating LivingDoc Report Completed");
-                Console.WriteLine("");
-            }
-            else if (args.Length == 7 && args[0] == "--merge")
-            {
-                // Generating a LivingDoc Test Report based on Two Cucumber Messages JSON files...
-                Console.WriteLine("");
-                Console.WriteLine("Generating LivingDoc Test Report...");
-                Console.WriteLine("InputMaster: " + args[1]);
-                Console.WriteLine("InputSlave: " + args[2]);
+                Console.WriteLine("Input: " + args[2]);
                 Console.WriteLine("Output: " + args[4]);
                 Console.WriteLine("Title: " + args[6]);
 
                 var livingDocConverter = new LivingDocConverter();
-                livingDocConverter.Generate(new List<string>() { args[1], args[2] }, args[4], args[6]);
+                var livingDocProject = livingDocConverter.Convert(args[2], args[6]);
+                livingDocConverter.Generate(livingDocProject, args[4]);
+
+                Console.WriteLine("Generating LivingDoc Report Completed");
+                Console.WriteLine("");
+            }
+            else if (args.Length == 5 && args[0] == "--native")
+            {
+                // Generating a LivingDoc Test Report based on a Native JSON file...
+                // E.g. Expressium.LivingDoc.Cli.exe --native --input [INPUTPATH] --output [OUTPUTPATH]
+                Console.WriteLine("");
+                Console.WriteLine("Generating LivingDoc Test Report...");
+                Console.WriteLine("Input: " + args[2]);
+                Console.WriteLine("Output: " + args[4]);
+
+                var livingDocConverter = new LivingDocConverter();
+                var livingDocProject = livingDocConverter.Import(args[2]);
+                livingDocConverter.Generate(livingDocProject, args[4]);
 
                 Console.WriteLine("Generating LivingDoc Report Completed");
                 Console.WriteLine("");
             }
             else if (args.Length == 7 && args[0] == "--custom")
             {
-                // Generating a custom LivingDoc Test Report based on a Cucumber Messages JSON file...
+                // Generating a custom LivingDoc Test Report based on a Cucumber Messages NDJSON file...
+                // E.g. Expressium.LivingDoc.Cli.exe --custom --input [INPUTPATH] --output [OUTPUTPATH] --title [TITLE]
                 Console.WriteLine("");
                 Console.WriteLine("Generating LivingDoc Test Report...");
                 Console.WriteLine("Input: " + args[2]);
@@ -90,6 +62,52 @@ namespace Expressium.LivingDoc.Cli
                     feature.Uri = null;
 
                 livingDocConverter.Generate(livingDocProject, args[4]);
+
+                Console.WriteLine("Generating LivingDoc Report Completed");
+                Console.WriteLine("");
+            }
+            else if (args.Length == 8 && args[0] == "--merge")
+            {
+                // Generating a LivingDoc Test Report based on Two Cucumber Messages NDJSON files...
+                // E.g. Expressium.LivingDoc.Cli.exe --merge --input [INPUTPATHMASTER] [INPUTPATHSLAVE] --output [OUTPUTPATH] --title [TITLE]
+                Console.WriteLine("");
+                Console.WriteLine("Generating LivingDoc Test Report...");
+                Console.WriteLine("InputMaster: " + args[2]);
+                Console.WriteLine("InputSlave: " + args[3]);
+                Console.WriteLine("Output: " + args[5]);
+                Console.WriteLine("Title: " + args[7]);
+
+                var livingDocConverter = new LivingDocConverter();
+                var livingDocProject = livingDocConverter.Convert(args[2], args[7]);
+                livingDocConverter.MergeProject(livingDocProject, args[3]);
+                livingDocConverter.Generate(livingDocProject, args[5]);
+
+                Console.WriteLine("Generating LivingDoc Report Completed");
+                Console.WriteLine("");
+            }
+            else if (args.Length == 8 && args[0] == "--history")
+            {
+                // Generating a LivingDoc Test Report with History based on a Cucumber Messages NDJSON file...
+                // E.g. Expressium.LivingDoc.Cli.exe --history --input [INPUTPATH] [HISTORYPATH] --output [OUTPUTPATH] --title [TITLE]
+                Console.WriteLine("");
+                Console.WriteLine("Generating LivingDoc Test Report...");
+                Console.WriteLine("Input: " + args[2]);
+                Console.WriteLine("History: " + args[3]);
+                Console.WriteLine("Output: " + args[5]);
+                Console.WriteLine("Title: " + args[7]);
+
+                var livingDocConverter = new LivingDocConverter();
+                var livingDocProject = livingDocConverter.Convert(args[2], args[7]);
+
+                var historyDirectory = Path.GetDirectoryName(Path.GetFullPath(args[3]));
+                if (!Directory.Exists(historyDirectory))
+                    Directory.CreateDirectory(historyDirectory);
+
+                var historyFileName = Path.Combine(historyDirectory, livingDocProject.Date.ToString("yyyyMMddHHmmss") + ".ndjson");
+                File.Copy(args[2], historyFileName, true);
+
+                livingDocConverter.MergeHistory(livingDocProject, args[3]);
+                livingDocConverter.Generate(livingDocProject, args[5]);
 
                 Console.WriteLine("Generating LivingDoc Report Completed");
                 Console.WriteLine("");

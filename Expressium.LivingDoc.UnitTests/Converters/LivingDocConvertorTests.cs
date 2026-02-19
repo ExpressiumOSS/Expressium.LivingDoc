@@ -6,53 +6,42 @@ namespace Expressium.LivingDoc.UnitTests.Converters
     public class LivingDocConvertersTests
     {
         [Test]
-        public void LivingDocConverters_Generate()
+        public void LivingDocConverter_Generate()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "dummy.html");
 
             File.Delete(outputFilePath);
 
-            var livingDocConverters = new LivingDocConverter();
-            livingDocConverters.Generate(inputFilePath, outputFilePath, "MyProjectTitle");
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle");
+            livingDocConverter.Generate(livingDocProject, outputFilePath);
 
             Assert.That(File.Exists(outputFilePath));
         }
 
         [Test]
-        public void LivingDocConverters_Generate_Invalid_Input_Path()
+        public void LivingDocConverter_Convert_Invalid_Input_Path()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "unknown.feature.ndjson");
-            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "dummy.html");
 
-            var livingDocConverters = new LivingDocConverter();
+            var livingDocConverter = new LivingDocConverter();
 
-            var exception = Assert.Throws<IOException>(() => livingDocConverters.Generate(inputFilePath, outputFilePath, null));
+            var exception = Assert.Throws<IOException>(() => livingDocConverter.Convert(inputFilePath, "MyProjectTitle"));
             Assert.That(exception.Message.StartsWith("IO error: Could not find file"));
         }
 
         [Test]
-        public void LivingDocConverters_Generate_Invalid_Output_Path()
+        public void LivingDocConverter_Generate_Invalid_Output_Path()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
             var outputFilePath = Path.Combine($"G:\\Output\\dummy.html");
 
-            var livingDocConverters = new LivingDocConverter();
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle");
 
-            var exception = Assert.Throws<IOException>(() => livingDocConverters.Generate(inputFilePath, outputFilePath, null));
+            var exception = Assert.Throws<IOException>(() => livingDocConverter.Generate(livingDocProject, outputFilePath));
             Assert.That(exception.Message.StartsWith("IO error: Could not find a part of the path"));
-        }
-
-        [Test]
-        public void LivingDocConverters_Generate_Invalid_Input_File()
-        {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.feature.ndjson");
-            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "invalid.html");
-
-            var livingDocConverters = new LivingDocConverter();
-
-            var exception = Assert.Throws<ApplicationException>(() => livingDocConverters.Generate(inputFilePath, outputFilePath, null));
-            Assert.That(exception.Message.StartsWith("Unexpected error: Object reference not set to an instance of an object."));
         }
 
         [Test]
@@ -68,6 +57,34 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             var livingDocHistories = livingDocProject.Histories;
             Assert.That(livingDocHistories.Count, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void LivingDocConverters_Import()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.json");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Import(inputFilePath);
+            Assert.That(livingDocProject.Features.Count, Is.EqualTo(4));
+            Assert.That(livingDocProject.Features[0].Scenarios.Count, Is.EqualTo(2));
+            Assert.That(livingDocProject.Features[0].Scenarios[0].Examples.Count, Is.EqualTo(1));
+            Assert.That(livingDocProject.Features[0].Scenarios[0].Examples[0].Steps.Count, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void LivingDocConverters_Export()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.json");
+            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "export.json");
+
+            File.Delete(outputFilePath);
+
+            var livingDocConverters = new LivingDocConverter();
+            var livingDocProject = livingDocConverters.Import(inputFilePath);
+            livingDocConverters.Export(livingDocProject, outputFilePath);
+
+            Assert.That(File.Exists(outputFilePath));
         }
     }
 }
