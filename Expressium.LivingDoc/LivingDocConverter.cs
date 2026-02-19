@@ -2,6 +2,7 @@
 using Expressium.LivingDoc.Models;
 using Expressium.LivingDoc.Parsers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -169,5 +170,81 @@ namespace Expressium.LivingDoc
                     break;
             }
         }
+
+        #region Deprecated
+
+        /// <summary>
+        /// Generates a LivingDoc test report from a single Cucumber Messages NdJson file.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="title"></param>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
+        [Obsolete("Will be removed in v2.0.0 - Use Convert() and Generate() instead...")]
+        public void Generate(string inputPath, string outputPath, string title)
+        {
+            try
+            {
+                Console.WriteLine("Deprecated - Will be removed in v2.0.0 - Use Convert() and Generate() instead...");
+
+                var messagesParser = new MessagesParser();
+                var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
+                if (!string.IsNullOrEmpty(title))
+                    livingDocProject.Title = title;
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject);
+                livingDocProjectGenerator.Generate(outputPath);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"IO error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Unexpected error: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Generates a LivingDoc test report from multiple Cucumber Messages NdJson files.    
+        /// </summary>
+        /// <param name="inputPaths"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="title"></param>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ApplicationException"></exception>
+        [Obsolete("Will be removed in v2.0.0 - Use Convert() MergeProject() and Generate() instead...")]
+        public void Generate(List<string> inputPaths, string outputPath, string title)
+        {
+            try
+            {
+                Console.WriteLine("Deprecated - Will be removed in v2.0.0 - Use Convert() MergeProject() and Generate() instead...");
+
+                var messagesParser = new MessagesParser();
+                var livingDocProjectMaster = messagesParser.ConvertToLivingDoc(inputPaths[0]);
+                if (!string.IsNullOrEmpty(title))
+                    livingDocProjectMaster.Title = title;
+
+                for (int i = 1; i < inputPaths.Count; i++)
+                {
+                    var messagesParserSlave = new MessagesParser();
+                    var livingDocProjectSlave = messagesParserSlave.ConvertToLivingDoc(inputPaths[i]);
+                    livingDocProjectMaster.Merge(livingDocProjectSlave);
+                }
+
+                var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProjectMaster);
+                livingDocProjectGenerator.Generate(outputPath);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"IO error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Unexpected error: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
     }
 }

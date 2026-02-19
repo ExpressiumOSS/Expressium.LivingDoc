@@ -4,7 +4,8 @@ using System.IO;
 namespace Expressium.LivingDoc.Cli
 {
     /// <summary>
-    /// This program file is provided as an example to help you create a custom CLI version of LivingDoc.
+    /// This program file is provided as an example of how to create a custom CLI for Expressium LivingDoc.
+    /// The associated batch files in this repository demonstrate how to use the CLI to generate LivingDoc test reports.
     /// It is not included in the distributed NuGet packages and may change in future releases.
     /// </summary>
     public class Program
@@ -14,7 +15,6 @@ namespace Expressium.LivingDoc.Cli
             if (args.Length == 7 && args[0] == "--generate")
             {
                 // Generating a LivingDoc Test Report based on a Cucumber Messages NDJSON file...
-                // E.g. Expressium.LivingDoc.Cli.exe --generate --input [INPUTPATH] --output [OUTPUTPATH] --title [TITLE]
                 Console.WriteLine("");
                 Console.WriteLine("Generating LivingDoc Test Report...");
                 Console.WriteLine("Input: " + args[2]);
@@ -30,8 +30,7 @@ namespace Expressium.LivingDoc.Cli
             }
             else if (args.Length == 5 && args[0] == "--native")
             {
-                // Generating a LivingDoc Test Report based on a Native JSON file...
-                // E.g. Expressium.LivingDoc.Cli.exe --native --input [INPUTPATH] --output [OUTPUTPATH]
+                // Generating a LivingDoc Test Report based on a Native JSON file...                
                 Console.WriteLine("");
                 Console.WriteLine("Generating LivingDoc Test Report...");
                 Console.WriteLine("Input: " + args[2]);
@@ -47,7 +46,6 @@ namespace Expressium.LivingDoc.Cli
             else if (args.Length == 7 && args[0] == "--custom")
             {
                 // Generating a custom LivingDoc Test Report based on a Cucumber Messages NDJSON file...
-                // E.g. Expressium.LivingDoc.Cli.exe --custom --input [INPUTPATH] --output [OUTPUTPATH] --title [TITLE]
                 Console.WriteLine("");
                 Console.WriteLine("Generating LivingDoc Test Report...");
                 Console.WriteLine("Input: " + args[2]);
@@ -69,7 +67,6 @@ namespace Expressium.LivingDoc.Cli
             else if (args.Length == 8 && args[0] == "--merge")
             {
                 // Generating a LivingDoc Test Report based on Two Cucumber Messages NDJSON files...
-                // E.g. Expressium.LivingDoc.Cli.exe --merge --input [INPUTPATHMASTER] [INPUTPATHSLAVE] --output [OUTPUTPATH] --title [TITLE]
                 Console.WriteLine("");
                 Console.WriteLine("Generating LivingDoc Test Report...");
                 Console.WriteLine("InputMaster: " + args[2]);
@@ -88,7 +85,6 @@ namespace Expressium.LivingDoc.Cli
             else if (args.Length == 8 && args[0] == "--history")
             {
                 // Generating a LivingDoc Test Report with History based on a Cucumber Messages NDJSON file...
-                // E.g. Expressium.LivingDoc.Cli.exe --history --input [INPUTPATH] [HISTORYPATH] --output [OUTPUTPATH] --title [TITLE]
                 Console.WriteLine("");
                 Console.WriteLine("Generating LivingDoc Test Report...");
                 Console.WriteLine("Input: " + args[2]);
@@ -114,8 +110,12 @@ namespace Expressium.LivingDoc.Cli
             }
             else
             {
-                Console.WriteLine("Expressium.LivingDoc.Cli.exe --input [INPUTFILE] --output [OUTPUTFILE] --title [TITLE]");
-                Console.WriteLine("Expressium.LivingDoc.Cli.exe --input .\\ReqnRoll.ndjson --output .\\LivingDoc.html --title \"Expressium CoffeeShop Report\"");
+                Console.WriteLine("Examples...");
+                Console.WriteLine("Expressium.LivingDoc.Cli.exe --generate --input [INPUTPATH] --output [OUTPUTPATH] --title [TITLE]");
+                Console.WriteLine("Expressium.LivingDoc.Cli.exe --native --input [INPUTPATH] --output [OUTPUTPATH]");
+                Console.WriteLine("Expressium.LivingDoc.Cli.exe --custom --input [INPUTPATH] --output [OUTPUTPATH] --title [TITLE]");
+                Console.WriteLine("Expressium.LivingDoc.Cli.exe --merge --input [INPUTPATHMASTER] [INPUTPATHSLAVE] --output [OUTPUTPATH] --title [TITLE]");
+                Console.WriteLine("Expressium.LivingDoc.Cli.exe --history --input [INPUTPATH] [HISTORYPATH] --output [OUTPUTPATH] --title [TITLE]\r\n");
             }
         }
     }
