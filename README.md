@@ -22,7 +22,7 @@ be distributed to a public location enabling easy access by the stackholders.
 
 ## Getting Started
 * Add the Expressium.LivingDoc.ReqnrollPlugin NuGet package to the ReqnRoll test project...
-* Setup the Expressium formatters properties in the configuration of ReqnRoll test project...
+* Setup the Expressium formatters properties in the ReqnRoll configuration in the test project...
 * Run the tests in the ReqnRoll test project and open the HTML report in the output directory...
 
 ```json
@@ -72,6 +72,13 @@ namespace MyCompany.MyProject.Web.API.Tests
     }
 }
 ```
+
+<br />
+<p align="center">
+<img src="Attachments.png"
+     alt="Scenario Attachments"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
 
 ## Merging Reports
 The ReqnRoll test execution may run across multiple pipelines
