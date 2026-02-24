@@ -6,6 +6,9 @@
             var scenario = document.getElementById(scenarioId).innerHTML;
 
             document.getElementById('right-section').innerHTML = feature + scenario;
+
+            clearActiveListItems();
+            x.classList.add('active');
         }
     </script>
     <script>
@@ -32,6 +35,18 @@
             var rules = document.getElementById('right-section').querySelectorAll('[data-rule-replica]');
             for (var i = 0; i < rules.length; i++)
                 rules[i].style.display = "none";
+
+            clearActiveListItems();
+            x.classList.add('active');
+        }
+    </script>
+    <script>
+        function clearActiveListItems() {
+            var table = document.getElementById("table-list");
+            var tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < tr.length; i++) {
+                tr[i].classList.remove('active');
+            }
         }
     </script>
     <script>
