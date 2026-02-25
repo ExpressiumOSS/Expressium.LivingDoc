@@ -3,18 +3,21 @@
         syntax: "<color>";
         inherits: false;
         initial-value: #48A84F;
+        initial-value: #47A64E;
     }
 
     @property --incomplete-color {
         syntax: "<color>";
         inherits: false;
         initial-value: #F5BB00;
+        initial-value: #F2B900;
     }
 
     @property --failed-color {
         syntax: "<color>";
         inherits: false;
         initial-value: #EB4431;
+        initial-value: #E84330;
     }
 
     @property --skipped-color {
@@ -88,7 +91,6 @@
         syntax: "<color>";
         inherits: false;
         initial-value: #d9e5f0;
-        initial-value: #d5e3ef;
     }
 
     @property --hover-color {
@@ -298,6 +300,7 @@
 
     .gridline {
         border-bottom: 1px solid Gainsboro;
+        border-bottom: 1px solid #E0E0E0;
     }
 
     .gridline-folder {
