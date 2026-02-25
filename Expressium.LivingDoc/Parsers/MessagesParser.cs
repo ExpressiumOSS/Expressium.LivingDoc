@@ -371,6 +371,16 @@ namespace Expressium.LivingDoc.Parsers
                 livingDocStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
             }
 
+            // Work-around for Undefined Steps without Exception Information...
+            if (livingDocStep.Status == LivingDocStatuses.Undefined.ToString())
+            {
+                if (livingDocStep.Message == null && livingDocStep.ExceptionMessage == null)
+                {
+                    livingDocStep.ExceptionType = "UndefinedStepException";
+                    livingDocStep.ExceptionMessage = "The step definition is undefined.";
+                }
+            }
+
             // Work-around for duplicated step messages...
             if (!string.IsNullOrEmpty(livingDocStep.ExceptionType) && !string.IsNullOrEmpty(livingDocStep.ExceptionMessage))
                 livingDocStep.Message = null;
