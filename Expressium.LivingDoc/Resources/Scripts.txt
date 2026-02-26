@@ -89,6 +89,8 @@
                 var analytics = document.getElementById("analytics-scenarios").innerHTML;
                 document.getElementById('right-section').innerHTML = analytics;
             }
+
+            clearActiveListItems();
         }
     </script>
     <script>
