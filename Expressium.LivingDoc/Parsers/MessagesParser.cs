@@ -371,14 +371,27 @@ namespace Expressium.LivingDoc.Parsers
                 livingDocStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
             }
 
-            // Work-around for Undefined Steps without Exception Information...
-            if (livingDocStep.Status == LivingDocStatuses.Undefined.ToString())
+            // Work-around for Failing, Pending, Undefined and Ambiguous Step Messages...
+            if (livingDocStep.Status == LivingDocStatuses.Pending.ToString())
             {
-                if (livingDocStep.Message == null && livingDocStep.ExceptionMessage == null)
-                {
-                    livingDocStep.ExceptionType = "UndefinedStepException";
-                    livingDocStep.ExceptionMessage = "The step definition is undefined.";
-                }
+                livingDocStep.Message = null;
+                livingDocStep.ExceptionType = "Warning";
+                livingDocStep.ExceptionMessage = "Pending Step Definition...";
+                livingDocStep.ExceptionStackTrace = null;
+            }
+            else if (livingDocStep.Status == LivingDocStatuses.Undefined.ToString())
+            {
+                livingDocStep.Message = null;
+                livingDocStep.ExceptionType = "Warning";
+                livingDocStep.ExceptionMessage = "Undefined Step Definition...";
+                livingDocStep.ExceptionStackTrace = null;
+            }
+            else if (livingDocStep.Status == LivingDocStatuses.Ambiguous.ToString())
+            {
+                livingDocStep.Message = null;
+                livingDocStep.ExceptionType = "Warning";
+                livingDocStep.ExceptionMessage = "Ambiguous Step Definition...";
+                livingDocStep.ExceptionStackTrace = null;
             }
 
             // Work-around for duplicated step messages...
