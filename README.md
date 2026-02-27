@@ -54,7 +54,7 @@ must be preserved in the history folder before executing the next test run.
     "expressium": {
       "outputFilePath": "LivingDoc.ndjson",
       "outputFileTitle": "Expressium.Coffeeshop.Web.API.Tests",
-      "historyFilePath": "History/*.ndjson"
+      "historyPath": "History/*.ndjson"
     }
   }
 }

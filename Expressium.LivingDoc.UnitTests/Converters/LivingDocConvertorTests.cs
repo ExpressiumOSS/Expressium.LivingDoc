@@ -48,12 +48,12 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         public void LivingDocConverters_Convert_And_Merge_History()
         {
             var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
-            var historyFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "History/coffeeshop*.ndjson");
+            var historyPath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "History/coffeeshop*.ndjson");
 
             var livingDocConverters = new LivingDocConverter();
             var livingDocProject = livingDocConverters.Convert(inputFilePath, "Expressium.Coffeeshop.Web.API.Tests");
 
-            livingDocConverters.MergeHistory(livingDocProject, historyFilePath);
+            livingDocConverters.MergeHistory(livingDocProject, historyPath);
 
             var livingDocHistories = livingDocProject.Histories;
             Assert.That(livingDocHistories.Count, Is.EqualTo(4));
