@@ -13,12 +13,10 @@ namespace Expressium.LivingDoc.Generators
     internal class LivingDocProjectGenerator
     {
         private LivingDocProject project;
-        private LivingDocConfiguration configuration;
 
         internal LivingDocProjectGenerator(LivingDocProject project)
         {
             this.project = project;
-            this.configuration = new LivingDocConfiguration();
         }
 
         internal void Generate(string outputPath)
@@ -101,7 +99,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var generator = new LivingDocContentGenerator(project, configuration);
+            var generator = new LivingDocContentGenerator(project);
             listOfLines.AddRange(generator.GenerateHeader());
             listOfLines.AddRange(generator.GenerateNavigation());
             listOfLines.AddRange(generator.GenerateSplitter());
@@ -116,7 +114,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<data style='display: none;'>");
 
-            var generator = new LivingDocDataGenerator(project, configuration);
+            var generator = new LivingDocDataGenerator(project);
             listOfLines.AddRange(generator.GenerateDataOverview());
             listOfLines.AddRange(generator.GenerateDataListViews());
             listOfLines.AddRange(generator.GenerateDataObjects());

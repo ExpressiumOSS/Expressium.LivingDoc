@@ -6,12 +6,10 @@ namespace Expressium.LivingDoc.Generators
     internal class LivingDocDataGenerator
     {
         private LivingDocProject project;
-        private LivingDocConfiguration configuration;
 
-        internal LivingDocDataGenerator(LivingDocProject project, LivingDocConfiguration configuration)
+        internal LivingDocDataGenerator(LivingDocProject project)
         {
             this.project = project;
-            this.configuration = configuration;
         }
 
         internal List<string> GenerateDataOverview()
@@ -30,14 +28,9 @@ namespace Expressium.LivingDoc.Generators
 
             var generator = new LivingDocDataListViewsGenerator(project);
 
-            if (configuration.FeaturesListView)
-                listOfLines.AddRange(generator.GenerateDataFeaturesListView());
-
-            if (configuration.ScenariosListView)
-                listOfLines.AddRange(generator.GenerateDataScenariosListView());
-
-            if (configuration.StepsListView)
-                listOfLines.AddRange(generator.GenerateDataStepsListView());
+            listOfLines.AddRange(generator.GenerateDataFeaturesListView());
+            listOfLines.AddRange(generator.GenerateDataScenariosListView());
+            listOfLines.AddRange(generator.GenerateDataStepsListView());
 
             return listOfLines;
         }
@@ -59,13 +52,9 @@ namespace Expressium.LivingDoc.Generators
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
 
-            if (configuration.FeaturesListView)
-                listOfLines.AddRange(generator.GenerateDataAnalyticsFeaturesView());
-
+            listOfLines.AddRange(generator.GenerateDataAnalyticsFeaturesView());
             listOfLines.AddRange(generator.GenerateDataAnalyticsScenariosView());
-
-            if (configuration.StepsListView)
-                listOfLines.AddRange(generator.GenerateDataAnalyticsStepsView());
+            listOfLines.AddRange(generator.GenerateDataAnalyticsStepsView());
 
             return listOfLines;
         }

@@ -9,12 +9,10 @@ namespace Expressium.LivingDoc.Generators
     internal class LivingDocContentGenerator
     {
         private LivingDocProject project;
-        private LivingDocConfiguration configuration;
 
-        internal LivingDocContentGenerator(LivingDocProject project, LivingDocConfiguration configuration)
+        internal LivingDocContentGenerator(LivingDocProject project)
         {
             this.project = project;
-            this.configuration = configuration;
         }
 
         internal List<string> GenerateHeader()
@@ -42,23 +40,14 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewMode('project-view','Overview');\">Overview</a>");
             listOfLines.Add("<span>|</span>");
 
-            if (configuration.FeaturesListView)
-            {
-                listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewMode('features-view','Features');\">Features</a>");
-                listOfLines.Add("<span>|</span>");
-            }
+            listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewMode('features-view','Features');\">Features</a>");
+            listOfLines.Add("<span>|</span>");
 
-            if (configuration.ScenariosListView)
-            {
-                listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewMode('scenarios-view','Scenarios');\">Scenarios</a>");
-                listOfLines.Add("<span>|</span>");
-            }
+            listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewMode('scenarios-view','Scenarios');\">Scenarios</a>");
+            listOfLines.Add("<span>|</span>");
 
-            if (configuration.StepsListView)
-            {
-                listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewMode('steps-view','Steps');\">Steps</a>");
-                listOfLines.Add("<span>|</span>");
-            }
+            listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewMode('steps-view','Steps');\">Steps</a>");
+            listOfLines.Add("<span>|</span>");
 
             listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
             listOfLines.Add("<span>|</span>");

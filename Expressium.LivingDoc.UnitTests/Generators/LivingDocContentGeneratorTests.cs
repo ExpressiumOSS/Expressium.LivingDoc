@@ -14,8 +14,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 Date = new System.DateTime(2024, 6, 1, 13, 5, 37)
             };
 
-            var configuration = new LivingDocConfiguration();
-            var generator = new LivingDocContentGenerator(project, configuration);
+            var generator = new LivingDocContentGenerator(project);
 
             var listOfLines = generator.GenerateHeader();
 
@@ -32,9 +31,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         public void LivingDocContentGenerator_GenerateNavigation()
         {
             var project = new LivingDocProject();
-            var configuration = new LivingDocConfiguration();
 
-            var generator = new LivingDocContentGenerator(project, configuration);
+            var generator = new LivingDocContentGenerator(project);
 
             var listOfLines = generator.GenerateNavigation();
 
@@ -49,36 +47,11 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        public void LivingDocContentGenerator_GenerateNavigation_Configured()
-        {
-            var project = new LivingDocProject();
-
-            var configuration = new LivingDocConfiguration()
-            {
-                Overview = false,
-                FeaturesListView = false,
-                ScenariosListView = false,
-                StepsListView = false
-            };
-
-            var generator = new LivingDocContentGenerator(project, configuration);
-
-            var listOfLines = generator.GenerateNavigation();
-
-            Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(8));
-            Assert.That(listOfLines[0], Is.EqualTo("<!-- Project Navigation Section -->"));
-            Assert.That(listOfLines[3], Does.Contain("title='Overview'"));
-            Assert.That(listOfLines[5], Does.Contain("title='Analytics'"));
-        }
-
-        [Test]
         public void LivingDocContentGenerator_GenerateFooter()
         {
             var project = new LivingDocProject();
-            var configuration = new LivingDocConfiguration();
 
-            var generator = new LivingDocContentGenerator(project, configuration);
+            var generator = new LivingDocContentGenerator(project);
 
             var listOfLines = generator.GenerateFooter();
 

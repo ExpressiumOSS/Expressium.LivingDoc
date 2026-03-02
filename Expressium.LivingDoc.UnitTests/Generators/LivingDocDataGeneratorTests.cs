@@ -10,8 +10,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         {
             var project = new LivingDocProject();
 
-            var configuration = new LivingDocConfiguration();
-            var generator = new LivingDocDataGenerator(project, configuration);
+            var generator = new LivingDocDataGenerator(project);
 
             var listOfLines = generator.GenerateDataListViews();
 
@@ -20,59 +19,16 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        public void LivingDocDataGenerator_GenerateDataListViews_Configured()
-        {
-            var project = new LivingDocProject();
-
-            var configuration = new LivingDocConfiguration()
-            {
-                Overview = false,
-                FeaturesListView = true,
-                ScenariosListView = true,
-                StepsListView = false,
-            };
-
-            var generator = new LivingDocDataGenerator(project, configuration);
-
-            var listOfLines = generator.GenerateDataListViews();
-
-            Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(37));
-        }
-
-        [Test]
         public void LivingDocDataGenerator_GenerateDataAnalytics()
         {
             var project = new LivingDocProject();
 
-            var configuration = new LivingDocConfiguration();
-            var generator = new LivingDocDataGenerator(project, configuration);
+            var generator = new LivingDocDataGenerator(project);
 
             var listOfLines = generator.GenerateDataAnalytics();
 
             Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines.Count, Is.EqualTo(219));
-        }
-
-        [Test]
-        public void LivingDocDataGenerator_GenerateDataAnalytics_Configured()
-        {
-            var project = new LivingDocProject();
-
-            var configuration = new LivingDocConfiguration()
-            {
-                Overview = false,
-                FeaturesListView = false,
-                ScenariosListView = false,
-                StepsListView = false
-            };
-
-            var generator = new LivingDocDataGenerator(project, configuration);
-
-            var listOfLines = generator.GenerateDataAnalytics();
-
-            Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(73));
         }
     }
 }
