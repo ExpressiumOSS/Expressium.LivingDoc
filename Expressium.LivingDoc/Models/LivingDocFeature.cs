@@ -49,6 +49,26 @@ namespace Expressium.LivingDoc.Models
             return LivingDocStatuses.Unknown.ToString();
         }
 
+        public int GetNumberOfPassedScenarios()
+        {
+            return Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());
+        }
+
+        public int GetNumberOfFailedScenarios()
+        {
+            return Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Failed.ToString());
+        }
+
+        public int GetNumberOfIncompleteScenarios()
+        {
+            return Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Incomplete.ToString());
+        }
+
+        public int GetNumberOfSkippedScenarios()
+        {
+            return Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Skipped.ToString());
+        }
+
         public int GetNumberOfScenarios()
         {
             return Scenarios.Count;

@@ -89,5 +89,28 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:000"));
             Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\empty"));
         }
+
+        [Test]
+        public void LivingDocFeature_GetNumberOfStatuses()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
+
+            var livingDocFeature = livingDocProject.Features[0];
+            Assert.That(livingDocFeature.Name, Is.EqualTo("Contact Us"));
+            Assert.That(livingDocFeature.GetNumberOfPassedScenarios(), Is.EqualTo(1));
+            Assert.That(livingDocFeature.GetNumberOfIncompleteScenarios(), Is.EqualTo(1));
+            Assert.That(livingDocFeature.GetNumberOfFailedScenarios(), Is.EqualTo(0));
+            Assert.That(livingDocFeature.GetNumberOfSkippedScenarios(), Is.EqualTo(1));
+
+            livingDocFeature = livingDocProject.Features[1];
+            Assert.That(livingDocFeature.Name, Is.EqualTo("Login"));
+            Assert.That(livingDocFeature.GetNumberOfPassedScenarios(), Is.EqualTo(0));
+            Assert.That(livingDocFeature.GetNumberOfIncompleteScenarios(), Is.EqualTo(1));
+            Assert.That(livingDocFeature.GetNumberOfFailedScenarios(), Is.EqualTo(1));
+            Assert.That(livingDocFeature.GetNumberOfSkippedScenarios(), Is.EqualTo(0));
+        }
     }
 }
