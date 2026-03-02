@@ -514,19 +514,6 @@
         margin-bottom: 6px;
     }
 
-    .circle-number {
-        width: 1.5em;
-        height: 1.5em;
-        border-radius: 50%;
-        background-color: #909090;
-        color: white;
-        text-align: center;
-        line-height: 1.5em; /* Centers the text vertically */
-        font-size: 0.875em;
-        display: inline-block; /* Allows the circle to be displayed inline */
-        margin-left: 2px;
-    }
-
     .feature-tags,
     .rule-tags,
     .scenario-tags {
@@ -562,6 +549,19 @@
         color: var(--darkgray-color);
         padding-left: 4px;
         padding-right: 4px;
+    }
+
+    .scenario-index {
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 50%;
+        background-color: #909090;
+        color: white;
+        text-align: center;
+        line-height: 1.5em; /* Centers the text vertically */
+        font-size: 0.875em;
+        display: inline-block; /* Allows the circle to be displayed inline */
+        margin-left: 2px;
     }
 
     .scenario-stacktraces,

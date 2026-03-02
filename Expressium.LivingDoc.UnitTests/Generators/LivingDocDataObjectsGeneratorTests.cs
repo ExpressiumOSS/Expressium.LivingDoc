@@ -213,7 +213,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[2], Is.EqualTo("<span class='status-dot bgcolor-skipped'></span>"));
             Assert.That(listOfLines[3], Is.EqualTo("<span class='scenario-keyword'>Scenario: </span>"));
             Assert.That(listOfLines[4], Is.EqualTo("<span class='scenario-name'>Scenario Name</span>"));
-            Assert.That(listOfLines[5], Is.EqualTo("<span class='circle-number'>5</span>"));
+            Assert.That(listOfLines[5], Is.EqualTo("<span class='scenario-index'>5</span>"));
             Assert.That(listOfLines[6], Is.EqualTo("<span class='scenario-duration'>1s 500ms</span>"));
             Assert.That(listOfLines[7], Is.EqualTo("</div>"));
         }
