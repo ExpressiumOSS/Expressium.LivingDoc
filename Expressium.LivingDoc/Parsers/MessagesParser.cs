@@ -238,6 +238,17 @@ namespace Expressium.LivingDoc.Parsers
 
         internal void ParseTestResults(LivingDocProject livingDocProject)
         {
+            // Assign Test Execution Environment Details...
+            var meta = listOfMeta.FirstOrDefault();
+            livingDocProject.ProtocolVersion = meta.ProtocolVersion;
+            livingDocProject.ImplementationName = meta.Implementation.Name;
+            livingDocProject.ImplementationVersion = meta.Implementation.Version;
+            livingDocProject.RuntimeName = meta.Runtime.Name;
+            livingDocProject.RuntimeVersion = meta.Runtime.Version;
+            livingDocProject.OsName = meta.Os.Name;
+            livingDocProject.OsVersion = meta.Os.Version;
+            livingDocProject.CpuName = meta.Cpu.Name;
+
             // Assign Test Execution Date...
             var testRunStarted = listOfTestRunStarted.FirstOrDefault();
             livingDocProject.Date = testRunStarted.Timestamp.ToDateTime();

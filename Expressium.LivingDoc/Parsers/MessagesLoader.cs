@@ -6,6 +6,7 @@ namespace Expressium.LivingDoc.Parsers
 {
     internal class MessagesLoader
     {
+        protected List<Meta> listOfMeta;
         protected List<GherkinDocument> listOfGherkinDocuments;
         protected List<Pickle> listOfPickles;
         protected List<TestCase> listOfTestCases;
@@ -18,6 +19,7 @@ namespace Expressium.LivingDoc.Parsers
 
         internal MessagesLoader()
         {
+            listOfMeta = new List<Meta>();
             listOfGherkinDocuments = new List<GherkinDocument>();
             listOfPickles = new List<Pickle>();
             listOfTestCases = new List<TestCase>();
@@ -37,6 +39,9 @@ namespace Expressium.LivingDoc.Parsers
                 while (enumerator.MoveNext())
                 {
                     var envelope = enumerator.Current;
+
+                    if (envelope.Meta != null)
+                        listOfMeta.Add(envelope.Meta);
 
                     if (envelope.GherkinDocument != null)
                         listOfGherkinDocuments.Add(envelope.GherkinDocument);

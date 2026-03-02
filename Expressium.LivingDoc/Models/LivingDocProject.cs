@@ -10,6 +10,15 @@ namespace Expressium.LivingDoc.Models
         public DateTime Date { get; set; }
         public TimeSpan Duration { get; set; }
 
+        public string ProtocolVersion { get; set; }
+        public string ImplementationName { get; set; }
+        public string ImplementationVersion { get; set; }
+        public string RuntimeName { get; set; }
+        public string RuntimeVersion { get; set; }
+        public string OsName { get; set; }
+        public string OsVersion { get; set; }
+        public string CpuName { get; set; }
+
         public List<LivingDocFeature> Features { get; set; }
         public List<LivingDocHistory> Histories { get; set; }
 
