@@ -318,6 +318,17 @@
         cursor: pointer;
         text-align: center;
     }
+    
+    .gridline-number {
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 20%;
+        color: white;
+        text-align: center;
+        line-height: 1.5em; /* Centers the text vertically */
+        font-size: 0.875em;
+        display: inline-block;
+    } 
 
     .project-name {
         font-size: 1.40em;
