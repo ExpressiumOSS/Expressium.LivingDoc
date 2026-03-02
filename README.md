@@ -26,6 +26,7 @@ The formatter configuration may include relative paths and predefined ReqnRoll s
 * Setup the Expressium formatters properties in the ReqnRoll configuration in the test project...
 * Run the tests in the ReqnRoll test project and open the HTML report in the output directory...
 
+***ReqnRoll.json***
 ```json
 {
   "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
@@ -47,6 +48,7 @@ and includes a maximum of four of the most recent previous test executions.
 In a pipeline, the previous Cucumber message files
 must be preserved in the history folder before executing the next test run.
 
+***ReqnRoll.json***
 ```json
 {
   "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
@@ -72,6 +74,7 @@ we need to use a workaround to enable attachments in the Expressium LivingDoc re
 Scenario attachments, such as log files and screenshots, can be stored in a relative location
 and added as links to simplify distribution afterwards.
 
+***ReqnRollExtensions.cs***
 ```c#
 using Reqnroll;
 
@@ -89,6 +92,7 @@ namespace MyCompany.MyProject.Web.API.Tests
 
 <br />
 
+***BaseHook.cs***
 ```c#
 [AfterScenario]
 public void AfterScenario()
@@ -122,6 +126,7 @@ and implementing any logic needed to handle your specific reporting requirements
 For other examples of custom CLI implementations, 
 please refer to the Expressium LivingDoc CLI project and batch files in this repository.
 
+***Program.cs***
 ```c#
 if (args.Length == 7 && args[0] == "--custom")
 {
@@ -152,6 +157,7 @@ and it is desirable to produce a single consolidated test report.
 A merging of test reports can be achieved through a separate CLI program.
 Only new and previously unknown features will be included during the merge process.
 
+***Program.cs***
 ```c#
 if (args.Length == 8 && args[0] == "--merge")
 {
@@ -178,6 +184,7 @@ When the Expressium LivingDoc report is opened in a browser,
 the onload event automatically reads URL query parameters and applies filters accordingly.
 This enables direct linking to specific scenarios or features filtered by keywords within the LivingDoc report.
 
+***DeepLinking.bat***
 ```bat
 start chrome "file:///C://Company/Coffeeshop.html?filterByKeywords=TA-3001"
 ```
