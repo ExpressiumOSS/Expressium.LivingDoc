@@ -69,17 +69,5 @@ namespace Expressium.LivingDoc.Generators
 
             return listOfLines;
         }
-
-        internal List<string> GenerateDataEditor()
-        {
-            var listOfLines = new List<string>();
-
-            var generator = new LivingDocDataEditorGenerator(project);
-
-            if (configuration.EditorView)
-                listOfLines.AddRange(generator.GenerateDataEditor());
-
-            return listOfLines;
-        }
     }
 }

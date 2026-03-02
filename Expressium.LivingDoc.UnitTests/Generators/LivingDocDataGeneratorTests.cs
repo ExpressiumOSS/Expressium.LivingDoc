@@ -30,7 +30,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 FeaturesListView = true,
                 ScenariosListView = true,
                 StepsListView = false,
-                EditorView = false
             };
 
             var generator = new LivingDocDataGenerator(project, configuration);
@@ -65,8 +64,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 Overview = false,
                 FeaturesListView = false,
                 ScenariosListView = false,
-                StepsListView = false,
-                EditorView = false
+                StepsListView = false
             };
 
             var generator = new LivingDocDataGenerator(project, configuration);
@@ -75,38 +73,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines.Count, Is.EqualTo(73));
-        }
-
-        [Test]
-        public void LivingDocDataGenerator_GenerateDataEditor()
-        {
-            var project = new LivingDocProject();
-
-            var configuration = new LivingDocConfiguration();
-            var generator = new LivingDocDataGenerator(project, configuration);
-
-            var listOfLines = generator.GenerateDataEditor();
-
-            Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void LivingDocDataGenerator_GenerateDataEditor_Configured()
-        {
-            var project = new LivingDocProject();
-
-            var configuration = new LivingDocConfiguration()
-            {
-                EditorView = true
-            };
-
-            var generator = new LivingDocDataGenerator(project, configuration);
-
-            var listOfLines = generator.GenerateDataEditor();
-
-            Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(37));
         }
     }
 }

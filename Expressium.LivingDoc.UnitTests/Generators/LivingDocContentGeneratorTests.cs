@@ -58,8 +58,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 Overview = false,
                 FeaturesListView = false,
                 ScenariosListView = false,
-                StepsListView = false,
-                EditorView = false
+                StepsListView = false
             };
 
             var generator = new LivingDocContentGenerator(project, configuration);

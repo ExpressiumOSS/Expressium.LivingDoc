@@ -8,7 +8,6 @@ namespace Expressium.LivingDoc.Generators
         public bool FeaturesListView { get; set; }
         public bool ScenariosListView { get; set; }
         public bool StepsListView { get; set; }
-        public bool EditorView { get; set; }
 
         public LivingDocConfiguration()
         {
@@ -16,7 +15,6 @@ namespace Expressium.LivingDoc.Generators
             FeaturesListView = true;
             ScenariosListView = true;
             StepsListView = true;
-            EditorView = false;
         }
     }
 }

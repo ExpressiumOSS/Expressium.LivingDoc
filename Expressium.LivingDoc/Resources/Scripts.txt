@@ -448,95 +448,6 @@
         }
     </script>
     <script>
-        function loadEditor() {
-            var editor = document.getElementById('editor-view').innerHTML;
-
-            document.getElementById('left-section').innerHTML = editor;
-            document.getElementById('right-section').remove();
-
-            document.getElementById("scenario-script").value = "";
-            document.getElementById("scenario-script").value += "@TA-??? @Review";
-            document.getElementById("scenario-script").value += "\nScenario: Successfully Creating a new Gherkin Script";
-
-            filterStepDefinitions();
-
-            var navLinks = document.querySelectorAll('.navigation-link');
-            for (var i = 0; i < navLinks.length; i++) {
-                if (navLinks[i].textContent == "Editor")
-                    navLinks[i].classList.add('navigation-active');
-                else
-                    navLinks[i].classList.remove('navigation-active');
-            }
-        }
-    </script>
-    <script>
-        function filterStepDefinitions() {
-            var input = document.getElementById("stepdefinition-filter");
-            var filterTokens = input.value.toUpperCase().split(/\s+/);
-            var table = document.getElementById("steps-table-list");
-            var tr = table.getElementsByTagName("tr");
-
-            var numberOfFound = 0;
-
-            for (var i = 0; i < tr.length; i++) {
-                var td = tr[i].getElementsByTagName("td");
-                var rowText = "";
-                var found = false;
-
-                for (var j = 0; j < td.length; j++) {
-                    rowText += td[j].textContent.toUpperCase() + " ";
-                }
-
-                found = filterTokens.every(token => rowText.includes(token));
-
-                if (found)
-                    numberOfFound++;
-
-                if (numberOfFound >= 6)
-                    found = false;
-
-                tr[i].style.display = found ? "" : "none";
-            }
-        }
-    </script>
-    <script>
-        function loadStepDefinition(row) {
-            var link = row.querySelector("td a");
-            var linkText = link.textContent || link.innerText;
-
-            var script = document.getElementById("scenario-script").value;
-            if (script.endsWith("\n") || script === "") {
-                document.getElementById("scenario-script").value += "    " + linkText;
-            } else {
-                document.getElementById("scenario-script").value += "\n    " + linkText;
-            }
-
-            document.getElementById("stepdefinition-filter").value = "";
-            filterStepDefinitions();
-        }
-    </script>
-    <script>
-        function loadStepDefinitionByEnter() {
-            var table = document.getElementById("steps-table-list");
-            var tr = table.getElementsByTagName("tr");
-
-            for (var i = 0; i < tr.length; i++) {
-                if (tr[i].style.display == "") {
-                    loadStepDefinition(tr[i]);
-                    break;
-                }
-            }
-
-            document.getElementById("stepdefinition-filter").value = "";
-        }
-    </script>
-    <script>
-        function editorCopy() {
-            var copyText = document.getElementById("scenario-script");
-            navigator.clipboard.writeText(copyText.value);
-        }
-    </script>
-    <script>
         function loadCollapse(x) {
             var collapse = x.getAttribute('data-collapse');
             var parent = x.parentElement;
@@ -667,21 +578,7 @@
         }
     </script>
     <script>
-        function editorCopy() {
-            var textArea = document.getElementById("scenario-script");
-            textArea.select();
-            navigator.clipboard.writeText(textArea.value);
-            window.getSelection().removeAllRanges();
-        }
-    </script>
-    <script>
         function onloadFilter() {
-            const viewMode = new URLSearchParams(window.location.search).get('viewMode');
-            if (viewMode == "Editor") { 
-                loadEditor();
-                return;
-            }
-
             const filter = new URLSearchParams(window.location.search).get('filterByKeywords');
             if (!filter) 
                 return;
@@ -713,20 +610,4 @@
 
             window.history.replaceState({}, document.title, window.location.pathname);
         }
-    </script>
-    <script>
-      document.addEventListener("keydown", function (event) {
-        if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "e") {
-          event.preventDefault();
-
-          const url = new URL(window.location.href);
-          url.searchParams.set("viewMode", "Editor");
-
-          window.open(
-            url.toString(),
-            "newwindow",
-            "width=700,height=700,left=100,top=100"
-          );
-        }
-      });
     </script>

@@ -60,12 +60,6 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add("<span>|</span>");
             }
 
-            if (configuration.EditorView)
-            {
-                listOfLines.Add("<a class='navigation-link' title='Gherkin Script Editor' href='#' onclick=\"window.open(window.location.pathname + '?viewMode=Editor', 'newwindow', 'width=700,height=700,top=100,left=100'); return false;\">Editor</a>");
-                listOfLines.Add("<span>|</span>");
-            }
-
             listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
             listOfLines.Add("<span>|</span>");
 
