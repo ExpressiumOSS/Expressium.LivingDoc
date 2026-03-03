@@ -22,7 +22,7 @@ namespace Expressium.LivingDoc
             foreach (var feature in project.Features)
             {
                 listOfLines.Add("<!-- Data Feature -->");
-                listOfLines.Add($"<div class='data-item' id='{feature.Id}'>");
+                listOfLines.Add($"<div id='{feature.Id}'>");
 
                 listOfLines.Add("<!-- Feature Section -->");
                 listOfLines.Add("<div class='section'>");
@@ -138,7 +138,7 @@ namespace Expressium.LivingDoc
                 foreach (var scenario in feature.Scenarios)
                 {
                     listOfLines.Add("<!-- Data Scenario -->");
-                    listOfLines.Add($"<div class='data-item' id='{scenario.Id}'>");
+                    listOfLines.Add($"<div id='{scenario.Id}'>");
 
                     if (!string.IsNullOrEmpty(scenario.RuleId))
                     {

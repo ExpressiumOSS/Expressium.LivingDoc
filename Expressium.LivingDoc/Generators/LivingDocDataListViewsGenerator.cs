@@ -19,7 +19,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Features View -->");
-            listOfLines.Add($"<div class='data-item' id='features-view'>");
+            listOfLines.Add($"<div id='features-view'>");
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<table id='table-grid' class='grid-view'>");
@@ -63,7 +63,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Scenarios View -->");
-            listOfLines.Add($"<div class='data-item' id='scenarios-view'>");
+            listOfLines.Add($"<div id='scenarios-view'>");
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<table id='table-grid' class='grid-view'>");
@@ -108,7 +108,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Steps View -->");
-            listOfLines.Add($"<div class='data-item' id='steps-view'>");
+            listOfLines.Add($"<div id='steps-view'>");
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<table id='table-grid' class='grid-view'>");

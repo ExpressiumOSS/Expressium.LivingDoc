@@ -388,10 +388,6 @@
         height: 0.4em;
     }
 
-    data-item {
-        visibility: hidden;
-    }
-
     a {
         color: var(--keyword-color);
         text-decoration: none;

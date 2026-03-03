@@ -24,7 +24,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Overview -->");
-            listOfLines.Add($"<div class='data-item' id='project-view'>");
+            listOfLines.Add($"<div id='project-view'>");
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<table id='table-grid' class='tree-view'>");

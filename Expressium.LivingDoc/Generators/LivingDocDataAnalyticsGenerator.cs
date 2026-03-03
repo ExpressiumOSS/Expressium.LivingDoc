@@ -19,7 +19,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Analytics -->");
-            listOfLines.Add($"<div class='data-item' id='analytics-features'>");
+            listOfLines.Add($"<div id='analytics-features'>");
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart());
@@ -38,7 +38,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Analytics -->");
-            listOfLines.Add($"<div class='data-item' id='analytics-scenarios'>");
+            listOfLines.Add($"<div id='analytics-scenarios'>");
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart());
@@ -57,7 +57,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Analytics -->");
-            listOfLines.Add($"<div class='data-item' id='analytics-steps'>");
+            listOfLines.Add($"<div id='analytics-steps'>");
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart());
