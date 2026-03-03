@@ -359,22 +359,6 @@
         color: dimgray;
     }
 
-    .chart-percentage {
-        font-size: 2.25em;
-        line-height: 1.0;
-    }
-
-    .chart-status {
-        font-size: 2em;
-        color: var(--darkgray-color);
-        line-height: 1.0;
-    }
-
-    .chart-bar {
-        height: 0.8em;
-        float: left
-    }
-
     .chart-count {
         text-align: center;
     }
