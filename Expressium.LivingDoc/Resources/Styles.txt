@@ -364,6 +364,22 @@
       height: 168px;
     }
 
+    .chart-number {
+        font-size: 0.5em;
+        text-anchor: middle;
+        transform: translateY(-0.25em);
+    }
+
+    .chart-label {
+        font-size: 0.3em;
+        text-anchor: middle;
+        transform: translateY(0.7em);
+    }
+
+    .chart-text {
+        transform: translateY(0.15em);
+    }
+
     .chart-count {
         text-align: center;
     }
@@ -446,22 +462,6 @@
     ul {
         list-style-type: none;
         margin-bottom: 0px;
-    }
-
-    .chart-text {
-        transform: translateY(0.15em);
-    }
-
-    .chart-number {
-        font-size: 0.5em;
-        text-anchor: middle;
-        transform: translateY(-0.25em);
-    }
-
-    .chart-label {
-        font-size: 0.3em;
-        text-anchor: middle;
-        transform: translateY(0.7em);
     }
 
     .donut-segment-passed {
