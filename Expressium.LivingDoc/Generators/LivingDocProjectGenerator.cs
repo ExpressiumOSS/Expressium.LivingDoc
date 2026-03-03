@@ -78,7 +78,10 @@ namespace Expressium.LivingDoc.Generators
 
         internal List<string> GenerateStyles()
         {
-            return Resources.Styles.Split(Environment.NewLine).ToList();
+            if (project.ExperimentFlag)
+                return Resources.StylesFacelift.Split(Environment.NewLine).ToList();
+            else
+                return Resources.Styles.Split(Environment.NewLine).ToList();
         }
 
         internal List<string> GenerateScripts()

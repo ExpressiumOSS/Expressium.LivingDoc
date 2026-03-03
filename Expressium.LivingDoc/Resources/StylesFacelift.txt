@@ -1,0 +1,770 @@
+﻿<style>
+    @property --passed-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #48A84F;
+        initial-value: #47A64E;
+    }
+
+    @property --incomplete-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #F5BB00;
+        initial-value: #F2B900;
+    }
+
+    @property --failed-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #EB4431;
+        initial-value: #E84330;
+    }
+
+    @property --skipped-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #A9A9A9;
+    }
+
+    @property --total-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: black;
+    }
+
+    @property --passed-background-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #E5F4E6;
+    }
+
+    @property --incomplete-background-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #FFF6D6;
+    }
+
+    @property --failed-background-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #FBE6E3;
+    }
+
+    @property --skipped-background-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #F0F0F0;
+    }
+
+    @property --passed-text-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #2B672F;
+    }
+
+    @property --incomplete-text-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #7A5E00;
+    }
+
+    @property --failed-text-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #99271E;
+    }
+
+    @property --skipped-text-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #000000;
+    }
+
+    @property --keyword-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #2F6795;
+        initial-value: #2D638F;
+    }
+
+    @property --selected-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #d9e5f0;
+    }
+
+    @property --hover-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #e3ecf4;
+    }
+
+    @property --darkgray-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #484848;
+    }
+   
+    @property --dustgray-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #F1F1F1;
+    }
+
+    body, html {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        font-size: 14px;
+        /* font-family: system-ui, "Segoe UI Variable Small", "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+    }
+
+    #content-wrapper {
+        display: flex;
+        height: calc(100% - 156px); /* Adjust for header and footer height */
+        flex-direction: row; /* Change to row for vertical splitter */
+    }
+
+    #splitter {
+        width: 2px;
+        background: #ddd;
+        cursor: col-resize;
+    }
+
+    #left-section {
+        flex: 1;
+        overflow: hidden;
+        scrollbar-color: #909090 #F8F9FA;
+    }
+
+    #right-section {
+        flex: 1;
+        overflow: auto;
+        scrollbar-color: #909090 #F8F9FA;
+    }
+
+    #list-view {
+        flex: 1;
+        overflow: auto;
+        height: calc(100% - 68px); /* Adjust for filter and search height */
+    }
+
+    header {
+        padding: 8px;
+        padding-left: 16px;
+        background-color: #dfe7f2;
+    }
+
+    footer {
+        background-color: var(--dustgray-color);
+        color: #555;
+        text-align: center;
+        padding: 10px;
+        font-size: 0.875em;
+    }
+
+    .navigation {
+        background-color: var(--dustgray-color);
+        padding: 8px 16px;
+    }
+
+    a.navigation-link {
+        position: relative;
+        color: var(--darkgray-color);
+        padding-left: 1px;
+        padding-right: 1px;
+        margin-right: 8px;
+        font-size: 1.0625em;
+        text-decoration: none; /* remove default underline */
+    }
+
+    a.navigation-active {
+        font-weight: 600;
+        font-size: 1.125em;
+    }
+
+    a.navigation-active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px; /* adjust spacing under text */
+        width: 100%;
+        height: 2px;  /* thickness of line */
+        background-color: black;
+    }
+
+    .section {
+        padding-bottom: 8px;
+    }
+
+    .layout-row {
+        display: flex;
+        width: 100%;
+    }
+
+    .layout-column {
+        flex: auto;
+    }
+
+    .align-left {
+        text-align: left;
+    }
+
+    .align-center {
+        text-align: center;
+    }
+
+    .align-right {
+        text-align: right;
+    }
+
+    .filter-group {
+        background-color: var(--dustgray-color);
+        padding: 8px;
+        align-items: center;
+    }
+
+    .filter-symbol {
+        padding-left: 4px;
+        padding-right: 6px;
+        color: var(--darkgray-color);
+    }
+
+    .filter-group-input {
+        width: 100%;
+        box-sizing: border-box;
+        border-width: 1px;
+        outline: none;
+        background-color: var(--dustgray-color);
+        border: hidden;
+    }
+
+    th, td {
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    th {
+        background-color: var(--dustgray-color);
+        color: var(--darkgray-color);
+        border: 1px solid;
+        font-weight: 600;
+        border-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    table.grid-view,
+    table.tree-view {
+        border: 1px;
+        width: 100%;
+    }
+
+    table.grid-view tr:hover,
+    table.tree-view tr:hover td[class] {
+        background-color: var(--hover-color);
+    }
+
+    table.grid-view th,
+    table.grid-view td {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    table.tree-view th,
+    table.tree-view td {
+        padding-left: 2px;
+        padding-right: 4px;
+    }
+
+    .grid-folder {
+        font-size: 0.9375em;
+        padding: 2px;
+        text-align: center;
+    }
+
+    table.tree-view tr.active td[class] {
+        background-color: var(--selected-color);
+    }
+
+    table.grid-view tr.active {
+        background-color: var(--selected-color);
+    }
+
+    button {
+        color: black;
+        border: 1px solid black;
+        /* border-radius: 0.50em; */
+    }
+
+    button.prefilter {       
+        border: 1px solid var(--darkgray-color);
+        color: var(--darkgray-color);
+    }
+
+    button.prefilter:hover,
+    button.prefilter.active {
+        color: black;
+        border: 1px solid black;
+        background-color: var(--selected-color);
+    }
+
+    .grid-option {
+        color: dimgray;
+    }
+
+    .gridline {
+        border-bottom: 1px solid Gainsboro;
+        border-bottom: 1px solid #E0E0E0;
+    }
+
+    .gridline-folder {
+        color: var(--darkgray-color);
+        font-weight: bold;
+    }
+
+    .gridline-heading {
+        color: var(--keyword-color);
+        font-weight: normal;
+    }
+
+    .gridline-toggle {
+        color: dimgray;
+        cursor: pointer;
+        text-align: center;
+    }
+    
+    .gridline-number {
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 20%;
+        color: white;
+        text-align: center;
+        line-height: 1.5em; /* Centers the text vertically */
+        font-size: 0.875em;
+        display: inline-block;
+    } 
+
+    .project-name {
+        font-size: 1.750em;
+        font-weight: bold;
+    }
+
+    .project-title {
+        font-size: 1.125em;
+        font-weight: 600;
+        color: var(--darkgray-color);
+        color: dimgray;
+        padding-left: 4px;
+    }
+
+    .project-date {
+        color: dimgray;        
+        padding-left: 2px;
+        font-size: 1.00em;
+    }
+
+    .page-name {
+        font-size: 1.40em;
+        font-weight: bold;
+        line-height: 1;
+        color: dimgray;
+    }
+
+    .chart-outline {
+        width: fit-content;
+        margin: auto;
+        padding: 16px;
+        padding-left: 24px;
+        padding-right: 24px;
+        background-color: whitesmoke;
+    }
+
+    .chart-name {
+        font-size: 1.25em;
+        font-weight: bold;
+        line-height: 1;
+        color: dimgray;
+    }
+
+    .chart-status {
+      width: 144px;
+      height: 148px;
+    }
+
+    .chart-number {
+        font-size: 0.55em;
+        text-anchor: middle;
+        transform: translateY(-0.25em);
+    }
+
+    .chart-label {
+        font-size: 0.35em;
+        text-anchor: middle;
+        transform: translateY(0.7em);
+    }
+
+    .chart-text {
+        transform: translateY(0.15em);
+    }
+
+    .chart-count {
+        text-align: center;
+    }
+
+    .chart-count-number {
+        font-size: 1.25em;
+        line-height: 1.0;
+    }
+
+    .chart-count-percentage {
+        font-size: 1.125em;
+        line-height: 1.0;
+    }
+
+    .chart-count-status {
+        font-size: 1.125em;
+        line-height: 1.0;
+    }
+
+    .chart-count-bar {
+        width: 100px;
+        height: 0.475em;
+    }
+
+    a {
+        color: var(--keyword-color);
+        text-decoration: none;
+    }
+
+    .color-passed {
+        color: var(--passed-color);
+    }
+
+    .bgcolor-passed {
+        background: var(--passed-color);
+    }
+
+    .color-incomplete {
+        color: var(--incomplete-color);
+    }
+
+    .bgcolor-incomplete {
+        background: var(--incomplete-color);
+    }
+
+    .color-failed {
+        color: var(--failed-color);
+    }
+
+    .bgcolor-failed {
+        background: var(--failed-color);
+    }
+
+    .color-skipped {
+        color: var(--skipped-color);
+    }
+
+    .bgcolor-skipped {
+        background: var(--skipped-color);
+    }
+
+    .bgcolor-total {
+        background: var(--total-color);
+    }
+
+    .status-dot {
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+    .sort-column {
+        float: right;
+        font-weight: normal;
+    }
+
+    ul {
+        list-style-type: none;
+        margin-bottom: 0px;
+    }
+
+    .donut-segment-passed {
+        stroke: var(--passed-color);
+        fill: transparent;
+        stroke-width: 3.2px;
+    }
+
+    .donut-segment-incomplete {
+        stroke: var(--incomplete-color);
+        fill: transparent;
+        stroke-width: 3.2px;
+    }
+
+    .donut-segment-failed {
+        stroke: var(--failed-color);
+        fill: transparent;
+        stroke-width: 3.2px;
+    }
+
+    .donut-segment-skipped {
+        stroke: var(--skipped-color);
+        fill: transparent;
+        stroke-width: 3.2px;
+    }
+
+    hr {
+        border: 0 none;
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+
+    .feature-tags,
+    .rule-tags,
+    .scenario-tags {
+        color: #348F91;
+    }
+
+    .feature-keyword,
+    .background-keyword,
+    .rule-keyword,
+    .scenario-keyword,
+    .step-keyword {
+        color: var(--keyword-color);
+        font-weight: bold;
+    }
+
+    .feature-name,
+    .rule-name,
+    .scenario-name {
+        font-weight: bold;
+    }
+
+    .feature-description,
+    .rule-description,
+    .scenario-description {
+        font-family: Consolas;
+        font-size: 0.875em;
+        color: var(--darkgray-color);
+        font-style: italic;
+        padding-top: 2px;
+    }
+
+    .feature-duration,
+    .scenario-duration {
+        color: var(--darkgray-color);
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .scenario-index {
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 50%;
+        background-color: #909090;
+        color: white;
+        text-align: center;
+        line-height: 1.5em; /* Centers the text vertically */
+        font-size: 0.875em;
+        display: inline-block; /* Allows the circle to be displayed inline */
+        margin-left: 2px;
+    }
+
+    .scenario-stacktraces,
+    .scenario-attachments {
+        color: dimgray;
+    }
+
+    .step-symbol {
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .scenario-steps {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    ul.scenario-steps li {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .steps-datatable {
+        padding-left: 32px;
+    }
+
+    .scenario-datatable {
+        color: dimgray;
+    }
+
+    table.scenario-datatable td {
+        padding-top: 1px;
+        padding-bottom: 1px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .message-box {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 2px;
+        padding-right: 2px;
+        max-width: inherit;
+        word-wrap: break-word;
+    }
+
+    .message-passed {
+        color: var(--passed-text-color);
+        background-color: var(--passed-background-color);
+        padding: 8px;
+        border-left: 8px solid var(--passed-color);
+    }
+
+    .message-failed {
+        color: var(--failed-text-color);
+        background-color: var(--failed-background-color);
+        padding: 8px;
+        border-left: 8px solid var(--failed-color);
+    }
+
+    .message-incomplete {
+        color: var(--incomplete-text-color);
+        background-color: var(--incomplete-background-color);
+        padding: 8px;
+        border-left: 8px solid var(--incomplete-color);
+    }
+
+    .message-skipped {
+        color: var(--skipped-text-color);
+        background-color: var(--skipped-background-color);
+        padding: 8px;
+        border-left: 8px solid var(--skipped-color);
+    }
+
+    .message-stacktrace {
+        font-size: 0.875em;
+    }
+
+    .examples-keyword {
+        font-weight: bold;
+        color: var(--darkgray-color);
+        padding-left: 16px;
+    }
+
+    .examples-name {
+        color: var(--darkgray-color);
+    }
+
+    .examples-description {
+        font-family: Consolas;
+        font-size: 0.875em;
+        color: var(--darkgray-color);
+        font-style: italic;
+        padding-left: 32px;
+    }
+
+    .examples-datatable {
+        padding-left: 32px;
+    }
+
+    .attachments {
+        padding-top: 4px;
+    }
+
+    .attachments-keyword {
+        font-weight: bold;
+        color: var(--darkgray-color);
+        padding-left: 16px;
+    }
+
+    ul.attachments-files li {
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+
+    #script-view {
+        flex: 1;
+        overflow: auto;
+        height: calc(100% - 334px); /* Adjust for filter and search height */
+    }
+
+    #scenario-script {
+        field-sizing: content;
+        height: 96%;
+    }
+
+    .duration-symbol {
+        color: dimgray;
+        font-size: 2.5em;
+    }
+
+    .duration-text {
+        font-size: 1.25em;
+        padding-left: 8px;
+        padding-top: 4px;
+    }
+
+    .duration-keyword {
+        color: dimgray;
+    }
+
+    .history-passed {
+        color: var(--passed-text-color);
+        background-color: var(--passed-background-color);
+        text-align: center;
+        width: 100px;
+    }
+
+    .history-failed {
+        color: var(--failed-text-color);
+        background-color: var(--failed-background-color);
+        text-align: center;
+        width: 100px;        
+    }
+
+    .history-incomplete {
+        color: var(--incomplete-text-color);
+        background-color: var(--incomplete-background-color);
+        text-align: center;
+        width: 100px;
+    }
+
+    .history-skipped {
+        color: var(--skipped-text-color);
+        background-color: var(--skipped-background-color);
+        text-align: center;
+        width: 100px;
+    }
+
+    .history-unknown {
+        text-align: center;
+        width: 100px;
+    }
+
+    .chart-history-trends {
+        padding-left: 16px;
+        padding-right: 16px;
+        margin: auto;
+    }
+
+    .chart-history-failures {
+        padding-left: 16px;
+        padding-right: 16px;
+        margin: auto;
+    }
+
+    .chart-history-grid {
+        border: 1px;
+        width: 100%;
+    }
+
+    table.chart-history-grid th,
+    table.chart-history-grid td {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+</style>

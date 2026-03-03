@@ -19,7 +19,7 @@ namespace Expressium.LivingDoc.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -64,7 +64,8 @@ namespace Expressium.LivingDoc.Properties {
         ///   Looks up a localized string similar to 		&lt;meta charset=&quot;UTF-8&quot;&gt;
         ///		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
         ///		&lt;title&gt;Expressium LivingDoc&lt;/title&gt;
-        ///		&lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;.
+        ///		&lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+        ///		&lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css&quot; rel=&quot;stylesheet&quot;&gt;.
         /// </summary>
         internal static string Heads {
             get {
@@ -81,11 +82,11 @@ namespace Expressium.LivingDoc.Properties {
         ///            var scenario = document.getElementById(scenarioId).innerHTML;
         ///
         ///            document.getElementById(&apos;right-section&apos;).innerHTML = feature + scenario;
+        ///
+        ///            clearActiveListItems();
+        ///            x.classList.add(&apos;active&apos;);
         ///        }
-        ///    &lt;/script&gt;
-        ///    &lt;script&gt;
-        ///        function loadFeature(x) {
-        ///            var feature [rest of string was truncated]&quot;;.
+        ///    &lt;/sc [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Scripts {
             get {
@@ -117,28 +118,64 @@ namespace Expressium.LivingDoc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to     &lt;style&gt;
-        ///        @property --master-color {
-        ///            syntax: &quot;&lt;color&gt;&quot;;
-        ///            inherits: false;
-        ///            initial-value: steelblue;
-        ///            initial-value: #3C78AA;
-        ///            initial-value: #326EA0;            
-        ///        }
+        ///   Looks up a localized string similar to &lt;style&gt;
+        ///    @property --passed-color {
+        ///        syntax: &quot;&lt;color&gt;&quot;;
+        ///        inherits: false;
+        ///        initial-value: #48A84F;
+        ///        initial-value: #47A64E;
+        ///    }
         ///
-        ///        @property --primary-color {
-        ///            syntax: &quot;&lt;color&gt;&quot;;
-        ///            inherits: false;
-        ///            initial-value: #598EBC;
-        ///            initial-value: #508CBE;     
-        ///            initial-value: #909090;
-        ///        }
+        ///    @property --incomplete-color {
+        ///        syntax: &quot;&lt;color&gt;&quot;;
+        ///        inherits: false;
+        ///        initial-value: #F5BB00;
+        ///        initial-value: #F2B900;
+        ///    }
         ///
-        ///        @property --secondary-color [rest of string was truncated]&quot;;.
+        ///    @property --failed-color {
+        ///        syntax: &quot;&lt;color&gt;&quot;;
+        ///        inherits: false;
+        ///        initial-value: #EB4431;
+        ///        initial-value: #E84330;
+        ///    }
+        ///
+        ///    @property -- [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Styles {
             get {
                 return ResourceManager.GetString("Styles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;style&gt;
+        ///    @property --passed-color {
+        ///        syntax: &quot;&lt;color&gt;&quot;;
+        ///        inherits: false;
+        ///        initial-value: #48A84F;
+        ///        initial-value: #47A64E;
+        ///    }
+        ///
+        ///    @property --incomplete-color {
+        ///        syntax: &quot;&lt;color&gt;&quot;;
+        ///        inherits: false;
+        ///        initial-value: #F5BB00;
+        ///        initial-value: #F2B900;
+        ///    }
+        ///
+        ///    @property --failed-color {
+        ///        syntax: &quot;&lt;color&gt;&quot;;
+        ///        inherits: false;
+        ///        initial-value: #EB4431;
+        ///        initial-value: #E84330;
+        ///    }
+        ///
+        ///    @property -- [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string StylesFacelift {
+            get {
+                return ResourceManager.GetString("StylesFacelift", resourceCulture);
             }
         }
     }
