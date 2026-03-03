@@ -503,7 +503,8 @@
     .feature-keyword,
     .background-keyword,
     .rule-keyword,
-    .scenario-keyword {
+    .scenario-keyword,
+    .step-keyword {
         color: var(--keyword-color);
         font-weight: bold;
     }
@@ -549,14 +550,9 @@
         color: dimgray;
     }
 
-    .step-marker {
+    .step-symbol {
         font-weight: bold;
         text-align: center;
-    }
-
-    .step-keyword {
-        color: var(--keyword-color);
-        font-weight: bold;
     }
 
     .scenario-steps {
