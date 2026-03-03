@@ -25,6 +25,28 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<span class='project-date'>Generated {project.GetDate()}</span>");
             listOfLines.Add("</header>");
 
+            // Header Facelift Version 2.0.0
+            //listOfLines.Add("<!-- Header Section -->");
+            //listOfLines.Add("<header>");
+
+            //listOfLines.Add("<div class='layout-row' style ='text-align: center; justify-content: center; align-items: center;'>");
+
+            //listOfLines.Add("<div class='layout-column align-left'>");
+            //listOfLines.Add($"<b class='bi bi-check2-circle project-name'></b><span class='project-name' style='padding-left: 2px;'>Expressium LivingDoc</span>");
+            //listOfLines.Add("</div>");
+
+            //listOfLines.Add("<div class='layout-column align-right'>");
+            //listOfLines.Add($"<span class='project-date' style='padding-right: 12px; text-align: right'>Generated {project.GetDate()}</span>");
+            //listOfLines.Add("</div>");
+
+            //listOfLines.Add("</div>");
+
+            //listOfLines.Add("<div>");
+            //listOfLines.Add($"<span id='project-title' class='project-title'>{project.Title}</span>");
+            //listOfLines.Add("</div>");
+
+            //listOfLines.Add("</header>");
+
             return listOfLines;
         }
 
@@ -36,7 +58,6 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<nav class='navigation'>");
 
             listOfLines.Add("<span>|</span>");
-
             listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewMode('project-view','Overview');\">Overview</a>");
             listOfLines.Add("<span>|</span>");
 
@@ -51,6 +72,13 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
             listOfLines.Add("<span>|</span>");
+
+            // Navigation Facelift Version 2.0.0
+            //listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewMode('project-view','Overview');\">Overview</a>");
+            //listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewMode('features-view','Features');\">Features</a>");
+            //listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewMode('scenarios-view','Scenarios');\">Scenarios</a>");
+            //listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewMode('steps-view','Steps');\">Steps</a>");
+            //listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
 
             listOfLines.Add("</nav>");
 

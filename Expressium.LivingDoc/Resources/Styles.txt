@@ -503,18 +503,6 @@
         stroke-width: 3.2px;
     }
 
-    textarea {
-        resize: none;
-        width: 100%;
-        padding: 8px;
-        border: 1px solid dimgray;
-    }
-
-    textarea:focus {
-        border-color: black;
-        outline: none;
-    }
-
     hr {
         border: 0 none;
         margin-top: 6px;
