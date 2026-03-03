@@ -140,24 +140,29 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<a class='gridline-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
 
-            listOfLines.Add($"<td class='gridline' align='right'></td>");
+            if (project.ExperimentFlag)
+            {
+                // Scenario Status Counts Facelift Version 2.0.0
+                listOfLines.Add($"<td class='gridline' align='right'>");
 
-            // Scenario Status Counts Facelift Version 2.0.0
-            //listOfLines.Add($"<td class='gridline' align='right'>");
+                if (feature.GetNumberOfPassedScenarios() > 0)
+                    listOfLines.Add($"<span class='gridline-number bgcolor-passed'>{feature.GetNumberOfPassedScenarios()}</span>");
 
-            //if (feature.GetNumberOfPassedScenarios() > 0)
-            //    listOfLines.Add($"<span class='gridline-number bgcolor-passed'>{feature.GetNumberOfPassedScenarios()}</span>");
+                if (feature.GetNumberOfFailedScenarios() > 0)
+                    listOfLines.Add($"<span class='gridline-number bgcolor-failed'>{feature.GetNumberOfFailedScenarios()}</span>");
 
-            //if (feature.GetNumberOfFailedScenarios() > 0)
-            //    listOfLines.Add($"<span class='gridline-number bgcolor-failed'>{feature.GetNumberOfFailedScenarios()}</span>");
+                if (feature.GetNumberOfIncompleteScenarios() > 0)
+                    listOfLines.Add($"<span class='gridline-number bgcolor-incomplete'>{feature.GetNumberOfIncompleteScenarios()}</span>");
 
-            //if (feature.GetNumberOfIncompleteScenarios() > 0)
-            //    listOfLines.Add($"<span class='gridline-number bgcolor-incomplete'>{feature.GetNumberOfIncompleteScenarios()}</span>");
+                if (feature.GetNumberOfSkippedScenarios() > 0)
+                    listOfLines.Add($"<span class='gridline-number bgcolor-skipped'>{feature.GetNumberOfSkippedScenarios()}</span>");
 
-            //if (feature.GetNumberOfSkippedScenarios() > 0)
-            //    listOfLines.Add($"<span class='gridline-number bgcolor-skipped'>{feature.GetNumberOfSkippedScenarios()}</span>");
-
-            //listOfLines.Add($"</td>");
+                listOfLines.Add($"</td>");
+            }
+            else
+            {
+                listOfLines.Add($"<td class='gridline' align='right'></td>");
+            }
 
             listOfLines.Add($"</tr>");
 

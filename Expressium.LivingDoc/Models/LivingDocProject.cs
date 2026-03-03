@@ -22,11 +22,15 @@ namespace Expressium.LivingDoc.Models
         public List<LivingDocFeature> Features { get; set; }
         public List<LivingDocHistory> Histories { get; set; }
 
+        internal bool ExperimentFlag { get; set; }
+
         public LivingDocProject()
         {
             Duration = new TimeSpan();
             Features = new List<LivingDocFeature>();
             Histories = new List<LivingDocHistory>();
+
+            ExperimentFlag = false;
         }
 
         public void Merge(LivingDocProject project)
