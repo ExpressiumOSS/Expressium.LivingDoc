@@ -359,6 +359,11 @@
         color: dimgray;
     }
 
+    .chart-status {
+      width: 160px;
+      height: 168px;
+    }
+
     .chart-count {
         text-align: center;
     }
