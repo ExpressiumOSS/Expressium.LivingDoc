@@ -183,7 +183,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<td width='16'></td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
-            listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
+            listOfLines.Add($"<a class='gridline-heading' href='#'>{scenario.Name}</a>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' align='right'></td>");
 

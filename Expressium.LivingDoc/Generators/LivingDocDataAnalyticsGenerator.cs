@@ -222,7 +222,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Data Analytics Duration -->");
             listOfLines.Add("<div style='padding-top: 6px; text-align: center; justify-content: center; align-items: center; display: flex;'>");
-            listOfLines.Add($"<span class='bi bi-stopwatch duration-icon'></span>");
+            listOfLines.Add($"<span class='bi bi-stopwatch duration-symbol'></span>");
             listOfLines.Add($"<span class='duration-text'>");
             listOfLines.Add($"<span class='duration-keyword'>Duration: </span>");
             listOfLines.Add($"<span data-testid='project-duration'>{project.GetDuration()}</span>");

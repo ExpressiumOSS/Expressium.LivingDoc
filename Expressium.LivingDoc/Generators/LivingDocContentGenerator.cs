@@ -149,7 +149,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<div class='layout-row filter-group'>");
 
-            listOfLines.Add("<div class='filter-group-text'>");
+            listOfLines.Add("<div class='filter-symbol'>");
             listOfLines.Add("<span class='bi bi-search'></span>");
             listOfLines.Add("</div>");
 
