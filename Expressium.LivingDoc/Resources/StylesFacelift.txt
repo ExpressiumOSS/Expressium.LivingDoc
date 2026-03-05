@@ -90,13 +90,13 @@
     @property --selected-color {
         syntax: "<color>";
         inherits: false;
-        initial-value: #d9e5f0;
+        initial-value: #EAECEF;
     }
 
     @property --hover-color {
         syntax: "<color>";
         inherits: false;
-        initial-value: #e3ecf4;
+        initial-value: #F1F3F5;
     }
 
     @property --darkgray-color {
@@ -105,10 +105,22 @@
         initial-value: #484848;
     }
    
+    @property --headinggray-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #1F2A44;
+    }
+
+    @property --navgray-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #1F2937;
+    }
+
     @property --dustgray-color {
         syntax: "<color>";
         inherits: false;
-        initial-value: #F1F1F1;
+        initial-value: #F3F4F6;
     }
 
     body, html {
@@ -123,10 +135,11 @@
         display: flex;
         height: calc(100% - 156px); /* Adjust for header and footer height */
         flex-direction: row; /* Change to row for vertical splitter */
+        border-bottom: 1px solid #ddd;
     }
 
     #splitter {
-        width: 2px;
+        width: 1px;
         background: #ddd;
         cursor: col-resize;
     }
@@ -153,6 +166,8 @@
         padding: 8px;
         padding-left: 16px;
         background-color: #dfe7f2;
+        background-color: #DFE3ED;
+        background-color: #E9EDF5;
     }
 
     footer {
@@ -160,17 +175,18 @@
         color: #555;
         text-align: center;
         padding: 10px;
-        font-size: 0.875em;
+        font-size: 0.9em;
     }
 
     .navigation {
         background-color: var(--dustgray-color);
         padding: 8px 16px;
+        border-bottom: 1px solid #ddd;
     }
 
     a.navigation-link {
         position: relative;
-        color: var(--darkgray-color);
+        color: var(--navgray-color);
         padding-left: 1px;
         padding-right: 1px;
         margin-right: 8px;
@@ -187,10 +203,10 @@
         content: "";
         position: absolute;
         left: 0;
-        bottom: -8px; /* adjust spacing under text */
+        bottom: -4px; /* adjust spacing under text */
         width: 100%;
-        height: 2px;  /* thickness of line */
-        background-color: black;
+        height: 1px;  /* thickness of line */
+        background-color: var(--navgray-color);
     }
 
     .section {
@@ -247,9 +263,9 @@
     }
 
     th {
-        background-color: var(--dustgray-color);
-        color: var(--darkgray-color);
-        border: 1px solid;
+        color: var(--navgray-color);
+        background-color: #E5EAF4;
+        border: 2px solid;
         font-weight: 600;
         border-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
     }
@@ -292,25 +308,24 @@
     }
 
     button {
-        color: black;
-        border: 1px solid black;
-        /* border-radius: 0.50em; */
-    }
-
-    button.prefilter {       
-        border: 1px solid var(--darkgray-color);
-        color: var(--darkgray-color);
-    }
-
-    button.prefilter:hover,
-    button.prefilter.active {
-        color: black;
-        border: 1px solid black;
+        color: var(--navgray-color);
+        border: 1px solid #B8C2D3;
         background-color: var(--selected-color);
+        border-radius: 4px;
     }
 
-    .grid-option {
-        color: dimgray;
+    /* Filter buttons */
+    button.filter-option {   
+        color: #6B778C;
+        background-color: #F4F6F9;
+    }
+
+    button.filter-option:hover,
+    button.filter-option.active {
+        color: var(--darkgray-color);
+        color: var(--navgray-color);
+        background-color: var(--selected-color);
+        border-color: #B8C2D3;
     }
 
     .gridline {
@@ -319,8 +334,8 @@
     }
 
     .gridline-folder {
-        color: var(--darkgray-color);
-        font-weight: bold;
+        color: dimgray;
+        font-weight: 600;
     }
 
     .gridline-heading {
@@ -365,10 +380,10 @@
     }
 
     .page-name {
-        font-size: 1.40em;
-        font-weight: bold;
+        font-size: 1.35em;
+        font-weight: 600;
         line-height: 1;
-        color: dimgray;
+        color: var(--headinggray-color);
     }
 
     .chart-outline {
@@ -377,14 +392,14 @@
         padding: 16px;
         padding-left: 24px;
         padding-right: 24px;
-        background-color: whitesmoke;
+        background-color: var(--dustgray-color);
     }
 
     .chart-name {
         font-size: 1.25em;
-        font-weight: bold;
+        font-weight: 600;
         line-height: 1;
-        color: dimgray;
+        color: var(--headinggray-color);
     }
 
     .chart-status {
@@ -534,21 +549,21 @@
     .scenario-keyword,
     .step-keyword {
         color: var(--keyword-color);
-        font-weight: bold;
+        font-weight: 600;
     }
 
     .feature-name,
     .rule-name,
     .scenario-name {
-        font-weight: bold;
+        font-weight: 600;
     }
 
     .feature-description,
     .rule-description,
     .scenario-description {
         font-family: Consolas;
-        font-size: 0.875em;
-        color: var(--darkgray-color);
+        font-size: 0.9em;
+        color: dimgray;
         font-style: italic;
         padding-top: 2px;
     }
@@ -573,6 +588,7 @@
         margin-left: 2px;
     }
 
+    .gridline-option,
     .scenario-stacktraces,
     .scenario-attachments {
         color: dimgray;
@@ -646,23 +662,23 @@
     }
 
     .message-stacktrace {
-        font-size: 0.875em;
+        font-size: 0.9em;
     }
 
     .examples-keyword {
-        font-weight: bold;
-        color: var(--darkgray-color);
+        font-weight: 600;
+        color: dimgray;
         padding-left: 16px;
     }
 
     .examples-name {
-        color: var(--darkgray-color);
+        color: dimgray;
     }
 
     .examples-description {
         font-family: Consolas;
-        font-size: 0.875em;
-        color: var(--darkgray-color);
+        font-size: 0.9em;
+        color: dimgray;
         font-style: italic;
         padding-left: 32px;
     }
@@ -676,8 +692,8 @@
     }
 
     .attachments-keyword {
-        font-weight: bold;
-        color: var(--darkgray-color);
+        font-weight: 600;
+        color: dimgray;
         padding-left: 16px;
     }
 

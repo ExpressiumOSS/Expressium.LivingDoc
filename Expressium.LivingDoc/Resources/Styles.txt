@@ -278,13 +278,13 @@
         /* border-radius: 0.50em; */
     }
 
-    button.prefilter {       
+    button.filter-option {       
         border: 1px solid var(--darkgray-color);
         color: var(--darkgray-color);
     }
 
-    button.prefilter:hover,
-    button.prefilter.active {
+    button.filter-option:hover,
+    button.filter-option.active {
         color: black;
         border: 1px solid black;
         background-color: var(--selected-color);

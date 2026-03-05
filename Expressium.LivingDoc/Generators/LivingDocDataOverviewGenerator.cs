@@ -97,8 +97,18 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' colspan='2' align='right'>");
-            listOfLines.Add("<a class='grid-option bi bi-plus-lg' title='Expand All Features' href='#' onclick='loadExpandAll()'></a>");
-            listOfLines.Add("<a class='grid-option bi bi-dash-lg' title='Collapse All Features' href='#' onclick='loadCollapseAll()'></a>");
+
+            if (project.ExperimentFlag)
+            {
+                listOfLines.Add("<button class='gridline-option bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
+                listOfLines.Add("<button class='gridline-option bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
+            }
+            else
+            {
+                listOfLines.Add("<a class='grid-option bi bi-plus-lg' title='Expand All Features' href='#' onclick='loadExpandAll()'></a>");
+                listOfLines.Add("<a class='grid-option bi bi-dash-lg' title='Collapse All Features' href='#' onclick='loadCollapseAll()'></a>");
+            }
+
             listOfLines.Add($"</td>");
             listOfLines.Add($"</tr>");
 
@@ -118,7 +128,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='gridline' align='right'></td>");
+            listOfLines.Add($"<td class='gridline gridline-option' style='padding-right: 8px;' align='right' ></td>");
 
             listOfLines.Add($"</tr>");
 
@@ -143,7 +153,7 @@ namespace Expressium.LivingDoc.Generators
             if (project.ExperimentFlag)
             {
                 // Scenario Status Counts Facelift Version 2.0.0
-                listOfLines.Add($"<td class='gridline' align='right'>");
+                listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' align='right'>");
 
                 if (feature.GetNumberOfPassedScenarios() > 0)
                     listOfLines.Add($"<span class='gridline-number bgcolor-passed'>{feature.GetNumberOfPassedScenarios()}</span>");

@@ -16,6 +16,7 @@ namespace Expressium.LivingDoc.Parsers
         protected List<TestRunStarted> listOfTestRunStarted;
         protected List<TestRunFinished> listOfTestRunFinished;
         protected List<Attachment> listOftAttachment;
+        protected List<Hook> listOfHook;
 
         internal MessagesLoader()
         {
@@ -29,6 +30,7 @@ namespace Expressium.LivingDoc.Parsers
             listOfTestRunStarted = new List<TestRunStarted>();
             listOfTestRunFinished = new List<TestRunFinished>();
             listOftAttachment = new List<Attachment>();
+            listOfHook = new List<Hook>();
         }
 
         internal void LoadCucumberMessages(string filePath)
@@ -69,6 +71,9 @@ namespace Expressium.LivingDoc.Parsers
 
                     if (envelope.Attachment != null)
                         listOftAttachment.Add(envelope.Attachment);
+
+                    if (envelope.Hook != null)
+                        listOfHook.Add(envelope.Hook);
                 }
             }
         }

@@ -317,6 +317,9 @@ namespace Expressium.LivingDoc.Parsers
                         if (testCaseFinished == null)
                             continue;
 
+                        // Asign Before and After Hook Failures...
+                        ParseHookTestResults(example, testCaseStarted);
+
                         // Assign Scenario Duration...
                         example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
 
@@ -326,6 +329,50 @@ namespace Expressium.LivingDoc.Parsers
                         {
                             foreach (var attachment in attachments)
                                 ParseTestResultsAttachments(example, attachment);
+                        }
+                    }
+                }
+            }
+        }
+
+        internal void ParseHookTestResults(LivingDocExample example, TestCaseStarted testCaseStarted)
+        {
+            if (example.Steps.Count == 0)
+                return;
+
+            if (example.GetStatus() == LivingDocStatuses.Failed.ToString())
+                return;
+
+            var testCase = listOfTestCases.FirstOrDefault(x => x.Id == testCaseStarted.TestCaseId);
+            if (testCase == null)
+                return;
+
+            var hookTestSteps = testCase.TestSteps.FindAll(g => g.HookId != null);
+            foreach (var hookTestStep in hookTestSteps)
+            {
+                var testStepFinished = listOfTestStepFinished.Find(k => k.TestStepId == hookTestStep.Id);
+                if (testStepFinished != null)
+                {
+                    if (testStepFinished.TestStepResult.Exception != null)
+                    {
+                        var hook = listOfHook.Find(d => d.Id == hookTestStep.HookId);
+                        if (hook != null)
+                        {
+                            if (hook.Type.ToString() == "BEFORE_TEST_CASE")
+                            {
+                                example.Steps.First().Status = LivingDocStatuses.Failed.ToString();
+                                example.Steps.First().ExceptionType = testStepFinished.TestStepResult.Exception.Type;
+                                example.Steps.First().ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
+                                example.Steps.First().ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+                            }
+
+                            if (hook.Type.ToString() == "AFTER_TEST_CASE")
+                            {
+                                example.Steps.Last().Status = LivingDocStatuses.Failed.ToString();
+                                example.Steps.Last().ExceptionType = testStepFinished.TestStepResult.Exception.Type;
+                                example.Steps.Last().ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
+                                example.Steps.Last().ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+                            }
                         }
                     }
                 }
