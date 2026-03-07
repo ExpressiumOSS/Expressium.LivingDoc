@@ -19,36 +19,42 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            if (project.ExperimentFlag)
+            //if (project.ExperimentFlag)
+            //{
+            //    // Header Facelift Version 2.0.0
+            //    listOfLines.Add("<!-- Header Section -->");
+            //    listOfLines.Add("<header>");
+
+            //    listOfLines.Add("<div class='layout-row' style ='text-align: center; justify-content: center; align-items: center;'>");
+
+            //    listOfLines.Add("<div class='layout-column align-left'>");
+            //    listOfLines.Add($"<b class='bi bi-check2-circle project-name'></b><span class='project-name' style='padding-left: 2px;'>Expressium LivingDoc</span>");
+            //    listOfLines.Add("<br />");
+            //    listOfLines.Add($"<span class='project-date' style='padding-right: 12px; text-align: right'>Generated {project.GetDate()}</span>");
+            //    listOfLines.Add("<br />");
+            //    listOfLines.Add($"<span id='project-title' class='project-title'>{project.Title}</span>");
+            //    listOfLines.Add("</div>");
+
+            //    listOfLines.Add("<div class='layout-column align-right'>");
+            //    listOfLines.Add($"<span>{project.OsVersion}</span>");
+            //    listOfLines.Add("<br />");
+            //    listOfLines.Add($"<span>LivingDoc Version {project.GetApplicationVersion()}</span>");
+            //    listOfLines.Add("<br />");
+            //    listOfLines.Add($"<span>{project.ImplementationName} Version {project.ImplementationVersion}</span>");
+            //    listOfLines.Add("</div>");
+
+            //    listOfLines.Add("</div>");
+
+            //    listOfLines.Add("</header>");
+            //}
+            //else
             {
-                // Header Facelift Version 2.0.0
                 listOfLines.Add("<!-- Header Section -->");
                 listOfLines.Add("<header>");
 
-                listOfLines.Add("<div class='layout-row' style ='text-align: center; justify-content: center; align-items: center;'>");
-
-                listOfLines.Add("<div class='layout-column align-left'>");
-                listOfLines.Add($"<b class='bi bi-check2-circle project-name'></b><span class='project-name' style='padding-left: 2px;'>Expressium LivingDoc</span>");
-                listOfLines.Add("</div>");
-
-                listOfLines.Add("<div class='layout-column align-right'>");
-                listOfLines.Add($"<span class='project-date' style='padding-right: 12px; text-align: right'>Generated {project.GetDate()}</span>");
-                listOfLines.Add("</div>");
-
-                listOfLines.Add("</div>");
-
-                listOfLines.Add("<div>");
-                listOfLines.Add($"<span id='project-title' class='project-title'>{project.Title}</span>");
-                listOfLines.Add("</div>");
-
-                listOfLines.Add("</header>");
-            }
-            else
-            {
-                listOfLines.Add("<!-- Header Section -->");
-                listOfLines.Add("<header>");
                 listOfLines.Add($"<span class='project-name'>{project.Title}</span><br />");
                 listOfLines.Add($"<span class='project-date'>Generated {project.GetDate()}</span>");
+
                 listOfLines.Add("</header>");
             }
 
@@ -147,7 +153,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'>Incomplete</button>");
             listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'>Failed</button>");
             listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'>Skipped</button>");
-            listOfLines.Add("<button title='Clear Filters' onclick='clearPrefilters()'>Clear</button>");
+            listOfLines.Add("<button class='filter-button' title='Clear Filters' onclick='clearPrefilters()'>Clear</button>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");

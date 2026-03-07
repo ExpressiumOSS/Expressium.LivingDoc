@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Expressium.LivingDoc.Models
 {
@@ -31,6 +32,16 @@ namespace Expressium.LivingDoc.Models
             Histories = new List<LivingDocHistory>();
 
             ExperimentFlag = false;
+        }
+
+        internal string GetApplicationName()
+        {
+            return "Expressium LivingDoc";
+        }
+
+        internal string GetApplicationVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version?.ToString();
         }
 
         public void Merge(LivingDocProject project)

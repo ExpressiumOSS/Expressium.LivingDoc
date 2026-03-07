@@ -7,12 +7,16 @@ namespace Expressium.LivingDoc.Generators
     internal class LivingDocDataOverviewGenerator
     {
         private int numberOfColumns = 10;
+        private int indentSize = 16;
 
         private LivingDocProject project;
 
         internal LivingDocDataOverviewGenerator(LivingDocProject project)
         {
             this.project = project;
+
+            if (project.ExperimentFlag)
+                indentSize = 14;
         }
 
         internal List<string> GenerateDataOverview()
@@ -92,7 +96,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<tr>");
-            listOfLines.Add($"<td class='grid-folder' width='16'>📂</td>");
+            listOfLines.Add($"<td class='grid-folder' width='{indentSize}'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - 1}'>");
             listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
@@ -105,8 +109,8 @@ namespace Expressium.LivingDoc.Generators
             }
             else
             {
-                listOfLines.Add("<a class='grid-option bi bi-plus-lg' title='Expand All Features' href='#' onclick='loadExpandAll()'></a>");
-                listOfLines.Add("<a class='grid-option bi bi-dash-lg' title='Collapse All Features' href='#' onclick='loadCollapseAll()'></a>");
+                listOfLines.Add("<a class='gridline-option bi bi-plus-lg' title='Expand All Features' href='#' onclick='loadExpandAll()'></a>");
+                listOfLines.Add("<a class='gridline-option bi bi-dash-lg' title='Collapse All Features' href='#' onclick='loadCollapseAll()'></a>");
             }
 
             listOfLines.Add($"</td>");
@@ -124,7 +128,7 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td class='grid-folder' width='16'>📂</td>");
+            listOfLines.Add($"<td class='grid-folder' width='{indentSize}'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
@@ -144,32 +148,32 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td data-collapse='false' width='16' class='gridline-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
+            listOfLines.Add($"<td data-collapse='false' width='{indentSize}' class='gridline-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<a class='gridline-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
 
-            if (project.ExperimentFlag)
-            {
-                // Scenario Status Counts Facelift Version 2.0.0
-                listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' align='right'>");
+            //if (project.ExperimentFlag)
+            //{
+            //    // Scenario Status Counts Facelift Version 2.0.0
+            //    listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' align='right'>");
 
-                if (feature.GetNumberOfPassedScenarios() > 0)
-                    listOfLines.Add($"<span class='gridline-number bgcolor-passed'>{feature.GetNumberOfPassedScenarios()}</span>");
+            //    if (feature.GetNumberOfPassedScenarios() > 0)
+            //        listOfLines.Add($"<span class='gridline-number bgcolor-passed'>{feature.GetNumberOfPassedScenarios()}</span>");
 
-                if (feature.GetNumberOfFailedScenarios() > 0)
-                    listOfLines.Add($"<span class='gridline-number bgcolor-failed'>{feature.GetNumberOfFailedScenarios()}</span>");
+            //    if (feature.GetNumberOfFailedScenarios() > 0)
+            //        listOfLines.Add($"<span class='gridline-number bgcolor-failed'>{feature.GetNumberOfFailedScenarios()}</span>");
 
-                if (feature.GetNumberOfIncompleteScenarios() > 0)
-                    listOfLines.Add($"<span class='gridline-number bgcolor-incomplete'>{feature.GetNumberOfIncompleteScenarios()}</span>");
+            //    if (feature.GetNumberOfIncompleteScenarios() > 0)
+            //        listOfLines.Add($"<span class='gridline-number bgcolor-incomplete'>{feature.GetNumberOfIncompleteScenarios()}</span>");
 
-                if (feature.GetNumberOfSkippedScenarios() > 0)
-                    listOfLines.Add($"<span class='gridline-number bgcolor-skipped'>{feature.GetNumberOfSkippedScenarios()}</span>");
+            //    if (feature.GetNumberOfSkippedScenarios() > 0)
+            //        listOfLines.Add($"<span class='gridline-number bgcolor-skipped'>{feature.GetNumberOfSkippedScenarios()}</span>");
 
-                listOfLines.Add($"</td>");
-            }
-            else
+            //    listOfLines.Add($"</td>");
+            //}
+            //else
             {
                 listOfLines.Add($"<td class='gridline' align='right'></td>");
             }
@@ -195,7 +199,7 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td width='16'></td>");
+            listOfLines.Add($"<td width='{indentSize}'></td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<a class='gridline-heading' href='#'>{scenario.Name}</a>");

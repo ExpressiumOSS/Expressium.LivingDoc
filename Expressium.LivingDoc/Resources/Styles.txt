@@ -290,7 +290,7 @@
         background-color: var(--selected-color);
     }
 
-    .grid-option {
+    .gridline-option {
         color: dimgray;
     }
 
@@ -656,12 +656,6 @@
     ul.attachments-files li {
         padding-top: 1px;
         padding-bottom: 1px;
-    }
-
-    #script-view {
-        flex: 1;
-        overflow: auto;
-        height: calc(100% - 334px); /* Adjust for filter and search height */
     }
 
     #scenario-script {
