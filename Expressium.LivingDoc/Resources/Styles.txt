@@ -112,48 +112,10 @@
         /* font-family: system-ui, "Segoe UI Variable Small", "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
     }
 
-    #content-wrapper {
-        display: flex;
-        height: calc(100% - 156px); /* Adjust for header and footer height */
-        flex-direction: row; /* Change to row for vertical splitter */
-    }
-
-    #splitter {
-        width: 2px;
-        background: #ddd;
-        cursor: col-resize;
-    }
-
-    #left-section {
-        flex: 1;
-        overflow: hidden;
-        scrollbar-color: #909090 #F8F9FA;
-    }
-
-    #right-section {
-        flex: 1;
-        overflow: auto;
-        scrollbar-color: #909090 #F8F9FA;
-    }
-
-    #list-view {
-        flex: 1;
-        overflow: auto;
-        height: calc(100% - 68px); /* Adjust for filter and search height */
-    }
-
     header {
         padding: 8px;
         padding-left: 16px;
         background-color: #C7D9E9;
-    }
-
-    footer {
-        background-color: #f1f1f1;
-        color: #555;
-        text-align: center;
-        padding: 10px;
-        font-size: 0.875em;
     }
 
     .navigation {
@@ -169,9 +131,47 @@
         padding-right: 1px;
     }
 
-    a.navigation-active {
+    a.navigation-link.active {
         font-weight: 600;
         font-size: 1.0625em;
+    }
+
+    .splitter-wrapper {
+        display: flex;
+        height: calc(100% - 156px); /* Adjust for header and footer height */
+        flex-direction: row; /* Change to row for vertical splitter */
+    }
+
+    #splitter {
+        width: 2px;
+        background: #ddd;
+        cursor: col-resize;
+    }
+
+    #splitter-left {
+        flex: 1;
+        overflow: hidden;
+        scrollbar-color: #909090 #F8F9FA;
+    }
+
+    #splitter-right {
+        flex: 1;
+        overflow: auto;
+        scrollbar-color: #909090 #F8F9FA;
+    }
+
+    #list-view {
+        flex: 1;
+        overflow: auto;
+        height: calc(100% - 68px); /* Adjust for filter and search height */
+    }
+
+    footer {
+        background-color: #f1f1f1;
+        color: #555;
+        text-align: center;
+        padding: 10px;
+        font-size: 0.875em;
     }
 
     .section {
@@ -290,7 +290,8 @@
         background-color: var(--selected-color);
     }
 
-    .gridline-option {
+    .grid-expand,
+    .grid-collapse {
         color: dimgray;
     }
 
@@ -299,17 +300,17 @@
         border-bottom: 1px solid #E0E0E0;
     }
 
-    .gridline-folder {
+    .grid-folder-name {
         color: var(--darkgray-color);
         font-weight: bold;
     }
 
-    .gridline-heading {
+    .grid-heading {
         color: var(--keyword-color);
         font-weight: normal;
     }
 
-    .gridline-toggle {
+    .grid-toggle {
         color: dimgray;
         cursor: pointer;
         text-align: center;

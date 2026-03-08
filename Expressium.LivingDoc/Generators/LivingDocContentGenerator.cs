@@ -19,44 +19,13 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            //if (project.ExperimentFlag)
-            //{
-            //    // Header Facelift Version 2.0.0
-            //    listOfLines.Add("<!-- Header Section -->");
-            //    listOfLines.Add("<header>");
+            listOfLines.Add("<!-- Header Section -->");
+            listOfLines.Add("<header>");
 
-            //    listOfLines.Add("<div class='layout-row' style ='text-align: center; justify-content: center; align-items: center;'>");
+            listOfLines.Add($"<span class='project-name'>{project.Title}</span><br />");
+            listOfLines.Add($"<span class='project-date'>Generated {project.GetDate()}</span>");
 
-            //    listOfLines.Add("<div class='layout-column align-left'>");
-            //    listOfLines.Add($"<b class='bi bi-check2-circle project-name'></b><span class='project-name' style='padding-left: 2px;'>Expressium LivingDoc</span>");
-            //    listOfLines.Add("<br />");
-            //    listOfLines.Add($"<span class='project-date' style='padding-right: 12px; text-align: right'>Generated {project.GetDate()}</span>");
-            //    listOfLines.Add("<br />");
-            //    listOfLines.Add($"<span id='project-title' class='project-title'>{project.Title}</span>");
-            //    listOfLines.Add("</div>");
-
-            //    listOfLines.Add("<div class='layout-column align-right'>");
-            //    listOfLines.Add($"<span>{project.OsVersion}</span>");
-            //    listOfLines.Add("<br />");
-            //    listOfLines.Add($"<span>LivingDoc Version {project.GetApplicationVersion()}</span>");
-            //    listOfLines.Add("<br />");
-            //    listOfLines.Add($"<span>{project.ImplementationName} Version {project.ImplementationVersion}</span>");
-            //    listOfLines.Add("</div>");
-
-            //    listOfLines.Add("</div>");
-
-            //    listOfLines.Add("</header>");
-            //}
-            //else
-            {
-                listOfLines.Add("<!-- Header Section -->");
-                listOfLines.Add("<header>");
-
-                listOfLines.Add($"<span class='project-name'>{project.Title}</span><br />");
-                listOfLines.Add($"<span class='project-date'>Generated {project.GetDate()}</span>");
-
-                listOfLines.Add("</header>");
-            }
+            listOfLines.Add("</header>");
 
             return listOfLines;
         }
@@ -110,22 +79,22 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Content Wrapper Section -->");
-            listOfLines.Add("<div id='content-wrapper'>");
+            listOfLines.Add("<!-- Splitter Wrapper Section -->");
+            listOfLines.Add("<div class='splitter-wrapper'>");
 
-            listOfLines.Add("<!-- Left Content Section -->");
-            listOfLines.Add("<div id='left-section' class='bg-light p-3'>");
+            listOfLines.Add("<!-- Left Splitter Section -->");
+            listOfLines.Add("<div id='splitter-left' class='bg-light p-3'>");
 
             listOfLines.AddRange(GenerateViewPreFilters());
             listOfLines.AddRange(GenerateFilter());
             listOfLines.Add("<div id='list-view'></div>");
             listOfLines.Add("</div>");
 
-            listOfLines.Add("<!-- Splitter Content Section -->");
+            listOfLines.Add("<!-- Splitter Section -->");
             listOfLines.Add("<div id='splitter'></div>");
 
-            listOfLines.Add("<!-- Right Content Section -->");
-            listOfLines.Add("<div id='right-section' class='bg-light p-3'>");
+            listOfLines.Add("<!-- Right Splitter Section -->");
+            listOfLines.Add("<div id='splitter-right' class='bg-light p-3'>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");

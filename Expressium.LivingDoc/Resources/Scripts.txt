@@ -5,7 +5,7 @@
             var feature = document.getElementById(featureId).innerHTML;
             var scenario = document.getElementById(scenarioId).innerHTML;
 
-            document.getElementById('right-section').innerHTML = feature + scenario;
+            document.getElementById('splitter-right').innerHTML = feature + scenario;
 
             clearActiveListItems();
             x.classList.add('active');
@@ -30,9 +30,9 @@
                 }
             }
 
-            document.getElementById('right-section').innerHTML = feature;
+            document.getElementById('splitter-right').innerHTML = feature;
 
-            var rules = document.getElementById('right-section').querySelectorAll('[data-rule-replica]');
+            var rules = document.getElementById('splitter-right').querySelectorAll('[data-rule-replica]');
             for (var i = 0; i < rules.length; i++)
                 rules[i].style.display = "none";
 
@@ -62,9 +62,9 @@
             var navLinks = document.querySelectorAll('.navigation-link');
             for (var i = 0; i < navLinks.length; i++) {
                 if (navLinks[i].textContent == y)
-                    navLinks[i].classList.add('navigation-active');
+                    navLinks[i].classList.add('active');
                 else
-                    navLinks[i].classList.remove('navigation-active');
+                    navLinks[i].classList.remove('active');
             }
 
             filterView();
@@ -73,21 +73,21 @@
     </script>
     <script>
         function loadAnalytics() {
-            var navLinkActive = document.querySelectorAll('a.navigation-link.navigation-active');
+            var navLinkActive = document.querySelectorAll('a.navigation-link.active');
             if (navLinkActive.length > 0) {
                 var name = navLinkActive[0].textContent.toLowerCase();
 
                 if (name == "overview") {
                     var analytics = document.getElementById("analytics-scenarios").innerHTML;
-                    document.getElementById('right-section').innerHTML = analytics;
+                    document.getElementById('splitter-right').innerHTML = analytics;
                 } else {
                     var analytics = document.getElementById("analytics-" + name).innerHTML;
-                    document.getElementById('right-section').innerHTML = analytics;
+                    document.getElementById('splitter-right').innerHTML = analytics;
                 }
             }
             else {
                 var analytics = document.getElementById("analytics-scenarios").innerHTML;
-                document.getElementById('right-section').innerHTML = analytics;
+                document.getElementById('splitter-right').innerHTML = analytics;
             }
 
             clearActiveListItems();
@@ -95,7 +95,7 @@
     </script>
     <script>
         function filterView() {
-            var navLinkActive = document.querySelectorAll('a.navigation-link.navigation-active');
+            var navLinkActive = document.querySelectorAll('a.navigation-link.active');
             if (navLinkActive.length > 0) {
                 name = navLinkActive[0].textContent.toLowerCase();
 
@@ -600,7 +600,7 @@
                             var feature = document.getElementById(featureId).innerHTML;
                             var scenario = document.getElementById(scenarioId).innerHTML;
 
-                            document.getElementById('right-section').innerHTML = feature + scenario;
+                            document.getElementById('splitter-right').innerHTML = feature + scenario;
 
                             break;
                         }

@@ -1,7 +1,7 @@
 ﻿    <script>
         const splitter = document.getElementById('splitter');
-        const leftSection = document.getElementById('left-section');
-        const rightSection = document.getElementById('right-section');
+        const splitterLeft = document.getElementById('splitter-left');
+        const splitterRight = document.getElementById('splitter-right');
 
         let isDragging = false;
 
@@ -15,12 +15,12 @@
 
             document.body.style.userSelect = 'none';
 
-            const totalWidth = leftSection.offsetWidth + rightSection.offsetWidth + splitter.offsetWidth;
-            const leftWidth = e.clientX - leftSection.getBoundingClientRect().left;
+            const totalWidth = splitterLeft.offsetWidth + splitterRight.offsetWidth + splitter.offsetWidth;
+            const leftWidth = e.clientX - splitterLeft.getBoundingClientRect().left;
 
             if (leftWidth > 50 && leftWidth < totalWidth - 50) {
-                leftSection.style.flex = `0 0 ${leftWidth}px`;
-                rightSection.style.flex = `1 1 auto`;
+                splitterLeft.style.flex = `0 0 ${leftWidth}px`;
+                splitterRight.style.flex = `1 1 auto`;
             }
         });
 

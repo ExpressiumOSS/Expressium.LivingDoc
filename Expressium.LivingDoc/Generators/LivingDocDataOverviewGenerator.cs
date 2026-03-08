@@ -98,19 +98,19 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<tr>");
             listOfLines.Add($"<td class='grid-folder' width='{indentSize}'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - 1}'>");
-            listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
+            listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' colspan='2' align='right'>");
 
             if (project.ExperimentFlag)
             {
-                listOfLines.Add("<button class='gridline-option bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
-                listOfLines.Add("<button class='gridline-option bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
+                listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
+                listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
             }
             else
             {
-                listOfLines.Add("<a class='gridline-option bi bi-plus-lg' title='Expand All Features' href='#' onclick='loadExpandAll()'></a>");
-                listOfLines.Add("<a class='gridline-option bi bi-dash-lg' title='Collapse All Features' href='#' onclick='loadCollapseAll()'></a>");
+                listOfLines.Add("<a class='grid-expand bi bi-plus-lg' title='Expand All Features' href='#' onclick='loadExpandAll()'></a>");
+                listOfLines.Add("<a class='grid-collapse bi bi-dash-lg' title='Collapse All Features' href='#' onclick='loadCollapseAll()'></a>");
             }
 
             listOfLines.Add($"</td>");
@@ -130,9 +130,9 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add($"<td class='grid-folder' width='{indentSize}'>📂</td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
-            listOfLines.Add($"<span class='gridline-folder'>{GetFolderName(folder)}</span>");
+            listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='gridline gridline-option' style='padding-right: 8px;' align='right' ></td>");
+            listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' align='right' ></td>");
 
             listOfLines.Add($"</tr>");
 
@@ -148,35 +148,13 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td data-collapse='false' width='{indentSize}' class='gridline-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
+            listOfLines.Add($"<td data-collapse='false' width='{indentSize}' class='grid-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
-            listOfLines.Add($"<a class='gridline-heading' href='#'>{feature.Name}</a>");
+            listOfLines.Add($"<a class='grid-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
 
-            //if (project.ExperimentFlag)
-            //{
-            //    // Scenario Status Counts Facelift Version 2.0.0
-            //    listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' align='right'>");
-
-            //    if (feature.GetNumberOfPassedScenarios() > 0)
-            //        listOfLines.Add($"<span class='gridline-number bgcolor-passed'>{feature.GetNumberOfPassedScenarios()}</span>");
-
-            //    if (feature.GetNumberOfFailedScenarios() > 0)
-            //        listOfLines.Add($"<span class='gridline-number bgcolor-failed'>{feature.GetNumberOfFailedScenarios()}</span>");
-
-            //    if (feature.GetNumberOfIncompleteScenarios() > 0)
-            //        listOfLines.Add($"<span class='gridline-number bgcolor-incomplete'>{feature.GetNumberOfIncompleteScenarios()}</span>");
-
-            //    if (feature.GetNumberOfSkippedScenarios() > 0)
-            //        listOfLines.Add($"<span class='gridline-number bgcolor-skipped'>{feature.GetNumberOfSkippedScenarios()}</span>");
-
-            //    listOfLines.Add($"</td>");
-            //}
-            //else
-            {
-                listOfLines.Add($"<td class='gridline' align='right'></td>");
-            }
+            listOfLines.Add($"<td class='gridline' align='right'></td>");
 
             listOfLines.Add($"</tr>");
 
@@ -202,7 +180,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<td width='{indentSize}'></td>");
             listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
-            listOfLines.Add($"<a class='gridline-heading' href='#'>{scenario.Name}</a>");
+            listOfLines.Add($"<a class='grid-heading' href='#'>{scenario.Name}</a>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='gridline' align='right'></td>");
 
