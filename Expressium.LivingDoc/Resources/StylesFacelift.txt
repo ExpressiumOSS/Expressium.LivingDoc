@@ -85,18 +85,19 @@
         inherits: false;
         initial-value: #2F6795;
         initial-value: #2D638F;
+        initial-value: #2c657e;
     }
 
     @property --selected-color {
         syntax: "<color>";
         inherits: false;
-        initial-value: #EDEFF2;
+        initial-value: #ECEEF2;
     }
 
     @property --hover-color {
         syntax: "<color>";
         inherits: false;
-        initial-value: #F3F5F7;
+        initial-value: #F3F4F6;
     }
 
     @property --darkgray-color {
@@ -105,23 +106,33 @@
         initial-value: #484848;
     }
    
-    @property --headinggray-color {
+    @property --heading-color {
         syntax: "<color>";
         inherits: false;
-        initial-value: #1F2A44;
         initial-value: #1F2937;
+        initial-value: #333333;
     }
 
-    @property --navgray-color {
+    @property --navigation-color {
         syntax: "<color>";
         inherits: false;
         initial-value: #1F2937;
+        initial-value: #333333;
     }
 
     @property --dustgray-color {
         syntax: "<color>";
         inherits: false;
         initial-value: #F3F4F6;
+    }
+
+    @property --header-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #E5EAF4;
+        initial-value: #E9EEF0;
+        initial-value: #E9EDF5;
+        initial-value: #E9EDF1;
     }
 
     body, html {
@@ -131,23 +142,32 @@
         font-size: 14px;
         /* font-family: system-ui, "Segoe UI Variable Small", "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
     }
-
+   
     header {
-        padding: 8px;
-        padding-left: 16px;
-        padding-right: 16px;
-        background-color: #E9EDF5;
+        padding: 10px 16px;
+        background-color: var(--header-color);
+    }
+
+    .project-name {
+        font-size: 1.50em;
+        font-weight: bold;
+    }
+
+    .project-date {
+        color: dimgray;        
+        padding-left: 2px;
+        font-size: 1.00em;
     }
 
     .navigation {
+        padding: 9px 16px;
         background-color: var(--dustgray-color);
-        padding: 8px 16px;
         border-bottom: 1px solid #ddd;
     }
 
     a.navigation-link {
         position: relative;
-        color: var(--navgray-color);
+        color: var(--navigation-color);
         padding-left: 1px;
         padding-right: 1px;
         margin-right: 8px;
@@ -164,9 +184,9 @@
         content: "";
         position: absolute;
         left: 0;
-        bottom: -10px; /* adjust spacing under text */
+        bottom: -11px; /* adjust spacing under text */
         width: 100%;
-        height: 2px;  /* thickness of line */
+        height: 1px;  /* thickness of line */
         background-color: gray;
     }
 
@@ -193,12 +213,6 @@
         flex: 1;
         overflow: auto;
         scrollbar-color: #909090 #F8F9FA;
-    }
-
-    #list-view {
-        flex: 1;
-        overflow: auto;
-        height: calc(100% - 68px); /* Adjust for filter and search height */
     }
 
     footer {
@@ -247,7 +261,7 @@
         color: var(--darkgray-color);
     }
 
-    .filter-group-input {
+    .filter-keywords {
         width: 100%;
         box-sizing: border-box;
         border-width: 1px;
@@ -256,39 +270,38 @@
         border: hidden;
     }
 
-    th, td {
-        padding-left: 4px;
-        padding-right: 4px;
-        padding-top: 3px;
-        padding-bottom: 3px;
+    #filter-list {
+        flex: 1;
+        overflow: auto;
+        height: calc(100% - 68px); /* Adjust for filter and search height */
     }
 
-    .chart-history-grid td {
-        border: 2px solid;
-        border-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+    th, td {
+        padding: 3px 4px;
     }
 
     th {
-        color: var(--navgray-color);
-        background-color: #E5EAF4;
+        color: var(--navigation-color);
+        background-color: var(--header-color);
+        background-color: #E8E9EB;
         border: 2px solid;
         font-weight: 600;
         border-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
     }
 
-    table.grid-view,
+    table.list-view,
     table.tree-view {
         border: 1px;
         width: 100%;
     }
 
-    table.grid-view tr:hover,
+    table.list-view tr:hover,
     table.tree-view tr:hover td[class] {
         background-color: var(--hover-color);
     }
 
-    table.grid-view th,
-    table.grid-view td {
+    table.list-view th,
+    table.list-view td {
         padding-left: 6px;
         padding-right: 6px;
     }
@@ -299,53 +312,52 @@
         padding-right: 2px;
     }
     
+    table.tree-view tr.active td[class] {
+        background-color: var(--selected-color);
+    }
+
+    table.list-view tr.active {
+        background-color: var(--selected-color);
+    }
+
+    button {
+        color: #6B7280;
+        border: 1px solid #D0D7DE;
+        background-color: var(--hover-color);
+        border-radius: 4px;
+        padding: 2px 6px;
+    }
+
+    button:hover,
+    button.active,
+    button.selected {
+        color: var(--navigation-color);
+        background-color: var(--selected-color);
+        border-color: #C9D1D9;
+    }
+
     .grid-folder {
         font-size: 0.9375em;
         padding: 2px;
         text-align: center;
     }
 
-    table.tree-view tr.active td[class] {
-        background-color: var(--selected-color);
-    }
-
-    table.grid-view tr.active {
-        background-color: var(--selected-color);
-    }
-
-    button {
-        color: dimgray;
-        border: 1px solid #B0B9C9;
-        background-color: var(--selected-color);
-        border-radius: 4px;
-        padding: 2px 6px;
-    }
-
-    button.filter-button {
-        color: var(--navgray-color);
-        border-color: #A3ACBA;
-    }
-
-    button.filter-option {   
-        color: #6B778C;
-        background-color: #F4F6F9;
-    }
-
-    button:hover,
-    button.active {
-        color: var(--navgray-color);
-        background-color: var(--selected-color);
-        border-color: #A3ACBA;
-    }
-
-    .gridline {
-        border-bottom: 1px solid Gainsboro;
-        border-bottom: 1px solid #E0E0E0;
-    }
-
     .grid-folder-name {
         color: var(--darkgray-color);
-        font-weight: 400;
+        color: gray;
+        font-weight: normal;
+    }
+
+    .grid-expand,
+    .grid-collapse,
+    .scenario-stacktraces,
+    .scenario-attachments {
+        padding: 1px 4px;
+    }
+
+    .grid-border {
+        border-bottom: 1px solid Gainsboro;
+        border-bottom: 1px solid #E0E0E0;
     }
 
     .grid-heading {
@@ -359,7 +371,7 @@
         text-align: center;
     }
     
-    .gridline-number {
+    .grid-number {
         width: 1.5em;
         height: 1.5em;
         border-radius: 20%;
@@ -370,52 +382,26 @@
         display: inline-block;
     } 
 
-    .project-name {
-        font-size: 1.50em;
-        font-weight: bold;
-    }
-
-    .project-title {
-        font-size: 1.125em;
-        font-weight: 600;
-        color: var(--darkgray-color);
-        color: dimgray;
-        padding-left: 4px;
-    }
-
-    .project-date {
-        color: dimgray;        
-        padding-left: 2px;
-        font-size: 1.00em;
-    }
-
-    .project-info {
-        color: gray;        
-        font-size: 0.750em;
-    }
-
     .page-name {
         font-size: 1.5em;
         font-weight: 600;
         line-height: 1;
-        color: var(--headinggray-color);
-    }
-
-    .chart-outline {
-        width: fit-content;
-        margin: auto;
-        padding: 16px;
-        padding-left: 24px;
-        padding-right: 24px;
-        background-color: var(--dustgray-color);
-        border-radius: 0 1.0em 1.0em 1.0em;
+        color: var(--heading-color);
     }
 
     .chart-name {
         font-size: 1.30em;
         font-weight: 600;
         line-height: 1;
-        color: var(--headinggray-color);
+        color: var(--heading-color);
+    }
+
+    .chart-outline {
+        width: fit-content;
+        margin: auto;
+        padding: 1.5em 2.0em;
+        background-color: var(--dustgray-color);
+        border-radius: 0 1.0em 1.0em 1.0em;
     }
 
     .chart-status {
@@ -604,13 +590,6 @@
         margin-left: 3px;
     }
 
-    .grid-expand,
-    .grid-collapse,
-    .scenario-stacktraces,
-    .scenario-attachments {
-        padding: 1px 4px;
-    }
-
     .step-symbol {
         font-weight: bold;
         text-align: center;
@@ -772,26 +751,26 @@
         width: 100px;
     }
 
-    .chart-history-trends {
+    .analytics-trends,
+    .analytics-failures {
         padding-left: 16px;
         padding-right: 16px;
         margin: auto;
     }
 
-    .chart-history-failures {
-        padding-left: 16px;
-        padding-right: 16px;
-        margin: auto;
-    }
-
-    .chart-history-grid {
+    .analytics-list {
         border: 1px;
         width: 100%;
     }
 
-    table.chart-history-grid th,
-    table.chart-history-grid td {
+    table.analytics-list th,
+    table.analytics-list td {
         padding-left: 6px;
         padding-right: 6px;
+    }
+
+    .analytics-list td {
+        border: 2px solid;
+        border-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
     }
 </style>

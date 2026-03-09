@@ -114,7 +114,7 @@ namespace Expressium.LivingDoc.Tests.Generators
 
             Assert.That(listOfLines.Count, Is.EqualTo(43));
             Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Trend Chart -->"));
-            Assert.That(listOfLines[2], Is.EqualTo("<div class='section chart-history-trends' id='features-history-trends'>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<div class='section analytics-trends'>"));
 
             Assert.That(listOfLines[20].Trim(), Is.EqualTo("<div class='bgcolor-passed' title='80%' style='width: 80%; height: 0.80em; float: left'></div>"));
             Assert.That(listOfLines[21].Trim(), Is.EqualTo("<div class='bgcolor-incomplete' title='10%' style='width: 10%; height: 0.80em; float: left'></div>"));
@@ -143,7 +143,7 @@ namespace Expressium.LivingDoc.Tests.Generators
 
             Assert.That(listOfLines.Count, Is.EqualTo(23));
             Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Failures Chart -->"));
-            Assert.That(listOfLines[2], Is.EqualTo("<div class='section chart-history-failures' id='features-history-failures'>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<div class='section analytics-failures'>"));
 
             Assert.That(listOfLines[15], Is.EqualTo("<td>Successful User Login with Valid Credentials</td>"));
             Assert.That(listOfLines[16], Is.EqualTo("<td class='history-failed'>Failed</td>"));

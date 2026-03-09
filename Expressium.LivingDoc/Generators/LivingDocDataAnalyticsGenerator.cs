@@ -285,11 +285,11 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<hr>");
 
             listOfLines.Add("<!-- Data Analytics Trend Chart -->");
-            listOfLines.Add($"<div class='section chart-history-trends' id='{type.ToLower()}-history-trends'>");
+            listOfLines.Add($"<div class='section analytics-trends'>");
             listOfLines.Add($"<span class='chart-name'>Trends</span>");
             listOfLines.Add("<div class='section'>");
 
-            listOfLines.Add("<table class='chart-history-grid'>");
+            listOfLines.Add("<table class='analytics-list'>");
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
             listOfLines.Add("<th>Id</th>");
@@ -380,11 +380,11 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<hr>");
 
             listOfLines.Add("<!-- Data Analytics Failures Chart -->");
-            listOfLines.Add($"<div class='section chart-history-failures' id='{type.ToLower()}-history-failures'>");
+            listOfLines.Add($"<div class='section analytics-failures'>");
             listOfLines.Add($"<span class='chart-name'>Failures</span>");
             listOfLines.Add("<div class='section'>");
 
-            listOfLines.Add("<table class='chart-history-grid'>");
+            listOfLines.Add("<table class='analytics-list'>");
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
             listOfLines.Add("<th>Name</th>");

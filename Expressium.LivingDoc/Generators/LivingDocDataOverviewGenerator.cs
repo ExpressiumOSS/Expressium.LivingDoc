@@ -97,10 +97,10 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add($"<tr>");
             listOfLines.Add($"<td class='grid-folder' width='{indentSize}'>📂</td>");
-            listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - 1}'>");
+            listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - 1}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' colspan='2' align='right'>");
+            listOfLines.Add($"<td class='grid-border' style='padding-right: 8px;' colspan='2' align='right'>");
 
             if (project.ExperimentFlag)
             {
@@ -129,10 +129,10 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add($"<td></td>");
 
             listOfLines.Add($"<td class='grid-folder' width='{indentSize}'>📂</td>");
-            listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
+            listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='gridline' style='padding-right: 8px;' align='right' ></td>");
+            listOfLines.Add($"<td class='grid-border' style='padding-right: 8px;' align='right' ></td>");
 
             listOfLines.Add($"</tr>");
 
@@ -149,12 +149,12 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add($"<td></td>");
 
             listOfLines.Add($"<td data-collapse='false' width='{indentSize}' class='grid-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
-            listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
+            listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<a class='grid-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
 
-            listOfLines.Add($"<td class='gridline' align='right'></td>");
+            listOfLines.Add($"<td class='grid-border' align='right'></td>");
 
             listOfLines.Add($"</tr>");
 
@@ -178,11 +178,11 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add($"<td></td>");
 
             listOfLines.Add($"<td width='{indentSize}'></td>");
-            listOfLines.Add($"<td class='gridline' colspan='{numberOfColumns - indent}'>");
+            listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<a class='grid-heading' href='#'>{scenario.Name}</a>");
             listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='gridline' align='right'></td>");
+            listOfLines.Add($"<td class='grid-border' align='right'></td>");
 
             listOfLines.Add($"</tr>");
 

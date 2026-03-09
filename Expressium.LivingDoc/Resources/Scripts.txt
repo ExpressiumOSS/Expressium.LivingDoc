@@ -51,9 +51,9 @@
     </script>
     <script>
         function loadViewMode(x, y) {
-            var listview = document.getElementById(x).innerHTML;
+            var filterlist = document.getElementById(x).innerHTML;
 
-            document.getElementById('list-view').innerHTML = listview;
+            document.getElementById('filter-list').innerHTML = filterlist;
 
             var exists = document.getElementById('view-title');
             if (exists)

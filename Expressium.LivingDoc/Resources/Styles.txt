@@ -118,6 +118,16 @@
         background-color: #C7D9E9;
     }
 
+    .project-name {
+        font-size: 1.40em;
+        font-weight: bold;
+    }
+
+    .project-date {
+        color: dimgray;
+        padding-left: 2px;
+    }
+
     .navigation {
         background-color: var(--darkgray-color);
         color: white;
@@ -160,7 +170,7 @@
         scrollbar-color: #909090 #F8F9FA;
     }
 
-    #list-view {
+    #filter-list {
         flex: 1;
         overflow: auto;
         height: calc(100% - 68px); /* Adjust for filter and search height */
@@ -211,7 +221,7 @@
         color: var(--darkgray-color);
     }
 
-    .filter-group-input {
+    .filter-keywords {
         width: 100%;
         box-sizing: border-box;
         border-width: 1px;
@@ -233,21 +243,22 @@
         border: solid;
         border-width: 1px;
         font-weight: 600;
+        border-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
     }
 
-    table.grid-view,
+    table.list-view,
     table.tree-view {
         border: 1px;
         width: 100%;
     }
 
-    table.grid-view tr:hover,
+    table.list-view tr:hover,
     table.tree-view tr:hover td[class] {
         background-color: var(--hover-color);
     }
 
-    table.grid-view th,
-    table.grid-view td {
+    table.list-view th,
+    table.list-view td {
         padding-left: 6px;
         padding-right: 6px;
     }
@@ -268,7 +279,7 @@
         background-color: var(--selected-color);
     }
 
-    table.grid-view tr.active {
+    table.list-view tr.active {
         background-color: var(--selected-color);
     }
 
@@ -295,7 +306,7 @@
         color: dimgray;
     }
 
-    .gridline {
+    .grid-border {
         border-bottom: 1px solid Gainsboro;
         border-bottom: 1px solid #E0E0E0;
     }
@@ -316,27 +327,6 @@
         text-align: center;
     }
     
-    .gridline-number {
-        width: 1.5em;
-        height: 1.5em;
-        border-radius: 20%;
-        color: white;
-        text-align: center;
-        line-height: 1.5em; /* Centers the text vertically */
-        font-size: 0.875em;
-        display: inline-block;
-    } 
-
-    .project-name {
-        font-size: 1.40em;
-        font-weight: bold;
-    }
-
-    .project-date {
-        color: dimgray;
-        padding-left: 2px;
-    }
-
     .page-name {
         font-size: 1.40em;
         font-weight: bold;
@@ -712,26 +702,26 @@
         width: 100px;
     }
 
-    .chart-history-trends {
+    .analytics-trends,
+    .analytics-failures {
         padding-left: 16px;
         padding-right: 16px;
         margin: auto;
     }
 
-    .chart-history-failures {
-        padding-left: 16px;
-        padding-right: 16px;
-        margin: auto;
-    }
-
-    .chart-history-grid {
+    .analytics-list {
         border: 1px;
         width: 100%;
     }
 
-    table.chart-history-grid th,
-    table.chart-history-grid td {
+    table.analytics-list th,
+    table.analytics-list td {
         padding-left: 6px;
         padding-right: 6px;
+    }
+
+    .analytics-list td {
+        border: 1px solid;
+        border-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
     }
 </style>

@@ -84,10 +84,9 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Left Splitter Section -->");
             listOfLines.Add("<div id='splitter-left' class='bg-light p-3'>");
-
             listOfLines.AddRange(GenerateViewPreFilters());
             listOfLines.AddRange(GenerateFilter());
-            listOfLines.Add("<div id='list-view'></div>");
+            listOfLines.Add("<div id='filter-list'></div>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<!-- Splitter Section -->");
@@ -122,7 +121,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'>Incomplete</button>");
             listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'>Failed</button>");
             listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'>Skipped</button>");
-            listOfLines.Add("<button class='filter-button' title='Clear Filters' onclick='clearPrefilters()'>Clear</button>");
+            listOfLines.Add("<button class='selected' title='Clear Filters' onclick='clearPrefilters()'>Clear</button>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
@@ -144,7 +143,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div style='width: 100%'>");
-            listOfLines.Add("<input onkeyup='filterView()' class='filter-group-input' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
+            listOfLines.Add("<input onkeyup='filterView()' class='filter-keywords' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
