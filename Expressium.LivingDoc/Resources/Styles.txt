@@ -253,7 +253,7 @@
     }
 
     table.list-view tr:hover,
-    table.tree-view tr:hover td[class] {
+    table.tree-view tr:hover td.grid-border {
         background-color: var(--hover-color);
     }
 
@@ -263,19 +263,18 @@
         padding-right: 6px;
     }
 
-    table.tree-view th,
     table.tree-view td {
         padding-left: 2px;
         padding-right: 4px;
+        /* border: 1px solid gray; */
     }
 
     .grid-folder {
-        font-size: 0.9375em;
-        padding: 2px;
         text-align: center;
+        width: 1.5em;
     }
 
-    table.tree-view tr.active td[class] {
+    table.tree-view tr.active td.grid-border {
         background-color: var(--selected-color);
     }
 
@@ -325,8 +324,13 @@
         color: dimgray;
         cursor: pointer;
         text-align: center;
+        width: 1.5em;
     }
     
+    .grid-indent {
+        width: 1.5em;
+    }
+
     .page-name {
         font-size: 1.40em;
         font-weight: bold;
@@ -647,11 +651,6 @@
     ul.attachments-files li {
         padding-top: 1px;
         padding-bottom: 1px;
-    }
-
-    #scenario-script {
-        field-sizing: content;
-        height: 96%;
     }
 
     .duration-symbol {

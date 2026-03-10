@@ -1,4 +1,75 @@
 ﻿<style>
+    /* Header Background */
+    @property --header-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #E9EDF1;
+    }
+
+    /* Navigation Texts */
+    @property --navigation-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #212529; /* Body Texts */
+    }
+
+    /* Navigation Footer and Filter Backgrounds */
+    @property --dustgray-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #F3F4F6;
+    }
+
+    /* Heading Texts */
+    @property --heading-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #1F2937;
+        initial-value: #333333;
+    }
+
+    /* Body Texts */
+    @property --text-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #212529;
+    }
+
+    /* Description Texts */
+    @property --dimmed-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: dimgray;
+    }
+
+    /* Keyword and Link Texts */
+    @property --keyword-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #2C657E;
+    }
+
+    /* Tag Texts */
+    @property --tag-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #348F91;
+    }
+    
+    /* Grid Selected Backgrounds */
+    @property --selected-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #EDEFF2;
+    }
+
+    /* Grid Hover Backgrounds */
+    @property --hover-color {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #F3F5F7;
+    } 
+
     @property --passed-color {
         syntax: "<color>";
         inherits: false;
@@ -80,61 +151,6 @@
         initial-value: #333333;
     }
 
-    @property --keyword-color {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #2F6795;
-        initial-value: #2D638F;
-        initial-value: #2c657e;
-    }
-
-    @property --selected-color {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #ECEEF2;
-    }
-
-    @property --hover-color {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #F3F4F6;
-    }
-
-    @property --darkgray-color {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #484848;
-    }
-   
-    @property --heading-color {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #1F2937;
-        initial-value: #333333;
-    }
-
-    @property --navigation-color {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #1F2937;
-        initial-value: #333333;
-    }
-
-    @property --dustgray-color {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #F3F4F6;
-    }
-
-    @property --header-color {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #E5EAF4;
-        initial-value: #E9EEF0;
-        initial-value: #E9EDF5;
-        initial-value: #E9EDF1;
-    }
-
     body, html {
         height: 100%;
         margin: 0;
@@ -154,7 +170,7 @@
     }
 
     .project-date {
-        color: dimgray;        
+        color: var(--dimmed-color);        
         padding-left: 2px;
         font-size: 1.00em;
     }
@@ -177,7 +193,7 @@
 
     a.navigation-link.active {
         font-weight: 600;
-        font-size: 1.125em;
+        /* font-size: 1.125em; */
     }
 
     a.navigation-link.active::after {
@@ -192,7 +208,7 @@
 
     .splitter-wrapper {
         display: flex;
-        height: calc(100% - 148px); /* Adjust for header and footer height */
+        height: calc(100% - 152px); /* Adjust for header and footer height */
         flex-direction: row; /* Change to row for vertical splitter */
         border-bottom: 1px solid #ddd;
     }
@@ -217,7 +233,7 @@
 
     footer {
         background-color: var(--dustgray-color);
-        color: #555;
+        color: gray;
         text-align: center;
         padding: 10px;
         font-size: 0.9em;
@@ -250,15 +266,16 @@
 
     .filter-group {
         background-color: var(--dustgray-color);
-        padding: 8px;
+        padding: 7px;
         align-items: center;
-        border-radius: 0.50em;
+        border-radius: 1.00em;
+        border: 1px solid #E5E7EB;
     }
 
     .filter-symbol {
         padding-left: 4px;
         padding-right: 6px;
-        color: var(--darkgray-color);
+        color: var(--dimmed-color);
     }
 
     .filter-keywords {
@@ -273,7 +290,7 @@
     #filter-list {
         flex: 1;
         overflow: auto;
-        height: calc(100% - 68px); /* Adjust for filter and search height */
+        height: calc(100% - 67px); /* Adjust for filter and search height */
     }
 
     th, td {
@@ -281,9 +298,7 @@
     }
 
     th {
-        color: var(--navigation-color);
         background-color: var(--header-color);
-        background-color: #E8E9EB;
         border: 2px solid;
         font-weight: 600;
         border-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
@@ -296,7 +311,7 @@
     }
 
     table.list-view tr:hover,
-    table.tree-view tr:hover td[class] {
+    table.tree-view tr:hover td.grid-border {
         background-color: var(--hover-color);
     }
 
@@ -306,13 +321,13 @@
         padding-right: 6px;
     }
 
-    table.tree-view th,
     table.tree-view td {
         padding-left: 2px;
         padding-right: 2px;
+        /* border: 1px solid gray; */
     }
     
-    table.tree-view tr.active td[class] {
+    table.tree-view tr.active td.grid-border {
         background-color: var(--selected-color);
     }
 
@@ -320,32 +335,32 @@
         background-color: var(--selected-color);
     }
 
+    /* Inactive Buttons */
     button {
-        color: #6B7280;
+        color: #727272;
         border: 1px solid #D0D7DE;
-        background-color: var(--hover-color);
+        background-color: #F6F8FA;
         border-radius: 4px;
         padding: 2px 6px;
     }
 
+    /* Active Buttons */
     button:hover,
     button.active,
     button.selected {
-        color: var(--navigation-color);
-        background-color: var(--selected-color);
-        border-color: #C9D1D9;
+        color: var(--text-color);
+        background-color: #F0F2F5;
+        border-color: #D0D7DE;
     }
 
     .grid-folder {
-        font-size: 0.9375em;
-        padding: 2px;
         text-align: center;
+        width: 1.5em;
     }
 
     .grid-folder-name {
-        color: var(--darkgray-color);
-        color: gray;
-        font-weight: normal;
+        color: var(--dimmed-color);
+        font-weight: 500;
     }
 
     .grid-expand,
@@ -366,11 +381,16 @@
     }
 
     .grid-toggle {
-        color: dimgray;
+        color: var(--dimmed-color);
         cursor: pointer;
         text-align: center;
+        width: 1.5em;
     }
     
+    .grid-indent {
+        width: 1.5em;
+    }
+
     .grid-number {
         width: 1.5em;
         height: 1.5em;
@@ -542,7 +562,7 @@
     .feature-tags,
     .rule-tags,
     .scenario-tags {
-        color: #348F91;
+        color: var(--tag-color);
     }
 
     .feature-keyword,
@@ -565,14 +585,14 @@
     .scenario-description {
         font-family: Consolas;
         font-size: 0.9em;
-        color: dimgray;
+        color: var(--dimmed-color);
         font-style: italic;
         padding-top: 2px;
     }
 
     .feature-duration,
     .scenario-duration {
-        color: var(--darkgray-color);
+        color: var(--dimmed-color);
         padding-left: 4px;
         padding-right: 5px;
     }
@@ -610,7 +630,7 @@
     }
 
     .scenario-datatable {
-        color: dimgray;
+        color: var(--dimmed-color);
     }
 
     table.scenario-datatable td {
@@ -663,18 +683,18 @@
 
     .examples-keyword {
         font-weight: 600;
-        color: dimgray;
+        color: var(--dimmed-color);
         padding-left: 16px;
     }
 
     .examples-name {
-        color: dimgray;
+        color: var(--dimmed-color);
     }
 
     .examples-description {
         font-family: Consolas;
         font-size: 0.9em;
-        color: dimgray;
+        color: var(--dimmed-color);
         font-style: italic;
         padding-left: 32px;
     }
@@ -689,7 +709,7 @@
 
     .attachments-keyword {
         font-weight: 600;
-        color: dimgray;
+        color: var(--dimmed-color);
         padding-left: 16px;
     }
 
@@ -698,13 +718,8 @@
         padding-bottom: 1px;
     }
 
-    #scenario-script {
-        field-sizing: content;
-        height: 96%;
-    }
-
     .duration-symbol {
-        color: dimgray;
+        color: var(--dimmed-color);
         font-size: 2.5em;
     }
 
@@ -715,7 +730,7 @@
     }
 
     .duration-keyword {
-        color: dimgray;
+        color: var(--dimmed-color);
     }
 
     .history-passed {
