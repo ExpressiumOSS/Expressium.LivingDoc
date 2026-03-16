@@ -92,11 +92,11 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<tr>");
-            listOfLines.Add($"<td class='grid-folder'><span>&#x1F4C2;</span></td>");
+            listOfLines.Add($"<td class='grid-folder'>📂</td>");
             listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - 1}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='grid-border' style='padding-right: 8px;' colspan='2' align='right'>");
+            listOfLines.Add($"<td class='grid-border' style='padding-right: 4px;' colspan='2' align='right'>");
 
             if (project.ExperimentFlag)
             {
@@ -124,7 +124,7 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add($"<td></td>");
 
-            listOfLines.Add($"<td class='grid-folder'><span>&#x1F4C2;</span></td>");
+            listOfLines.Add($"<td class='grid-folder'>📂</td>");
             listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - indent}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");

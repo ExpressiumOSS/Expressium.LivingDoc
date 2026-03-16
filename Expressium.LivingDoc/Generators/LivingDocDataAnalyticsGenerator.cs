@@ -338,11 +338,11 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add($"<td width='45%'>{history.GetDate()}</td>");
 
                 listOfLines.Add("<td>");
-                listOfLines.Add("<div style='width: 100%; height: 0.80em;'>");
-                listOfLines.Add($"<div class='bgcolor-passed' title='{percentageOfPassed}%' style='width: {percentageOfPassed}%; height: 0.80em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-incomplete' title='{percentageOfIncomplete}%' style='width: {percentageOfIncomplete}%; height: 0.80em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-failed' title='{percentageOfFailed}%' style='width: {percentageOfFailed}%; height: 0.80em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-skipped' title='{percentageOfSkipped}%' style='width: {percentageOfSkipped}%; height: 0.80em; float: left'></div>");
+                listOfLines.Add("<div style='width: 100%;'>");
+                listOfLines.Add($"<div class='bgcolor-passed' title='{percentageOfPassed}%' style='width: {percentageOfPassed}%; height: 0.75em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-incomplete' title='{percentageOfIncomplete}%' style='width: {percentageOfIncomplete}%; height: 0.75em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-failed' title='{percentageOfFailed}%' style='width: {percentageOfFailed}%; height: 0.75em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-skipped' title='{percentageOfSkipped}%' style='width: {percentageOfSkipped}%; height: 0.75em; float: left'></div>");
                 listOfLines.Add("</div>");
                 listOfLines.Add("</td>");
                 listOfLines.Add("</tr>");

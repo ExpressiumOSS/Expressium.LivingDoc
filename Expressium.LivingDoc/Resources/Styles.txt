@@ -174,6 +174,7 @@
         flex: 1;
         overflow: auto;
         height: calc(100% - 68px); /* Adjust for filter and search height */
+        padding-right: 0.25em;
     }
 
     footer {
@@ -573,6 +574,10 @@
         padding-bottom: 1px;
         padding-left: 4px;
         padding-right: 4px;
+    }
+
+    .message-header {
+        font-weight: bold;
     }
 
     .message-box {

@@ -281,14 +281,14 @@ namespace Expressium.LivingDoc.UITests.Pages
         public virtual void ExpandAllFeatures()
         {
             logger.Info("ExpandAllFeatures()");
-            var element = baseLocator.GetChildElement(driver, By.XPath(".//a[@title='Expand All Features']"));
+            var element = baseLocator.GetChildElement(driver, By.XPath(".//*[@title='Expand All Features']"));
             element.Click(driver);
         }
 
         public virtual void CollapseAllFeatures()
         {
             logger.Info("CollapseAllFeatures()");
-            var element = baseLocator.GetChildElement(driver, By.XPath(".//a[@title='Collapse All Features']"));
+            var element = baseLocator.GetChildElement(driver, By.XPath(".//*[@title='Collapse All Features']"));
             element.Click(driver);
         }
 

@@ -6,18 +6,18 @@ namespace Expressium.LivingDoc.UITests.Pages
 {
     public partial class AnalyticsPage : BasePage
     {
-        private readonly By PageTitle = By.XPath("//*[@id='right-section']//*[@data-testid='page-title']");
+        private readonly By PageTitle = By.XPath("//*[@id='splitter-right']//*[@data-testid='page-title']");
 
-        private readonly By FeaturesChartTitle = By.XPath("//*[@id='right-section']//*[@data-testid='features-chart-title']");
-        private readonly By FeaturesChartPassed = By.XPath("//*[@id='right-section']//*[@data-testid='features-chart-passed']");
+        private readonly By FeaturesChartTitle = By.XPath("//*[@id='splitter-right']//*[@data-testid='features-chart-title']");
+        private readonly By FeaturesChartPassed = By.XPath("//*[@id='splitter-right']//*[@data-testid='features-chart-passed']");
 
-        private readonly By ScenariosChartTitle = By.XPath("//*[@id='right-section']//*[@data-testid='scenarios-chart-title']");
-        private readonly By ScenariosChartPassed = By.XPath("//*[@id='right-section']//*[@data-testid='scenarios-chart-passed']");
+        private readonly By ScenariosChartTitle = By.XPath("//*[@id='splitter-right']//*[@data-testid='scenarios-chart-title']");
+        private readonly By ScenariosChartPassed = By.XPath("//*[@id='splitter-right']//*[@data-testid='scenarios-chart-passed']");
 
-        private readonly By StepsChartTitle = By.XPath("//*[@id='right-section']//*[@data-testid='steps-chart-title']");
-        private readonly By StepsChartPassed = By.XPath("//*[@id='right-section']//*[@data-testid='steps-chart-passed']");
+        private readonly By StepsChartTitle = By.XPath("//*[@id='splitter-right']//*[@data-testid='steps-chart-title']");
+        private readonly By StepsChartPassed = By.XPath("//*[@id='splitter-right']//*[@data-testid='steps-chart-passed']");
 
-        private readonly By ProjectDuration = By.XPath("//*[@id='right-section']//*[@data-testid='project-duration']");
+        private readonly By ProjectDuration = By.XPath("//*[@id='splitter-right']//*[@data-testid='project-duration']");
 
         public AnalyticsPage(ILog logger, IWebDriver driver) : base(logger, driver)
         {

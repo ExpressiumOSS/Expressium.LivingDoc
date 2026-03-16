@@ -7,14 +7,14 @@ namespace Expressium.LivingDoc.UITests.Pages
 {
     public partial class DocumentPage : BasePage
     {
-        private readonly By FeatureTags = By.XPath("//*[@id='right-section']//span[@class='feature-tags']");
-        private readonly By FeatureDescription = By.XPath("//*[@id='right-section']//ul[@class='feature-description']");
-        private readonly By FeatureName = By.XPath("//*[@id='right-section']//span[@class='feature-name']");
-        private readonly By RuleTags = By.XPath("//*[@id='right-section']//span[@class='rule-tags']");
-        private readonly By RuleNames = By.XPath("//*[@id='right-section']//span[@class='rule-name']");
-        private readonly By ScenarioTags = By.XPath("//*[@id='right-section']//span[@class='scenario-tags']");
-        private readonly By ScenarioNames = By.XPath("//*[@id='right-section']//span[@class='scenario-name']");
-        private readonly By StepNames = By.XPath("//*[@id='right-section']//span[@class='step-name']");
+        private readonly By FeatureTags = By.XPath("//*[@id='splitter-right']//div[@class='feature-tags-group']");
+        private readonly By FeatureDescription = By.XPath("//*[@id='splitter-right']//ul[@class='feature-description']");
+        private readonly By FeatureName = By.XPath("//*[@id='splitter-right']//span[@class='feature-name']");
+        private readonly By RuleTags = By.XPath("//*[@id='splitter-right']//div[@class='rule-tags-group']");
+        private readonly By RuleNames = By.XPath("//*[@id='splitter-right']//span[@class='rule-name']");
+        private readonly By ScenarioTags = By.XPath("//*[@id='splitter-right']//div[@class='scenario-tags-group']");
+        private readonly By ScenarioNames = By.XPath("//*[@id='splitter-right']//span[@class='scenario-name']");
+        private readonly By StepNames = By.XPath("//*[@id='splitter-right']//span[@class='step-name']");
 
         public DocumentPage(ILog logger, IWebDriver driver) : base(logger, driver)
         {

@@ -12,7 +12,7 @@ namespace Expressium.LivingDoc.UITests.Pages
 
         public OverviewPage(ILog logger, IWebDriver driver) : base(logger, driver)
         {
-            Grid = new BaseTable(logger, driver, By.XPath("//*[@id='left-section']//*[@id='table-grid']"));
+            Grid = new BaseTable(logger, driver, By.XPath("//*[@id='splitter-left']//*[@id='table-grid']"));
 
             WaitForPageElementIsVisible(Headline);
         }

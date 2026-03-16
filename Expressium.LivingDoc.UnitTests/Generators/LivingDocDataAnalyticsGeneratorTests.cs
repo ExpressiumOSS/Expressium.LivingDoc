@@ -116,10 +116,10 @@ namespace Expressium.LivingDoc.Tests.Generators
             Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Trend Chart -->"));
             Assert.That(listOfLines[2], Is.EqualTo("<div class='section analytics-trends'>"));
 
-            Assert.That(listOfLines[20].Trim(), Is.EqualTo("<div class='bgcolor-passed' title='80%' style='width: 80%; height: 0.80em; float: left'></div>"));
-            Assert.That(listOfLines[21].Trim(), Is.EqualTo("<div class='bgcolor-incomplete' title='10%' style='width: 10%; height: 0.80em; float: left'></div>"));
-            Assert.That(listOfLines[22].Trim(), Is.EqualTo("<div class='bgcolor-failed' title='10%' style='width: 10%; height: 0.80em; float: left'></div>"));
-            Assert.That(listOfLines[23].Trim(), Is.EqualTo("<div class='bgcolor-skipped' title='0%' style='width: 0%; height: 0.80em; float: left'></div>"));
+            Assert.That(listOfLines[20].Trim(), Is.EqualTo("<div class='bgcolor-passed' title='80%' style='width: 80%; height: 0.75em; float: left'></div>"));
+            Assert.That(listOfLines[21].Trim(), Is.EqualTo("<div class='bgcolor-incomplete' title='10%' style='width: 10%; height: 0.75em; float: left'></div>"));
+            Assert.That(listOfLines[22].Trim(), Is.EqualTo("<div class='bgcolor-failed' title='10%' style='width: 10%; height: 0.75em; float: left'></div>"));
+            Assert.That(listOfLines[23].Trim(), Is.EqualTo("<div class='bgcolor-skipped' title='0%' style='width: 0%; height: 0.75em; float: left'></div>"));
         }
 
         [Test]

@@ -83,7 +83,10 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div class='splitter-wrapper'>");
 
             listOfLines.Add("<!-- Left Splitter Section -->");
-            listOfLines.Add("<div id='splitter-left' class='bg-light p-3'>");
+            if (project.ExperimentFlag)
+                listOfLines.Add("<div id='splitter-left' class='bg-white p-3'>");
+            else
+                listOfLines.Add("<div id='splitter-left' class='bg-light p-3'>");
             listOfLines.AddRange(GenerateViewPreFilters());
             listOfLines.AddRange(GenerateFilter());
             listOfLines.Add("<div id='filter-list'></div>");
@@ -93,7 +96,10 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div id='splitter'></div>");
 
             listOfLines.Add("<!-- Right Splitter Section -->");
-            listOfLines.Add("<div id='splitter-right' class='bg-light p-3'>");
+            if (project.ExperimentFlag)
+                listOfLines.Add("<div id='splitter-right' class='bg-white p-3'>");
+            else
+                listOfLines.Add("<div id='splitter-right' class='bg-light p-3'>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
