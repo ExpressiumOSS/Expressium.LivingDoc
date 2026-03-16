@@ -16,6 +16,7 @@ namespace Expressium.LivingDoc.Models
 
     public enum LivingDocStepTypes
     {
+        Hook,
         Background,
         Rule,
         Scenario,

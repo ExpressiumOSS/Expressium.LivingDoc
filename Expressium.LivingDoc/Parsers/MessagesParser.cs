@@ -363,7 +363,7 @@ namespace Expressium.LivingDoc.Parsers
                                 var hookStep = new LivingDocStep();
                                 hookStep.Name = "Before Scenario";
                                 hookStep.Keyword = "Hook";
-                                hookStep.Type = LivingDocStepTypes.Unknown.ToString();
+                                hookStep.Type = LivingDocStepTypes.Hook.ToString();
                                 hookStep.Status = LivingDocStatuses.Failed.ToString();
                                 hookStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
                                 hookStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
@@ -376,7 +376,7 @@ namespace Expressium.LivingDoc.Parsers
                                 var hookStep = new LivingDocStep();
                                 hookStep.Name = "After Scenario";
                                 hookStep.Keyword = "Hook";
-                                hookStep.Type = LivingDocStepTypes.Unknown.ToString();
+                                hookStep.Type = LivingDocStepTypes.Hook.ToString();
                                 hookStep.Status = LivingDocStatuses.Failed.ToString();
                                 hookStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
                                 hookStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
