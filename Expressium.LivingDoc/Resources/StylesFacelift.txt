@@ -115,7 +115,7 @@
     }
 
     #splitter {
-        width: 1px;
+        width: 2px;
         background: #ddd;
         cursor: col-resize;
     }
