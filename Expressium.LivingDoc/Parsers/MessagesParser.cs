@@ -360,18 +360,28 @@ namespace Expressium.LivingDoc.Parsers
                         {
                             if (hook.Type.ToString() == "BEFORE_TEST_CASE")
                             {
-                                example.Steps.First().Status = LivingDocStatuses.Failed.ToString();
-                                example.Steps.First().ExceptionType = testStepFinished.TestStepResult.Exception.Type;
-                                example.Steps.First().ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
-                                example.Steps.First().ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+                                var hookStep = new LivingDocStep();
+                                hookStep.Name = "Before Scenario";
+                                hookStep.Keyword = "Hook";
+                                hookStep.Type = LivingDocStepTypes.Unknown.ToString();
+                                hookStep.Status = LivingDocStatuses.Failed.ToString();
+                                hookStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
+                                hookStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
+                                hookStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+                                example.Steps.Insert(0, hookStep);
                             }
 
                             if (hook.Type.ToString() == "AFTER_TEST_CASE")
                             {
-                                example.Steps.Last().Status = LivingDocStatuses.Failed.ToString();
-                                example.Steps.Last().ExceptionType = testStepFinished.TestStepResult.Exception.Type;
-                                example.Steps.Last().ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
-                                example.Steps.Last().ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+                                var hookStep = new LivingDocStep();
+                                hookStep.Name = "After Scenario";
+                                hookStep.Keyword = "Hook";
+                                hookStep.Type = LivingDocStepTypes.Unknown.ToString();
+                                hookStep.Status = LivingDocStatuses.Failed.ToString();
+                                hookStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
+                                hookStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
+                                hookStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+                                example.Steps.Add(hookStep);
                             }
                         }
                     }

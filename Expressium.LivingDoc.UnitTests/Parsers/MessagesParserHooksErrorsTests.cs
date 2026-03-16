@@ -65,9 +65,9 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
             var feature = livingDocProject.Features[0];
             var scenario = livingDocProject.Features[0].Scenarios[3];
 
-            Assert.That(scenario.Examples[0].Steps[1].ExceptionType, Is.EqualTo("ApplicationException"));
-            Assert.That(scenario.Examples[0].Steps[1].ExceptionMessage, Is.EqualTo("Hook After Scenario faling..."));
-            Assert.That(scenario.Examples[0].Steps[1].ExceptionStackTrace, Does.Contain("AfterScenario"));
+            Assert.That(scenario.Examples[0].Steps[2].ExceptionType, Is.EqualTo("ApplicationException"));
+            Assert.That(scenario.Examples[0].Steps[2].ExceptionMessage, Is.EqualTo("Hook After Scenario faling..."));
+            Assert.That(scenario.Examples[0].Steps[2].ExceptionStackTrace, Does.Contain("AfterScenario"));
         }
     }
 }
