@@ -123,7 +123,7 @@
 
     .splitter-wrapper {
         display: flex;
-        height: calc(100% - 162px); /* Adjust for header and footer height */
+        height: calc(100% - 160px); /* Adjust for header and footer height */
         flex-direction: row; /* Change to row for vertical splitter */
         border-bottom: 1px solid #ddd;
     }
@@ -148,10 +148,13 @@
 
     footer {
         background-color: var(--footer-bg-color);
-        color: var(--footer-text-color);
         text-align: center;
         padding: 10px;
         font-size: 0.875em;
+    }
+
+    footer a {
+        color: var(--footer-text-color);
     }
 
     .section {
