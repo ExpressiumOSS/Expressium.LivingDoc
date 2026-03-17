@@ -294,7 +294,8 @@
     .grid-expand,
     .grid-collapse,
     .scenario-stacktraces,
-    .scenario-attachments {
+    .scenario-attachments,
+    .scenario-backgrounds {
         padding: 1px 4px;
     }
 

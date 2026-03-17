@@ -168,7 +168,7 @@ namespace Expressium.LivingDoc
                         listOfLines.AddRange(GenerateDataScenarioTags(scenario));
                         listOfLines.AddRange(GenerateDataScenarioName(scenario, example, indexId));
                         listOfLines.AddRange(GenerateDataScenarioDescription(scenario));
-                        listOfLines.AddRange(GenerateDataScenarioSteps(example.Steps));
+                        listOfLines.AddRange(GenerateDataScenarioSteps(example));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
                         listOfLines.AddRange(GenerateDataScenarioAttachments(example));
                         listOfLines.Add("</div>");
@@ -295,6 +295,14 @@ namespace Expressium.LivingDoc
             // Scenario Options Facelift Version 2.0.0
             if (project.ExperimentFlag)
             {
+                ///////////////////////////////////////////////////////
+                // Toggle option for visibility of Background steps...
+                ///////////////////////////////////////////////////////
+                //var hasBackgrounds = example.Steps?.Any(x => x.Type == LivingDocStepTypes.Background.ToString()) ?? false;
+                //if (hasBackgrounds)
+                //    listOfLines.Add("<button class='scenario-backgrounds bi bi-chevron-double-down' title='Toggle Backgrounds' onclick=\"toggleBackgrounds(this)\"></button>");
+                ///////////////////////////////////////////////////////
+
                 var hasStacktraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
                 if (hasStacktraces)
                     listOfLines.Add("<button class='scenario-stacktraces bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></button>");
@@ -338,7 +346,7 @@ namespace Expressium.LivingDoc
             return listOfLines;
         }
 
-        internal List<string> GenerateDataScenarioSteps(List<LivingDocStep> steps)
+        internal List<string> GenerateDataScenarioSteps(LivingDocExample example)
         {
             var listOfLines = new List<string>();
 
@@ -346,13 +354,28 @@ namespace Expressium.LivingDoc
             listOfLines.Add("<div>");
             listOfLines.Add("<ul class='scenario-steps'>");
 
-            foreach (var step in steps)
+            //var isPassed = example.GetStatus() == LivingDocStatuses.Passed.ToString();
+
+            foreach (var step in example.Steps)
             {
                 var status = step.GetStatus().ToLower();
 
                 var stepSymbol = "&cross;";
                 if (step.IsPassed())
                     stepSymbol = "&check;";
+
+                ///////////////////////////////////////////////////////
+                // Toggle option for visibility of Background steps...
+                ///////////////////////////////////////////////////////
+                //if (step.Type == LivingDocStepTypes.Background.ToString())
+                //{
+                //    if (isPassed)
+                //        listOfLines.Add($"<li class='backgrounds' style='display: none;'>");
+                //    else
+                //        listOfLines.Add($"<li class='backgrounds' style='display: block;'>");
+                //}
+                //else
+                ///////////////////////////////////////////////////////
 
                 listOfLines.Add("<li>");
 

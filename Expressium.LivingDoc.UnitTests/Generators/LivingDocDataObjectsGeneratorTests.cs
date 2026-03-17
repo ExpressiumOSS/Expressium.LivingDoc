@@ -223,17 +223,16 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         {
             var livingDocProject = new LivingDocProject();
 
-            var steps = new List<LivingDocStep>
-            {
-                new LivingDocStep
-                {
-                    Keyword = "Given",
-                    Name = "I have logged in to the application"
-                }
-            };
+            var exmaple = new LivingDocExample();
+
+            var step = new LivingDocStep();
+            step.Keyword = "Given";
+            step.Name = "I have logged in to the application";
+
+            exmaple.Steps.Add(step);
 
             var generator = new LivingDocDataObjectsGenerator(livingDocProject);
-            var listOfLines = generator.GenerateDataScenarioSteps(steps);
+            var listOfLines = generator.GenerateDataScenarioSteps(exmaple);
 
             Assert.That(listOfLines.Count, Is.EqualTo(10));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Steps -->"));
