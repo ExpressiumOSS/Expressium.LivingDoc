@@ -137,13 +137,13 @@
     #splitter-left {
         flex: 1;
         overflow: hidden;
-        scrollbar-color: #909090 #F8F9FA;
+        scrollbar-color: #909090 white;
     }
 
     #splitter-right {
         flex: 1;
         overflow: auto;
-        scrollbar-color: #909090 #F8F9FA;
+        scrollbar-color: #909090 white;
     }
 
     footer {
@@ -209,7 +209,7 @@
     #filter-list {
         flex: 1;
         overflow: auto;
-        height: calc(100% - 72px); /* Adjust for filter and search height */
+        height: calc(100% - 75px); /* Adjust for filter and search height */
         padding-right: 0.25em;
     }
 
