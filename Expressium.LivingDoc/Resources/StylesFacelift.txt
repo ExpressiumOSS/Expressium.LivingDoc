@@ -1,50 +1,54 @@
 ﻿<style>
     :root {
         /* Header */
-        --header-bg-color: #d1ddea;
+        --header-bg-color: #cfdbea;
 
         /* Footer */
-        --footer-text-color: #808080;
-        --footer-bg-color: #FBFBFB;
+        --footer-text-color: #6b7280;
+        --footer-bg-color: #f9fafb;
 
         /* Navigation */
-        --navigation-bg-color: #F5F5F6;
-        --navigation-underline-color: #A1A1A1;
+        --navigation-bg-color: #f3f4f6;
+        --navigation-underline-color: #9ca3af;
 
         /* Tables */
         --table-header-text-color: #111827;
-        --table-header-bg-color: #F5F5F3;
+        --table-header-bg-color: #f3f4f6;
 
         /* Tags */
-        --tag-text-color: #348F91;
-        --tag-bg-color: #EDF3F8;
+        --tag-text-color: #338689;
+        --tag-bg-color: #eef4f8;
 
         /* Groups */
-        --group-bg-color: #FCFCFC;
-        --group-border-color: #DADCDE;
+        --group-bg-color: #fcfcfd;
+        --group-border-color: #d1d5db;
 
         /* Surfaces */
-        --hover-bg-color: #F8FAFC;
-        --selected-bg-color: #F1F5F9;
+        --hover-bg-color: #f7fafc;
+        --selected-bg-color: #f3f6fa;
 
         /* Texts */
         --text-color: #111827;
-        --heading-text-color: #111827;
-        --text-gray-color: #808080;
-        --text-dimgray-color: #5A5A5A;
-        --keyword-text-color: #25576B;
-        --link-text-color: #295F75;
+        --heading-text-color: #0f172a;
+        --text-gray-color: #6f6f73;
+        --text-dimgray-color: #52525b;
+        --keyword-text-color: #1f5a70;
+        --link-text-color: #2a6785;
 
         /* Badges */
-        --scenario-index-text-color: white;
+        --scenario-index-text-color: #ffffff;
         --scenario-index-bg-color: #909090;
 
         /* Buttons */
-        --button-border-color: #B8C2CC;
+        --button-border-color: #c5ced9;
         --button-active-text-color: #111827;
-        --button-active-bg-color: #EEF2F7;
-        --button-inactive-text-color: #5F6875;
-        --button-inactive-bg-color: #F9FAFB;
+        --button-active-bg-color: #f1f5f9;
+        --button-inactive-text-color: #6b7280;
+        --button-inactive-bg-color: #f8fafc;
+
+        /* Scrollbars */
+        --scrollbar-text-color: #909090;
+        --scrollbar-bg-color: white;
 
         /* Status colors */
         --passed-color: #47A64E;
@@ -137,13 +141,13 @@
     #splitter-left {
         flex: 1;
         overflow: hidden;
-        scrollbar-color: #909090 white;
+        scrollbar-color: var(--scrollbar-text-color) var(--scrollbar-bg-color);
     }
 
     #splitter-right {
         flex: 1;
         overflow: auto;
-        scrollbar-color: #909090 white;
+        scrollbar-color: var(--scrollbar-text-color) var(--scrollbar-bg-color);
     }
 
     footer {
@@ -635,9 +639,8 @@
     }
 
     .examples-description {
-        /* font-family: Consolas; */
         font-size: 0.9375em;
-        color: var(--text-dimgray-color);
+        color: var(--text-gray-color);
         font-style: italic;
         padding-left: 32px;
     }
