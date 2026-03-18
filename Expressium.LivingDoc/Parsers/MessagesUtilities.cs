@@ -25,12 +25,14 @@ namespace Expressium.LivingDoc.Parsers
             return endTime - startTime;
         }
 
+        private static readonly Regex CapitalizeWordsRegex = new Regex(@"(^\w)|(\s\w)", RegexOptions.Compiled);
+
         internal static string CapitalizeWords(this string value)
         {
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            return Regex.Replace(value, @"(^\w)|(\s\w)", m => m.Value.ToUpper());
+            return CapitalizeWordsRegex.Replace(value, m => m.Value.ToUpper());
         }
     }
 }

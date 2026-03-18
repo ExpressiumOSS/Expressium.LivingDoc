@@ -15,7 +15,7 @@ namespace Expressium.LivingDoc.Parsers
         protected List<TestCaseFinished> listOfTestCaseFinished;
         protected List<TestRunStarted> listOfTestRunStarted;
         protected List<TestRunFinished> listOfTestRunFinished;
-        protected List<Attachment> listOftAttachment;
+        protected List<Attachment> listOfAttachment;
         protected List<Hook> listOfHook;
 
         internal MessagesLoader()
@@ -29,7 +29,7 @@ namespace Expressium.LivingDoc.Parsers
             listOfTestCaseFinished = new List<TestCaseFinished>();
             listOfTestRunStarted = new List<TestRunStarted>();
             listOfTestRunFinished = new List<TestRunFinished>();
-            listOftAttachment = new List<Attachment>();
+            listOfAttachment = new List<Attachment>();
             listOfHook = new List<Hook>();
         }
 
@@ -70,7 +70,7 @@ namespace Expressium.LivingDoc.Parsers
                         listOfTestRunFinished.Add(envelope.TestRunFinished);
 
                     if (envelope.Attachment != null)
-                        listOftAttachment.Add(envelope.Attachment);
+                        listOfAttachment.Add(envelope.Attachment);
 
                     if (envelope.Hook != null)
                         listOfHook.Add(envelope.Hook);

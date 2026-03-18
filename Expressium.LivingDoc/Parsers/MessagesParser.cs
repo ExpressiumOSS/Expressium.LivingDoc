@@ -1,5 +1,6 @@
 ﻿using Expressium.LivingDoc.Models;
 using Io.Cucumber.Messages.Types;
+using System;
 using System.Linq;
 using System.Net;
 
@@ -129,7 +130,7 @@ namespace Expressium.LivingDoc.Parsers
 
             if (scenario.Examples.Count > 0)
             {
-                // Consolidating Scenario Examples as Self-Contained...
+                // Consolidating Examples as Self-Contained Scenarios...
                 foreach (var example in scenario.Examples)
                 {
                     int tableIndexId = 1;
@@ -179,16 +180,7 @@ namespace Expressium.LivingDoc.Parsers
                 livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
                 livingDocStep.Keyword = step.Keyword.Trim();
 
-                if (step.DataTable != null)
-                {
-                    foreach (var row in step.DataTable.Rows)
-                    {
-                        var dataTableRow = new LivingDocDataTableRow();
-                        foreach (var cell in row.Cells)
-                            dataTableRow.Cells.Add(cell.Value);
-                        livingDocStep.DataTable.Rows.Add(dataTableRow);
-                    }
-                }
+                ParseStepDataTable(livingDocStep, step);
 
                 livingDocExample.Steps.Add(livingDocStep);
             }
@@ -205,18 +197,23 @@ namespace Expressium.LivingDoc.Parsers
                 livingDocStep.Type = LivingDocStepTypes.Scenario.ToString();
                 livingDocStep.Keyword = step.Keyword.Trim();
 
-                if (step.DataTable != null)
-                {
-                    foreach (var row in step.DataTable.Rows)
-                    {
-                        var dataTableRow = new LivingDocDataTableRow();
-                        foreach (var cell in row.Cells)
-                            dataTableRow.Cells.Add(cell.Value);
-                        livingDocStep.DataTable.Rows.Add(dataTableRow);
-                    }
-                }
+                ParseStepDataTable(livingDocStep, step);
 
                 livingDocExample.Steps.Add(livingDocStep);
+            }
+        }
+
+        private static void ParseStepDataTable(LivingDocStep livingDocStep, Step step)
+        {
+            if (step.DataTable == null)
+                return;
+
+            foreach (var row in step.DataTable.Rows)
+            {
+                var dataTableRow = new LivingDocDataTableRow();
+                foreach (var cell in row.Cells)
+                    dataTableRow.Cells.Add(cell.Value);
+                livingDocStep.DataTable.Rows.Add(dataTableRow);
             }
         }
 
@@ -240,6 +237,9 @@ namespace Expressium.LivingDoc.Parsers
         {
             // Assign Test Execution Environment Details...
             var meta = listOfMeta.FirstOrDefault();
+            if (meta == null)
+                throw new InvalidOperationException("No Meta message found in the Cucumber messages file. The file may be empty or malformed.");
+
             livingDocProject.ProtocolVersion = meta.ProtocolVersion;
             livingDocProject.ImplementationName = meta.Implementation.Name;
             livingDocProject.ImplementationVersion = meta.Implementation.Version;
@@ -251,10 +251,14 @@ namespace Expressium.LivingDoc.Parsers
 
             // Assign Test Execution Date...
             var testRunStarted = listOfTestRunStarted.FirstOrDefault();
+            if (testRunStarted == null)
+                throw new InvalidOperationException("No TestRunStarted message found. The test run may not have started or the file is incomplete.");
             livingDocProject.Date = testRunStarted.Timestamp.ToDateTime();
 
             // Assign Test Execution Duration...
-            var testRunFinished = listOfTestRunFinished.Last();
+            var testRunFinished = listOfTestRunFinished.LastOrDefault();
+            if (testRunFinished == null)
+                throw new InvalidOperationException("No TestRunFinished message found. The test run may have been interrupted before completing.");
             livingDocProject.Duration = testRunStarted.Timestamp.ToTimeSpan(testRunFinished.Timestamp);
 
             // Assign Scenario Test Results....
@@ -278,6 +282,17 @@ namespace Expressium.LivingDoc.Parsers
 
         internal void ParseTestResultsScenarios(LivingDocProject livingDocProject)
         {
+            // Build lookup dictionaries for steps...
+            var testStepByPickleStepId = listOfTestCases
+                .SelectMany(p => p.TestSteps)
+                .Where(s => s.PickleStepId != null)
+                .GroupBy(s => s.PickleStepId)
+                .ToDictionary(g => g.Key, g => g.First());
+
+            var testStepFinishedByTestStepId = listOfTestStepFinished
+                .GroupBy(f => f.TestStepId)
+                .ToDictionary(g => g.Key, g => g.First());
+
             foreach (var feature in livingDocProject.Features)
             {
                 foreach (var scenario in feature.Scenarios)
@@ -293,12 +308,10 @@ namespace Expressium.LivingDoc.Parsers
                             if (pickleStep == null)
                                 continue;
 
-                            var testStep = listOfTestCases.SelectMany(p => p.TestSteps).FirstOrDefault(s => s.PickleStepId == pickleStep.Id);
-                            if (testStep == null)
+                            if (!testStepByPickleStepId.TryGetValue(pickleStep.Id, out var testStep))
                                 continue;
 
-                            var testStepFinished = listOfTestStepFinished.Find(f => f.TestStepId == testStep.Id);
-                            if (testStepFinished == null)
+                            if (!testStepFinishedByTestStepId.TryGetValue(testStep.Id, out var testStepFinished))
                                 continue;
 
                             // Assign Scenario Step Test Results...
@@ -324,7 +337,7 @@ namespace Expressium.LivingDoc.Parsers
                         example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
 
                         // Assign Scenario Attachments...
-                        var attachments = listOftAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
+                        var attachments = listOfAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
                         if (attachments.Count > 0)
                         {
                             foreach (var attachment in attachments)
@@ -358,71 +371,74 @@ namespace Expressium.LivingDoc.Parsers
                         var hook = listOfHook.Find(d => d.Id == hookTestStep.HookId);
                         if (hook != null)
                         {
-                            if (hook.Type.ToString() == "BEFORE_TEST_CASE")
-                            {
-                                var hookStep = new LivingDocStep();
-                                hookStep.Name = "Before Scenario";
-                                hookStep.Keyword = "Hook";
-                                hookStep.Type = LivingDocStepTypes.Hook.ToString();
-                                hookStep.Status = LivingDocStatuses.Failed.ToString();
-                                hookStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
-                                hookStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
-                                hookStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
-                                example.Steps.Insert(0, hookStep);
-                            }
+                            if (hook.Type == HookType.BEFORE_TEST_CASE)
+                                example.Steps.Insert(0, CreateHookStep("Before Scenario", testStepFinished));
 
-                            if (hook.Type.ToString() == "AFTER_TEST_CASE")
-                            {
-                                var hookStep = new LivingDocStep();
-                                hookStep.Name = "After Scenario";
-                                hookStep.Keyword = "Hook";
-                                hookStep.Type = LivingDocStepTypes.Hook.ToString();
-                                hookStep.Status = LivingDocStatuses.Failed.ToString();
-                                hookStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
-                                hookStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
-                                hookStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
-                                example.Steps.Add(hookStep);
-                            }
+                            if (hook.Type == HookType.AFTER_TEST_CASE)
+                                example.Steps.Add(CreateHookStep("After Scenario", testStepFinished));
                         }
                     }
                 }
             }
         }
 
+        private static LivingDocStep CreateHookStep(string name, TestStepFinished testStepFinished)
+        {
+            var hookStep = new LivingDocStep();
+            hookStep.Name = name;
+            hookStep.Keyword = "Hook";
+            hookStep.Type = LivingDocStepTypes.Hook.ToString();
+            hookStep.Status = LivingDocStatuses.Failed.ToString();
+            hookStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
+            hookStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
+            hookStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+            return hookStep;
+        }
+
         internal PickleStep GetPickleStep(LivingDocScenario scenario, LivingDocStep step)
         {
             if (step.TableBodyId != null)
-            {
-                // Normal Step in Scenario with Examples...
-                var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id) && x.AstNodeIds.Contains(step.TableBodyId));
-                if (pickle == null)
-                    return null;
+                return GetPickleStepForExampleTableStep(scenario, step);
 
-                return pickle.Steps.FirstOrDefault(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableBodyId));
-            }
-            else if (step.TableIndexId != -1)
-            {
-                // Background Step in Scenario with Examples...
-                var scenarioPickles = listOfPickles.Where(x => x.AstNodeIds.Contains(scenario.Id));
-                if (!scenarioPickles.Any())
-                    return null;
+            if (step.TableIndexId != -1)
+                return GetPickleStepForExampleBackgroundStep(scenario, step);
 
-                var stepPickles = scenarioPickles.SelectMany(p => p.Steps).Where(s => s.AstNodeIds.Contains(step.Id));
-                if (!stepPickles.Any())
-                    return null;
+            return GetPickleStepForScenarioStep(scenario, step);
+        }
 
-                if (stepPickles.Count() >= step.TableIndexId)
-                    return stepPickles.ElementAt(step.TableIndexId - 1);
-            }
-            else
-            {
-                // Normal Step in Scenario...
-                var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id));
-                if (pickle == null)
-                    return null;
+        private PickleStep GetPickleStepForScenarioStep(LivingDocScenario scenario, LivingDocStep step)
+        {
+            // Normal Step in Scenario (no Examples table)...
+            var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id));
+            if (pickle == null)
+                return null;
 
-                return pickle.Steps.FirstOrDefault(s => s.AstNodeIds.Contains(step.Id));
-            }
+            return pickle.Steps.FirstOrDefault(s => s.AstNodeIds.Contains(step.Id));
+        }
+
+        private PickleStep GetPickleStepForExampleTableStep(LivingDocScenario scenario, LivingDocStep step)
+        {
+            // Normal Step in Scenario with Examples table...
+            var pickle = listOfPickles.Find(x => x.AstNodeIds.Contains(scenario.Id) && x.AstNodeIds.Contains(step.TableBodyId));
+            if (pickle == null)
+                return null;
+
+            return pickle.Steps.FirstOrDefault(s => s.AstNodeIds.Contains(step.Id) && s.AstNodeIds.Contains(step.TableBodyId));
+        }
+
+        private PickleStep GetPickleStepForExampleBackgroundStep(LivingDocScenario scenario, LivingDocStep step)
+        {
+            // Background Step in Scenario with Examples table...
+            var scenarioPickles = listOfPickles.Where(x => x.AstNodeIds.Contains(scenario.Id));
+            if (!scenarioPickles.Any())
+                return null;
+
+            var stepPickles = scenarioPickles.SelectMany(p => p.Steps).Where(s => s.AstNodeIds.Contains(step.Id)).ToList();
+            if (!stepPickles.Any())
+                return null;
+
+            if (stepPickles.Count >= step.TableIndexId)
+                return stepPickles[step.TableIndexId - 1];
 
             return null;
         }
