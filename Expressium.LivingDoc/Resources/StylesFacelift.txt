@@ -21,7 +21,7 @@
 
         /* Groups */
         --group-bg-color: #fcfcfd;
-        --group-border-color: #d1d5db;
+        --group-border-color: #D9DDE3;
 
         /* Surfaces */
         --hover-bg-color: #f7fafc;
@@ -32,8 +32,8 @@
         --heading-text-color: #0f172a;
         --text-gray-color: #6f6f73;
         --text-dimgray-color: #52525b;
-        --keyword-text-color: #1f5a70;
-        --link-text-color: #2a6785;
+        --keyword-text-color: #25576b;  /* #1f5a70; */
+        --link-text-color: #295f75;     /* #2a6785; */
 
         /* Badges */
         --scenario-index-text-color: #ffffff;
@@ -127,7 +127,7 @@
 
     .splitter-wrapper {
         display: flex;
-        height: calc(100% - 160px); /* Adjust for header and footer height */
+        height: calc(100% - 10em); /* Adjust for header and footer height */
         flex-direction: row; /* Change to row for vertical splitter */
         border-bottom: 1px solid #ddd;
     }
@@ -213,7 +213,7 @@
     #filter-list {
         flex: 1;
         overflow: auto;
-        height: calc(100% - 75px); /* Adjust for filter and search height */
+        height: calc(100% - 4.625em); /* Adjust for filter and search height */
         padding-right: 0.25em;
     }
 
@@ -304,7 +304,6 @@
     }
 
     .grid-border {
-        border-bottom: 1px solid Gainsboro;
         border-bottom: 1px solid #E0E0E0;
     }
 
@@ -665,7 +664,7 @@
     }
 
     .duration-symbol {
-        color: var(--text-dimgray-color);
+        color: var(--text-gray-color);
         font-size: 2.5em;
     }
 
@@ -673,6 +672,7 @@
         font-size: 1.25em;
         padding-left: 8px;
         padding-top: 4px;
+        color: var(--text-dimgray-color);
     }
 
     .duration-keyword {
