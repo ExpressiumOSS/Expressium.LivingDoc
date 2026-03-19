@@ -21,8 +21,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(listOfLines.Count, Is.EqualTo(4));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Feature Tags -->"));
-            Assert.That(listOfLines[1], Is.EqualTo("<div class='feature-tags-group'>"));
-            Assert.That(listOfLines[2], Is.EqualTo("<span class='feature-tags'>@tag1 @tag2</span>"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div class='feature-tag-group'>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='feature-tag'>@tag1 @tag2</span>"));
             Assert.That(listOfLines[3], Is.EqualTo("</div>"));
         }
 
@@ -144,8 +144,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(listOfLines.Count, Is.EqualTo(4));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Rule Tags -->"));
-            Assert.That(listOfLines[1], Is.EqualTo("<div class='rule-tags-group'>"));
-            Assert.That(listOfLines[2], Is.EqualTo("<span class='rule-tags'>@tag5 @tag6</span>"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div class='rule-tag-group'>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='rule-tag'>@tag5 @tag6</span>"));
             Assert.That(listOfLines[3], Is.EqualTo("</div>"));
         }
 
@@ -184,8 +184,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(listOfLines.Count, Is.EqualTo(4));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Tags -->"));
-            Assert.That(listOfLines[1], Is.EqualTo("<div class='scenario-tags-group'>"));
-            Assert.That(listOfLines[2], Is.EqualTo("<span class='scenario-tags'>@tag3 @tag4</span>"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div class='scenario-tag-group'>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='scenario-tag'>@tag3 @tag4</span>"));
             Assert.That(listOfLines[3], Is.EqualTo("</div>"));
         }
 

@@ -43,15 +43,15 @@ namespace Expressium.LivingDoc
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Feature Tags -->");
-            listOfLines.Add("<div class='feature-tags-group'>");
+            listOfLines.Add("<div class='feature-tag-group'>");
             if (project.ExperimentFlag)
             {
                 foreach (var tag in feature.Tags)
-                    listOfLines.Add("<span class='feature-tags'>" + tag + "</span>");
+                    listOfLines.Add("<span class='feature-tag'>" + tag + "</span>");
             }
             else
             {
-                listOfLines.Add("<span class='feature-tags'>" + feature.GetTags() + "</span>");
+                listOfLines.Add("<span class='feature-tag'>" + feature.GetTags() + "</span>");
             }
             listOfLines.Add("</div>");
 
@@ -208,15 +208,15 @@ namespace Expressium.LivingDoc
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Rule Tags -->");
-            listOfLines.Add("<div class='rule-tags-group'>");
+            listOfLines.Add("<div class='rule-tag-group'>");
             if (project.ExperimentFlag)
             {
                 foreach (var tag in rule.Tags)
-                    listOfLines.Add("<span class='rule-tags'>" + tag + "</span>");
+                    listOfLines.Add("<span class='rule-tag'>" + tag + "</span>");
             }
             else
             {
-                listOfLines.Add("<span class='rule-tags'>" + rule.GetTags() + "</span>");
+                listOfLines.Add("<span class='rule-tag'>" + rule.GetTags() + "</span>");
             }
             listOfLines.Add("</div>");
 
@@ -262,15 +262,15 @@ namespace Expressium.LivingDoc
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Scenario Tags -->");
-            listOfLines.Add("<div class='scenario-tags-group'>");
+            listOfLines.Add("<div class='scenario-tag-group'>");
             if (project.ExperimentFlag)
             {
                 foreach (var tag in scenario.Tags)
-                    listOfLines.Add("<span class='scenario-tags'>" + tag + "</span>");
+                    listOfLines.Add("<span class='scenario-tag'>" + tag + "</span>");
             }
             else
             {
-                listOfLines.Add("<span class='scenario-tags'>" + scenario.GetTags() + "</span>");
+                listOfLines.Add("<span class='scenario-tag'>" + scenario.GetTags() + "</span>");
             }
             listOfLines.Add("</div>");
 

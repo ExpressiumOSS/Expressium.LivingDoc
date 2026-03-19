@@ -490,9 +490,9 @@
         margin-bottom: 6px;
     }
 
-    .feature-tags,
-    .rule-tags,
-    .scenario-tags {
+    .feature-tag,
+    .rule-tag,
+    .scenario-tag {
         color: #348F91;
     }
 

@@ -40,11 +40,15 @@
         --scenario-index-bg-color: #909090;
 
         /* Buttons */
-        --button-border-color: #c5ced9;
-        --button-active-text-color: #111827;
-        --button-active-bg-color: #f1f5f9;
-        --button-inactive-text-color: #6b7280;
-        --button-inactive-bg-color: #f8fafc;
+        --button-border-color: #a8b0b8;
+        --button-text-color: #111827;
+        --button-bg-color: #f4f6f8;
+        --button-hover-bg-color: #edf1f5; 
+        --button-hover-border-color: #98a2ad;
+        --button-inactive-border-color: #c6cdd4;
+        --button-inactive-text-color: #6f6f73;
+        --button-inactive-bg-color: #f8f9fa;
+        --button-selected-bg-color: #e7eff7;
 
         /* Scrollbars */
         --scrollbar-text-color: #909090;
@@ -259,30 +263,41 @@
         background-color: var(--selected-bg-color);
     }
 
-    /* Inactive Buttons */
+    /* Buttons */
     button {
-        color: var(--button-inactive-text-color);
+        color: var(--button-text-color);
         border: 1px solid var(--button-border-color);
-        background-color: var(--button-inactive-bg-color);
+        background-color: var(--button-bg-color);
         border-radius: 0.375em;
         padding: 2px 6px;
     }
 
-    /* Active Buttons */
-    button.active {
-        color: var(--button-active-text-color);
-        background-color: var(--button-active-bg-color);
-    }
-
-    /* Selected Buttons */
-    button.selected {
-        color: var(--button-active-text-color);
-    }
-
     /* Hover Buttons */
     button:hover {
-        color: var(--button-active-text-color);
-        background-color: var(--button-active-bg-color);
+        color: var(--button-text-color);
+        border: 1px solid var(--button-hover-border-color);
+        background-color: var(--button-hover-bg-color);
+    }
+
+    /* Inactive Option Buttons */
+    button.filter-option:not(.active) {
+        color: var(--button-inactive-text-color);
+        border: 1px solid var(--button-inactive-border-color);
+        background-color: var(--button-inactive-bg-color);
+    }
+
+    /* Hover Option Buttons */
+    button.filter-option:hover {
+        color: var(--button-text-color);
+        border: 1px solid var(--button-hover-border-color);
+        background-color: var(--button-selected-bg-color);
+    }
+
+    /* Active Option Buttons */
+    button.filter-option.active {
+        color: var(--button-text-color);
+        border: 1px solid var(--button-border-color);
+        background-color: var(--button-selected-bg-color);
     }
 
     .grid-folder {
@@ -481,9 +496,9 @@
         margin-bottom: 0.375em;
     }
 
-    .feature-tags,
-    .rule-tags,
-    .scenario-tags {
+    .feature-tag,
+    .rule-tag,
+    .scenario-tag {
         color: var(--tag-text-color);
         background: var(--tag-bg-color);
         border-radius: 0.375em;
@@ -495,9 +510,9 @@
         vertical-align: middle;
     }
 
-    .feature-tags-group,
-    .rule-tags-group,
-    .scenario-tags-group {
+    .feature-tag-group,
+    .rule-tag-group,
+    .scenario-tag-group {
         padding-bottom: 2px;
     }
 
