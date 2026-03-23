@@ -308,7 +308,7 @@ namespace Expressium.LivingDoc
                     listOfLines.Add("<button class='scenario-stacktraces bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></button>");
 
                 if (example.Attachments.Count > 0)
-                    listOfLines.Add("<button class='scenario-attachments bi bi-paperclip' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></button>");
+                    listOfLines.Add("<button class='scenario-attachments bi bi-list' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></button>");
             }
             else
             {

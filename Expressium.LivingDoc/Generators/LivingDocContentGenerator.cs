@@ -127,6 +127,12 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'>Incomplete</button>");
             listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'>Failed</button>");
             listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'>Skipped</button>");
+
+            //listOfLines.Add("<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-passed'></span>&nbsp;Passed</button>");
+            //listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-incomplete'></span>&nbsp;Incomplete</button>");
+            //listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-failed'></span>&nbsp;Failed</button>");
+            //listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-skipped'></span>&nbsp;Skipped</button>");
+
             listOfLines.Add("<button class='selected' title='Clear Filters' onclick='clearPrefilters()'>Clear</button>");
             listOfLines.Add("</div>");
 
@@ -154,6 +160,12 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("</div>");
             listOfLines.Add("</div>");
+
+            //listOfLines.Add("<!-- Toolbar Section -->");
+            //listOfLines.Add($"<div class='grid-toolbar'>");
+            //listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
+            //listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
+            //listOfLines.Add($"</div>");
 
             return listOfLines;
         }

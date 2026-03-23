@@ -20,7 +20,7 @@
         --tag-bg-color: #eef4f8;
 
         /* Groups */
-        --group-bg-color: #fcfcfd;
+        --group-bg-color: #fdfdfd;
         --group-border-color: #D9DDE3;
 
         /* Surfaces */
@@ -32,7 +32,7 @@
         --heading-text-color: #0f172a;
         --text-gray-color: #6f6f73;
         --text-dimgray-color: #52525b;
-        --keyword-text-color: #25576b;  /* #1f5a70; */
+        --keyword-text-color: #1f5a70;  /* #25576b; */
         --link-text-color: #295f75;     /* #2a6785; */
 
         /* Badges */
@@ -84,7 +84,7 @@
     }
    
     header {
-        padding: 8px 16px;
+        padding: 10px 16px;
         background-color: var(--header-bg-color);
     }
 
@@ -131,7 +131,7 @@
 
     .splitter-wrapper {
         display: flex;
-        height: calc(100% - 10em); /* Adjust for header and footer height */
+        height: calc(100% - 10.25em); /* Adjust for header and footer height */
         flex-direction: row; /* Change to row for vertical splitter */
         border-bottom: 1px solid #ddd;
     }
@@ -157,7 +157,7 @@
     footer {
         background-color: var(--footer-bg-color);
         text-align: center;
-        padding: 10px;
+        padding: 0.750em;
         font-size: 0.875em;
     }
 
@@ -219,6 +219,7 @@
         overflow: auto;
         height: calc(100% - 4.625em); /* Adjust for filter and search height */
         padding-right: 0.25em;
+        padding-top: 0.125em;
     }
 
     th, td {
@@ -232,7 +233,7 @@
         font-weight: 600;
         border-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
     }
-
+    
     table.list-view,
     table.tree-view {
         border: 1px;
@@ -316,6 +317,10 @@
     .scenario-attachments,
     .scenario-backgrounds {
         padding: 1px 4px;
+        font-size: 0.9625em;
+        color: var(--button-inactive-text-color);
+        border: 1px solid var(--button-inactive-border-color);
+        background-color: var(--button-inactive-bg-color);
     }
 
     .grid-border {
@@ -522,7 +527,6 @@
     .scenario-keyword {
         color: var(--keyword-text-color);
         font-weight: 600;
-        /* font-size: 1.0625em; */
     }
 
     .step-keyword {
@@ -534,7 +538,6 @@
     .rule-name,
     .scenario-name {
         font-weight: 600;
-        font-size: 1.0625em;
     }
 
     .feature-description,
@@ -548,7 +551,7 @@
 
     .feature-duration,
     .scenario-duration {
-        color: var(--text-dimgray-color);
+        color: var(--text-gray-color);
         padding-left: 4px;
         padding-right: 5px;
         font-size: 0.9375em;
