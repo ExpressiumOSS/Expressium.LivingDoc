@@ -32,5 +32,29 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Count, Is.EqualTo(219));
             Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Duration -->"));
         }
+
+        [Test]
+        public void LivingDocDataGenerator_GenerateDataOverview()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocDataGenerator(project);
+            var listOfLines = generator.GenerateDataOverview();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines, Does.Contain("<!-- Data Overview -->"));
+        }
+
+        [Test]
+        public void LivingDocDataGenerator_GenerateDataObjects()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocDataGenerator(project);
+            var listOfLines = generator.GenerateDataObjects();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines.Count, Is.EqualTo(0));
+        }
     }
 }

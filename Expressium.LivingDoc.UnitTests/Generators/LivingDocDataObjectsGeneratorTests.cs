@@ -8,6 +8,74 @@ namespace Expressium.LivingDoc.UnitTests.Generators
     public class LivingDocDataObjectsGeneratorTests
     {
         [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataFeatures()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var feature = new LivingDocFeature
+            {
+                Name = "Login",
+                Tags = new List<string> { "@Login" }
+            };
+            livingDocProject.Features.Add(feature);
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataFeatures();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines, Does.Contain("<!-- Data Feature -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Feature Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Feature Name -->"));
+        }
+
+        [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataScenarios()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var feature = new LivingDocFeature { Name = "Login" };
+            var scenario = new LivingDocScenario { Name = "Successful User Login with Valid Credentials" };
+            var example = new LivingDocExample();
+            example.Steps.Add(new LivingDocStep { Keyword = "Given", Name = "I have logged in", Status = "Passed" });
+            scenario.Examples.Add(example);
+            feature.Scenarios.Add(scenario);
+            livingDocProject.Features.Add(feature);
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataScenarios();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines, Does.Contain("<!-- Data Scenario -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Scenario Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Scenario Steps -->"));
+        }
+
+        [Test]
+        public void LivingDocDataObjectsGenerator_GenerateDataScenarioDescription()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var scenario = new LivingDocScenario
+            {
+                Description = "Line One\nLine Two\nLine Three"
+            };
+
+            var generator = new LivingDocDataObjectsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataScenarioDescription(scenario);
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines.Count, Is.EqualTo(8));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Description -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<ul class='scenario-description'>"));
+            Assert.That(listOfLines[3], Is.EqualTo("<li>Line One</li>"));
+            Assert.That(listOfLines[4], Is.EqualTo("<li>Line Two</li>"));
+            Assert.That(listOfLines[5], Is.EqualTo("<li>Line Three</li>"));
+            Assert.That(listOfLines[6], Is.EqualTo("</ul>"));
+            Assert.That(listOfLines[7], Is.EqualTo("</div>"));
+        }
+
+        [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataFeaturesTags()
         {
             var livingDocProject = new LivingDocProject();

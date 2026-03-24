@@ -1,5 +1,6 @@
 ﻿using Expressium.LivingDoc.Generators;
 using Expressium.LivingDoc.Models;
+using System.Linq;
 
 namespace Expressium.LivingDoc.UnitTests.Generators
 {
@@ -44,6 +45,50 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[4], Does.Contain("title='Scenarios List View'"));
             Assert.That(listOfLines[5], Does.Contain("title='Steps List View'"));
             Assert.That(listOfLines[6], Does.Contain("title='Analytics'"));
+        }
+
+        [Test]
+        public void LivingDocContentGenerator_GenerateSplitter()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocContentGenerator(project);
+            var listOfLines = generator.GenerateSplitter();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines, Does.Contain("<!-- Splitter Wrapper Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Left Splitter Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Splitter Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Right Splitter Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Content Splitter Script -->"));
+        }
+
+        [Test]
+        public void LivingDocContentGenerator_GenerateViewPreFilters()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocContentGenerator(project);
+            var listOfLines = generator.GenerateViewPreFilters();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines, Does.Contain("<!-- View Title Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- PreFilters Section -->"));
+            Assert.That(listOfLines, Does.Contain("<span id='view-title' class='page-name'>Overview</span>"));
+            Assert.That(listOfLines.Count(l => l.Contains("data-prefilter")), Is.EqualTo(4));
+        }
+
+        [Test]
+        public void LivingDocContentGenerator_GenerateFilter()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocContentGenerator(project);
+            var listOfLines = generator.GenerateFilter();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines, Does.Contain("<!-- Filter Section -->"));
+            Assert.That(listOfLines, Does.Contain("<input onkeyup='filterView()' class='filter-keywords' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>"));
         }
 
         [Test]

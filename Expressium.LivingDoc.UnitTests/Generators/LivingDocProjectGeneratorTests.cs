@@ -9,6 +9,76 @@ namespace Expressium.LivingDoc.UnitTests.Generators
     public class LivingDocProjectGeneratorTests
     {
         [Test]
+        public void LivingDocProjectGenerator_GenerateHtmlHeader()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateHtmlHeader();
+
+            Assert.That(listOfLines.Count, Is.EqualTo(2));
+            Assert.That(listOfLines[0], Is.EqualTo("<!DOCTYPE html>"));
+            Assert.That(listOfLines[1], Is.EqualTo("<html lang='en'>"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_GenerateHtmlFooter()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateHtmlFooter();
+
+            Assert.That(listOfLines.Count, Is.EqualTo(1));
+            Assert.That(listOfLines[0], Is.EqualTo("</html>"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_GenerateBodyHeader()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateBodyHeader();
+
+            Assert.That(listOfLines.Count, Is.EqualTo(1));
+            Assert.That(listOfLines[0], Does.Contain("<body"));
+            Assert.That(listOfLines[0], Does.Contain("onload"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_GenerateBodyFooter()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateBodyFooter();
+
+            Assert.That(listOfLines.Count, Is.EqualTo(1));
+            Assert.That(listOfLines[0], Is.EqualTo("</body>"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_GenerateProperties()
+        {
+            var project = new LivingDocProject
+            {
+                OsVersion = "Windows 11",
+                ImplementationName = "ReqnRoll",
+                ImplementationVersion = "2.0.0"
+            };
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateProperties();
+
+            Assert.That(listOfLines.Count, Is.EqualTo(3));
+            Assert.That(listOfLines[0], Does.Contain("Windows 11"));
+            Assert.That(listOfLines[1], Does.Contain("Expressium LivingDoc"));
+            Assert.That(listOfLines[2], Does.Contain("ReqnRoll"));
+            Assert.That(listOfLines[2], Does.Contain("2.0.0"));
+        }
+
+        [Test]
         public void LivingDocProjectGenerator_GenerateContent()
         {
             var project = new LivingDocProject

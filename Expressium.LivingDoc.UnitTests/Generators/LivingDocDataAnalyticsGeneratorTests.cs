@@ -1,5 +1,6 @@
 using Expressium.LivingDoc.Generators;
 using Expressium.LivingDoc.Models;
+using System.Linq;
 
 namespace Expressium.LivingDoc.UnitTests.Generators
 {
@@ -85,6 +86,51 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[1], Is.EqualTo("<span class='chart-name' data-testid='title-chart-title'>Title</span>"));
             Assert.That(listOfLines[3], Is.EqualTo("<!-- Data Analytics Status Chart -->"));
             Assert.That(listOfLines[13].Trim(), Is.EqualTo("<text x='50%' y='50%' class='chart-number' data-testid='title-chart-passed'>36%</text>"));
+        }
+
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFeaturesView()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataAnalyticsFeaturesView();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Analytics -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div id='analytics-features'>"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Duration -->"));
+            Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
+        }
+
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsScenariosView()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataAnalyticsScenariosView();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Analytics -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div id='analytics-scenarios'>"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Duration -->"));
+            Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
+        }
+
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStepsView()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataAnalyticsStepsView();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Analytics -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div id='analytics-steps'>"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Duration -->"));
+            Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
         }
 
         [Test]
