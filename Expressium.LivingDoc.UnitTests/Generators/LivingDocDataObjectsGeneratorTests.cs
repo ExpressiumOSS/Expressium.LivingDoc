@@ -1,4 +1,5 @@
-﻿using Expressium.LivingDoc.Models;
+﻿using Expressium.LivingDoc.Generators;
+using Expressium.LivingDoc.Models;
 using System;
 using System.Collections.Generic;
 

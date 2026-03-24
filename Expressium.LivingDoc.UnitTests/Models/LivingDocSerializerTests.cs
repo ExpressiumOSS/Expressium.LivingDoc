@@ -33,6 +33,13 @@ namespace Expressium.LivingDoc.UnitTests.Models
             LivingDocSerializer.SerializeAsJson(outputFilePath, livingDocProject);
 
             Assert.That(File.Exists(outputFilePath));
+
+            var reloadedProject = LivingDocSerializer.DeserializeAsJson<LivingDocProject>(outputFilePath);
+            Assert.That(reloadedProject.GetNumberOfFeatures(), Is.EqualTo(livingDocProject.GetNumberOfFeatures()));
+            Assert.That(reloadedProject.GetNumberOfScenarios(), Is.EqualTo(livingDocProject.GetNumberOfScenarios()));
+            Assert.That(reloadedProject.GetNumberOfRules(), Is.EqualTo(livingDocProject.GetNumberOfRules()));
+            Assert.That(reloadedProject.GetNumberOfExamples(), Is.EqualTo(livingDocProject.GetNumberOfExamples()));
+            Assert.That(reloadedProject.GetNumberOfSteps(), Is.EqualTo(livingDocProject.GetNumberOfSteps()));
         }
     }
 }

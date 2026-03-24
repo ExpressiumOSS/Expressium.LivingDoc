@@ -17,6 +17,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
             Assert.That(livingDocSteps.IsSkipped(), Is.True);
             Assert.That(livingDocSteps.IsPassed(), Is.False);
+            Assert.That(livingDocSteps.IsFailed(), Is.False);
+            Assert.That(livingDocSteps.IsIncomplete(), Is.False);
         }
 
         [Test]
@@ -31,6 +33,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
             Assert.That(livingDocSteps.IsFailed(), Is.True);
             Assert.That(livingDocSteps.IsPassed(), Is.False);
+            Assert.That(livingDocSteps.IsSkipped(), Is.False);
+            Assert.That(livingDocSteps.IsIncomplete(), Is.False);
             Assert.That(livingDocSteps.Message, Does.Contain("Validate the HomePage title property..."));
         }
 
@@ -46,6 +50,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
             Assert.That(livingDocSteps.IsIncomplete(), Is.True);
             Assert.That(livingDocSteps.IsPassed(), Is.False);
+            Assert.That(livingDocSteps.IsFailed(), Is.False);
+            Assert.That(livingDocSteps.IsSkipped(), Is.False);
             Assert.That(livingDocSteps.Message, Is.EqualTo("Pending Step Definition"));
         }
 
@@ -59,9 +65,23 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocSteps = livingDocProject.Features[0].Scenarios[3].Examples[0].Steps[0];
 
             Assert.That(livingDocSteps.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
-            Assert.That(livingDocSteps.IsIncomplete(), Is.False);
             Assert.That(livingDocSteps.IsPassed(), Is.True);
+            Assert.That(livingDocSteps.IsFailed(), Is.False);
+            Assert.That(livingDocSteps.IsIncomplete(), Is.False);
+            Assert.That(livingDocSteps.IsSkipped(), Is.False);
             Assert.That(livingDocSteps.Message, Is.EqualTo(null));
+        }
+
+        [Test]
+        public void LivingDocSteps_NullStatus_IsSkipped()
+        {
+            var livingDocStep = new LivingDocStep();
+
+            Assert.That(livingDocStep.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
+            Assert.That(livingDocStep.IsSkipped(), Is.True);
+            Assert.That(livingDocStep.IsPassed(), Is.False);
+            Assert.That(livingDocStep.IsFailed(), Is.False);
+            Assert.That(livingDocStep.IsIncomplete(), Is.False);
         }
     }
 }

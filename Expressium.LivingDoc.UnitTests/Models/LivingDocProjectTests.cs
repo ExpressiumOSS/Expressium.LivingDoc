@@ -131,6 +131,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase(0, 0, 43, 7, 587, "43min 7s")]
         [TestCase(0, 0, 0, 7, 587, "7s 587ms")]
         [TestCase(0, 0, 0, 0, 587, "0s 587ms")]
+        [TestCase(0, 0, 0, 0, 0,   "0s 000ms")]
+        [TestCase(1, 2, 43, 7, 587, "2h 43min")]
         public void LivingDocProject_GetDuration(int days, int hours, int minutes, int seconds, int milliseconds, string result)
         {
             var livingDocProject = new LivingDocProject
@@ -216,6 +218,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             livingDocProject.Histories.Add(historyOne);
             livingDocProject.Histories.Add(historyTwo);
 
+            Assert.That(livingDocProject.Histories.Count, Is.EqualTo(2));
             Assert.That(livingDocProject.GetMaximumNumberOfHistoryFeatures(), Is.EqualTo(5));
             Assert.That(livingDocProject.GetMaximumNumberOfHistoryScenarios(), Is.EqualTo(4));
             Assert.That(livingDocProject.GetMaximumNumberOfHistorySteps(), Is.EqualTo(7));

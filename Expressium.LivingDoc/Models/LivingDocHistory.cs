@@ -19,7 +19,7 @@ namespace Expressium.LivingDoc.Models
 
         public string GetDate()
         {
-            return Date.ToString("ddd d. MMMM yyyy HH':'mm':'ss \"GMT\"z");
+            return LivingDocUtilities.FormatAsString(Date);
         }
 
         public int GetNumberOfFeatures()

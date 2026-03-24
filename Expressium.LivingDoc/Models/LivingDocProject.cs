@@ -49,7 +49,7 @@ namespace Expressium.LivingDoc.Models
             foreach (var feature in project.Features)
             {
                 if (!Features.Any(x => x.Name == feature.Name))
-                    Features.Add(LivingDocSerializer.DeepClone(feature));
+                    Features.Add(LivingDocExtensions.DeepClone(feature));
             }
 
             Duration += project.Duration;

@@ -1,4 +1,3 @@
-﻿using System;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -20,15 +19,6 @@ namespace Expressium.LivingDoc.Models
         {
             var jsonString = JsonSerializer.Serialize(obj, new JsonSerializerOptions() { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
             File.WriteAllText(filePath, jsonString);
-        }
-
-        public static T DeepClone<T>(this T obj)
-        {
-            if (obj is null)
-                throw new ArgumentNullException(nameof(obj));
-
-            var json = JsonSerializer.Serialize(obj);
-            return JsonSerializer.Deserialize<T>(json)!;
         }
     }
 }

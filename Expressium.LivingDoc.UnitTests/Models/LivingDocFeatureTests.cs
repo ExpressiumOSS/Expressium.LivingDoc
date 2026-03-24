@@ -51,22 +51,22 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocFeature_GetStatus_Passed()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             var livingDocFeature = livingDocProject.Features[0];
 
-            Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(2));
-            Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0002"));
-            Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(50));
-            Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0050"));
+            Assert.That(livingDocFeature.GetNumberOfScenarios(), Is.EqualTo(1));
+            Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0001"));
+            Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(100));
+            Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0100"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
-            Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
-            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 063ms"));
-            Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:063"));
-            Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\examples-tables"));
+            Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
+            Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 003ms"));
+            Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:003"));
+            Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\minimal"));
         }
 
         [Test]
