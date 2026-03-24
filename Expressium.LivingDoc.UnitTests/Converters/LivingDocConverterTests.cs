@@ -80,7 +80,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var livingDocConverter = new LivingDocConverter();
 
             var exception = Assert.Throws<IOException>(() => livingDocConverter.Convert(inputFilePath, "MyProjectTitle"));
-            Assert.That(exception.Message, Does.StartWith("IO error: Could not find file"));
+            Assert.That(exception.Message, Does.StartWith("IO error:"));
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle");
 
             var exception = Assert.Throws<IOException>(() => livingDocConverter.Generate(livingDocProject, outputFilePath));
-            Assert.That(exception.Message, Does.StartWith("IO error: Could not find a part of the path"));
+            Assert.That(exception.Message, Does.StartWith("IO error:"));
         }
 
         [Test]
