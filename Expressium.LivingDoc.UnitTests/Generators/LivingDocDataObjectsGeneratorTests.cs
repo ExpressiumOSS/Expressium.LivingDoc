@@ -19,11 +19,12 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataObjectsGenerator(livingDocProject);
             var listOfLines = generator.GenerateDataFeatureTags(feature);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(4));
+            Assert.That(listOfLines.Count, Is.EqualTo(5));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Feature Tags -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<div class='feature-tag-group'>"));
-            Assert.That(listOfLines[2], Is.EqualTo("<span class='feature-tag'>@tag1 @tag2</span>"));
-            Assert.That(listOfLines[3], Is.EqualTo("</div>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='feature-tag'>@tag1</span>"));
+            Assert.That(listOfLines[3], Is.EqualTo("<span class='feature-tag'>@tag2</span>"));
+            Assert.That(listOfLines[4], Is.EqualTo("</div>"));
         }
 
         [Test]
@@ -142,11 +143,12 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataObjectsGenerator(livingDocProject);
             var listOfLines = generator.GenerateDataRuleTags(rule);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(4));
+            Assert.That(listOfLines.Count, Is.EqualTo(5));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Rule Tags -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<div class='rule-tag-group'>"));
-            Assert.That(listOfLines[2], Is.EqualTo("<span class='rule-tag'>@tag5 @tag6</span>"));
-            Assert.That(listOfLines[3], Is.EqualTo("</div>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='rule-tag'>@tag5</span>"));
+            Assert.That(listOfLines[3], Is.EqualTo("<span class='rule-tag'>@tag6</span>"));
+            Assert.That(listOfLines[4], Is.EqualTo("</div>"));
         }
 
         [Test]
@@ -163,10 +165,10 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataObjectsGenerator(livingDocProject);
             var listOfLines = generator.GenerateDataScenarioRule(rule, null);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(13));
-            Assert.That(listOfLines[6], Is.EqualTo("<!-- Data Rule Name -->"));
-            Assert.That(listOfLines[8], Does.Contain("Rule:"));
-            Assert.That(listOfLines[9], Does.Contain("Orders"));
+            Assert.That(listOfLines.Count, Is.EqualTo(14));
+            Assert.That(listOfLines[7], Is.EqualTo("<!-- Data Rule Name -->"));
+            Assert.That(listOfLines[9], Does.Contain("Rule:"));
+            Assert.That(listOfLines[10], Does.Contain("Orders"));
         }
 
         [Test]
@@ -182,11 +184,12 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataObjectsGenerator(livingDocProject);
             var listOfLines = generator.GenerateDataScenarioTags(scenario);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(4));
+            Assert.That(listOfLines.Count, Is.EqualTo(5));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Tags -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<div class='scenario-tag-group'>"));
-            Assert.That(listOfLines[2], Is.EqualTo("<span class='scenario-tag'>@tag3 @tag4</span>"));
-            Assert.That(listOfLines[3], Is.EqualTo("</div>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='scenario-tag'>@tag3</span>"));
+            Assert.That(listOfLines[3], Is.EqualTo("<span class='scenario-tag'>@tag4</span>"));
+            Assert.That(listOfLines[4], Is.EqualTo("</div>"));
         }
 
         [Test]
