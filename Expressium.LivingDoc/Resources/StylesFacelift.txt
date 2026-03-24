@@ -1,37 +1,43 @@
 ﻿<style>
     :root {
+
+        /* Grayscale */
+        --bs-gray-150: #f1f3f4;
+        --bs-gray-450: #bec5cc;
+        --bs-gray-550: #8d959d;
+
         /* Header */
         --header-bg-color: #cfdbea;
 
         /* Footer */
-        --footer-text-color: #6b7280;
-        --footer-bg-color: #f9fafb;
+        --footer-text-color: var(--bs-gray-600);
+        --footer-bg-color: var(--bs-gray-100);
 
         /* Navigation */
-        --navigation-bg-color: #f3f4f6;
-        --navigation-underline-color: #9ca3af;
+        --navigation-bg-color: var(--bs-gray-150);
+        --navigation-underline-color: var(--bs-gray-500);
 
         /* Tables */
-        --table-header-text-color: #111827;
-        --table-header-bg-color: #f3f4f6;
+        --table-header-text-color: var(--bs-gray-900);
+        --table-header-bg-color: var(--bs-gray-150);
 
         /* Tags */
         --tag-text-color: #338689;
         --tag-bg-color: #eef4f8;
 
         /* Groups */
-        --group-bg-color: #fdfdfd;
-        --group-border-color: #D9DDE3;
+        --group-bg-color: #FCFCFC;
+        --group-border-color: var(--bs-gray-300);
 
         /* Surfaces */
-        --hover-bg-color: #f7fafc;
+        --hover-bg-color: #F7F9FC;
         --selected-bg-color: #f3f6fa;
 
         /* Texts */
-        --text-color: #111827;
-        --heading-text-color: #0f172a;
-        --text-gray-color: #6f6f73;
-        --text-dimgray-color: #52525b;
+        --text-color: var(--bs-gray-900);
+        --heading-text-color: var(--bs-gray-900);
+        --text-gray-color: var(--bs-gray-600);
+        --text-dimgray-color: var(--bs-gray-700);
         --keyword-text-color: #1f5a70;  /* #25576b; */
         --link-text-color: #295f75;     /* #2a6785; */
 
@@ -40,19 +46,19 @@
         --scenario-index-bg-color: #909090;
 
         /* Buttons */
-        --button-border-color: #a8b0b8;
-        --button-text-color: #111827;
-        --button-bg-color: #f4f6f8;
-        --button-hover-bg-color: #edf1f5; 
-        --button-hover-border-color: #98a2ad;
-        --button-inactive-border-color: #c6cdd4;
-        --button-inactive-text-color: #6f6f73;
-        --button-inactive-bg-color: #f8f9fa;
+        --button-border-color: var(--bs-gray-500);
+        --button-bg-color: var(--bs-gray-100);
+        --button-text-color: var(--bs-gray-900);
+        --button-inactive-border-color: var(--bs-gray-450);
+        --button-inactive-bg-color: var(--bs-gray-100);
+        --button-inactive-text-color: var(--bs-gray-600);
+        --button-hover-border-color: var(--bs-gray-550);
+        --button-hover-bg-color: var(--bs-gray-150);
         --button-selected-bg-color: #e7eff7;
 
         /* Scrollbars */
         --scrollbar-text-color: #909090;
-        --scrollbar-bg-color: white;
+        --scrollbar-bg-color: #ffffff;
 
         /* Status colors */
         --passed-color: #47A64E;
@@ -318,9 +324,6 @@
     .scenario-backgrounds {
         padding: 1px 4px;
         font-size: 0.9625em;
-        color: var(--button-inactive-text-color);
-        border: 1px solid var(--button-inactive-border-color);
-        background-color: var(--button-inactive-bg-color);
     }
 
     .grid-border {
@@ -497,8 +500,8 @@
 
     hr {
         border: 0 none;
-        margin-top: 0.375em;
-        margin-bottom: 0.375em;
+        margin-top: 0.50em;
+        margin-bottom: 0.50em;
     }
 
     .feature-tag,
@@ -558,14 +561,14 @@
     }
 
     .scenario-index {
-        width: 1.75em;
-        height: 1.75em;
+        width: 1.70em;
+        height: 1.70em;
         border-radius: 50%;
         background-color: var(--scenario-index-bg-color);
         color: var(--scenario-index-text-color);
         text-align: center;
-        line-height: 1.75em; /* Centers the text vertically */
-        font-size: 0.875em;
+        line-height: 1.70em; /* Centers the text vertically */
+        font-size: 0.850em;
         display: inline-block; /* Allows the circle to be displayed inline */
         margin-left: 3px;
     }
