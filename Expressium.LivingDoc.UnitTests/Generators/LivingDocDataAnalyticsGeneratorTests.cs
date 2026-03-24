@@ -1,9 +1,8 @@
 using Expressium.LivingDoc.Generators;
 using Expressium.LivingDoc.Models;
 
-namespace Expressium.LivingDoc.Tests.Generators
+namespace Expressium.LivingDoc.UnitTests.Generators
 {
-    [TestFixture]
     public class LivingDocDataAnalyticsGeneratorTests
     {
         [Test]

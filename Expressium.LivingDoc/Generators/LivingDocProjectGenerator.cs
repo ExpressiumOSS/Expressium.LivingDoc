@@ -149,20 +149,31 @@ namespace Expressium.LivingDoc.Generators
 
         internal static void SaveHtmlFile(string filePath, List<string> listOfLines)
         {
-            var content = string.Join(Environment.NewLine, listOfLines);
-
-            var htmlParser = new HtmlParser();
-            var htmlDocument = htmlParser.ParseDocument(content);
-
-            using (var streamWriter = new StringWriter())
+            try
             {
-                htmlDocument.ToHtml(streamWriter, new PrettyMarkupFormatter
-                {
-                    Indentation = "\t",
-                    NewLine = "\n"
-                });
+                var content = string.Join(Environment.NewLine, listOfLines);
 
-                File.WriteAllText(filePath, streamWriter.ToString());
+                var htmlParser = new HtmlParser();
+                var htmlDocument = htmlParser.ParseDocument(content);
+
+                using (var streamWriter = new StringWriter())
+                {
+                    htmlDocument.ToHtml(streamWriter, new PrettyMarkupFormatter
+                    {
+                        Indentation = "\t",
+                        NewLine = "\n"
+                    });
+
+                    File.WriteAllText(filePath, streamWriter.ToString());
+                }
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"IO error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Unexpected error: {ex.Message}", ex);
             }
         }
     }

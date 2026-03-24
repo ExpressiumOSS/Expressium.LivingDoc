@@ -16,6 +16,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines.Count, Is.EqualTo(54));
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Features View -->"));
         }
 
         [Test]
@@ -29,6 +30,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines.Count, Is.EqualTo(219));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Duration -->"));
         }
     }
 }

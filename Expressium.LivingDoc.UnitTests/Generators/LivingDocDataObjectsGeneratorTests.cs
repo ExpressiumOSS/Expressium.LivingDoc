@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Expressium.LivingDoc.UnitTests.Generators
 {
-    internal class LivingDocDataObjectsGeneratorTests
+    public class LivingDocDataObjectsGeneratorTests
     {
         [Test]
         public void LivingDocDataObjectsGenerator_GenerateDataFeaturesTags()
@@ -227,16 +227,16 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         {
             var livingDocProject = new LivingDocProject();
 
-            var exmaple = new LivingDocExample();
+            var example = new LivingDocExample();
 
             var step = new LivingDocStep();
             step.Keyword = "Given";
             step.Name = "I have logged in to the application";
 
-            exmaple.Steps.Add(step);
+            example.Steps.Add(step);
 
             var generator = new LivingDocDataObjectsGenerator(livingDocProject);
-            var listOfLines = generator.GenerateDataScenarioSteps(exmaple);
+            var listOfLines = generator.GenerateDataScenarioSteps(example);
 
             Assert.That(listOfLines.Count, Is.EqualTo(10));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Steps -->"));

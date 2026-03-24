@@ -62,7 +62,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         [TestCase("\\Root\\", "")]
         [TestCase("\\Root\\SubFolder", "SubFolder")]
         [TestCase("\\Root\\Folder\\SubFolder", "SubFolder")]
-        public void LivingDocDataOverviewGenerator_GenerateOverviewHeaderFolder(string value, string expected)
+        public void LivingDocDataOverviewGenerator_GetFolderName(string value, string expected)
         {
             var result = LivingDocDataOverviewGenerator.GetFolderName(value);
 
@@ -91,7 +91,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        public void LivingDocDataOverviewGenerator_GetFolderDepth_Tree_Locators()
+        public void LivingDocDataOverviewGenerator_GetFolderDepth_Three_Locators()
         {
             var folderDepth = LivingDocDataOverviewGenerator.GetFolderDepth("Features\\Login\\Exp");
             Assert.That(folderDepth, Is.EqualTo(3));

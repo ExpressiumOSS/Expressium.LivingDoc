@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Expressium.LivingDoc.UnitTests.Generators
 {
-    internal class LivingDocDataListViewsGeneratorTests
+    public class LivingDocDataListViewsGeneratorTests
     {
         [Test]
         public void LivingDocDataListViewsGenerator_GenerateDataFeaturesListView()

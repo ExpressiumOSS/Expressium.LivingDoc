@@ -29,6 +29,9 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var listOfLines = generator.GenerateContent();
 
             Assert.That(listOfLines.Count, Is.GreaterThanOrEqualTo(80));
+            Assert.That(listOfLines, Does.Contain("<!-- Header Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Project Navigation Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Footer Section -->"));
         }
 
         [Test]
@@ -52,6 +55,9 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var listOfLines = generator.GenerateData();
 
             Assert.That(listOfLines.Count, Is.GreaterThan(300));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Overview -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Features View -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics -->"));
         }
 
         [Test]
@@ -82,6 +88,16 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(document.Body != null);
             Assert.That(document.Body.InnerHtml.Trim(), Does.Contain("Hello, world!"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_SaveHtmlFile_Invalid_Output_Path()
+        {
+            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "NonExistent", "Subfolder", "output.html");
+
+            var inputLines = new List<string> { "<html></html>" };
+
+            Assert.Throws<IOException>(() => LivingDocProjectGenerator.SaveHtmlFile(outputFilePath, inputLines));
         }
     }
 }
