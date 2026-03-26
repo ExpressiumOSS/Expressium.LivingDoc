@@ -5,6 +5,7 @@
         --bs-gray-150: #f1f3f4;
         --bs-gray-450: #bec5cc;
         --bs-gray-550: #8d959d;
+        --bs-gray-650: #5b636a;
 
         /* Header */
         --header-bg-color: #cfdbea;
@@ -30,14 +31,15 @@
         --group-border-color: var(--bs-gray-300);
 
         /* Surfaces */
-        --hover-bg-color: #F7F9FC;
-        --selected-bg-color: #f3f6fa;
+        --hover-bg-color: #F5F8FC;
+        --selected-bg-color: #EDF3F9;
 
         /* Texts */
         --text-color: var(--bs-gray-900);
         --heading-text-color: var(--bs-gray-900);
-        --text-gray-color: var(--bs-gray-600);
         --text-dimgray-color: var(--bs-gray-700);
+        --text-darkgray-color: var(--bs-gray-650);
+        --text-gray-color: var(--bs-gray-600);
         --keyword-text-color: #1f5a70;  /* #25576b; */
         --link-text-color: #295f75;     /* #2a6785; */
 
@@ -54,7 +56,7 @@
         --button-inactive-text-color: var(--bs-gray-600);
         --button-hover-border-color: var(--bs-gray-550);
         --button-hover-bg-color: var(--bs-gray-150);
-        --button-selected-bg-color: #e7eff7;
+        --button-selected-bg-color: #E4EEF6;
 
         /* Scrollbars */
         --scrollbar-text-color: #909090;
@@ -208,7 +210,7 @@
     .filter-symbol {
         padding-left: 4px;
         padding-right: 6px;
-        color: var(--text-dimgray-color);
+        color: var(--text-gray-color);
     }
 
     .filter-keywords {
@@ -324,6 +326,7 @@
     .scenario-backgrounds {
         padding: 1px 4px;
         font-size: 0.9625em;
+        color: var(--text-dimgray-color);
     }
 
     .grid-border {
@@ -593,7 +596,7 @@
     }
 
     .scenario-datatable {
-        color: var(--text-dimgray-color);
+        color: var(--text-darkgray-color);
     }
 
     table.scenario-datatable td {
@@ -650,12 +653,12 @@
 
     .examples-keyword {
         font-weight: 600;
-        color: var(--text-dimgray-color);
+        color: var(--text-darkgray-color);
         padding-left: 16px;
     }
 
     .examples-name {
-        color: var(--text-dimgray-color);
+        color: var(--text-gray-color);
     }
 
     .examples-description {
@@ -675,7 +678,7 @@
 
     .attachments-keyword {
         font-weight: 600;
-        color: var(--text-dimgray-color);
+        color: var(--text-darkgray-color);
         padding-left: 16px;
     }
 
@@ -685,7 +688,7 @@
     }
 
     .duration-symbol {
-        color: var(--text-gray-color);
+        color: var(--text-darkgray-color);
         font-size: 2.5em;
     }
 
