@@ -186,7 +186,7 @@ This enables direct linking to specific scenarios or features filtered by keywor
 
 ***DeepLinking.bat***
 ```bat
-start chrome "file:///C://Company/Coffeeshop.html?filterByKeywords=TA-3001"
+start chrome "file:///C://Company/LivingDoc.html?filterByKeywords=TA-3001"
 ```
 
 <br />
