@@ -87,9 +87,11 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add("<div id='splitter-left' class='bg-white p-3'>");
             else
                 listOfLines.Add("<div id='splitter-left' class='bg-light p-3'>");
+            //listOfLines.Add("<div class='card'>");
             listOfLines.AddRange(GenerateViewPreFilters());
             listOfLines.AddRange(GenerateFilter());
             listOfLines.Add("<div id='filter-list'></div>");
+            //listOfLines.Add("</div>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("<!-- Splitter Section -->");
@@ -100,6 +102,9 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add("<div id='splitter-right' class='bg-white p-3'>");
             else
                 listOfLines.Add("<div id='splitter-right' class='bg-light p-3'>");
+            //listOfLines.Add("<div class='card'>");
+            //listOfLines.Add("<div id='document-view'></div>");
+            //listOfLines.Add("</div>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
@@ -123,17 +128,18 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- PreFilters Section -->");
             listOfLines.Add("<div class='layout-column align-right'>");
-            listOfLines.Add("<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'>Passed</button>");
-            listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'>Incomplete</button>");
-            listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'>Failed</button>");
-            listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'>Skipped</button>");
 
-            //listOfLines.Add("<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-passed'></span>&nbsp;Passed</button>");
-            //listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-incomplete'></span>&nbsp;Incomplete</button>");
-            //listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-failed'></span>&nbsp;Failed</button>");
-            //listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-skipped'></span>&nbsp;Skipped</button>");
+            //listOfLines.Add("<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'>Passed</button>");
+            //listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'>Incomplete</button>");
+            //listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'>Failed</button>");
+            //listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'>Skipped</button>");
 
-            listOfLines.Add("<button class='selected' title='Clear Filters' onclick='clearPrefilters()'>Clear</button>");
+            listOfLines.Add("<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-passed'></span><span>Passed</span></button>");
+            listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-incomplete filter-option-name'></span><span>Incomplete</span></button>");
+            listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-failed filter-option-name'></span><span>Failed</span></button>");
+            listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-skipped filter-option-name'></span><span>Skipped</span></button>");
+
+            listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearPrefilters()'>Clear</button>");
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
@@ -147,7 +153,6 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Filter Section -->");
 
-            listOfLines.Add("<div class='section'>");
             listOfLines.Add("<div class='layout-row filter-group'>");
 
             listOfLines.Add("<div class='filter-symbol'>");
@@ -158,7 +163,6 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<input onkeyup='filterView()' class='filter-keywords' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
             listOfLines.Add("</div>");
 
-            listOfLines.Add("</div>");
             listOfLines.Add("</div>");
 
             //listOfLines.Add("<!-- Toolbar Section -->");
@@ -176,7 +180,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Footer Section -->");
             listOfLines.Add("<footer>");
-            listOfLines.Add("<a title='Expressium LivingDoc on GitHub' href='https://github.com/ExpressiumOSS/Expressium.LivingDoc' target='_blank' rel='noopener noreferrer'>Generated by Expressium LivingDoc</a>");
+            listOfLines.Add("<a title='Expressium LivingDoc on GitHub' href='https://github.com/ExpressiumOSS/Expressium.LivingDoc' target='_blank' rel='noopener noreferrer'>Powered by Expressium LivingDoc</a>");
             listOfLines.Add("</footer>");
 
             return listOfLines;

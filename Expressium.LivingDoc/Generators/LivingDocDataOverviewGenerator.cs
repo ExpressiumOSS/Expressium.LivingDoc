@@ -96,7 +96,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - 1}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='grid-border' style='padding-right: 4px;' colspan='2' align='right'>");
+            listOfLines.Add($"<td class='grid-border' colspan='2' align='right'>");
 
             if (project.ExperimentFlag)
             {

@@ -7,11 +7,11 @@ namespace Expressium.LivingDoc.UITests.Pages
     public partial class FilterBar : BasePage
     {
         private readonly By Heading = By.Id("view-title");
-        private readonly By Passed = By.XPath("//button[text()='Passed']");
-        private readonly By Incomplete = By.XPath("//button[text()='Incomplete']");
-        private readonly By Failed = By.XPath("//button[text()='Failed']");
-        private readonly By Skipped = By.XPath("//button[text()='Skipped']");
-        private readonly By Clear = By.XPath("//button[@title='Clear Filters']");
+        private readonly By Passed = By.XPath("//button[normalize-space()='Passed']");
+        private readonly By Incomplete = By.XPath("//button[normalize-space()='Incomplete']");
+        private readonly By Failed = By.XPath("//button[normalize-space()='Failed']");
+        private readonly By Skipped = By.XPath("//button[normalize-space()='Skipped']");
+        private readonly By Clear = By.XPath("//button[@title='Clear All Filters']");
         private readonly By FilterByKeywords = By.Id("filter-by-keywords");
 
         public FilterBar(ILog logger, IWebDriver driver) : base(logger, driver)
