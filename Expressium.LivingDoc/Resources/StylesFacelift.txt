@@ -146,7 +146,7 @@
 
     .splitter-wrapper {
         display: flex;
-        height: calc(100% - 10.00em); /* Adjust for header and footer height */
+        height: calc(100% - 9.75em); /* Adjust for header and footer height */
         flex-direction: row; /* Change to row for vertical splitter */
         border-bottom: 1px solid var(--splitter-border-color);
     }
@@ -172,7 +172,7 @@
     footer {
         background-color: var(--footer-bg-color);
         text-align: center;
-        padding: 0.625em;
+        padding: 0.50em;
     }
 
     footer a {
@@ -233,9 +233,9 @@
     #filter-list {
         flex: 1;
         overflow: auto;
-        height: calc(100% - 4.625em); /* Adjust for filter and search height */
+        height: calc(100% - 4.75em); /* Adjust for filter and search height */
         /* margin-top: 0.50em; */
-        padding-right: 0.25em;
+        padding-right: 0.375em;
     }
 
     th, td {
