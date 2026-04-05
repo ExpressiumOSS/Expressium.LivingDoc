@@ -1,14 +1,23 @@
 ﻿<style>
     :root {
-
-        /* Grayscale */
-        --bs-gray-075: #fafbfc;
-        --bs-gray-150: #f3f4f6;
-        --bs-gray-450: #bec5cc;
-        --bs-gray-550: #8d959d;
-        --bs-gray-650: #5b636a;
-        --bs-gray-900: #111827; /* Override Bootstrap #212529; */
         
+        /* Bootstrap Grayscale */
+        --bs-gray-075: #fafbfc;
+        --bs-gray-100: #f8f9fa;
+        --bs-gray-150: #f3f4f6;
+        --bs-gray-200: #e9ecef;
+        --bs-gray-300: #dee2e6;
+        --bs-gray-400: #ced4da;
+        --bs-gray-450: #bec5cc;
+        --bs-gray-500: #adb5bd;
+        --bs-gray-550: #8d959d;
+        --bs-gray-600: #6c757d;
+        --bs-gray-650: #5b636a;
+        --bs-gray-700: #495057;
+        --bs-gray-800: #343a40;
+        --bs-gray-900: #111827; /* Tailwind Color */
+        --bs-gray-900: #212529;
+
         /* Header */
         --header-bg-color: #cfdbea;
 
@@ -17,8 +26,8 @@
         --footer-bg-color: var(--bs-gray-100);
 
         /* Navigation */
-        --navigation-bg-color: var(--bs-gray-150);
-        --navigation-underline-color: var(--bs-gray-550);
+        --navigation-bg-color: var(--bs-gray-100);
+        --navigation-underline-color: var(--bs-gray-500);
 
         /* Tables */
         --table-header-text-color: var(--bs-gray-900);
@@ -31,7 +40,7 @@
 
         /* Groups */
         --group-bg-color: var(--bs-gray-075); 
-        --group-border-color: var(--bs-gray-300);
+        --group-border-color: var(--bs-gray-200);
 
         /* Outlines */
         --grid-border-color: #E0E0E0;
@@ -47,6 +56,8 @@
         --text-dimgray-color: var(--bs-gray-700);
         --text-darkgray-color: var(--bs-gray-650);
         --text-gray-color: var(--bs-gray-600);
+
+        /* Special Texts */
         --keyword-text-color: #25576b;  /* #25576b; */
         --link-text-color: #295f75;     /* #2a6785; */
 
@@ -55,13 +66,13 @@
         --scenario-index-bg-color: #909090;
 
         /* Buttons */
-        --button-border-color: var(--bs-gray-500);
-        --button-bg-color: var(--bs-gray-100);
+        --button-border-color: var(--bs-gray-400);
+        --button-bg-color: var(--bs-gray-075);
         --button-text-color: var(--bs-gray-900);
-        --button-inactive-border-color: var(--bs-gray-450);
-        --button-inactive-bg-color: var(--bs-gray-100);
+        --button-inactive-border-color: var(--bs-gray-300);
+        --button-inactive-bg-color: var(--bs-gray-075);
         --button-inactive-text-color: var(--bs-gray-600);
-        --button-hover-border-color: var(--bs-gray-550);
+        --button-hover-border-color: var(--bs-gray-500);
         --button-hover-bg-color: var(--bs-gray-150);
         --button-selected-bg-color: #EDF3F9;
 

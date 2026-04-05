@@ -31,7 +31,7 @@ namespace Expressium.LivingDoc.Models
             Features = new List<LivingDocFeature>();
             Histories = new List<LivingDocHistory>();
 
-            ExperimentFlag = true;
+            ExperimentFlag = false;
         }
 
         internal string GetApplicationName()

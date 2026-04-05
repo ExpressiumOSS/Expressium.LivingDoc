@@ -97,18 +97,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"<td class='grid-border' colspan='2' align='right'>");
-
-            if (project.ExperimentFlag)
-            {
-                listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
-                listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
-            }
-            else
-            {
-                listOfLines.Add("<a class='grid-expand bi bi-plus-lg' title='Expand All Features' href='#' onclick='loadExpandAll()'></a>");
-                listOfLines.Add("<a class='grid-collapse bi bi-dash-lg' title='Collapse All Features' href='#' onclick='loadCollapseAll()'></a>");
-            }
-
+            listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
+            listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
             listOfLines.Add($"</td>");
             listOfLines.Add($"</tr>");
 

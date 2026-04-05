@@ -34,43 +34,14 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            if (project.ExperimentFlag)
-            {
-                // Navigation Facelift Version 2.0.0
-                listOfLines.Add("<!-- Project Navigation Section -->");
-                listOfLines.Add("<nav class='navigation'>");
-
-                listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewMode('project-view','Overview');\">Overview</a>");
-                listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewMode('features-view','Features');\">Features</a>");
-                listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewMode('scenarios-view','Scenarios');\">Scenarios</a>");
-                listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewMode('steps-view','Steps');\">Steps</a>");
-                listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
-
-                listOfLines.Add("</nav>");
-            }
-            else
-            {
-                listOfLines.Add("<!-- Project Navigation Section -->");
-                listOfLines.Add("<nav class='navigation'>");
-
-                listOfLines.Add("<span>|</span>");
-                listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewMode('project-view','Overview');\">Overview</a>");
-                listOfLines.Add("<span>|</span>");
-
-                listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewMode('features-view','Features');\">Features</a>");
-                listOfLines.Add("<span>|</span>");
-
-                listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewMode('scenarios-view','Scenarios');\">Scenarios</a>");
-                listOfLines.Add("<span>|</span>");
-
-                listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewMode('steps-view','Steps');\">Steps</a>");
-                listOfLines.Add("<span>|</span>");
-
-                listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
-                listOfLines.Add("<span>|</span>");
-
-                listOfLines.Add("</nav>");
-            }
+            listOfLines.Add("<!-- Project Navigation Section -->");
+            listOfLines.Add("<nav class='navigation'>");
+            listOfLines.Add("<a class='navigation-link' title='Overview' href='#' onclick=\"loadViewMode('project-view','Overview');\">Overview</a>");
+            listOfLines.Add("<a class='navigation-link' title='Features List View' href='#' onclick=\"loadViewMode('features-view','Features');\">Features</a>");
+            listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewMode('scenarios-view','Scenarios');\">Scenarios</a>");
+            listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewMode('steps-view','Steps');\">Steps</a>");
+            listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
+            listOfLines.Add("</nav>");
 
             return listOfLines;
         }
@@ -83,10 +54,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div class='splitter-wrapper'>");
 
             listOfLines.Add("<!-- Left Splitter Section -->");
-            if (project.ExperimentFlag)
-                listOfLines.Add("<div id='splitter-left' class='bg-white p-3'>");
-            else
-                listOfLines.Add("<div id='splitter-left' class='bg-light p-3'>");
+            listOfLines.Add("<div id='splitter-left' class='bg-white p-3'>");
             //listOfLines.Add("<div class='card'>");
             listOfLines.AddRange(GenerateViewPreFilters());
             listOfLines.AddRange(GenerateFilter());
@@ -98,10 +66,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div id='splitter'></div>");
 
             listOfLines.Add("<!-- Right Splitter Section -->");
-            if (project.ExperimentFlag)
-                listOfLines.Add("<div id='splitter-right' class='bg-white p-3'>");
-            else
-                listOfLines.Add("<div id='splitter-right' class='bg-light p-3'>");
+            listOfLines.Add("<div id='splitter-right' class='bg-white p-3'>");
             //listOfLines.Add("<div class='card'>");
             //listOfLines.Add("<div id='document-view'></div>");
             //listOfLines.Add("</div>");

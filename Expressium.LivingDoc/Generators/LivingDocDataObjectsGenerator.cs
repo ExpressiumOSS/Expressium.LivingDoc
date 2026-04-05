@@ -44,15 +44,10 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Data Feature Tags -->");
             listOfLines.Add("<div class='feature-tag-group'>");
-            if (project.ExperimentFlag)
-            {
-                foreach (var tag in feature.Tags)
-                    listOfLines.Add("<span class='feature-tag'>" + tag + "</span>");
-            }
-            else
-            {
-                listOfLines.Add("<span class='feature-tag'>" + feature.GetTags() + "</span>");
-            }
+
+            foreach (var tag in feature.Tags)
+                listOfLines.Add("<span class='feature-tag'>" + tag + "</span>");
+
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -209,15 +204,10 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Data Rule Tags -->");
             listOfLines.Add("<div class='rule-tag-group'>");
-            if (project.ExperimentFlag)
-            {
-                foreach (var tag in rule.Tags)
-                    listOfLines.Add("<span class='rule-tag'>" + tag + "</span>");
-            }
-            else
-            {
-                listOfLines.Add("<span class='rule-tag'>" + rule.GetTags() + "</span>");
-            }
+
+            foreach (var tag in rule.Tags)
+                listOfLines.Add("<span class='rule-tag'>" + tag + "</span>");
+
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -263,15 +253,10 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Data Scenario Tags -->");
             listOfLines.Add("<div class='scenario-tag-group'>");
-            if (project.ExperimentFlag)
-            {
-                foreach (var tag in scenario.Tags)
-                    listOfLines.Add("<span class='scenario-tag'>" + tag + "</span>");
-            }
-            else
-            {
-                listOfLines.Add("<span class='scenario-tag'>" + scenario.GetTags() + "</span>");
-            }
+
+            foreach (var tag in scenario.Tags)
+                listOfLines.Add("<span class='scenario-tag'>" + tag + "</span>");
+
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -292,33 +277,20 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add($"<span class='scenario-duration'>{example.GetDuration()}</span>");
 
-            // Scenario Options Facelift Version 2.0.0
-            if (project.ExperimentFlag)
-            {
-                ///////////////////////////////////////////////////////
-                // Toggle option for visibility of Background steps...
-                ///////////////////////////////////////////////////////
-                //var hasBackgrounds = example.Steps?.Any(x => x.Type == LivingDocStepTypes.Background.ToString()) ?? false;
-                //if (hasBackgrounds)
-                //    listOfLines.Add("<button class='scenario-backgrounds bi bi-chevron-double-down' title='Toggle Backgrounds' onclick=\"toggleBackgrounds(this)\"></button>");
-                ///////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////
+            // Toggle option for visibility of Background steps...
+            ///////////////////////////////////////////////////////
+            //var hasBackgrounds = example.Steps?.Any(x => x.Type == LivingDocStepTypes.Background.ToString()) ?? false;
+            //if (hasBackgrounds)
+            //    listOfLines.Add("<button class='scenario-backgrounds bi bi-chevron-double-down' title='Toggle Backgrounds' onclick=\"toggleBackgrounds(this)\"></button>");
+            ///////////////////////////////////////////////////////
 
-                var hasStacktraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
-                if (hasStacktraces)
-                    listOfLines.Add("<button class='scenario-stacktraces bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></button>");
+            var hasStacktraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
+            if (hasStacktraces)
+                listOfLines.Add("<button class='scenario-stacktraces bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></button>");
 
-                if (example.Attachments.Count > 0)
-                    listOfLines.Add("<button class='scenario-attachments bi bi-list' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></button>");
-            }
-            else
-            {
-                var hasStacktraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
-                if (hasStacktraces)
-                    listOfLines.Add("<a href='#' class='scenario-stacktraces bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></a>");
-
-                if (example.Attachments.Count > 0)
-                    listOfLines.Add("<a href='#' class='scenario-attachments' title='Toggle Attachments' onclick=\"toggleAttachments(this)\">&#9776;</a>");
-            }
+            if (example.Attachments.Count > 0)
+                listOfLines.Add("<button class='scenario-attachments bi bi-list' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></button>");
 
             listOfLines.Add("</div>");
 
