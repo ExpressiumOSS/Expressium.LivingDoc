@@ -21,6 +21,10 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             var scenario = livingDocProject.Features[0].Scenarios[0];
 
+            Assert.That(scenario.Examples[0].Steps[0].Name, Is.EqualTo("there are 12 cucumbers"));
+            Assert.That(scenario.Examples[0].Steps[1].Name, Is.EqualTo("I eat 5 cucumbers"));
+            Assert.That(scenario.Examples[0].Steps[2].Name, Is.EqualTo("I should have 7 cucumbers"));
+
             Assert.That(scenario.Examples[0].DataTable.Rows.Count, Is.EqualTo(2));
             Assert.That(scenario.Examples[0].DataTable.Rows[0].Cells.Count, Is.EqualTo(3));
 

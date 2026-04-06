@@ -4,7 +4,8 @@
         /* Bootstrap Grayscale */
         --bs-gray-075: #fafbfc;
         --bs-gray-100: #f8f9fa;
-        --bs-gray-150: #f3f4f6;
+        --bs-gray-125: #f2f4f6;
+        --bs-gray-150: #f1f3f5;
         --bs-gray-200: #e9ecef;
         --bs-gray-300: #dee2e6;
         --bs-gray-400: #ced4da;
@@ -15,7 +16,6 @@
         --bs-gray-650: #5b636a;
         --bs-gray-700: #495057;
         --bs-gray-800: #343a40;
-        --bs-gray-900: #111827; /* Tailwind Color */
         --bs-gray-900: #212529;
 
         /* Header */
@@ -26,7 +26,7 @@
         --footer-bg-color: var(--bs-gray-100);
 
         /* Navigation */
-        --navigation-bg-color: var(--bs-gray-100);
+        --navigation-bg-color: var(--bs-gray-125);
         --navigation-underline-color: var(--bs-gray-500);
 
         /* Tables */
@@ -44,7 +44,7 @@
 
         /* Outlines */
         --grid-border-color: #E0E0E0;
-        --splitter-border-color: #ddd;
+        --splitter-border-color: #E0E0E0;
 
         /* Surfaces */
         --hover-bg-color: #F5F8FC;
@@ -66,11 +66,11 @@
         --scenario-index-bg-color: #909090;
 
         /* Buttons */
-        --button-border-color: var(--bs-gray-400);
-        --button-bg-color: var(--bs-gray-075);
+        --button-border-color: var(--bs-gray-450);
+        --button-bg-color: var(--bs-gray-100);
         --button-text-color: var(--bs-gray-900);
         --button-inactive-border-color: var(--bs-gray-300);
-        --button-inactive-bg-color: var(--bs-gray-075);
+        --button-inactive-bg-color: var(--bs-gray-100);
         --button-inactive-text-color: var(--bs-gray-600);
         --button-hover-border-color: var(--bs-gray-500);
         --button-hover-bg-color: var(--bs-gray-150);
@@ -120,7 +120,7 @@
     }
 
     .project-date {
-        color: var(--text-dimgray-color);      
+        color: var(--text-darkgray-color);      
         padding-left: 2px;
     }
 
@@ -345,7 +345,7 @@
     .scenario-backgrounds {
         padding: 1px 4px;
         font-size: 0.9625em;
-        color: var(--text-dimgray-color);
+        color: var(--text-darkgray-color);
     }
 
     .grid-border {
@@ -358,7 +358,7 @@
     }
 
     .grid-toggle {
-        color: var(--text-dimgray-color);
+        color: var(--text-darkgray-color);
         cursor: pointer;
         text-align: center;
         width: 1.5em;
@@ -715,11 +715,11 @@
         font-size: 1.25em;
         padding-left: 8px;
         padding-top: 4px;
-        color: var(--text-dimgray-color);
+        color: var(--text-darkgray-color);
     }
 
     .duration-keyword {
-        color: var(--text-dimgray-color);
+        color: var(--text-darkgray-color);
     }
 
     .history-passed {

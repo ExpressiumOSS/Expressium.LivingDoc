@@ -308,6 +308,10 @@ namespace Expressium.LivingDoc.Parsers
                             if (pickleStep == null)
                                 continue;
 
+                            // Assign actual Step Text from PickleStep... 
+                            if (!string.IsNullOrWhiteSpace(pickleStep.Text))
+                                step.Name = WebUtility.HtmlEncode(pickleStep.Text);
+
                             if (!testStepByPickleStepId.TryGetValue(pickleStep.Id, out var testStep))
                                 continue;
 

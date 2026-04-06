@@ -20,9 +20,10 @@ Scenario: Filter by Multiple Keywords in the Steps List
 		| Keywords                  |
 		| message have notification |
 	Then I should have following visible objects in the Steps List
-		| Steps                                                               |
-		| Then I should have <Price> in the confirmation notification message |
-		| Then I should have a confirmation notification message              |
+		| Steps                                                           |
+		| Then I should have $99 in the confirmation notification message |
+		| Then I should have $77 in the confirmation notification message |
+		| Then I should have a confirmation notification message          |
 
 Scenario: Filter by Uppercased Keywords in the Steps List
 	Given I have navigated to the Steps List
@@ -108,7 +109,7 @@ Scenario: Clear All PreFilters in the Steps List
 	Then I should have all status prefilters disabled in the Filter Bar
 	And I should have following number of visible objects in the Steps List
 		| Steps |
-		|    15 |
+		|    17 |
 
 Scenario: Clear Keyword Filter in the Steps List
 	Given I have navigated to the Steps List
@@ -120,7 +121,7 @@ Scenario: Clear Keyword Filter in the Steps List
 	Then I should have an emtpy keyword filter in the Filter Bar
 	And I should have following number of visible objects in the Steps List
 		| Steps |
-		|    15 |
+		|    17 |
 
 Rule: Sort by Columns in Steps List
 
