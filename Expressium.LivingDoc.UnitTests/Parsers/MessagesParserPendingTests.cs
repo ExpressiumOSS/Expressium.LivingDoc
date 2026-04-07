@@ -16,7 +16,6 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
-            Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(3));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(5));
 
             var scenario = livingDocProject.Features[0].Scenarios[0];
@@ -38,7 +37,6 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
-            Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(2));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(4));
 
             var scenario = livingDocProject.Features[0].Scenarios[0];

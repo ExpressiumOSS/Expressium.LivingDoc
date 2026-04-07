@@ -64,6 +64,7 @@ namespace Expressium.LivingDoc.Models
         {
             return Features
                 .SelectMany(feature => feature.Scenarios)
+                .SelectMany(scenario => scenario.Examples)
                 .Count();
         }
 
@@ -74,14 +75,6 @@ namespace Expressium.LivingDoc.Models
                 .Where(scenario => scenario.RuleId != null)
                 .Select(scenario => scenario.RuleId)
                 .Distinct()
-                .Count();
-        }
-
-        public int GetNumberOfExamples()
-        {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .SelectMany(scenario => scenario.Examples)
                 .Count();
         }
 
@@ -116,30 +109,22 @@ namespace Expressium.LivingDoc.Models
 
         public int GetNumberOfFailedScenarios()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Failed.ToString());
+            return Features.Sum(feature => feature.GetNumberOfFailedScenarios());
         }
 
         public int GetNumberOfIncompleteScenarios()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Incomplete.ToString());
+            return Features.Sum(feature => feature.GetNumberOfIncompleteScenarios());
         }
 
         public int GetNumberOfPassedScenarios()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());
+            return Features.Sum(feature => feature.GetNumberOfPassedScenarios());
         }
 
         public int GetNumberOfSkippedScenarios()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .Count(scenario => scenario.GetStatus() == LivingDocStatuses.Skipped.ToString());
+            return Features.Sum(feature => feature.GetNumberOfSkippedScenarios());
         }
 
         public int GetNumberOfPassedSteps()
@@ -254,20 +239,20 @@ namespace Expressium.LivingDoc.Models
 
                     foreach (var scenario in feature.Scenarios)
                     {
-                        if (scenario.GetStatus() == LivingDocStatuses.Passed.ToString())
-                            livingDocHistory.Scenarios.Passed.Add(scenario.Name);
-
-                        if (scenario.GetStatus() == LivingDocStatuses.Incomplete.ToString())
-                            livingDocHistory.Scenarios.Incomplete.Add(scenario.Name);
-
-                        if (scenario.GetStatus() == LivingDocStatuses.Failed.ToString())
-                            livingDocHistory.Scenarios.Failed.Add(scenario.Name);
-
-                        if (scenario.GetStatus() == LivingDocStatuses.Skipped.ToString())
-                            livingDocHistory.Scenarios.Skipped.Add(scenario.Name);
-
                         foreach (var example in scenario.Examples)
                         {
+                            if (example.GetStatus() == LivingDocStatuses.Passed.ToString())
+                                livingDocHistory.Scenarios.Passed.Add(scenario.Name);
+
+                            if (example.GetStatus() == LivingDocStatuses.Incomplete.ToString())
+                                livingDocHistory.Scenarios.Incomplete.Add(scenario.Name);
+
+                            if (example.GetStatus() == LivingDocStatuses.Failed.ToString())
+                                livingDocHistory.Scenarios.Failed.Add(scenario.Name);
+
+                            if (example.GetStatus() == LivingDocStatuses.Skipped.ToString())
+                                livingDocHistory.Scenarios.Skipped.Add(scenario.Name);
+
                             foreach (var step in example.Steps)
                             {
                                 if (step.GetStatus() == LivingDocStatuses.Passed.ToString())

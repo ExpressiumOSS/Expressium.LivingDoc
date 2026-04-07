@@ -14,9 +14,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocProject = livingDocConverter.Import(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(5));
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(6));
             Assert.That(livingDocProject.GetNumberOfRules(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(6));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(17));
         }
 
@@ -38,7 +37,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(reloadedProject.GetNumberOfFeatures(), Is.EqualTo(livingDocProject.GetNumberOfFeatures()));
             Assert.That(reloadedProject.GetNumberOfScenarios(), Is.EqualTo(livingDocProject.GetNumberOfScenarios()));
             Assert.That(reloadedProject.GetNumberOfRules(), Is.EqualTo(livingDocProject.GetNumberOfRules()));
-            Assert.That(reloadedProject.GetNumberOfExamples(), Is.EqualTo(livingDocProject.GetNumberOfExamples()));
             Assert.That(reloadedProject.GetNumberOfSteps(), Is.EqualTo(livingDocProject.GetNumberOfSteps()));
         }
     }

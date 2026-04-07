@@ -1,4 +1,5 @@
 ﻿using Expressium.LivingDoc.Models;
+using Expressium.LivingDoc.Parsers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,9 +17,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocProject = livingDocConverter.Import(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(5));
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(6));
             Assert.That(livingDocProject.GetNumberOfRules(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(6));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(17));
 
             Assert.That(livingDocProject.GetNumberOfFailedFeatures(), Is.EqualTo(1));
@@ -28,7 +28,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             Assert.That(livingDocProject.GetNumberOfFailedScenarios(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfIncompleteScenarios(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfPassedScenarios(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfPassedScenarios(), Is.EqualTo(3));
             Assert.That(livingDocProject.GetNumberOfSkippedScenarios(), Is.EqualTo(1));
 
             Assert.That(livingDocProject.GetNumberOfFailedSteps(), Is.EqualTo(1));
@@ -131,7 +131,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase(0, 0, 43, 7, 587, "43min 7s")]
         [TestCase(0, 0, 0, 7, 587, "7s 587ms")]
         [TestCase(0, 0, 0, 0, 587, "0s 587ms")]
-        [TestCase(0, 0, 0, 0, 0,   "0s 000ms")]
+        [TestCase(0, 0, 0, 0, 0, "0s 000ms")]
         [TestCase(1, 2, 43, 7, 587, "2h 43min")]
         public void LivingDocProject_GetDuration(int days, int hours, int minutes, int seconds, int milliseconds, string result)
         {
@@ -222,6 +222,33 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocProject.GetMaximumNumberOfHistoryFeatures(), Is.EqualTo(5));
             Assert.That(livingDocProject.GetMaximumNumberOfHistoryScenarios(), Is.EqualTo(4));
             Assert.That(livingDocProject.GetMaximumNumberOfHistorySteps(), Is.EqualTo(7));
+        }
+
+        [Test]
+        public void LivingDocProject_GetNumberOfStatuses()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
+
+            Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(4));
+            Assert.That(livingDocProject.GetNumberOfPassedFeatures(), Is.EqualTo(1));
+            Assert.That(livingDocProject.GetNumberOfIncompleteFeatures(), Is.EqualTo(1));
+            Assert.That(livingDocProject.GetNumberOfFailedFeatures(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfSkippedFeatures(), Is.EqualTo(0));
+
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(11));
+            Assert.That(livingDocProject.GetNumberOfPassedScenarios(), Is.EqualTo(6));
+            Assert.That(livingDocProject.GetNumberOfIncompleteScenarios(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfFailedScenarios(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfSkippedScenarios(), Is.EqualTo(1));
+
+            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(30));
+            Assert.That(livingDocProject.GetNumberOfPassedSteps(), Is.EqualTo(21));
+            Assert.That(livingDocProject.GetNumberOfIncompleteSteps(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfFailedSteps(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfSkippedSteps(), Is.EqualTo(5));
         }
     }
 }

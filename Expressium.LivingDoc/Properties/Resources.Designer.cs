@@ -81,12 +81,12 @@ namespace Expressium.LivingDoc.Properties {
         ///            var feature = document.getElementById(featureId).innerHTML;
         ///            var scenario = document.getElementById(scenarioId).innerHTML;
         ///
-        ///            document.getElementById(&apos;right-section&apos;).innerHTML = feature + scenario;
+        ///            document.getElementById(&apos;splitter-right&apos;).innerHTML = feature + scenario;
         ///
         ///            clearActiveListItems();
         ///            x.classList.add(&apos;active&apos;);
         ///        }
-        ///    &lt;/sc [rest of string was truncated]&quot;;.
+        ///    &lt;/s [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Scripts {
             get {
@@ -97,8 +97,8 @@ namespace Expressium.LivingDoc.Properties {
         /// <summary>
         ///   Looks up a localized string similar to     &lt;script&gt;
         ///        const splitter = document.getElementById(&apos;splitter&apos;);
-        ///        const leftSection = document.getElementById(&apos;left-section&apos;);
-        ///        const rightSection = document.getElementById(&apos;right-section&apos;);
+        ///        const splitterLeft = document.getElementById(&apos;splitter-left&apos;);
+        ///        const splitterRight = document.getElementById(&apos;splitter-right&apos;);
         ///
         ///        let isDragging = false;
         ///
@@ -108,8 +108,7 @@ namespace Expressium.LivingDoc.Properties {
         ///        });
         ///
         ///        document.addEventListener(&apos;mousemove&apos;, (e) =&gt; {
-        ///            if (!isDragging) return;
-        ///        /// [rest of string was truncated]&quot;;.
+        ///            if (!isDragging) return [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Splitter {
             get {
@@ -119,63 +118,27 @@ namespace Expressium.LivingDoc.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;style&gt;
-        ///    @property --passed-color {
-        ///        syntax: &quot;&lt;color&gt;&quot;;
-        ///        inherits: false;
-        ///        initial-value: #48A84F;
-        ///        initial-value: #47A64E;
-        ///    }
-        ///
-        ///    @property --incomplete-color {
-        ///        syntax: &quot;&lt;color&gt;&quot;;
-        ///        inherits: false;
-        ///        initial-value: #F5BB00;
-        ///        initial-value: #F2B900;
-        ///    }
-        ///
-        ///    @property --failed-color {
-        ///        syntax: &quot;&lt;color&gt;&quot;;
-        ///        inherits: false;
-        ///        initial-value: #EB4431;
-        ///        initial-value: #E84330;
-        ///    }
-        ///
-        ///    @property -- [rest of string was truncated]&quot;;.
+        ///    :root {
+        ///        
+        ///        /* Bootstrap Grayscale */
+        ///        --bs-gray-075: #fafbfc;
+        ///        --bs-gray-100: #f8f9fa;
+        ///        --bs-gray-125: #f2f4f6;
+        ///        --bs-gray-150: #f1f3f5;
+        ///        --bs-gray-200: #e9ecef;
+        ///        --bs-gray-300: #dee2e6;
+        ///        --bs-gray-400: #ced4da;
+        ///        --bs-gray-450: #bec5cc;
+        ///        --bs-gray-500: #adb5bd;
+        ///        --bs-gray-600: #6c757d;
+        ///        --bs-gray-650: #5b636a;
+        ///        --bs-gray-700: #495057;
+        ///        --bs-gray-800: #343a40;
+        ///        --bs-gra [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Styles {
             get {
                 return ResourceManager.GetString("Styles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;style&gt;
-        ///    @property --passed-color {
-        ///        syntax: &quot;&lt;color&gt;&quot;;
-        ///        inherits: false;
-        ///        initial-value: #48A84F;
-        ///        initial-value: #47A64E;
-        ///    }
-        ///
-        ///    @property --incomplete-color {
-        ///        syntax: &quot;&lt;color&gt;&quot;;
-        ///        inherits: false;
-        ///        initial-value: #F5BB00;
-        ///        initial-value: #F2B900;
-        ///    }
-        ///
-        ///    @property --failed-color {
-        ///        syntax: &quot;&lt;color&gt;&quot;;
-        ///        inherits: false;
-        ///        initial-value: #EB4431;
-        ///        initial-value: #E84330;
-        ///    }
-        ///
-        ///    @property -- [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string StylesFacelift {
-            get {
-                return ResourceManager.GetString("StylesFacelift", resourceCulture);
             }
         }
     }

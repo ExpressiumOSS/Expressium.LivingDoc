@@ -55,7 +55,7 @@ namespace Expressium.LivingDoc.UITests.Steps
         public void ThenIShouldHaveThePassedScenariosDisplayedInAnalytics()
         {
             var analyticsPage = new AnalyticsPage(logger, driver);
-            Asserts.EqualTo(analyticsPage.GetScenariosChartPassed(), "50%", "The Analytics page passed is valid");
+            Asserts.EqualTo(analyticsPage.GetScenariosChartPassed(), "55%", "The Analytics page passed is valid");
         }
 
         [Then("I should have the passed steps displayed in Analytics")]

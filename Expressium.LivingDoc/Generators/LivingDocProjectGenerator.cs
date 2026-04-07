@@ -51,11 +51,9 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<head>");
-
             listOfLines.AddRange(GenerateHeads());
             listOfLines.AddRange(GenerateStyles());
             listOfLines.AddRange(GenerateScripts());
-
             listOfLines.Add($"</head>");
 
             return listOfLines;
@@ -79,10 +77,7 @@ namespace Expressium.LivingDoc.Generators
 
         internal List<string> GenerateStyles()
         {
-            if (project.ExperimentFlag)
-                return Resources.StylesFacelift.Split(Environment.NewLine).ToList();
-            else
-                return Resources.Styles.Split(Environment.NewLine).ToList();
+            return Resources.Styles.Split(Environment.NewLine).ToList();
         }
 
         internal List<string> GenerateScripts()

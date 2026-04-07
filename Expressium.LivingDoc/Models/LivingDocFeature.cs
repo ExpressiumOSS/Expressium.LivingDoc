@@ -51,27 +51,27 @@ namespace Expressium.LivingDoc.Models
 
         public int GetNumberOfPassedScenarios()
         {
-            return Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());
+            return Scenarios.SelectMany(s => s.Examples).Count(e => e.GetStatus() == LivingDocStatuses.Passed.ToString());
         }
 
         public int GetNumberOfFailedScenarios()
         {
-            return Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Failed.ToString());
+            return Scenarios.SelectMany(s => s.Examples).Count(e => e.GetStatus() == LivingDocStatuses.Failed.ToString());
         }
 
         public int GetNumberOfIncompleteScenarios()
         {
-            return Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Incomplete.ToString());
+            return Scenarios.SelectMany(s => s.Examples).Count(e => e.GetStatus() == LivingDocStatuses.Incomplete.ToString());
         }
 
         public int GetNumberOfSkippedScenarios()
         {
-            return Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Skipped.ToString());
+            return Scenarios.SelectMany(s => s.Examples).Count(e => e.GetStatus() == LivingDocStatuses.Skipped.ToString());
         }
 
         public int GetNumberOfScenarios()
         {
-            return Scenarios.Count;
+            return Scenarios.SelectMany(scenario => scenario.Examples).Count();
         }
 
         public string GetNumberOfScenariosSortId()
@@ -81,12 +81,13 @@ namespace Expressium.LivingDoc.Models
 
         public int GetPercentageOfPassed()
         {
-            var numberOfPassed = Scenarios.Count(scenario => scenario.GetStatus() == LivingDocStatuses.Passed.ToString());
-
-            if (Scenarios.Count == 0)
+            var numberOfScenarios = GetNumberOfScenarios();
+            if (numberOfScenarios == 0)
                 return 0;
 
-            return (int)Math.Round(100.0f / Scenarios.Count * numberOfPassed);
+            var numberOfPassed = GetNumberOfPassedScenarios();
+
+            return (int)Math.Round(100.0f / numberOfScenarios * numberOfPassed);
         }
 
         public string GetPercentageOfPassedSortId()

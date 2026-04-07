@@ -21,10 +21,8 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Header Section -->");
             listOfLines.Add("<header>");
-
             listOfLines.Add($"<span class='project-name'>{project.Title}</span><br />");
             listOfLines.Add($"<span class='project-date'>Generated {project.GetDate()}</span>");
-
             listOfLines.Add("</header>");
 
             return listOfLines;
@@ -93,17 +91,10 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- PreFilters Section -->");
             listOfLines.Add("<div class='layout-column align-right'>");
-
-            //listOfLines.Add("<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'>Passed</button>");
-            //listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'>Incomplete</button>");
-            //listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'>Failed</button>");
-            //listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'>Skipped</button>");
-
             listOfLines.Add("<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-passed'></span><span>Passed</span></button>");
             listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-incomplete filter-option-name'></span><span>Incomplete</span></button>");
             listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-failed filter-option-name'></span><span>Failed</span></button>");
             listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-skipped filter-option-name'></span><span>Skipped</span></button>");
-
             listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearPrefilters()'>Clear</button>");
             listOfLines.Add("</div>");
 

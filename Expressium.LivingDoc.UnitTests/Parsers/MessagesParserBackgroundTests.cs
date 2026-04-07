@@ -16,7 +16,6 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(3));
-            Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(3));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(13));
 
             var feature = livingDocProject.Features[0];
@@ -35,7 +34,6 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
-            Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(2));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(4));
 
             var feature = livingDocProject.Features[0];
@@ -58,8 +56,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(4));
 
             var feature = livingDocProject.Features[0];
@@ -82,8 +79,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(2));
-            Assert.That(livingDocProject.GetNumberOfExamples(), Is.EqualTo(5));
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(5));
             Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(15));
 
             var feature = livingDocProject.Features[0];
