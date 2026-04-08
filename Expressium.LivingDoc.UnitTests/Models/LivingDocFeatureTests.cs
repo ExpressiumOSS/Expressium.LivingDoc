@@ -1,4 +1,4 @@
-﻿using Expressium.LivingDoc.Parsers;
+using Expressium.LivingDoc.Parsers;
 using Expressium.LivingDoc.Models;
 using System.IO;
 
@@ -145,6 +145,76 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetNumberOfIncompleteScenarios(), Is.EqualTo(0));
             Assert.That(livingDocFeature.GetNumberOfFailedScenarios(), Is.EqualTo(0));
             Assert.That(livingDocFeature.GetNumberOfSkippedScenarios(), Is.EqualTo(0));
+        }
+
+        // NEW
+        [Test]
+        public void LivingDocFeature_GetNumberOfSteps_ByStatus()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
+
+            var livingDocFeature = livingDocProject.Features[3];
+            Assert.That(livingDocFeature.Name, Is.EqualTo("Orders"));
+            Assert.That(livingDocFeature.GetNumberOfSteps(), Is.GreaterThan(0));
+            Assert.That(livingDocFeature.GetNumberOfPassedSteps(), Is.EqualTo(livingDocFeature.GetNumberOfSteps()));
+            Assert.That(livingDocFeature.GetNumberOfFailedSteps(), Is.EqualTo(0));
+            Assert.That(livingDocFeature.GetNumberOfIncompleteSteps(), Is.EqualTo(0));
+            Assert.That(livingDocFeature.GetNumberOfSkippedSteps(), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void LivingDocFeature_GetNumberOfSteps_MixedStatuses()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+
+            var messagesParser = new MessagesParser();
+            var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
+
+            var totalSteps = 0;
+            var totalPassed = 0;
+            var totalFailed = 0;
+            var totalIncomplete = 0;
+            var totalSkipped = 0;
+
+            foreach (var feature in livingDocProject.Features)
+            {
+                totalSteps += feature.GetNumberOfSteps();
+                totalPassed += feature.GetNumberOfPassedSteps();
+                totalFailed += feature.GetNumberOfFailedSteps();
+                totalIncomplete += feature.GetNumberOfIncompleteSteps();
+                totalSkipped += feature.GetNumberOfSkippedSteps();
+            }
+
+            Assert.That(totalSteps, Is.EqualTo(30));
+            Assert.That(totalPassed, Is.EqualTo(21));
+            Assert.That(totalFailed, Is.EqualTo(2));
+            Assert.That(totalIncomplete, Is.EqualTo(2));
+            Assert.That(totalSkipped, Is.EqualTo(5));
+        }
+
+        [Test]
+        public void LivingDocFeature_GetNumberOfRules_ReturnsDistinctRuleCount()
+        {
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "native.json");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Import(inputFilePath);
+
+            var livingDocFeature = livingDocProject.Features[0];
+
+            Assert.That(livingDocFeature.GetNumberOfRules(), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void LivingDocFeature_GetNumberOfRules_ReturnsZeroWhenNoRules()
+        {
+            var feature = new LivingDocFeature();
+            feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario without a rule" });
+
+            Assert.That(feature.GetNumberOfRules(), Is.EqualTo(0));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Expressium.LivingDoc.Models;
+using Expressium.LivingDoc.Models;
 using System.IO;
 
 namespace Expressium.LivingDoc.UnitTests.Models
@@ -88,6 +88,74 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             Assert.That(livingDocScenario.Name, Is.EqualTo("Ordering Coffee Confirmation Notification"));
             Assert.That(livingDocScenario.HasDataTable(), Is.True);
+        }
+
+        [Test]
+        public void LivingDocScenario_GetNumberOfExamples_ByStatus()
+        {
+            var scenario = new LivingDocScenario();
+
+            var passedExample = new LivingDocExample();
+            passedExample.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+
+            var failedExample = new LivingDocExample();
+            failedExample.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Failed.ToString() });
+
+            var incompleteExample = new LivingDocExample();
+            incompleteExample.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Incomplete.ToString() });
+
+            var skippedExample = new LivingDocExample();
+
+            scenario.Examples.Add(passedExample);
+            scenario.Examples.Add(failedExample);
+            scenario.Examples.Add(incompleteExample);
+            scenario.Examples.Add(skippedExample);
+
+            Assert.That(scenario.GetNumberOfPassedExamples(), Is.EqualTo(1));
+            Assert.That(scenario.GetNumberOfFailedExamples(), Is.EqualTo(1));
+            Assert.That(scenario.GetNumberOfIncompleteExamples(), Is.EqualTo(1));
+            Assert.That(scenario.GetNumberOfSkippedExamples(), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void LivingDocScenario_GetNumberOfSteps_ByStatus()
+        {
+            var scenario = new LivingDocScenario();
+
+            var example = new LivingDocExample();
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Failed.ToString() });
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Incomplete.ToString() });
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Skipped.ToString() });
+            scenario.Examples.Add(example);
+
+            Assert.That(scenario.GetNumberOfPassedSteps(), Is.EqualTo(2));
+            Assert.That(scenario.GetNumberOfFailedSteps(), Is.EqualTo(1));
+            Assert.That(scenario.GetNumberOfIncompleteSteps(), Is.EqualTo(1));
+            Assert.That(scenario.GetNumberOfSkippedSteps(), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void LivingDocScenario_GetOrder_ReturnsDefaultZero()
+        {
+            var scenario = new LivingDocScenario();
+
+            Assert.That(scenario.GetOrder(), Is.EqualTo(0));
+            Assert.That(scenario.GetOrderSortId(), Is.EqualTo("0000"));
+        }
+
+        [TestCase(0, "0000")]
+        [TestCase(1, "0001")]
+        [TestCase(42, "0042")]
+        [TestCase(999, "0999")]
+        [TestCase(1000, "1000")]
+        public void LivingDocScenario_GetOrderSortId_FormatsAsExpected(int order, string expected)
+        {
+            var scenario = new LivingDocScenario { Order = order };
+
+            Assert.That(scenario.GetOrder(), Is.EqualTo(order));
+            Assert.That(scenario.GetOrderSortId(), Is.EqualTo(expected));
         }
     }
 }
