@@ -17,6 +17,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.Id, Is.Not.Null);
             Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1002 @Ignored"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
+            Assert.That(livingDocScenario.IsSkipped(), Is.True);
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("0s 000ms"));
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:00:000"));
             Assert.That(livingDocScenario.HasDataTable(), Is.False);
@@ -34,6 +35,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.Id, Is.Not.Null);
             Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1003 @Done"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
+            Assert.That(livingDocScenario.IsFailed(), Is.True);
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("3s 478ms"));
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:03:478"));
             Assert.That(livingDocScenario.HasDataTable(), Is.False);
@@ -51,6 +53,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.Id, Is.Not.Null);
             Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1004 @Done"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
+            Assert.That(livingDocScenario.IsIncomplete(), Is.True);
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("5s 641ms"));
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:05:641"));
             Assert.That(livingDocScenario.HasDataTable(), Is.False);
@@ -68,6 +71,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocScenario.Id, Is.Not.Null);
             Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1005 @Review"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
+            Assert.That(livingDocScenario.IsPassed(), Is.True);
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("4s 495ms"));
             Assert.That(livingDocScenario.GetDurationSortId(), Is.EqualTo("00:04:495"));
             Assert.That(livingDocScenario.HasDataTable(), Is.False);

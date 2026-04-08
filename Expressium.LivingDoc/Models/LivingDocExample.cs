@@ -40,6 +40,26 @@ namespace Expressium.LivingDoc.Models
             return LivingDocStatuses.Unknown.ToString();
         }
 
+        public bool IsPassed()
+        {
+            return GetStatus() == LivingDocStatuses.Passed.ToString();
+        }
+
+        public bool IsIncomplete()
+        {
+            return GetStatus() == LivingDocStatuses.Incomplete.ToString();
+        }
+
+        public bool IsFailed()
+        {
+            return GetStatus() == LivingDocStatuses.Failed.ToString();
+        }
+
+        public bool IsSkipped()
+        {
+            return GetStatus() == LivingDocStatuses.Skipped.ToString();
+        }
+
         public string GetDuration()
         {
             return Duration.FormatAsString();

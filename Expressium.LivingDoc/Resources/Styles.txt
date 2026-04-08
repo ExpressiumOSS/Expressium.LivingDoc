@@ -39,7 +39,7 @@
 
         /* Groups */
         --group-bg-color: var(--bs-gray-075); 
-        --group-border-color: var(--bs-gray-200);
+        --group-border-color: var(--bs-gray-300);
 
         /* Outlines */
         --grid-border-color: #E0E0E0;
@@ -61,13 +61,13 @@
 
         /* Badges */
         --scenario-index-text-color: #ffffff;
-        --scenario-index-bg-color: #909090;
+        --scenario-index-bg-color: #969696;
 
         /* Buttons */
         --button-border-color: var(--bs-gray-450);
         --button-bg-color: var(--bs-gray-100);
         --button-text-color: var(--bs-gray-900);
-        --button-inactive-border-color: var(--bs-gray-300);
+        --button-inactive-border-color: var(--bs-gray-400);
         --button-inactive-bg-color: var(--bs-gray-100);
         --button-inactive-text-color: var(--bs-gray-600);
         --button-hover-border-color: var(--bs-gray-500);

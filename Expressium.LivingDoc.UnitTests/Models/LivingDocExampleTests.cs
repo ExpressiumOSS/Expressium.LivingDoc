@@ -17,6 +17,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
+            Assert.That(livingDocExample.IsFailed(), Is.True);
             Assert.That(livingDocExample.GetDuration(), Is.EqualTo("0s 003ms"));
             Assert.That(livingDocExample.HasDataTable(), Is.False);
         }
@@ -32,6 +33,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
+            Assert.That(livingDocExample.IsIncomplete(), Is.True);
             Assert.That(livingDocExample.GetDuration(), Is.EqualTo("0s 003ms"));
             Assert.That(livingDocExample.HasDataTable(), Is.False);
         }
@@ -47,6 +49,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
+            Assert.That(livingDocExample.IsPassed(), Is.True);
             Assert.That(livingDocExample.GetDuration(), Is.EqualTo("0s 007ms"));
             Assert.That(livingDocExample.HasDataTable(), Is.True);
         }
@@ -62,6 +65,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocExample = livingDocProject.Features[0].Scenarios[0].Examples[0];
 
             Assert.That(livingDocExample.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
+            Assert.That(livingDocExample.IsSkipped(), Is.True);
             Assert.That(livingDocExample.GetDuration(), Is.EqualTo("0s 000ms"));
             Assert.That(livingDocExample.HasDataTable(), Is.False);
         }

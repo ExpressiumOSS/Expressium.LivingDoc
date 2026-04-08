@@ -44,15 +44,14 @@ namespace Expressium.LivingDoc.Models
             return Assembly.GetExecutingAssembly().GetName().Version?.ToString();
         }
 
-        public void Merge(LivingDocProject project)
+        public string GetDate()
         {
-            foreach (var feature in project.Features)
-            {
-                if (!Features.Any(x => x.Name == feature.Name))
-                    Features.Add(LivingDocExtensions.DeepClone(feature));
-            }
+            return Date.FormatAsString();
+        }
 
-            Duration += project.Duration;
+        public string GetDuration()
+        {
+            return Duration.FormatAsString();
         }
 
         public int GetNumberOfFeatures()
@@ -62,54 +61,42 @@ namespace Expressium.LivingDoc.Models
 
         public int GetNumberOfScenarios()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .SelectMany(scenario => scenario.Examples)
-                .Count();
+            return Features.Sum(feature => feature.GetNumberOfScenarios());
         }
 
         public int GetNumberOfRules()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .Where(scenario => scenario.RuleId != null)
-                .Select(scenario => scenario.RuleId)
-                .Distinct()
-                .Count();
+            return Features.Sum(feature => feature.GetNumberOfRules());
         }
 
         public int GetNumberOfSteps()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .SelectMany(scenario => scenario.Examples)
-                .SelectMany(example => example.Steps)
-                .Count();
-        }
-
-        public int GetNumberOfFailedFeatures()
-        {
-            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Failed.ToString());
-        }
-
-        public int GetNumberOfIncompleteFeatures()
-        {
-            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Incomplete.ToString());
+            return Features.Sum(feature => feature.GetNumberOfSteps());
         }
 
         public int GetNumberOfPassedFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Passed.ToString());
+            return Features.Count(feature => feature.IsPassed());
+        }
+
+        public int GetNumberOfIncompleteFeatures()
+        {
+            return Features.Count(feature => feature.IsIncomplete());
+        }
+
+        public int GetNumberOfFailedFeatures()
+        {
+            return Features.Count(feature => feature.IsFailed());
         }
 
         public int GetNumberOfSkippedFeatures()
         {
-            return Features.Count(feature => feature.GetStatus() == LivingDocStatuses.Skipped.ToString());
+            return Features.Count(feature => feature.IsSkipped());
         }
 
-        public int GetNumberOfFailedScenarios()
+        public int GetNumberOfPassedScenarios()
         {
-            return Features.Sum(feature => feature.GetNumberOfFailedScenarios());
+            return Features.Sum(feature => feature.GetNumberOfPassedScenarios());
         }
 
         public int GetNumberOfIncompleteScenarios()
@@ -117,9 +104,9 @@ namespace Expressium.LivingDoc.Models
             return Features.Sum(feature => feature.GetNumberOfIncompleteScenarios());
         }
 
-        public int GetNumberOfPassedScenarios()
+        public int GetNumberOfFailedScenarios()
         {
-            return Features.Sum(feature => feature.GetNumberOfPassedScenarios());
+            return Features.Sum(feature => feature.GetNumberOfFailedScenarios());
         }
 
         public int GetNumberOfSkippedScenarios()
@@ -129,52 +116,22 @@ namespace Expressium.LivingDoc.Models
 
         public int GetNumberOfPassedSteps()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .SelectMany(scenario => scenario.Examples)
-                .SelectMany(example => example.Steps)
-                .Where(step => step.IsPassed())
-                .Count();
+            return Features.Sum(feature => feature.GetNumberOfPassedSteps());
         }
 
         public int GetNumberOfIncompleteSteps()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .SelectMany(scenario => scenario.Examples)
-                .SelectMany(example => example.Steps)
-                .Where(step => step.IsIncomplete())
-                .Count();
+            return Features.Sum(feature => feature.GetNumberOfIncompleteSteps());
         }
 
         public int GetNumberOfFailedSteps()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .SelectMany(scenario => scenario.Examples)
-                .SelectMany(example => example.Steps)
-                .Where(step => step.IsFailed())
-                .Count();
+            return Features.Sum(feature => feature.GetNumberOfFailedSteps());
         }
 
         public int GetNumberOfSkippedSteps()
         {
-            return Features
-                .SelectMany(feature => feature.Scenarios)
-                .SelectMany(scenario => scenario.Examples)
-                .SelectMany(example => example.Steps)
-                .Where(step => step.IsSkipped())
-                .Count();
-        }
-
-        public string GetDate()
-        {
-            return Date.FormatAsString();
-        }
-
-        public string GetDuration()
-        {
-            return Duration.FormatAsString();
+            return Features.Sum(feature => feature.GetNumberOfSkippedSteps());
         }
 
         public List<string> GetFolders()
@@ -213,6 +170,17 @@ namespace Expressium.LivingDoc.Models
             return listOfFolders;
         }
 
+        public void Merge(LivingDocProject project)
+        {
+            foreach (var feature in project.Features)
+            {
+                if (!Features.Any(x => x.Name == feature.Name))
+                    Features.Add(LivingDocExtensions.DeepClone(feature));
+            }
+
+            Duration += project.Duration;
+        }
+
         public void MergeHistory(LivingDocProject livingDocProject)
         {
             try
@@ -225,46 +193,46 @@ namespace Expressium.LivingDoc.Models
 
                 foreach (var feature in livingDocProject.Features)
                 {
-                    if (feature.GetStatus() == LivingDocStatuses.Passed.ToString())
+                    if (feature.IsPassed())
                         livingDocHistory.Features.Passed.Add(feature.Name);
 
-                    if (feature.GetStatus() == LivingDocStatuses.Incomplete.ToString())
+                    if (feature.IsIncomplete())
                         livingDocHistory.Features.Incomplete.Add(feature.Name);
 
-                    if (feature.GetStatus() == LivingDocStatuses.Failed.ToString())
+                    if (feature.IsFailed())
                         livingDocHistory.Features.Failed.Add(feature.Name);
 
-                    if (feature.GetStatus() == LivingDocStatuses.Skipped.ToString())
+                    if (feature.IsSkipped())
                         livingDocHistory.Features.Skipped.Add(feature.Name);
 
                     foreach (var scenario in feature.Scenarios)
                     {
                         foreach (var example in scenario.Examples)
                         {
-                            if (example.GetStatus() == LivingDocStatuses.Passed.ToString())
+                            if (example.IsPassed())
                                 livingDocHistory.Scenarios.Passed.Add(scenario.Name);
 
-                            if (example.GetStatus() == LivingDocStatuses.Incomplete.ToString())
+                            if (example.IsIncomplete())
                                 livingDocHistory.Scenarios.Incomplete.Add(scenario.Name);
 
-                            if (example.GetStatus() == LivingDocStatuses.Failed.ToString())
+                            if (example.IsFailed())
                                 livingDocHistory.Scenarios.Failed.Add(scenario.Name);
 
-                            if (example.GetStatus() == LivingDocStatuses.Skipped.ToString())
+                            if (example.IsSkipped())
                                 livingDocHistory.Scenarios.Skipped.Add(scenario.Name);
 
                             foreach (var step in example.Steps)
                             {
-                                if (step.GetStatus() == LivingDocStatuses.Passed.ToString())
+                                if (step.IsPassed())
                                     livingDocHistory.Steps.Passed.Add(step.Keyword + " " + step.Name);
 
-                                if (step.GetStatus() == LivingDocStatuses.Incomplete.ToString())
+                                if (step.IsIncomplete())
                                     livingDocHistory.Steps.Incomplete.Add(step.Keyword + " " + step.Name);
 
-                                if (step.GetStatus() == LivingDocStatuses.Failed.ToString())
+                                if (step.IsFailed())
                                     livingDocHistory.Steps.Failed.Add(step.Keyword + " " + step.Name);
 
-                                if (step.GetStatus() == LivingDocStatuses.Skipped.ToString())
+                                if (step.IsSkipped())
                                     livingDocHistory.Steps.Skipped.Add(step.Keyword + " " + step.Name);
                             }
                         }

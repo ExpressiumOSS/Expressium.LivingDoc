@@ -5,8 +5,8 @@ namespace Expressium.LivingDoc.Models
     public class LivingDocStep
     {
         public string Id { get; set; }
-        public int TableIndexId { get; set; }
-        public string TableBodyId { get; set; }
+        public int TableIndexId { get; set; }  /* Message Parser Property */
+        public string TableBodyId { get; set; } /* Message Parser Property */
         public string Keyword { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }

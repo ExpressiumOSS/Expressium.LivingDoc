@@ -22,6 +22,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
+            Assert.That(livingDocFeature.IsFailed(), Is.True);
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 003ms"));
             Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:003"));
             Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\stack-traces"));
@@ -43,6 +44,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
+            Assert.That(livingDocFeature.IsIncomplete(), Is.True);
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 013ms"));
             Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:013"));
             Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\pending"));
@@ -64,6 +66,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0100"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
+            Assert.That(livingDocFeature.IsPassed(), Is.True);
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 003ms"));
             Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:003"));
             Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\minimal"));
@@ -85,6 +88,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
             Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
+            Assert.That(livingDocFeature.IsSkipped(), Is.True);
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 000ms"));
             Assert.That(livingDocFeature.GetDurationSortId(), Is.EqualTo("00:00:000"));
             Assert.That(livingDocFeature.GetFolder(), Is.EqualTo("samples\\empty"));

@@ -326,7 +326,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div>");
             listOfLines.Add("<ul class='scenario-steps'>");
 
-            //var isPassed = example.GetStatus() == LivingDocStatuses.Passed.ToString();
+            //var isPassed = example.IsPassed();
 
             foreach (var step in example.Steps)
             {

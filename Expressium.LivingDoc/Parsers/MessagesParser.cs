@@ -357,7 +357,7 @@ namespace Expressium.LivingDoc.Parsers
             if (example.Steps.Count == 0)
                 return;
 
-            if (example.GetStatus() == LivingDocStatuses.Failed.ToString())
+            if (example.IsFailed())
                 return;
 
             var testCase = listOfTestCases.FirstOrDefault(x => x.Id == testCaseStarted.TestCaseId);

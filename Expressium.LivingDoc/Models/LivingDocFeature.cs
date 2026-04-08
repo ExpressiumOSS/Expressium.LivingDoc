@@ -34,44 +34,94 @@ namespace Expressium.LivingDoc.Models
 
         public string GetStatus()
         {
-            if (Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Failed.ToString()))
+            if (Scenarios.Any(s => s.IsFailed()))
                 return LivingDocStatuses.Failed.ToString();
 
-            if (Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Incomplete.ToString()))
+            if (Scenarios.Any(s => s.IsIncomplete()))
                 return LivingDocStatuses.Incomplete.ToString();
 
-            if (Scenarios.Count == 0 || Scenarios.Any(example => example.GetStatus() == LivingDocStatuses.Skipped.ToString()))
+            if (Scenarios.Count == 0 || Scenarios.Any(s => s.IsSkipped()))
                 return LivingDocStatuses.Skipped.ToString();
 
-            if (Scenarios.Count > 0 && Scenarios.TrueForAll(example => example.GetStatus() == LivingDocStatuses.Passed.ToString()))
+            if (Scenarios.Count > 0 && Scenarios.TrueForAll(s => s.IsPassed()))
                 return LivingDocStatuses.Passed.ToString();
 
             return LivingDocStatuses.Unknown.ToString();
         }
 
-        public int GetNumberOfPassedScenarios()
+        public bool IsPassed()
         {
-            return Scenarios.SelectMany(s => s.Examples).Count(e => e.GetStatus() == LivingDocStatuses.Passed.ToString());
+            return GetStatus() == LivingDocStatuses.Passed.ToString();
         }
 
-        public int GetNumberOfFailedScenarios()
+        public bool IsIncomplete()
         {
-            return Scenarios.SelectMany(s => s.Examples).Count(e => e.GetStatus() == LivingDocStatuses.Failed.ToString());
+            return GetStatus() == LivingDocStatuses.Incomplete.ToString();
         }
 
-        public int GetNumberOfIncompleteScenarios()
+        public bool IsFailed()
         {
-            return Scenarios.SelectMany(s => s.Examples).Count(e => e.GetStatus() == LivingDocStatuses.Incomplete.ToString());
+            return GetStatus() == LivingDocStatuses.Failed.ToString();
         }
 
-        public int GetNumberOfSkippedScenarios()
+        public bool IsSkipped()
         {
-            return Scenarios.SelectMany(s => s.Examples).Count(e => e.GetStatus() == LivingDocStatuses.Skipped.ToString());
+            return GetStatus() == LivingDocStatuses.Skipped.ToString();
         }
 
         public int GetNumberOfScenarios()
         {
-            return Scenarios.SelectMany(scenario => scenario.Examples).Count();
+            return Scenarios.Sum(s => s.Examples.Count);
+        }
+
+        public int GetNumberOfRules()
+        {
+            return Scenarios.Select(s => s.RuleId).Where(ruleId => ruleId != null).Distinct().Count();
+        }
+
+        public int GetNumberOfSteps()
+        {
+            return Scenarios.Sum(s => s.Examples.Sum(e => e.Steps.Count));
+        }
+
+        public int GetNumberOfPassedScenarios()
+        {
+            return Scenarios.Sum(s => s.GetNumberOfPassedExamples());
+        }
+
+        public int GetNumberOfIncompleteScenarios()
+        {
+            return Scenarios.Sum(s => s.GetNumberOfIncompleteExamples());
+        }
+
+        public int GetNumberOfFailedScenarios()
+        {
+            return Scenarios.Sum(s => s.GetNumberOfFailedExamples());
+        }
+
+        public int GetNumberOfSkippedScenarios()
+        {
+            return Scenarios.Sum(s => s.GetNumberOfSkippedExamples());
+        }
+
+        public int GetNumberOfPassedSteps()
+        {
+            return Scenarios.Sum(s => s.GetNumberOfPassedSteps());
+        }
+
+        public int GetNumberOfIncompleteSteps()
+        {
+            return Scenarios.Sum(s => s.GetNumberOfIncompleteSteps());
+        }
+
+        public int GetNumberOfFailedSteps()
+        {
+            return Scenarios.Sum(s => s.GetNumberOfFailedSteps());
+        }
+
+        public int GetNumberOfSkippedSteps()
+        {
+            return Scenarios.Sum(s => s.GetNumberOfSkippedSteps());
         }
 
         public string GetNumberOfScenariosSortId()
@@ -100,10 +150,7 @@ namespace Expressium.LivingDoc.Models
             var duration = new TimeSpan();
 
             foreach (var scenario in Scenarios)
-            {
-                foreach (var example in scenario.Examples)
-                    duration += example.Duration;
-            }
+                duration += scenario.GetSumOfDuration();
 
             return duration.FormatAsString();
         }
@@ -113,10 +160,7 @@ namespace Expressium.LivingDoc.Models
             var duration = new TimeSpan();
 
             foreach (var scenario in Scenarios)
-            {
-                foreach (var example in scenario.Examples)
-                    duration += example.Duration;
-            }
+                duration += scenario.GetSumOfDuration();
 
             return $"{duration.Minutes.ToString("D2")}:{duration.Seconds.ToString("D2")}:{duration.Milliseconds.ToString("D3")}";
         }
