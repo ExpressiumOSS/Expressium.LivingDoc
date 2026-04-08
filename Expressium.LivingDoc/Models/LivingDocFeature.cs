@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -145,23 +145,24 @@ namespace Expressium.LivingDoc.Models
             return GetPercentageOfPassed().ToString("D4");
         }
 
-        public string GetDuration()
+        public TimeSpan GetSumOfDuration()
         {
             var duration = new TimeSpan();
 
             foreach (var scenario in Scenarios)
                 duration += scenario.GetSumOfDuration();
 
-            return duration.FormatAsString();
+            return duration;
+        }
+
+        public string GetDuration()
+        {
+            return GetSumOfDuration().FormatAsString();
         }
 
         public string GetDurationSortId()
         {
-            var duration = new TimeSpan();
-
-            foreach (var scenario in Scenarios)
-                duration += scenario.GetSumOfDuration();
-
+            var duration = GetSumOfDuration();
             return $"{duration.Minutes.ToString("D2")}:{duration.Seconds.ToString("D2")}:{duration.Milliseconds.ToString("D3")}";
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -136,35 +136,18 @@ namespace Expressium.LivingDoc.Models
 
         public List<string> GetFolders()
         {
-            var listOfFolders = Features
-            .Select(feature => feature.GetFolder())
-            .Distinct()
-            .Where(folder => !string.IsNullOrWhiteSpace(folder))
-            .OrderBy(folder => folder)
-            .ToList();
+            var folders = new HashSet<string>();
 
-            var listOfExpandedFolders = new List<string>();
-            foreach (var folder in listOfFolders)
+            foreach (var folder in Features.Select(feature => feature.GetFolder()).Where(f => !string.IsNullOrWhiteSpace(f)))
             {
-                if (!string.IsNullOrWhiteSpace(folder) && folder.Contains("\\"))
-                {
-                    var tokens = folder.Split('\\');
-                    for (int i = 0; i < tokens.Length - 1; i++)
-                    {
-                        var expandedFolder = string.Join("\\", tokens.Take(i + 1));
-                        if (!listOfFolders.Contains(expandedFolder))
-                            listOfExpandedFolders.Add(expandedFolder);
-                    }
-                }
+                folders.Add(folder);
+
+                var tokens = folder.Split('\\');
+                for (int i = 1; i < tokens.Length; i++)
+                    folders.Add(string.Join("\\", tokens.Take(i)));
             }
 
-            foreach (var folder in listOfExpandedFolders)
-            {
-                if (!listOfFolders.Contains(folder))
-                    listOfFolders.Add(folder);
-            }
-
-            listOfFolders.Sort();
+            var listOfFolders = folders.OrderBy(f => f).Cast<string>().ToList();
             listOfFolders.Add(null);
 
             return listOfFolders;
@@ -183,68 +166,52 @@ namespace Expressium.LivingDoc.Models
 
         public void MergeHistory(LivingDocProject livingDocProject)
         {
-            try
+            if (this.Histories.Any(d => d.Date == livingDocProject.Date))
+                return;
+
+            var livingDocHistory = new LivingDocHistory();
+            livingDocHistory.Date = livingDocProject.Date;
+
+            foreach (var feature in livingDocProject.Features)
             {
-                if (this.Histories.Any(d => d.Date == livingDocProject.Date))
-                    return;
+                if (feature.IsPassed())
+                    livingDocHistory.Features.Passed.Add(feature.Name);
+                else if (feature.IsIncomplete())
+                    livingDocHistory.Features.Incomplete.Add(feature.Name);
+                else if (feature.IsFailed())
+                    livingDocHistory.Features.Failed.Add(feature.Name);
+                else if (feature.IsSkipped())
+                    livingDocHistory.Features.Skipped.Add(feature.Name);
 
-                var livingDocHistory = new LivingDocHistory();
-                livingDocHistory.Date = livingDocProject.Date;
-
-                foreach (var feature in livingDocProject.Features)
+                foreach (var scenario in feature.Scenarios)
                 {
-                    if (feature.IsPassed())
-                        livingDocHistory.Features.Passed.Add(feature.Name);
-
-                    if (feature.IsIncomplete())
-                        livingDocHistory.Features.Incomplete.Add(feature.Name);
-
-                    if (feature.IsFailed())
-                        livingDocHistory.Features.Failed.Add(feature.Name);
-
-                    if (feature.IsSkipped())
-                        livingDocHistory.Features.Skipped.Add(feature.Name);
-
-                    foreach (var scenario in feature.Scenarios)
+                    foreach (var example in scenario.Examples)
                     {
-                        foreach (var example in scenario.Examples)
+                        if (example.IsPassed())
+                            livingDocHistory.Scenarios.Passed.Add(scenario.Name);
+                        else if (example.IsIncomplete())
+                            livingDocHistory.Scenarios.Incomplete.Add(scenario.Name);
+                        else if (example.IsFailed())
+                            livingDocHistory.Scenarios.Failed.Add(scenario.Name);
+                        else if (example.IsSkipped())
+                            livingDocHistory.Scenarios.Skipped.Add(scenario.Name);
+
+                        foreach (var step in example.Steps)
                         {
-                            if (example.IsPassed())
-                                livingDocHistory.Scenarios.Passed.Add(scenario.Name);
-
-                            if (example.IsIncomplete())
-                                livingDocHistory.Scenarios.Incomplete.Add(scenario.Name);
-
-                            if (example.IsFailed())
-                                livingDocHistory.Scenarios.Failed.Add(scenario.Name);
-
-                            if (example.IsSkipped())
-                                livingDocHistory.Scenarios.Skipped.Add(scenario.Name);
-
-                            foreach (var step in example.Steps)
-                            {
-                                if (step.IsPassed())
-                                    livingDocHistory.Steps.Passed.Add(step.Keyword + " " + step.Name);
-
-                                if (step.IsIncomplete())
-                                    livingDocHistory.Steps.Incomplete.Add(step.Keyword + " " + step.Name);
-
-                                if (step.IsFailed())
-                                    livingDocHistory.Steps.Failed.Add(step.Keyword + " " + step.Name);
-
-                                if (step.IsSkipped())
-                                    livingDocHistory.Steps.Skipped.Add(step.Keyword + " " + step.Name);
-                            }
+                            if (step.IsPassed())
+                                livingDocHistory.Steps.Passed.Add(step.Keyword + " " + step.Name);
+                            else if (step.IsIncomplete())
+                                livingDocHistory.Steps.Incomplete.Add(step.Keyword + " " + step.Name);
+                            else if (step.IsFailed())
+                                livingDocHistory.Steps.Failed.Add(step.Keyword + " " + step.Name);
+                            else if (step.IsSkipped())
+                                livingDocHistory.Steps.Skipped.Add(step.Keyword + " " + step.Name);
                         }
                     }
                 }
+            }
 
-                Histories.Add(livingDocHistory);
-            }
-            catch (System.Exception ex)
-            {
-                throw new ApplicationException($"Unexpected error: {ex.Message}", ex);
-            }
+            Histories.Add(livingDocHistory);
         }
 
         public int GetMaximumNumberOfHistoryFeatures()
