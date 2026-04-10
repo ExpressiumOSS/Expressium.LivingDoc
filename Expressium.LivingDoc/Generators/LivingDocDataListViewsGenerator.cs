@@ -19,7 +19,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Features View -->");
-            listOfLines.Add($"<div id='features-view'>");
+            listOfLines.Add("<div id='features-view'>");
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<table id='table-grid' class='list-view'>");
@@ -63,7 +63,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Scenarios View -->");
-            listOfLines.Add($"<div id='scenarios-view'>");
+            listOfLines.Add("<div id='scenarios-view'>");
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<table id='table-grid' class='list-view'>");
@@ -108,7 +108,7 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Steps View -->");
-            listOfLines.Add($"<div id='steps-view'>");
+            listOfLines.Add("<div id='steps-view'>");
 
             listOfLines.Add("<div class='section'>");
             listOfLines.Add("<table id='table-grid' class='list-view'>");
@@ -154,8 +154,7 @@ namespace Expressium.LivingDoc.Generators
                                         .SelectMany(feature => feature.Scenarios)
                                         .SelectMany(scenario => scenario.Examples)
                                         .SelectMany(example => example.Steps)
-                                        .Where(x => x.Keyword + " " + x.Name == fullName)
-                                        .Count();
+                                        .Count(x => x.Keyword + " " + x.Name == fullName);
 
                                     listOfLines.Add($"<tr class='grid-border' data-role='step' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                                     listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{step.GetStatus().ToLower()}'></span></td>");
@@ -164,7 +163,7 @@ namespace Expressium.LivingDoc.Generators
                                     listOfLines.Add($"<td>{step.GetStatus()}</td>");
                                     listOfLines.Add($"</tr>");
 
-                                    mapOfSteps.Add(fullName, step.GetStatus());
+                                    mapOfSteps.Add(fullName, fullName);
                                 }
                             }
                         }

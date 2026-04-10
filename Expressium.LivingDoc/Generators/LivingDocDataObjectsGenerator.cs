@@ -326,103 +326,137 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div>");
             listOfLines.Add("<ul class='scenario-steps'>");
 
-            //var isPassed = example.IsPassed();
-
             foreach (var step in example.Steps)
             {
-                var status = step.GetStatus().ToLower();
-
-                var stepSymbol = "&cross;";
-                if (step.IsPassed())
-                    stepSymbol = "&check;";
-
-                ///////////////////////////////////////////////////////
-                // Toggle option for visibility of Background steps...
-                ///////////////////////////////////////////////////////
-                //if (step.Type == LivingDocStepTypes.Background.ToString())
-                //{
-                //    if (isPassed)
-                //        listOfLines.Add($"<li class='backgrounds' style='display: none;'>");
-                //    else
-                //        listOfLines.Add($"<li class='backgrounds' style='display: block;'>");
-                //}
-                //else
-                ///////////////////////////////////////////////////////
-
-                listOfLines.Add("<li>");
-
-                ///////////////////////////////////////////////////////
-                // Alternative visualization with Bootstrap icons...
-                ///////////////////////////////////////////////////////
-                //if (step.IsPassed())
-                //    listOfLines.Add($"<span class='bi bi-check-circle-fill step-symbol color-{status}'></span>");
-                //else if (step.IsFailed())
-                //    listOfLines.Add($"<span class='bi bi-x-circle-fill step-symbol color-{status}'></span>");
-                //else if (step.IsIncomplete())
-                //    listOfLines.Add($"<span class='bi bi-exclamation-circle-fill step-symbol color-{status}'></span>");
-                //else if (step.IsSkipped())
-                //    listOfLines.Add($"<span class='bi bi-dash-circle-fill step-symbol color-{status}'></span>");
-                //else
-                //    listOfLines.Add($"<span class='bi bi-question-circle-fill step-symbol color-{status}'></span>");
-                ///////////////////////////////////////////////////////
-
-                listOfLines.Add($"<span class='step-symbol color-{status}'>{stepSymbol}</span>");
-                listOfLines.Add($"<span class='step-keyword'>{step.Keyword}</span>");
-                listOfLines.Add($"<span class='step-name'>{step.Name}</span>");
-
-                if (step.DataTable.Rows.Count > 0)
-                {
-                    listOfLines.Add("<!-- Scenario Steps Data Table Section -->");
-                    listOfLines.Add($"<div class='steps-datatable'>");
-                    listOfLines.AddRange(GenerateDataScenarioDataTable(step.DataTable));
-                    listOfLines.Add("</div>");
-                }
-
-                listOfLines.Add("</li>");
-
-                var message = step.Message;
-                if (!string.IsNullOrWhiteSpace(message))
-                {
-                    listOfLines.Add("<!-- Data Step Message -->");
-                    listOfLines.Add("<li>");
-                    listOfLines.Add($"<div class='message-box'>");
-                    listOfLines.Add($"<div class='message-{status}'>{message.Trim().Replace("\n", "<br>")}</div>");
-                    listOfLines.Add("</div>");
-                    listOfLines.Add("</li>");
-                }
-
-                var exceptionType = step.ExceptionType;
-                var exceptionMessage = step.ExceptionMessage;
-                if (!string.IsNullOrWhiteSpace(exceptionType) && !string.IsNullOrWhiteSpace(exceptionMessage))
-                {
-                    listOfLines.Add("<!-- Data Step Message -->");
-                    listOfLines.Add("<li>");
-                    listOfLines.Add($"<div class='message-box'>");
-                    listOfLines.Add($"<div class='message-{status}'>");
-                    listOfLines.Add($"<span class='message-header'>{exceptionType}</span><br>");
-                    listOfLines.Add($"{exceptionMessage.Replace("\n", "<br>")}<br>");
-                    listOfLines.Add("</div>");
-                    listOfLines.Add("</div>");
-                    listOfLines.Add("</li>");
-                }
-
-                var exceptionStackTrace = step.ExceptionStackTrace;
-                if (!string.IsNullOrWhiteSpace(exceptionStackTrace))
-                {
-                    listOfLines.Add("<!-- Data Step Message -->");
-                    listOfLines.Add("<li class='stacktraces' style='display : none;'>");
-                    listOfLines.Add($"<div class='message-box'>");
-                    listOfLines.Add($"<div class='message-{status}'>");
-                    listOfLines.Add($"<span class='message-header'>Stacktrace</span><br>");
-                    listOfLines.Add($"<div class='message-stacktrace'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
-                    listOfLines.Add("</div>");
-                    listOfLines.Add("</div>");
-                    listOfLines.Add("</li>");
-                }
+                listOfLines.AddRange(GenerateDataScenarioStep(step));
+                listOfLines.AddRange(GenerateDataScenarioStepMessage(step));
+                listOfLines.AddRange(GenerateDataScenarioStepExceptionMessage(step));
+                listOfLines.AddRange(GenerateDataScenarioStepExceptionStackTrace(step));
             }
 
             listOfLines.Add("</ul>");
             listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataScenarioStep(LivingDocStep step)
+        {
+            var listOfLines = new List<string>();
+
+            var status = step.GetStatus().ToLower();
+
+            ///////////////////////////////////////////////////////
+            // Toggle option for visibility of Background steps...
+            ///////////////////////////////////////////////////////
+            //if (step.Type == LivingDocStepTypes.Background.ToString())
+            //{
+            //    if (isPassed)
+            //        listOfLines.Add($"<li class='backgrounds' style='display: none;'>");
+            //    else
+            //        listOfLines.Add($"<li class='backgrounds' style='display: block;'>");
+            //}
+            //else
+            ///////////////////////////////////////////////////////
+
+            listOfLines.Add("<li>");
+
+            if (project.ExperimentFlag)
+            {
+                ///////////////////////////////////////////////////////
+                // Alternative visualization with Bootstrap icons...
+                ///////////////////////////////////////////////////////
+                if (step.IsPassed())
+                    listOfLines.Add($"<span class='bi bi-check-circle-fill step-symbol color-{status}'></span>");
+                else if (step.IsFailed())
+                    listOfLines.Add($"<span class='bi bi-x-circle-fill step-symbol color-{status}'></span>");
+                else if (step.IsIncomplete())
+                    listOfLines.Add($"<span class='bi bi-exclamation-circle-fill step-symbol color-{status}'></span>");
+                else if (step.IsSkipped())
+                    listOfLines.Add($"<span class='bi bi-dash-circle-fill step-symbol color-{status}'></span>");
+                else
+                    listOfLines.Add($"<span class='bi bi-question-circle-fill step-symbol color-{status}'></span>");
+                ///////////////////////////////////////////////////////
+            }
+            else
+            {
+                var stepSymbol = step.IsPassed() ? "&check;" : "&cross;";
+                listOfLines.Add($"<span class='step-symbol color-{status}'>{stepSymbol}</span>");
+            }
+
+            listOfLines.Add($"<span class='step-keyword'>{step.Keyword}</span>");
+            listOfLines.Add($"<span class='step-name'>{step.Name}</span>");
+
+            if (step.DataTable.Rows.Count > 0)
+            {
+                listOfLines.Add("<!-- Scenario Steps Data Table Section -->");
+                listOfLines.Add($"<div class='steps-datatable'>");
+                listOfLines.AddRange(GenerateDataScenarioDataTable(step.DataTable));
+                listOfLines.Add("</div>");
+            }
+
+            listOfLines.Add("</li>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataScenarioStepMessage(LivingDocStep step)
+        {
+            var listOfLines = new List<string>();
+
+            var message = step.Message;
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                listOfLines.Add("<!-- Data Step Message -->");
+                listOfLines.Add("<li>");
+                listOfLines.Add($"<div class='message-box'>");
+                listOfLines.Add($"<div class='message-skipped'>{message.Trim().Replace("\n", "<br>")}</div>");
+                listOfLines.Add("</div>");
+                listOfLines.Add("</li>");
+            }
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataScenarioStepExceptionMessage(LivingDocStep step)
+        {
+            var listOfLines = new List<string>();
+
+            var exceptionType = step.ExceptionType;
+            var exceptionMessage = step.ExceptionMessage;
+            if (!string.IsNullOrWhiteSpace(exceptionType) && !string.IsNullOrWhiteSpace(exceptionMessage))
+            {
+                listOfLines.Add("<!-- Data Step Message -->");
+                listOfLines.Add("<li>");
+                listOfLines.Add($"<div class='message-box'>");
+                listOfLines.Add($"<div class='message-{step.GetStatus().ToLower()}'>");
+                listOfLines.Add($"<span class='message-header'>{exceptionType}</span><br>");
+                listOfLines.Add($"{exceptionMessage.Replace("\n", "<br>")}<br>");
+                listOfLines.Add("</div>");
+                listOfLines.Add("</div>");
+                listOfLines.Add("</li>");
+            }
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataScenarioStepExceptionStackTrace(LivingDocStep step)
+        {
+            var listOfLines = new List<string>();
+
+            var exceptionStackTrace = step.ExceptionStackTrace;
+            if (!string.IsNullOrWhiteSpace(exceptionStackTrace))
+            {
+                listOfLines.Add("<!-- Data Step Message -->");
+                listOfLines.Add("<li class='stacktraces' style='display : none;'>");
+                listOfLines.Add($"<div class='message-box'>");
+                listOfLines.Add($"<div class='message-{step.GetStatus().ToLower()}'>");
+                listOfLines.Add($"<span class='message-header'>Stacktrace</span><br>");
+                listOfLines.Add($"<div class='message-stacktrace'>{exceptionStackTrace.Replace("\n", "<br>")}<br></div>");
+                listOfLines.Add("</div>");
+                listOfLines.Add("</div>");
+                listOfLines.Add("</li>");
+            }
 
             return listOfLines;
         }

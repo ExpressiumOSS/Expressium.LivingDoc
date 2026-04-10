@@ -27,7 +27,6 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             var generator = new LivingDocDataListViewsGenerator(project);
-
             listOfLines.AddRange(generator.GenerateDataFeaturesListView());
             listOfLines.AddRange(generator.GenerateDataScenariosListView());
             listOfLines.AddRange(generator.GenerateDataStepsListView());
@@ -51,7 +50,6 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
-
             listOfLines.AddRange(generator.GenerateDataAnalyticsFeaturesView());
             listOfLines.AddRange(generator.GenerateDataAnalyticsScenariosView());
             listOfLines.AddRange(generator.GenerateDataAnalyticsStepsView());

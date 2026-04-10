@@ -41,10 +41,15 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Count, Is.EqualTo(8));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Project Navigation Section -->"));
             Assert.That(listOfLines[2], Does.Contain("title='Overview'"));
+            Assert.That(listOfLines[2], Does.Contain("loadViewMode('project-view','Overview')"));
             Assert.That(listOfLines[3], Does.Contain("title='Features List View'"));
+            Assert.That(listOfLines[3], Does.Contain("loadViewMode('features-view','Features')"));
             Assert.That(listOfLines[4], Does.Contain("title='Scenarios List View'"));
+            Assert.That(listOfLines[4], Does.Contain("loadViewMode('scenarios-view','Scenarios')"));
             Assert.That(listOfLines[5], Does.Contain("title='Steps List View'"));
+            Assert.That(listOfLines[5], Does.Contain("loadViewMode('steps-view','Steps')"));
             Assert.That(listOfLines[6], Does.Contain("title='Analytics'"));
+            Assert.That(listOfLines[6], Does.Contain("loadAnalytics()"));
         }
 
         [Test]
@@ -61,21 +66,30 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines, Does.Contain("<!-- Splitter Section -->"));
             Assert.That(listOfLines, Does.Contain("<!-- Right Splitter Section -->"));
             Assert.That(listOfLines, Does.Contain("<!-- Content Splitter Script -->"));
+            Assert.That(listOfLines, Does.Contain("<div id='splitter-left' class='bg-white p-3'>"));
+            Assert.That(listOfLines, Does.Contain("<div id='splitter'></div>"));
+            Assert.That(listOfLines, Does.Contain("<div id='splitter-right' class='bg-white p-3'>"));
+            Assert.That(listOfLines, Does.Contain("<div id='filter-list'></div>"));
         }
 
         [Test]
-        public void LivingDocContentGenerator_GenerateViewPreFilters()
+        public void LivingDocContentGenerator_GeneratePreFilters()
         {
             var project = new LivingDocProject();
 
             var generator = new LivingDocContentGenerator(project);
-            var listOfLines = generator.GenerateViewPreFilters();
+            var listOfLines = generator.GeneratePreFilters();
 
             Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines, Does.Contain("<!-- View Title Section -->"));
             Assert.That(listOfLines, Does.Contain("<!-- PreFilters Section -->"));
             Assert.That(listOfLines, Does.Contain("<span id='view-title' class='page-name'>Overview</span>"));
             Assert.That(listOfLines.Count(l => l.Contains("data-prefilter")), Is.EqualTo(4));
+            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Passed'"));
+            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Incomplete'"));
+            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Failed'"));
+            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Skipped'"));
+            Assert.That(listOfLines, Has.Some.Contains("clearPrefilters()"));
         }
 
         [Test]
@@ -88,7 +102,37 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines, Does.Contain("<!-- Filter Section -->"));
+            Assert.That(listOfLines, Does.Contain("<span class='bi bi-search'></span>"));
             Assert.That(listOfLines, Does.Contain("<input onkeyup='filterView()' class='filter-keywords' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>"));
+        }
+
+        [Test]
+        public void LivingDocContentGenerator_GenerateToolbar()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocContentGenerator(project);
+            var listOfLines = generator.GenerateToolbar();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void LivingDocContentGenerator_GenerateHeader_With_Empty_Title()
+        {
+            var project = new LivingDocProject
+            {
+                Title = null,
+                Date = new System.DateTime(2024, 6, 1, 13, 5, 37)
+            };
+
+            var generator = new LivingDocContentGenerator(project);
+            var listOfLines = generator.GenerateHeader();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines.Count, Is.EqualTo(5));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='project-name'></span><br />"));
         }
 
         [Test]

@@ -9,6 +9,8 @@ namespace Expressium.LivingDoc.Generators
     {
         private LivingDocProject project;
 
+        private enum AnalyticsType { Features, Scenarios, Steps }
+
         internal LivingDocDataAnalyticsGenerator(LivingDocProject project)
         {
             this.project = project;
@@ -19,14 +21,14 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Analytics -->");
-            listOfLines.Add($"<div id='analytics-features'>");
+            listOfLines.Add("<div id='analytics-features'>");
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
-            listOfLines.AddRange(GenerateDataAnalyticsFeaturesStatusChart());
+            listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Features.ToString()));
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
-            listOfLines.AddRange(GenerateDataAnalyticsTrends("Features"));
-            listOfLines.AddRange(GenerateDataAnalyticsFailures("Features"));
+            listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Features.ToString()));
+            listOfLines.AddRange(GenerateDataAnalyticsFailures(AnalyticsType.Features.ToString()));
 
             listOfLines.Add("</div>");
 
@@ -38,14 +40,14 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Analytics -->");
-            listOfLines.Add($"<div id='analytics-scenarios'>");
+            listOfLines.Add("<div id='analytics-scenarios'>");
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
-            listOfLines.AddRange(GenerateDataAnalyticsScenariosStatusChart());
+            listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Scenarios.ToString()));
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
-            listOfLines.AddRange(GenerateDataAnalyticsTrends("Scenarios"));
-            listOfLines.AddRange(GenerateDataAnalyticsFailures("Scenarios"));
+            listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Scenarios.ToString()));
+            listOfLines.AddRange(GenerateDataAnalyticsFailures(AnalyticsType.Scenarios.ToString()));
 
             listOfLines.Add("</div>");
 
@@ -57,14 +59,14 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add("<!-- Data Analytics -->");
-            listOfLines.Add($"<div id='analytics-steps'>");
+            listOfLines.Add("<div id='analytics-steps'>");
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
-            listOfLines.AddRange(GenerateDataAnalyticsStepsStatusChart());
+            listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Steps.ToString()));
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
 
-            listOfLines.AddRange(GenerateDataAnalyticsTrends("Steps"));
-            listOfLines.AddRange(GenerateDataAnalyticsFailures("Steps"));
+            listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Steps.ToString()));
+            listOfLines.AddRange(GenerateDataAnalyticsFailures(AnalyticsType.Steps.ToString()));
 
             listOfLines.Add("</div>");
 
@@ -85,47 +87,42 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsFeaturesStatusChart()
+        internal List<string> GenerateDataAnalyticsStatusChart(string type)
         {
             var listOfLines = new List<string>();
 
-            var numberOfPassed = project.GetNumberOfPassedFeatures();
-            var numberOfIncomplete = project.GetNumberOfIncompleteFeatures();
-            var numberOfFailed = project.GetNumberOfFailedFeatures();
-            var numberOfSkipped = project.GetNumberOfSkippedFeatures();
-            var numberOfTests = project.Features.Count;
+            var numberOfPassed = 0;
+            var numberOfIncomplete = 0;
+            var numberOfFailed = 0;
+            var numberOfSkipped = 0;
+            var numberOfTests = 0;
 
-            listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Features", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+            if (type == AnalyticsType.Features.ToString())
+            {
+                numberOfPassed = project.GetNumberOfPassedFeatures();
+                numberOfIncomplete = project.GetNumberOfIncompleteFeatures();
+                numberOfFailed = project.GetNumberOfFailedFeatures();
+                numberOfSkipped = project.GetNumberOfSkippedFeatures();
+                numberOfTests = project.Features.Count;
+            }
+            else if (type == AnalyticsType.Scenarios.ToString())
+            {
+                numberOfPassed = project.GetNumberOfPassedScenarios();
+                numberOfIncomplete = project.GetNumberOfIncompleteScenarios();
+                numberOfFailed = project.GetNumberOfFailedScenarios();
+                numberOfSkipped = project.GetNumberOfSkippedScenarios();
+                numberOfTests = project.GetNumberOfScenarios();
+            }
+            else if (type == AnalyticsType.Steps.ToString())
+            {
+                numberOfPassed = project.GetNumberOfPassedSteps();
+                numberOfIncomplete = project.GetNumberOfIncompleteSteps();
+                numberOfFailed = project.GetNumberOfFailedSteps();
+                numberOfSkipped = project.GetNumberOfSkippedSteps();
+                numberOfTests = project.GetNumberOfSteps();
+            }
 
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataAnalyticsScenariosStatusChart()
-        {
-            var listOfLines = new List<string>();
-
-            var numberOfPassed = project.GetNumberOfPassedScenarios();
-            var numberOfIncomplete = project.GetNumberOfIncompleteScenarios();
-            var numberOfFailed = project.GetNumberOfFailedScenarios();
-            var numberOfSkipped = project.GetNumberOfSkippedScenarios();
-            var numberOfTests = project.GetNumberOfScenarios();
-
-            listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Scenarios", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataAnalyticsStepsStatusChart()
-        {
-            var listOfLines = new List<string>();
-
-            var numberOfPassed = project.GetNumberOfPassedSteps();
-            var numberOfIncomplete = project.GetNumberOfIncompleteSteps();
-            var numberOfFailed = project.GetNumberOfFailedSteps();
-            var numberOfSkipped = project.GetNumberOfSkippedSteps();
-            var numberOfTests = project.GetNumberOfSteps();
-
-            listOfLines.AddRange(GenerateDataAnalyticsStatusChart("Steps", numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
+            listOfLines.AddRange(GenerateDataAnalyticsStatusChart(type, numberOfPassed, numberOfIncomplete, numberOfFailed, numberOfSkipped, numberOfTests));
 
             return listOfLines;
         }
@@ -141,26 +138,26 @@ namespace Expressium.LivingDoc.Generators
 
             var listOfLines = new List<string>();
 
-            listOfLines.Add($"<div class='section' style='width: fit-content; margin: auto;'>");
+            listOfLines.Add("<div class='section' style='width: fit-content; margin: auto;'>");
             listOfLines.Add($"<span class='chart-name' data-testid='{title.ToLower()}-chart-title'>{title}</span>");
             listOfLines.Add("<div class='section chart-outline'>");
 
             {
                 listOfLines.Add("<!-- Data Analytics Status Chart -->");
-                listOfLines.Add($"<div class='section' style='text-align: center; margin: auto;'>");
-                listOfLines.Add($"    <svg class='chart-status' viewBox='0 0 42 42'>");
-                listOfLines.Add($"        <g transform='rotate(-90, 21, 21)'>");
-                listOfLines.Add($"            <circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155'></circle>");
+                listOfLines.Add("<div class='section' style='text-align: center; margin: auto;'>");
+                listOfLines.Add("    <svg class='chart-status' viewBox='0 0 42 42'>");
+                listOfLines.Add("        <g transform='rotate(-90, 21, 21)'>");
+                listOfLines.Add("            <circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155'></circle>");
                 listOfLines.Add($"            <circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfPassed} {100 - percentageOfPassed}' stroke-dashoffset='0'></circle>");
                 listOfLines.Add($"            <circle class='donut-segment-incomplete' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfIncomplete} {100 - percentageOfIncomplete}' stroke-dashoffset='-{percentageOfPassed}'></circle>");
                 listOfLines.Add($"            <circle class='donut-segment-failed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfFailed} {100 - percentageOfFailed}' stroke-dashoffset='-{percentageOfPassed + percentageOfIncomplete}'></circle>");
-                listOfLines.Add($"        </g>");
-                listOfLines.Add($"        <g class='chart-text'>");
+                listOfLines.Add("        </g>");
+                listOfLines.Add("        <g class='chart-text'>");
                 listOfLines.Add($"            <text x='50%' y='50%' class='chart-number' data-testid='{title.ToLower()}-chart-passed'>{percentageOfPassed}%</text>");
-                listOfLines.Add($"            <text x='50%' y='50%' class='chart-label'>Passed</text>");
-                listOfLines.Add($"        </g>");
-                listOfLines.Add($"    </svg>");
-                listOfLines.Add($"</div>");
+                listOfLines.Add("            <text x='50%' y='50%' class='chart-label'>Passed</text>");
+                listOfLines.Add("        </g>");
+                listOfLines.Add("    </svg>");
+                listOfLines.Add("</div>");
             }
 
             {
@@ -171,36 +168,36 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add("<td class='color-passed chart-count'>");
                 listOfLines.Add($"<span class='chart-count-number'>{numberOfPassed}</span><br />");
                 listOfLines.Add($"<span class='chart-count-percentage'>{percentageOfPassed}%</span><br />");
-                listOfLines.Add($"<span class='chart-count-status'>Passed</span><br />");
-                listOfLines.Add($"<div class='chart-count-bar bgcolor-passed'></div>");
+                listOfLines.Add("<span class='chart-count-status'>Passed</span><br />");
+                listOfLines.Add("<div class='chart-count-bar bgcolor-passed'></div>");
                 listOfLines.Add("</td>");
 
                 listOfLines.Add("<td class='color-incomplete chart-count'>");
                 listOfLines.Add($"<span class='chart-count-number'>{numberOfIncomplete}</span><br />");
                 listOfLines.Add($"<span class='chart-count-percentage'>{percentageOfIncomplete}%</span><br />");
-                listOfLines.Add($"<span class='chart-count-status'>Incomplete</span><br />");
-                listOfLines.Add($"<div class='chart-count-bar bgcolor-incomplete'></div>");
+                listOfLines.Add("<span class='chart-count-status'>Incomplete</span><br />");
+                listOfLines.Add("<div class='chart-count-bar bgcolor-incomplete'></div>");
                 listOfLines.Add("</td>");
 
                 listOfLines.Add("<td class='color-failed chart-count'>");
                 listOfLines.Add($"<span class='chart-count-number'>{numberOfFailed}</span><br />");
                 listOfLines.Add($"<span class='chart-count-percentage'>{percentageOfFailed}%</span><br />");
-                listOfLines.Add($"<span class='chart-count-status'>Failed</span><br />");
-                listOfLines.Add($"<div class='chart-count-bar bgcolor-failed'></div>");
+                listOfLines.Add("<span class='chart-count-status'>Failed</span><br />");
+                listOfLines.Add("<div class='chart-count-bar bgcolor-failed'></div>");
                 listOfLines.Add("</td>");
 
                 listOfLines.Add("<td class='color-skipped chart-count'>");
                 listOfLines.Add($"<span class='chart-count-number'>{numberOfSkipped}</span><br />");
                 listOfLines.Add($"<span class='chart-count-percentage'>{percentageOfSkipped}%</span><br />");
-                listOfLines.Add($"<span class='chart-count-status'>Skipped</span><br />");
-                listOfLines.Add($"<div class='chart-count-bar bgcolor-skipped'></div>");
+                listOfLines.Add("<span class='chart-count-status'>Skipped</span><br />");
+                listOfLines.Add("<div class='chart-count-bar bgcolor-skipped'></div>");
                 listOfLines.Add("</td>");
 
                 listOfLines.Add("<td class='color-total chart-count'>");
                 listOfLines.Add($"<span class='chart-count-number'>{numberOfTests}</span><br />");
-                listOfLines.Add($"<span class='chart-count-percentage'>100%</span><br />");
-                listOfLines.Add($"<span class='chart-count-status'>Total</span><br />");
-                listOfLines.Add($"<div class='chart-count-bar bgcolor-total'></div>");
+                listOfLines.Add("<span class='chart-count-percentage'>100%</span><br />");
+                listOfLines.Add("<span class='chart-count-status'>Total</span><br />");
+                listOfLines.Add("<div class='chart-count-bar bgcolor-total'></div>");
                 listOfLines.Add("</td>");
 
                 listOfLines.Add("</tr>");
@@ -222,46 +219,14 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Data Analytics Duration -->");
             listOfLines.Add("<div style='padding-top: 6px; text-align: center; justify-content: center; align-items: center; display: flex;'>");
-            listOfLines.Add($"<span class='bi bi-stopwatch duration-symbol'></span>");
-            listOfLines.Add($"<span class='duration-text'>");
-            listOfLines.Add($"<span class='duration-keyword'>Duration: </span>");
+            listOfLines.Add("<span class='bi bi-stopwatch duration-symbol'></span>");
+            listOfLines.Add("<span class='duration-text'>");
+            listOfLines.Add("<span class='duration-keyword'>Duration: </span>");
             listOfLines.Add($"<span data-testid='project-duration'>{project.GetDuration()}</span>");
             listOfLines.Add("</span>");
             listOfLines.Add("</div>");
 
             return listOfLines;
-        }
-
-        internal static int CalculatePercentage(int numberOfStatuses, int numberOfTests)
-        {
-            if (numberOfStatuses == 0)
-                return 0;
-
-            var percentage = (int)Math.Round(100.0f / numberOfTests * numberOfStatuses);
-
-            if (numberOfStatuses > 0 && percentage == 0)
-                percentage = 1;
-
-            return percentage;
-        }
-
-        internal static void AdjustPercentagesDiscrepancy(ref int percentageOfPassed, ref int percentageOfIncomplete, ref int percentageOfFailed, ref int percentageOfSkipped)
-        {
-            var totalPercentage = percentageOfPassed + percentageOfIncomplete + percentageOfFailed + percentageOfSkipped;
-
-            int discrepancy = 100 - totalPercentage;
-            if (totalPercentage != 0 && discrepancy != 0)
-            {
-                int[] percentages = { percentageOfPassed, percentageOfIncomplete, percentageOfFailed, percentageOfSkipped };
-
-                int maxIndex = Array.IndexOf(percentages, percentages.Max());
-                percentages[maxIndex] += discrepancy;
-
-                percentageOfPassed = percentages[0];
-                percentageOfIncomplete = percentages[1];
-                percentageOfFailed = percentages[2];
-                percentageOfSkipped = percentages[3];
-            }
         }
 
         internal List<string> GenerateDataAnalyticsTrends(string type)
@@ -273,11 +238,11 @@ namespace Expressium.LivingDoc.Generators
 
             int numberOfTotals = 0;
 
-            if (type == "Features")
+            if (type == AnalyticsType.Features.ToString())
                 numberOfTotals = project.GetMaximumNumberOfHistoryFeatures();
-            else if (type == "Scenarios")
+            else if (type == AnalyticsType.Scenarios.ToString())
                 numberOfTotals = project.GetMaximumNumberOfHistoryScenarios();
-            else if (type == "Steps")
+            else if (type == AnalyticsType.Steps.ToString())
                 numberOfTotals = project.GetMaximumNumberOfHistorySteps();
 
             var sortedHistories = project.Histories.OrderBy(x => x.Date);
@@ -285,8 +250,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<hr>");
 
             listOfLines.Add("<!-- Data Analytics Trend Chart -->");
-            listOfLines.Add($"<div class='section analytics-trends'>");
-            listOfLines.Add($"<span class='chart-name'>Trends</span>");
+            listOfLines.Add("<div class='section analytics-trends'>");
+            listOfLines.Add("<span class='chart-name'>Trends</span>");
             listOfLines.Add("<div class='section'>");
 
             listOfLines.Add("<table class='analytics-list'>");
@@ -299,7 +264,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody>");
-            listOfLines.Add($"<tr><td></td></tr>");
+            listOfLines.Add("<tr><td></td></tr>");
 
             int rowIndex = 1;
             foreach (var history in sortedHistories)
@@ -309,21 +274,21 @@ namespace Expressium.LivingDoc.Generators
                 var percentageOfFailed = 0;
                 var percentageOfSkipped = 0;
 
-                if (type == "Features")
+                if (type == AnalyticsType.Features.ToString())
                 {
                     percentageOfPassed = CalculatePercentage(history.Features.GetNumberOfPassed(), numberOfTotals);
                     percentageOfIncomplete = CalculatePercentage(history.Features.GetNumberOfIncomplete(), numberOfTotals);
                     percentageOfFailed = CalculatePercentage(history.Features.GetNumberOfFailed(), numberOfTotals);
                     percentageOfSkipped = CalculatePercentage(history.Features.GetNumberOfSkipped(), numberOfTotals);
                 }
-                else if (type == "Scenarios")
+                else if (type == AnalyticsType.Scenarios.ToString())
                 {
                     percentageOfPassed = CalculatePercentage(history.Scenarios.GetNumberOfPassed(), numberOfTotals);
                     percentageOfIncomplete = CalculatePercentage(history.Scenarios.GetNumberOfIncomplete(), numberOfTotals);
                     percentageOfFailed = CalculatePercentage(history.Scenarios.GetNumberOfFailed(), numberOfTotals);
                     percentageOfSkipped = CalculatePercentage(history.Scenarios.GetNumberOfSkipped(), numberOfTotals);
                 }
-                else if (type == "Steps")
+                else if (type == AnalyticsType.Steps.ToString())
                 {
                     percentageOfPassed = CalculatePercentage(history.Steps.GetNumberOfPassed(), numberOfTotals);
                     percentageOfIncomplete = CalculatePercentage(history.Steps.GetNumberOfIncomplete(), numberOfTotals);
@@ -367,11 +332,11 @@ namespace Expressium.LivingDoc.Generators
                 return listOfLines;
 
             var historyFailureNames = new List<string>();
-            if (type == "Features")
+            if (type == AnalyticsType.Features.ToString())
                 historyFailureNames = project.GetHistoryFeatureFailures();
-            else if (type == "Scenarios")
+            else if (type == AnalyticsType.Scenarios.ToString())
                 historyFailureNames = project.GetHistoryScenarioFailures();
-            else if (type == "Steps")
+            else if (type == AnalyticsType.Steps.ToString())
                 historyFailureNames = project.GetHistoryStepFailures();
 
             if (historyFailureNames.Count == 0)
@@ -380,8 +345,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<hr>");
 
             listOfLines.Add("<!-- Data Analytics Failures Chart -->");
-            listOfLines.Add($"<div class='section analytics-failures'>");
-            listOfLines.Add($"<span class='chart-name'>Failures</span>");
+            listOfLines.Add("<div class='section analytics-failures'>");
+            listOfLines.Add("<span class='chart-name'>Failures</span>");
             listOfLines.Add("<div class='section'>");
 
             listOfLines.Add("<table class='analytics-list'>");
@@ -400,7 +365,7 @@ namespace Expressium.LivingDoc.Generators
 
             foreach (var failureName in historyFailureNames)
             {
-                listOfLines.Add($"<tr>");
+                listOfLines.Add("<tr>");
                 listOfLines.Add($"<td>{failureName}</td>");
 
                 foreach (var history in orderedHistories)
@@ -410,21 +375,21 @@ namespace Expressium.LivingDoc.Generators
                     var listOfFailed = new List<string>();
                     var listOfSkipped = new List<string>();
 
-                    if (type == "Features")
+                    if (type == AnalyticsType.Features.ToString())
                     {
                         listOfPassed = history.Features.Passed;
                         listOfIncomplete = history.Features.Incomplete;
                         listOfFailed = history.Features.Failed;
                         listOfSkipped = history.Features.Skipped;
                     }
-                    else if (type == "Scenarios")
+                    else if (type == AnalyticsType.Scenarios.ToString())
                     {
                         listOfPassed = history.Scenarios.Passed;
                         listOfIncomplete = history.Scenarios.Incomplete;
                         listOfFailed = history.Scenarios.Failed;
                         listOfSkipped = history.Scenarios.Skipped;
                     }
-                    else if (type == "Steps")
+                    else if (type == AnalyticsType.Steps.ToString())
                     {
                         listOfPassed = history.Steps.Passed;
                         listOfIncomplete = history.Steps.Incomplete;
@@ -455,6 +420,38 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</div>");
 
             return listOfLines;
+        }
+
+        internal static int CalculatePercentage(int numberOfStatuses, int numberOfTests)
+        {
+            if (numberOfStatuses == 0)
+                return 0;
+
+            var percentage = (int)Math.Round(100.0f / numberOfTests * numberOfStatuses);
+
+            if (numberOfStatuses > 0 && percentage == 0)
+                percentage = 1;
+
+            return percentage;
+        }
+
+        internal static void AdjustPercentagesDiscrepancy(ref int percentageOfPassed, ref int percentageOfIncomplete, ref int percentageOfFailed, ref int percentageOfSkipped)
+        {
+            var totalPercentage = percentageOfPassed + percentageOfIncomplete + percentageOfFailed + percentageOfSkipped;
+
+            int discrepancy = 100 - totalPercentage;
+            if (totalPercentage != 0 && discrepancy != 0)
+            {
+                int[] percentages = { percentageOfPassed, percentageOfIncomplete, percentageOfFailed, percentageOfSkipped };
+
+                int maxIndex = Array.IndexOf(percentages, percentages.Max());
+                percentages[maxIndex] += discrepancy;
+
+                percentageOfPassed = percentages[0];
+                percentageOfIncomplete = percentages[1];
+                percentageOfFailed = percentages[2];
+                percentageOfSkipped = percentages[3];
+            }
         }
     }
 }

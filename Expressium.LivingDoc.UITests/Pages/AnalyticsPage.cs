@@ -19,6 +19,11 @@ namespace Expressium.LivingDoc.UITests.Pages
 
         private readonly By ProjectDuration = By.XPath("//*[@id='splitter-right']//*[@data-testid='project-duration']");
 
+        private readonly By ChartPassedCountPercentage = By.XPath("//*[@id='splitter-right']//*[@class='color-passed chart-count']//*[@class='chart-count-percentage']");
+        private readonly By ChartIncompleteCountPercentage = By.XPath("//*[@id='splitter-right']//*[@class='color-incomplete chart-count']//*[@class='chart-count-percentage']");
+        private readonly By ChartFailedCountPercentage = By.XPath("//*[@id='splitter-right']//*[@class='color-failed chart-count']//*[@class='chart-count-percentage']");
+        private readonly By ChartSkippedCountPercentage = By.XPath("//*[@id='splitter-right']//*[@class='color-skipped chart-count']//*[@class='chart-count-percentage']");
+
         public AnalyticsPage(ILog logger, IWebDriver driver) : base(logger, driver)
         {
             WaitForPageElementIsVisible(PageTitle);
@@ -70,6 +75,30 @@ namespace Expressium.LivingDoc.UITests.Pages
         {
             logger.Info("GetProjectDuration()");
             return ProjectDuration.GetText(driver);
+        }
+
+        public string GetPassedCountPercentage()
+        {
+            logger.Info("GetPassedCountPercentage()");
+            return ChartPassedCountPercentage.GetText(driver);
+        }
+
+        public string GetIncompleteCountPercentage()
+        {
+            logger.Info("GetIncompleteCountPercentage()");
+            return ChartIncompleteCountPercentage.GetText(driver);
+        }
+
+        public string GetFailedCountPercentage()
+        {
+            logger.Info("GetFailedCountPercentage()");
+            return ChartFailedCountPercentage.GetText(driver);
+        }
+
+        public string GetSkippedCountPercentage()
+        {
+            logger.Info("GetSkippedCountPercentage()");
+            return ChartSkippedCountPercentage.GetText(driver);
         }
 
         #region Extensions

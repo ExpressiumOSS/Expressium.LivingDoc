@@ -2,6 +2,7 @@
 using Expressium.LivingDoc.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Expressium.LivingDoc.UnitTests.Generators
 {
@@ -52,6 +53,27 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[17], Does.Contain("Passed"));
         }
 
+        [Test]
+        public void LivingDocDataListViewsGenerator_GenerateDataStepsListView_Multiple_Step_Usages()
+        {
+            var generator = new LivingDocDataListViewsGenerator(CreateLivingDocProjectWithSharedSteps());
+            var listOfLines = generator.GenerateDataStepsListView();
+
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Steps View -->"));
+
+            // The shared step appears in 3 scenarios but must only be emitted once
+            var sharedStepLines = listOfLines.Where(l => l.Contains("Given I have logged in with valid user credentials")).ToList();
+            Assert.That(sharedStepLines.Count, Is.EqualTo(1));
+
+            // Its usage count must reflect all 3 occurrences
+            Assert.That(listOfLines, Has.Some.Contains("0003"));
+
+            // The unique step appears once and has a count of 1
+            var uniqueStepLines = listOfLines.Where(l => l.Contains("When I navigate to the dashboard")).ToList();
+            Assert.That(uniqueStepLines.Count, Is.EqualTo(1));
+            Assert.That(listOfLines, Has.Some.Contains("0001"));
+        }
+
         private LivingDocProject CreateLivingDocProject()
         {
             var livingDocProject = new LivingDocProject();
@@ -69,10 +91,10 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                         {
                             new LivingDocExample
                             {
-                                Duration = new TimeSpan(0,3,45),
+                                Duration = new TimeSpan(0, 3, 45),
                                 Steps = new List<LivingDocStep>
                                 {
-                                    new LivingDocStep { Keyword = "Given", Name = "I have logged in with valid user credentials", Status= "Passed" },
+                                    new LivingDocStep { Keyword = "Given", Name = "I have logged in with valid user credentials", Status = "Passed" },
                                 }
                             }
                         }
@@ -80,6 +102,66 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 }
             };
 
+            livingDocProject.Features.Add(feature);
+
+            return livingDocProject;
+        }
+
+        private LivingDocProject CreateLivingDocProjectWithSharedSteps()
+        {
+            var feature = new LivingDocFeature
+            {
+                Tags = new List<string> { "@Login" },
+                Name = "Login",
+                Scenarios = new List<LivingDocScenario>
+                {
+                    new LivingDocScenario
+                    {
+                        Name = "Scenario One",
+                        Examples = new List<LivingDocExample>
+                        {
+                            new LivingDocExample
+                            {
+                                Steps = new List<LivingDocStep>
+                                {
+                                    new LivingDocStep { Keyword = "Given", Name = "I have logged in with valid user credentials", Status = "Passed" },
+                                    new LivingDocStep { Keyword = "When",  Name = "I navigate to the dashboard", Status = "Passed" },
+                                }
+                            }
+                        }
+                    },
+                    new LivingDocScenario
+                    {
+                        Name = "Scenario Two",
+                        Examples = new List<LivingDocExample>
+                        {
+                            new LivingDocExample
+                            {
+                                Steps = new List<LivingDocStep>
+                                {
+                                    new LivingDocStep { Keyword = "Given", Name = "I have logged in with valid user credentials", Status = "Passed" },
+                                }
+                            }
+                        }
+                    },
+                    new LivingDocScenario
+                    {
+                        Name = "Scenario Three",
+                        Examples = new List<LivingDocExample>
+                        {
+                            new LivingDocExample
+                            {
+                                Steps = new List<LivingDocStep>
+                                {
+                                    new LivingDocStep { Keyword = "Given", Name = "I have logged in with valid user credentials", Status = "Passed" },
+                                }
+                            }
+                        }
+                    },
+                }
+            };
+
+            var livingDocProject = new LivingDocProject();
             livingDocProject.Features.Add(feature);
 
             return livingDocProject;

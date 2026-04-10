@@ -79,6 +79,63 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
+        public void LivingDocProjectGenerator_GenerateHeads()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateHeads();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines.Count, Is.GreaterThan(0));
+            Assert.That(listOfLines, Has.Some.Contains("<meta charset"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_GenerateStyles()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateStyles();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines.Count, Is.GreaterThan(0));
+            Assert.That(listOfLines, Does.Contain("<style>"));
+            Assert.That(listOfLines, Does.Contain("</style>"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_GenerateScripts()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateScripts();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines.Count, Is.GreaterThan(0));
+            Assert.That(listOfLines, Has.Some.Contain("<script>"));
+            Assert.That(listOfLines, Has.Some.Contain("</script>"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_GenerateHead()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocProjectGenerator(project);
+            var listOfLines = generator.GenerateHead();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines.Count, Is.GreaterThan(0));
+            Assert.That(listOfLines[0], Is.EqualTo("<head>"));
+            Assert.That(listOfLines[listOfLines.Count - 1], Is.EqualTo("</head>"));
+            Assert.That(listOfLines, Has.Some.Contain("<style>"));
+            Assert.That(listOfLines, Has.Some.Contain("<script>"));
+        }
+
+        [Test]
         public void LivingDocProjectGenerator_GenerateContent()
         {
             var project = new LivingDocProject
@@ -131,6 +188,70 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
+        public void LivingDocProjectGenerator_Generate_Sorts_Features_Alphabetically()
+        {
+            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "generate_sort.html");
+            File.Delete(outputFilePath);
+
+            var project = new LivingDocProject
+            {
+                Features = new List<LivingDocFeature>
+                {
+                    new LivingDocFeature { Name = "Zebra Feature" },
+                    new LivingDocFeature { Name = "Alpha Feature" },
+                    new LivingDocFeature { Name = "Mango Feature" },
+                }
+            };
+
+            var generator = new LivingDocProjectGenerator(project);
+            generator.Generate(outputFilePath);
+
+            Assert.That(project.Features[0].Name, Is.EqualTo("Alpha Feature"));
+            Assert.That(project.Features[1].Name, Is.EqualTo("Mango Feature"));
+            Assert.That(project.Features[2].Name, Is.EqualTo("Zebra Feature"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_Generate_Produces_Valid_Html_File()
+        {
+            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "generate_output.html");
+            File.Delete(outputFilePath);
+
+            var project = new LivingDocProject
+            {
+                Title = "My Test Project",
+                Features = new List<LivingDocFeature>
+                {
+                    new LivingDocFeature
+                    {
+                        Name = "Login Feature",
+                        Scenarios = new List<LivingDocScenario>
+                        {
+                            new LivingDocScenario { Name = "Successful Login" }
+                        }
+                    }
+                }
+            };
+
+            var generator = new LivingDocProjectGenerator(project);
+            generator.Generate(outputFilePath);
+
+            Assert.That(File.Exists(outputFilePath), Is.True);
+
+            var content = File.ReadAllText(outputFilePath);
+            Assert.That(content, Does.Contain("<html"));
+            Assert.That(content, Does.Contain("<head>"));
+            Assert.That(content, Does.Contain("<body"));
+            Assert.That(content, Does.Contain("My Test Project"));
+            Assert.That(content, Does.Contain("Login Feature"));
+
+            var parser = new HtmlParser();
+            var document = parser.ParseDocument(content);
+            Assert.That(document.Head, Is.Not.Null);
+            Assert.That(document.Body, Is.Not.Null);
+        }
+
+        [Test]
         public void LivingDocProjectGenerator_SaveHtmlFile()
         {
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "savehtmlfile.html");
@@ -158,6 +279,21 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(document.Body != null);
             Assert.That(document.Body.InnerHtml.Trim(), Does.Contain("Hello, world!"));
+        }
+
+        [Test]
+        public void LivingDocProjectGenerator_SaveHtmlFile_Empty_Input()
+        {
+            var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "savehtmlfile_empty.html");
+            File.Delete(outputFilePath);
+
+            LivingDocProjectGenerator.SaveHtmlFile(outputFilePath, new List<string>());
+
+            Assert.That(File.Exists(outputFilePath), Is.True);
+
+            var parser = new HtmlParser();
+            var document = parser.ParseDocument(File.ReadAllText(outputFilePath));
+            Assert.That(document, Is.Not.Null);
         }
 
         [Test]

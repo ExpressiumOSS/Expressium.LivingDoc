@@ -54,7 +54,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- Left Splitter Section -->");
             listOfLines.Add("<div id='splitter-left' class='bg-white p-3'>");
             //listOfLines.Add("<div class='card'>");
-            listOfLines.AddRange(GenerateViewPreFilters());
+            listOfLines.AddRange(GeneratePreFilters());
             listOfLines.AddRange(GenerateFilter());
             listOfLines.Add("<div id='filter-list'></div>");
             //listOfLines.Add("</div>");
@@ -78,7 +78,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateViewPreFilters()
+        internal List<string> GeneratePreFilters()
         {
             var listOfLines = new List<string>();
 
@@ -120,6 +120,13 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateToolbar()
+        {
+            var listOfLines = new List<string>();
 
             //listOfLines.Add("<!-- Toolbar Section -->");
             //listOfLines.Add($"<div class='grid-toolbar'>");

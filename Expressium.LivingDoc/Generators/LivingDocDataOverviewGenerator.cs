@@ -6,7 +6,7 @@ namespace Expressium.LivingDoc.Generators
 {
     internal class LivingDocDataOverviewGenerator
     {
-        private int numberOfColumns = 10;
+        private const int NumberOfColumns = 10;
 
         private LivingDocProject project;
 
@@ -61,7 +61,7 @@ namespace Expressium.LivingDoc.Generators
             {
                 var folderDepth = GetFolderDepth(folder);
                 var subFolderDepth = GetFolderDepth(subFolder);
-                if (subFolder != null && subFolder.StartsWith(folder + "\\") && folderDepth + 1 == subFolderDepth)
+                if (folder != null && subFolder != null && subFolder.StartsWith(folder + "\\") && folderDepth + 1 == subFolderDepth)
                 {
                     listOfLines.AddRange(GenerateOverview(listOfFolders, listOfExcludeFolders, subFolder, indent + 1));
                     listOfExcludeFolders.Add(subFolder);
@@ -93,14 +93,14 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add($"<tr>");
             listOfLines.Add($"<td class='grid-folder'>📂</td>");
-            listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - 1}'>");
+            listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - 1}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
-            listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='grid-border' colspan='2' align='right'>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("<td class='grid-border' colspan='2' align='right'>");
             listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
             listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
-            listOfLines.Add($"</td>");
-            listOfLines.Add($"</tr>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("</tr>");
 
             return listOfLines;
         }
@@ -112,15 +112,15 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<tr data-name='{folder}' data-role='folder'>");
 
             for (var i = 0; i < indent; i++)
-                listOfLines.Add($"<td></td>");
+                listOfLines.Add("<td></td>");
 
-            listOfLines.Add($"<td class='grid-folder'>📂</td>");
-            listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - indent}'>");
+            listOfLines.Add("<td class='grid-folder'>📂</td>");
+            listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
-            listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='grid-border' style='padding-right: 8px;' align='right' ></td>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("<td class='grid-border' style='padding-right: 8px;' align='right' ></td>");
 
-            listOfLines.Add($"</tr>");
+            listOfLines.Add("</tr>");
 
             return listOfLines;
         }
@@ -132,10 +132,10 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<tr data-parent='{feature.GetFolder()}' data-name='{feature.Id}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
 
             for (var i = 0; i < indent; i++)
-                listOfLines.Add($"<td></td>");
+                listOfLines.Add("<td></td>");
 
-            listOfLines.Add($"<td data-collapse='false' class='grid-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
-            listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - indent}'>");
+            listOfLines.Add("<td data-collapse='false' class='grid-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
+            listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<a class='grid-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
@@ -161,16 +161,16 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<tr data-parent='{feature.Id}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
             for (var i = 0; i < indent; i++)
-                listOfLines.Add($"<td></td>");
+                listOfLines.Add("<td></td>");
 
-            listOfLines.Add($"<td class='grid-indent'></td>");
-            listOfLines.Add($"<td class='grid-border' colspan='{numberOfColumns - indent}'>");
+            listOfLines.Add("<td class='grid-indent'></td>");
+            listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
             listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
             listOfLines.Add($"<a class='grid-heading' href='#'>{scenario.Name}</a>");
-            listOfLines.Add($"</td>");
-            listOfLines.Add($"<td class='grid-border' align='right'></td>");
+            listOfLines.Add("</td>");
+            listOfLines.Add("<td class='grid-border' align='right'></td>");
 
-            listOfLines.Add($"</tr>");
+            listOfLines.Add("</tr>");
 
             return listOfLines;
         }
@@ -182,16 +182,10 @@ namespace Expressium.LivingDoc.Generators
 
         internal static int GetFolderDepth(string folder)
         {
-            var depth = 0;
-
             if (string.IsNullOrWhiteSpace(folder))
                 return 0;
 
-            var tokens = folder.Split('\\');
-            if (tokens.Length > depth)
-                depth = tokens.Length;
-
-            return depth;
+            return folder.Split('\\').Length;
         }
     }
 }

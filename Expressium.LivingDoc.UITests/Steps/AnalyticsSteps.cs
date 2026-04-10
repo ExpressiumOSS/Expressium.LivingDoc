@@ -49,6 +49,11 @@ namespace Expressium.LivingDoc.UITests.Steps
         {
             var analyticsPage = new AnalyticsPage(logger, driver);
             Asserts.EqualTo(analyticsPage.GetFeaturesChartPassed(), "25%", "The Analytics page passed is valid");
+
+            Asserts.EqualTo(analyticsPage.GetPassedCountPercentage(), "25%", "The Analytics page passed count percentage is valid");
+            Asserts.EqualTo(analyticsPage.GetIncompleteCountPercentage(), "25%", "The Analytics page incomplete count percentage is valid");
+            Asserts.EqualTo(analyticsPage.GetFailedCountPercentage(), "50%", "The Analytics page failed count percentage is valid");
+            Asserts.EqualTo(analyticsPage.GetSkippedCountPercentage(), "0%", "The Analytics page skipped count percentage is valid");
         }
 
         [Then("I should have the passed scenarios displayed in Analytics")]
@@ -56,6 +61,11 @@ namespace Expressium.LivingDoc.UITests.Steps
         {
             var analyticsPage = new AnalyticsPage(logger, driver);
             Asserts.EqualTo(analyticsPage.GetScenariosChartPassed(), "55%", "The Analytics page passed is valid");
+
+            Asserts.EqualTo(analyticsPage.GetPassedCountPercentage(), "55%", "The Analytics page passed count percentage is valid");
+            Asserts.EqualTo(analyticsPage.GetIncompleteCountPercentage(), "18%", "The Analytics page incomplete count percentage is valid");
+            Asserts.EqualTo(analyticsPage.GetFailedCountPercentage(), "18%", "The Analytics page failed count percentage is valid");
+            Asserts.EqualTo(analyticsPage.GetSkippedCountPercentage(), "9%", "The Analytics page skipped count percentage is valid");
         }
 
         [Then("I should have the passed steps displayed in Analytics")]
@@ -63,6 +73,11 @@ namespace Expressium.LivingDoc.UITests.Steps
         {
             var analyticsPage = new AnalyticsPage(logger, driver);
             Asserts.EqualTo(analyticsPage.GetStepsChartPassed(), "69%", "The Analytics page passed is valid");
+
+            Asserts.EqualTo(analyticsPage.GetPassedCountPercentage(), "69%", "The Analytics page passed count percentage is valid");
+            Asserts.EqualTo(analyticsPage.GetIncompleteCountPercentage(), "7%", "The Analytics page incomplete count percentage is valid");
+            Asserts.EqualTo(analyticsPage.GetFailedCountPercentage(), "7%", "The Analytics page failed count percentage is valid");
+            Asserts.EqualTo(analyticsPage.GetSkippedCountPercentage(), "17%", "The Analytics page skipped count percentage is valid");
         }
 
         [Then("I should have the duration displayed in Analytics")]

@@ -50,11 +50,11 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add($"<head>");
+            listOfLines.Add("<head>");
             listOfLines.AddRange(GenerateHeads());
             listOfLines.AddRange(GenerateStyles());
             listOfLines.AddRange(GenerateScripts());
-            listOfLines.Add($"</head>");
+            listOfLines.Add("</head>");
 
             return listOfLines;
         }
@@ -164,7 +164,7 @@ namespace Expressium.LivingDoc.Generators
             }
             catch (IOException ex)
             {
-                throw new IOException($"IO error: {ex.Message}");
+                throw new IOException($"IO error: {ex.Message}", ex);
             }
             catch (Exception ex)
             {
