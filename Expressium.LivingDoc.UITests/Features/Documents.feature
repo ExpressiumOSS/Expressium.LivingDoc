@@ -1,4 +1,4 @@
-﻿Feature: Documents
+Feature: Documents
 	As a LivingDoc User
 	I want to view the documents
 	So that I validate test run test results
@@ -109,3 +109,45 @@ Scenario: Loading a step from the Steps List in Document View
 		| Name                                            |
 		| I complete and submit the Registration formular |
 		| I should be redirected to the Login page        |
+
+Rule: Toggling Attachments in Document View
+
+Scenario: Toggling Attachments Visible in Document View
+	Given I have navigated to the Overview List
+	When I filter by following keywords in the Filter Bar
+		| Keywords      |
+		| TA-1001 Login |
+	And I load the scenario document in the Overview List
+	And I toggle the attachments in the Document View
+	Then I should have attachments visible in the Document View
+
+Scenario: Toggling Attachments Hidden in Document View
+	Given I have navigated to the Overview List
+	When I filter by following keywords in the Filter Bar
+		| Keywords      |
+		| TA-1001 Login |
+	And I load the scenario document in the Overview List
+	And I toggle the attachments in the Document View
+	And I toggle the attachments in the Document View
+	Then I should have attachments hidden in the Document View
+
+Rule: Toggling Stacktraces in Document View
+
+Scenario: Toggling Stacktraces Visible in Document View
+	Given I have navigated to the Overview List
+	When I filter by following keywords in the Filter Bar
+		| Keywords      |
+		| TA-1001 Login |
+	And I load the scenario document in the Overview List
+	And I toggle the stacktraces in the Document View
+	Then I should have stacktraces visible in the Document View
+
+Scenario: Toggling Stacktraces Hidden in Document View
+	Given I have navigated to the Overview List
+	When I filter by following keywords in the Filter Bar
+		| Keywords      |
+		| TA-1001 Login |
+	And I load the scenario document in the Overview List
+	And I toggle the stacktraces in the Document View
+	And I toggle the stacktraces in the Document View
+	Then I should have stacktraces hidden in the Document View

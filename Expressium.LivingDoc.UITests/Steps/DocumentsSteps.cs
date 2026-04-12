@@ -92,6 +92,48 @@ namespace Expressium.LivingDoc.UITests.Steps
             }
         }
 
+        [When("I toggle the attachments in the Document View")]
+        public void WhenIToggleTheAttachmentsInTheDocumentView()
+        {
+            var documentPage = new DocumentPage(logger, driver);
+            documentPage.ToggleAttachments();
+        }
+
+        [Then("I should have attachments visible in the Document View")]
+        public void ThenIShouldHaveAttachmentsVisibleInTheDocumentView()
+        {
+            var documentPage = new DocumentPage(logger, driver);
+            Asserts.IsTrue(documentPage.IsAttachmentsVisible(), "Validating the DocumentPage Attachments are visible...");
+        }
+
+        [Then("I should have attachments hidden in the Document View")]
+        public void ThenIShouldHaveAttachmentsHiddenInTheDocumentView()
+        {
+            var documentPage = new DocumentPage(logger, driver);
+            Asserts.IsFalse(documentPage.IsAttachmentsVisible(), "Validating the DocumentPage Attachments are hidden...");
+        }
+
+        [When("I toggle the stacktraces in the Document View")]
+        public void WhenIToggleTheStacktracesInTheDocumentView()
+        {
+            var documentPage = new DocumentPage(logger, driver);
+            documentPage.ToggleStacktraces();
+        }
+
+        [Then("I should have stacktraces visible in the Document View")]
+        public void ThenIShouldHaveStacktracesVisibleInTheDocumentView()
+        {
+            var documentPage = new DocumentPage(logger, driver);
+            Asserts.IsTrue(documentPage.IsStacktracesVisible(), "Validating the DocumentPage Stacktraces are visible...");
+        }
+
+        [Then("I should have stacktraces hidden in the Document View")]
+        public void ThenIShouldHaveStacktracesHiddenInTheDocumentView()
+        {
+            var documentPage = new DocumentPage(logger, driver);
+            Asserts.IsFalse(documentPage.IsStacktracesVisible(), "Validating the DocumentPage Stacktraces are hidden...");
+        }
+
         private class Objects
         {
             public int Numbers { get; set; }

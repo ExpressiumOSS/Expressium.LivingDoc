@@ -1,4 +1,4 @@
-﻿using Expressium.LivingDoc.UITests.Controls;
+using Expressium.LivingDoc.UITests.Controls;
 using log4net;
 using OpenQA.Selenium;
 using System.Collections.Generic;
@@ -15,6 +15,10 @@ namespace Expressium.LivingDoc.UITests.Pages
         private readonly By ScenarioTags = By.XPath("//*[@id='splitter-right']//div[@class='scenario-tag-group']");
         private readonly By ScenarioNames = By.XPath("//*[@id='splitter-right']//span[@class='scenario-name']");
         private readonly By StepNames = By.XPath("//*[@id='splitter-right']//span[@class='step-name']");
+        private readonly By AttachmentsToggle = By.XPath("//*[@id='splitter-right']//button[contains(@onclick,'toggleAttachments')]");
+        private readonly By AttachmentsPanel = By.XPath("//*[@id='splitter-right']//div[contains(@class,'attachments')]");
+        private readonly By StacktracesToggle = By.XPath("//*[@id='splitter-right']//button[contains(@onclick,'toggleStacktraces')]");
+        private readonly By StacktracesPanel = By.XPath("//*[@id='splitter-right']//li[contains(@class,'stacktraces')]");
 
         public DocumentPage(ILog logger, IWebDriver driver) : base(logger, driver)
         {
@@ -66,6 +70,30 @@ namespace Expressium.LivingDoc.UITests.Pages
         {
             logger.Info("GetStepNames()");
             return StepNames.GetTexts(driver);
+        }
+
+        public void ToggleAttachments()
+        {
+            logger.Info("ToggleAttachments()");
+            AttachmentsToggle.Click(driver);
+        }
+
+        public bool IsAttachmentsVisible()
+        {
+            logger.Info("IsAttachmentsVisible()");
+            return AttachmentsPanel.IsVisible(driver);
+        }
+
+        public void ToggleStacktraces()
+        {
+            logger.Info("ToggleStacktraces()");
+            StacktracesToggle.Click(driver);
+        }
+
+        public bool IsStacktracesVisible()
+        {
+            logger.Info("IsStacktracesVisible()");
+            return StacktracesPanel.IsVisible(driver);
         }
     }
 }
