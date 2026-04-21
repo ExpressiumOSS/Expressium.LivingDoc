@@ -113,6 +113,10 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Count, Is.EqualTo(56));
             Assert.That(listOfLines[1], Is.EqualTo("<span class='chart-name' data-testid='title-chart-title'>Title</span>"));
             Assert.That(listOfLines[3], Is.EqualTo("<!-- Data Analytics Status Chart -->"));
+            Assert.That(listOfLines[7].Trim(), Is.EqualTo("<circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='35.5 64.5' stroke-dashoffset='0'></circle>"));
+            Assert.That(listOfLines[8].Trim(), Is.EqualTo("<circle class='donut-segment-incomplete' cx='21' cy='21' r='15.9155' stroke-dasharray='28.5 71.5' stroke-dashoffset='-36'></circle>"));
+            Assert.That(listOfLines[9].Trim(), Is.EqualTo("<circle class='donut-segment-failed' cx='21' cy='21' r='15.9155' stroke-dasharray='20.5 79.5' stroke-dashoffset='-65'></circle>"));
+            Assert.That(listOfLines[10].Trim(), Is.EqualTo("<circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155' stroke-dasharray='13.5 86.5' stroke-dashoffset='-86'></circle>"));
             Assert.That(listOfLines[13].Trim(), Is.EqualTo("<text x='50%' y='50%' class='chart-number' data-testid='title-chart-passed'>36%</text>"));
         }
 
@@ -124,8 +128,22 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
             var listOfLines = generator.GenerateDataAnalyticsStatusChart("Title", 0, 0, 0, 0, 0);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(56));
-            Assert.That(listOfLines[13].Trim(), Is.EqualTo("<text x='50%' y='50%' class='chart-number' data-testid='title-chart-passed'>0%</text>"));
+            Assert.That(listOfLines.Count, Is.EqualTo(52));
+            Assert.That(listOfLines[9].Trim(), Is.EqualTo("<text x='50%' y='50%' class='chart-number' data-testid='title-chart-passed'>0%</text>"));
+        }
+
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStatusChart_Passed()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var listOfLines = generator.GenerateDataAnalyticsStatusChart("Title", 10, 0, 0, 0, 10);
+
+            Assert.That(listOfLines.Count, Is.EqualTo(53));
+            Assert.That(listOfLines[1], Is.EqualTo("<span class='chart-name' data-testid='title-chart-title'>Title</span>"));
+            Assert.That(listOfLines[3], Is.EqualTo("<!-- Data Analytics Status Chart -->"));
+            Assert.That(listOfLines[7].Trim(), Is.EqualTo("<circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='99 0' stroke-dashoffset='0'></circle>"));
         }
 
         [Test]

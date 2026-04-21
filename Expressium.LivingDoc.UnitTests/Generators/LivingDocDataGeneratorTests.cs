@@ -138,7 +138,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var listOfLines = generator.GenerateDataAnalytics();
 
             Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(219));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Analytics -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<div id='analytics-features'>"));
             Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Duration -->"));

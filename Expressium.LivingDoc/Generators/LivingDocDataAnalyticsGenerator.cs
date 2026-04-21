@@ -147,10 +147,23 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add("<div class='section' style='text-align: center; margin: auto;'>");
                 listOfLines.Add("    <svg class='chart-status' viewBox='0 0 42 42'>");
                 listOfLines.Add("        <g transform='rotate(-90, 21, 21)'>");
-                listOfLines.Add("            <circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155'></circle>");
-                listOfLines.Add($"            <circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfPassed} {100 - percentageOfPassed}' stroke-dashoffset='0'></circle>");
-                listOfLines.Add($"            <circle class='donut-segment-incomplete' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfIncomplete} {100 - percentageOfIncomplete}' stroke-dashoffset='-{percentageOfPassed}'></circle>");
-                listOfLines.Add($"            <circle class='donut-segment-failed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfFailed} {100 - percentageOfFailed}' stroke-dashoffset='-{percentageOfPassed + percentageOfIncomplete}'></circle>");
+
+                var borderOffset = ".5";
+                if (new[] { numberOfPassed, numberOfSkipped, numberOfIncomplete, numberOfFailed }.Any(x => x == numberOfTests))
+                    borderOffset = "";
+
+                if (numberOfPassed > 0)
+                    listOfLines.Add($"            <circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfPassed - 1}{borderOffset} {100 - percentageOfPassed}{borderOffset}' stroke-dashoffset='0'></circle>");
+
+                if (numberOfIncomplete > 0)
+                    listOfLines.Add($"            <circle class='donut-segment-incomplete' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfIncomplete - 1}{borderOffset} {100 - percentageOfIncomplete}{borderOffset}' stroke-dashoffset='-{percentageOfPassed}'></circle>");
+
+                if (numberOfFailed > 0)
+                    listOfLines.Add($"            <circle class='donut-segment-failed' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfFailed - 1}{borderOffset} {100 - percentageOfFailed}{borderOffset}' stroke-dashoffset='-{percentageOfPassed + percentageOfIncomplete}'></circle>");
+
+                if (numberOfSkipped > 0)
+                    listOfLines.Add($"            <circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155' stroke-dasharray='{percentageOfSkipped - 1}{borderOffset} {100 - percentageOfSkipped}{borderOffset}' stroke-dashoffset='-{percentageOfPassed + percentageOfIncomplete + percentageOfFailed}'></circle>");
+
                 listOfLines.Add("        </g>");
                 listOfLines.Add("        <g class='chart-text'>");
                 listOfLines.Add($"            <text x='50%' y='50%' class='chart-number' data-testid='{title.ToLower()}-chart-passed'>{percentageOfPassed}%</text>");
