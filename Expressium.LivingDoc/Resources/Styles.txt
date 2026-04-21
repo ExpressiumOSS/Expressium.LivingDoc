@@ -2,9 +2,8 @@
     :root {
         
         /* Bootstrap Grayscale */
-        --bs-gray-075: #fafbfc;
+        --bs-gray-075: #fcfcfd;
         --bs-gray-100: #f8f9fa;
-        --bs-gray-125: #f2f4f6;
         --bs-gray-150: #f1f3f5;
         --bs-gray-200: #e9ecef;
         --bs-gray-300: #dee2e6;
@@ -25,25 +24,29 @@
         --footer-bg-color: var(--bs-gray-100);
 
         /* Navigation */
-        --navigation-bg-color: var(--bs-gray-125);
+        --navigation-bg-color: var(--bs-gray-150);
         --navigation-underline-color: var(--bs-gray-500);
 
         /* Tables */
         --table-header-text-color: var(--bs-gray-900);
         --table-header-bg-color: var(--bs-gray-150);
-        --table-header-border-color: white;
+        --table-header-border-color: var(--bs-white);
 
         /* Tags */
         --tag-text-color: #338689;
         --tag-bg-color: #eef4f8;
 
         /* Groups */
-        --group-bg-color: var(--bs-gray-075); 
+        --group-bg-color: var(--bs-gray-075);
         --group-border-color: var(--bs-gray-300);
 
         /* Outlines */
-        --grid-border-color: #E0E0E0;
+        --grid-border-color: #EAEAEA;
         --splitter-border-color: #E0E0E0;
+
+        /* Scrollbars */
+        --scrollbar-text-color: #969696;
+        --scrollbar-bg-color: var(--bs-white);
 
         /* Surfaces */
         --hover-bg-color: #F5F8FC;
@@ -56,11 +59,11 @@
         --text-gray-color: var(--bs-gray-600);
 
         /* Special Texts */
-        --keyword-text-color: #25576b;  /* #25576b; */
-        --link-text-color: #295f75;     /* #2a6785; */
+        --keyword-text-color: #25576b;
+        --link-text-color: #295f75;
 
         /* Badges */
-        --scenario-index-text-color: #ffffff;
+        --scenario-index-text-color: var(--bs-white);
         --scenario-index-bg-color: #969696;
 
         /* Buttons */
@@ -72,30 +75,27 @@
         --button-inactive-text-color: var(--bs-gray-600);
         --button-hover-border-color: var(--bs-gray-500);
         --button-hover-bg-color: var(--bs-gray-150);
-        --button-selected-bg-color: #EDF3F9;
-
-        /* Scrollbars */
-        --scrollbar-text-color: #909090;
-        --scrollbar-bg-color: white;
+        --button-selected-bg-color: var(--selected-bg-color);
 
         /* Status colors */
         --passed-color: #47A64E;
         --incomplete-color: #F7C21A;
         --failed-color: #E84330;
-        --skipped-color: #A9A9A9;
-        --total-color: #000000;
+        --skipped-color: #a5a5a5;
+        --total-color: var(--bs-gray-900);
 
         /* Status backgrounds */
         --passed-bg-color: #E2F5E3;
         --incomplete-bg-color: #FFF6D0;
         --failed-bg-color: #FCE4E0;
-        --skipped-bg-color: #F2F2F2;
+        --skipped-bg-color: var(--bs-gray-150);
 
         /* Status text */
         --passed-text-color: #2B672F;
         --incomplete-text-color: #7A5E00;
+        --incomplete-text-color: #745A00;
         --failed-text-color: #99271E;
-        --skipped-text-color: #333333;
+        --skipped-text-color: var(--bs-gray-800);
     }
    
     body, html {
@@ -115,6 +115,7 @@
     .project-name {
         font-size: 1.375em;
         font-weight: bold;
+        color: var(--heading-text-color);
     }
 
     .project-date {
@@ -259,10 +260,15 @@
         border-color: var(--table-header-border-color);
     }
     
-    table.list-view,
     table.tree-view {
         border: 1px;
         width: 100%;
+    }
+
+    table.list-view {
+        border: 1px;
+        width: 100%;
+        margin-top: 0.125em;
     }
 
     table.list-view tr:hover,
@@ -401,7 +407,7 @@
     }
 
     .chart-label {
-        font-size: 0.3125em;
+        font-size: 0.325em;
         text-anchor: middle;
         transform: translateY(0.7em);
     }
@@ -497,25 +503,25 @@
     .donut-segment-passed {
         stroke: var(--passed-color);
         fill: transparent;
-        stroke-width: 3.2px;
+        stroke-width: 0.21em;
     }
 
     .donut-segment-incomplete {
         stroke: var(--incomplete-color);
         fill: transparent;
-        stroke-width: 3.2px;
+        stroke-width: 0.21em;
     }
 
     .donut-segment-failed {
         stroke: var(--failed-color);
         fill: transparent;
-        stroke-width: 3.2px;
+        stroke-width: 0.21em;
     }
 
     .donut-segment-skipped {
         stroke: var(--skipped-color);
         fill: transparent;
-        stroke-width: 3.2px;
+        stroke-width: 0.21em;
     }
 
     hr {
@@ -613,7 +619,7 @@
     }
 
     .scenario-datatable {
-        color: var(--text-darkgray-color);
+        color: var(--text-gray-color);
     }
 
     table.scenario-datatable td {
@@ -670,7 +676,7 @@
 
     .examples-keyword {
         font-weight: 600;
-        color: var(--text-darkgray-color);
+        color: var(--text-gray-color);
         padding-left: 16px;
     }
 
@@ -695,7 +701,7 @@
 
     .attachments-keyword {
         font-weight: 600;
-        color: var(--text-darkgray-color);
+        color: var(--text-gray-color);
         padding-left: 16px;
     }
 
@@ -705,7 +711,7 @@
     }
 
     .duration-symbol {
-        color: var(--text-darkgray-color);
+        color: var(--text-gray-color);
         font-size: 2.5em;
     }
 
@@ -713,11 +719,11 @@
         font-size: 1.25em;
         padding-left: 8px;
         padding-top: 4px;
-        color: var(--text-darkgray-color);
+        color: var(--text-gray-color);
     }
 
     .duration-keyword {
-        color: var(--text-darkgray-color);
+        color: var(--text-gray-color);
     }
 
     .history-passed {
@@ -754,6 +760,7 @@
     }
 
     .analytics-trends,
+    .analytics-healths,
     .analytics-failures {
         padding-left: 16px;
         padding-right: 16px;
