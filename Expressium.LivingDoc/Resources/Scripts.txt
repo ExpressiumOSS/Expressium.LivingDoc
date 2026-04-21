@@ -9,6 +9,8 @@
 
             clearActiveListItems();
             x.classList.add('active');
+
+            document.getElementById("splitter-right").scrollTop = 0;
         }
     </script>
     <script>
@@ -38,6 +40,8 @@
 
             clearActiveListItems();
             x.classList.add('active');
+
+            document.getElementById("splitter-right").scrollTop = 0;
         }
     </script>
     <script>
@@ -91,6 +95,8 @@
             }
 
             clearActiveListItems();
+
+            document.getElementById("splitter-right").scrollTop = 0;
         }
     </script>
     <script>
