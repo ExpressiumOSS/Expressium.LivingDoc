@@ -490,6 +490,15 @@
         margin-right: 2px;
     }
 
+    .status-symbol {
+        font-size: 0.875em;
+        padding-right: 1px;
+    }
+
+    .health-symbol {
+        color: var(--text-gray-color);
+    }
+
     .sort-column {
         float: right;
         font-weight: normal;

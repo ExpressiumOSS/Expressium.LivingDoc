@@ -366,22 +366,14 @@ namespace Expressium.LivingDoc.Generators
                 ///////////////////////////////////////////////////////
                 // Alternative visualization with Bootstrap icons...
                 ///////////////////////////////////////////////////////
-                if (step.IsPassed())
-                    listOfLines.Add($"<span class='bi bi-check-circle-fill step-symbol color-{status}'></span>");
-                else if (step.IsFailed())
-                    listOfLines.Add($"<span class='bi bi-x-circle-fill step-symbol color-{status}'></span>");
-                else if (step.IsIncomplete())
-                    listOfLines.Add($"<span class='bi bi-exclamation-circle-fill step-symbol color-{status}'></span>");
-                else if (step.IsSkipped())
-                    listOfLines.Add($"<span class='bi bi-dash-circle-fill step-symbol color-{status}'></span>");
-                else
-                    listOfLines.Add($"<span class='bi bi-question-circle-fill step-symbol color-{status}'></span>");
+                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
                 ///////////////////////////////////////////////////////
             }
             else
             {
-                var stepSymbol = step.IsPassed() ? "&check;" : "&cross;";
-                listOfLines.Add($"<span class='step-symbol color-{status}'>{stepSymbol}</span>");
+                var symbol = step.IsPassed() ? "&check;" : "&cross;";
+                listOfLines.Add($"<span class='step-symbol color-{status}'>{symbol}</span>");
             }
 
             listOfLines.Add($"<span class='step-keyword'>{step.Keyword}</span>");

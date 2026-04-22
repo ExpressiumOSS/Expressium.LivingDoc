@@ -136,7 +136,23 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<td data-collapse='false' class='grid-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
-            listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
+
+            var status = feature.GetStatus().ToLower();
+
+            if (project.ExperimentFlag)
+            {
+                ///////////////////////////////////////////////////////
+                // Alternative visualization with Bootstrap icons...
+                ///////////////////////////////////////////////////////
+                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
+                ///////////////////////////////////////////////////////
+            }
+            else
+            {
+                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
+            }
+
             listOfLines.Add($"<a class='grid-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
 
@@ -165,10 +181,40 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<td class='grid-indent'></td>");
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
-            listOfLines.Add($"<span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span>");
+
+            var status = scenario.GetStatus().ToLower();
+
+            if (project.ExperimentFlag)
+            {
+                ///////////////////////////////////////////////////////
+                // Alternative visualization with Bootstrap icons...
+                ///////////////////////////////////////////////////////
+                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
+                ///////////////////////////////////////////////////////
+            }
+            else
+            {
+                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
+            }
+
             listOfLines.Add($"<a class='grid-heading' href='#'>{scenario.Name}</a>");
             listOfLines.Add("</td>");
-            listOfLines.Add("<td class='grid-border' align='right'></td>");
+
+
+            if (project.ExperimentFlag && scenario.Health != null)
+            {
+                if (scenario.Health == LivingDocHealths.Fixed.ToString())
+                    listOfLines.Add($"<td class='grid-border' align='right'><span class='bi bi-cloud-sun health-symbol' title='{scenario.Health}'></span></td>");
+                else if (scenario.Health == LivingDocHealths.Broken.ToString())
+                    listOfLines.Add($"<td class='grid-border' align='right'><span class='bi bi-cloud-rain health-symbol' title='{scenario.Health}'></span></td>");
+                else if (scenario.Health == LivingDocHealths.Flaky.ToString())
+                    listOfLines.Add($"<td class='grid-border' align='right'><span class='bi bi-cloud-rain-heavy health-symbol' title='{scenario.Health}'></span></td>");
+                else
+                    listOfLines.Add("<td class='grid-border' align='right'></td>");
+            }
+            else
+                listOfLines.Add("<td class='grid-border' align='right'></td>");
 
             listOfLines.Add("</tr>");
 
