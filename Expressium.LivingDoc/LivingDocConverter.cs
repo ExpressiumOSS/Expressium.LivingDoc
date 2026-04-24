@@ -147,27 +147,25 @@ namespace Expressium.LivingDoc
         {
             Console.WriteLine("  Merging History...");
 
-            var historyDirectory = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(historyPath)));
-            var historyFiles = Path.GetFileNameWithoutExtension(historyPath) + "*.ndjson";
+            var historyDirectory = Path.GetDirectoryName(Path.GetFullPath(historyPath));
+            var historyPattern = Path.GetFileNameWithoutExtension(historyPath) + "*.ndjson";
+
+            const int historyLimit = 4;
 
             var files = Directory
-                    .GetFiles(historyDirectory, historyFiles, SearchOption.AllDirectories)
-                    .OrderByDescending(f => File.GetLastWriteTime(f))
-                    .ToArray();
+                .GetFiles(historyDirectory, historyPattern, SearchOption.AllDirectories)
+                .OrderByDescending(f => File.GetLastWriteTime(f))
+                .Take(historyLimit);
 
-            var historyLimit = 4;
+            var convertedProjects = files
+                .Select(f => (File: f, Project: new LivingDocConverter().Convert(f, null)))
+                .OrderBy(x => x.Project.Date);
 
-            foreach (var file in files)
+            foreach (var (file, project) in convertedProjects)
             {
-                var historyFile = file.Replace(Path.GetDirectoryName(Path.GetFullPath(historyPath)), ".");
-                Console.WriteLine("    " + historyFile.ToString() + "...");
-
-                var livingDocConverterSlave = new LivingDocConverter();
-                var livingDocProjectSlave = livingDocConverterSlave.Convert(file, null);
-                livingDocProject.MergeHistory(livingDocProjectSlave);
-
-                if (livingDocProject.Histories.Count >= historyLimit)
-                    break;
+                var historyFile = file.Replace(historyDirectory, ".");
+                Console.WriteLine($"    {historyFile}...");
+                livingDocProject.MergeHistory(project);
             }
         }
 
