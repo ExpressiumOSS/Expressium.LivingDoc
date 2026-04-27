@@ -268,7 +268,7 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add("<span class='scenario-tag'>" + tag + "</span>");
 
             if (scenario.HasHealth())
-                listOfLines.Add($"<span class='scenario-tag color-{scenario.Health.ToLower()}'>@{scenario.Health}</span>");
+                listOfLines.Add($"<span class='scenario-tag-health color-{scenario.Health.ToLower()}'>@{scenario.Health}</span>");
 
             listOfLines.Add("</div>");
 

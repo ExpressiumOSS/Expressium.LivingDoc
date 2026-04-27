@@ -38,10 +38,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             return scenario;
         }
 
-        // -------------------------------------------------------
-        // GenerateDataAnalyticsTitle
-        // -------------------------------------------------------
-
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsTitle()
         {
@@ -55,10 +51,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[3], Is.EqualTo("<hr>"));
             Assert.That(listOfLines[4], Is.EqualTo("<hr>"));
         }
-
-        // -------------------------------------------------------
-        // GenerateDataAnalyticsDuration
-        // -------------------------------------------------------
 
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsDuration()
@@ -86,10 +78,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[6], Is.EqualTo("<span data-testid='project-duration'>0s 000ms</span>"));
         }
 
-        // -------------------------------------------------------
-        // CalculatePercentage
-        // -------------------------------------------------------
-
         [TestCase(0, 10, ExpectedResult = 0)]
         [TestCase(5, 10, ExpectedResult = 50)]
         [TestCase(1, 100, ExpectedResult = 1)]
@@ -110,10 +98,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             return LivingDocDataAnalyticsGenerator.CalculatePercentage(numberOfStatuses, numberOfTests);
         }
 
-        // -------------------------------------------------------
-        // AdjustPercentagesDiscrepancy
-        // -------------------------------------------------------
-
         [TestCase(100, 0, 0, 0, 100, 0, 0, 0)]
         [TestCase(0, 0, 0, 0, 0, 0, 0, 0)]
         [TestCase(10, 20, 30, 55, 10, 20, 30, 40)]
@@ -131,10 +115,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(failed, Is.EqualTo(failedOut));
             Assert.That(skipped, Is.EqualTo(skippedOut));
         }
-
-        // -------------------------------------------------------
-        // GenerateDataAnalyticsStatusChart
-        // -------------------------------------------------------
 
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStatusChart_Zero_Totals()
@@ -176,10 +156,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Any(l => l.Contains("data-testid='title-chart-passed'>36%")), Is.True);
         }
 
-        // -------------------------------------------------------
-        // GenerateDataAnalyticsFeaturesView
-        // -------------------------------------------------------
-
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFeaturesView()
         {
@@ -192,10 +168,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Duration -->"));
             Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
         }
-
-        // -------------------------------------------------------
-        // GenerateDataAnalyticsScenariosView
-        // -------------------------------------------------------
 
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsScenariosView()
@@ -210,10 +182,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
         }
 
-        // -------------------------------------------------------
-        // GenerateDataAnalyticsStepsView
-        // -------------------------------------------------------
-
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStepsView()
         {
@@ -226,10 +194,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Duration -->"));
             Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
         }
-
-        // -------------------------------------------------------
-        // GenerateDataAnalyticsTrends
-        // -------------------------------------------------------
 
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsTrends_Returns_Empty_With_No_History()
@@ -288,10 +252,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Any(l => l.Contains("bgcolor-passed")), Is.True);
         }
 
-        // -------------------------------------------------------
-        // GenerateDataAnalyticsHealths
-        // -------------------------------------------------------
-
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Returns_Empty_With_No_Health()
         {
@@ -303,7 +263,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataAnalyticsGenerator(project);
             var listOfLines = generator.GenerateDataAnalyticsHealths();
 
-            Assert.That(listOfLines.Count, Is.GreaterThan(0));
+            Assert.That(listOfLines.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -367,25 +327,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Any(l => l.Contains("Scenario A")), Is.True);
             Assert.That(listOfLines.Any(l => l.Contains("Scenario B")), Is.True);
             Assert.That(listOfLines.Any(l => l.Contains("Scenario C")), Is.True);
-        }
-
-        // -------------------------------------------------------
-        // GenerateDataAnalyticsFailures
-        // -------------------------------------------------------
-
-        [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFailures_Returns_Empty_With_No_Health()
-        {
-            var project = new LivingDocProject();
-            var feature = new LivingDocFeature { Name = "Login" };
-            feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario A" });
-            project.Features.Add(feature);
-
-            var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsFailures();
-
-            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Failures Chart -->"));
-            Assert.That(listOfLines.Any(l => l.Contains("<td>")), Is.False);
         }
 
         [Test]

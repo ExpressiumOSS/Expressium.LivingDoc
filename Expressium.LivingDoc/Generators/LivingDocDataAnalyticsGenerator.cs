@@ -348,7 +348,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var hasHealth = project.Features.SelectMany(f => f.Scenarios).Any(s => s != null);
+            var hasHealth = project.Features.SelectMany(f => f.Scenarios).Any(s => s.Health != null);
             if (!hasHealth)
                 return listOfLines;
 
@@ -402,6 +402,10 @@ namespace Expressium.LivingDoc.Generators
         internal List<string> GenerateDataAnalyticsFailures()
         {
             var listOfLines = new List<string>();
+
+            var hasHealth = project.Features.SelectMany(f => f.Scenarios).Any(s => s.Health != null);
+            if (!hasHealth)
+                return listOfLines;
 
             listOfLines.Add("<hr>");
 

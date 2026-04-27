@@ -197,11 +197,11 @@ namespace Expressium.LivingDoc.Generators
             if (project.ExperimentFlagHealth && scenario.HasHealth())
             {
                 if (scenario.IsFixed())
-                    listOfLines.Add($"<td class='grid-border' align='right'><span class='bi bi-cloud-sun health-symbol' title='{scenario.Health}'></span></td>");
+                    listOfLines.Add($"<td class='grid-border' align='right' style='padding-right: 0.75em;'><span class='bi bi-cloud-sun health-symbol' title='{scenario.Health}'></span></td>");
                 else if (scenario.IsBroken())
-                    listOfLines.Add($"<td class='grid-border' align='right'><span class='bi bi-cloud-rain health-symbol' title='{scenario.Health}'></span></td>");
+                    listOfLines.Add($"<td class='grid-border' align='right' style='padding-right: 0.75em;'><span class='bi bi-cloud-rain health-symbol' title='{scenario.Health}'></span></td>");
                 else if (scenario.IsFlaky() || scenario.IsRegressed())
-                    listOfLines.Add($"<td class='grid-border' align='right'><span class='bi bi-cloud-rain-heavy health-symbol' title='{scenario.Health}'></span></td>");
+                    listOfLines.Add($"<td class='grid-border' align='right' style='padding-right: 0.75em;'><span class='bi bi-cloud-rain-heavy health-symbol' title='{scenario.Health}'></span></td>");
                 else
                     listOfLines.Add("<td class='grid-border' align='right'></td>");
             }

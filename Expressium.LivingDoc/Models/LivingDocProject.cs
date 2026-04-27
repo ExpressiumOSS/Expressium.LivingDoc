@@ -276,7 +276,7 @@ namespace Expressium.LivingDoc.Models
                             .ToList();
 
                         // Flaky Pattern...
-                        if ((newest == failed || newest == passed) &&
+                        if ((newest == failed || (newest == passed && previous == failed)) &&
                             activeStatuses.Take(activeStatuses.Count - 1).Contains(passed) &&
                             activeStatuses.Take(activeStatuses.Count - 1).Contains(failed))
                         {

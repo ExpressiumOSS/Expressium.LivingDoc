@@ -83,7 +83,18 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-order\")'>Order<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(3, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
+
+            var hasHealth = project.Features.SelectMany(f => f.Scenarios).Any(s => s.Health != null);
+            if (hasHealth)
+            {
+                listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Health<span class='sort-column'>&udarr;</span></th>");
+                listOfLines.Add("<th width='100' onClick='sortTableByColumn(5)'>Status<span class='sort-column'>&udarr;</span></th>");
+            }
+            else
+            {
+                listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
+            }
+
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
@@ -107,6 +118,10 @@ namespace Expressium.LivingDoc.Generators
                     listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
                     listOfLines.Add($"<td align='center' data-order='{scenario.GetOrderSortId()}'>{scenario.GetOrder()}</td>");
                     listOfLines.Add($"<td align='center' data-duration='{scenario.GetDurationSortId()}'>{scenario.GetDuration()}</td>");
+
+                    if (hasHealth)
+                        listOfLines.Add($"<td>{scenario.Health}</td>");
+
                     listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
                     listOfLines.Add($"</tr>");
                 }
