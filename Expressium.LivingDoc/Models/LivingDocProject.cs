@@ -33,8 +33,8 @@ namespace Expressium.LivingDoc.Models
             Features = new List<LivingDocFeature>();
             History = new LivingDocProjectHistory();
 
-            ExperimentFlagSymbols = false;
-            ExperimentFlagHealth = false;
+            ExperimentFlagSymbols = false; // Alternative visualization with Bootstrap icons...
+            ExperimentFlagHealth = false;  // Additional scenario health status based on history...
         }
 
         internal string GetApplicationName()

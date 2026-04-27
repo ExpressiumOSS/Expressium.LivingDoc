@@ -91,10 +91,29 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- PreFilters Section -->");
             listOfLines.Add("<div class='layout-column align-right'>");
-            listOfLines.Add("<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-passed'></span><span>Passed</span></button>");
-            listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-incomplete filter-option-name'></span><span>Incomplete</span></button>");
-            listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-failed filter-option-name'></span><span>Failed</span></button>");
-            listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-skipped filter-option-name'></span><span>Skipped</span></button>");
+
+            if (project.ExperimentFlagSymbols)
+            {
+                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol("passed");
+                listOfLines.Add($"<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'><span class='{symbol} color-passed status-symbol'></span><span>Passed</span></button>");
+
+                symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol("incomplete");
+                listOfLines.Add($"<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'><span class='{symbol} color-incomplete status-symbol'></span><span>Incomplete</span></button>");
+
+                symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol("failed");
+                listOfLines.Add($"<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'><span class='{symbol} color-failed status-symbol'></span><span>Failed</span></button>");
+
+                symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol("skipped");
+                listOfLines.Add($"<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'><span class='{symbol} color-skipped status-symbol'></span><span>Skipped</span></button>");
+            }
+            else
+            {
+                listOfLines.Add("<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-passed'></span><span>Passed</span></button>");
+                listOfLines.Add("<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-incomplete filter-option-name'></span><span>Incomplete</span></button>");
+                listOfLines.Add("<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-failed filter-option-name'></span><span>Failed</span></button>");
+                listOfLines.Add("<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'><span class='status-dot bgcolor-skipped filter-option-name'></span><span>Skipped</span></button>");
+            }
+
             listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearPrefilters()'>Clear</button>");
             listOfLines.Add("</div>");
 

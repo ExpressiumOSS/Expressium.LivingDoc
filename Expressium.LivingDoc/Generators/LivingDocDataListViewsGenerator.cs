@@ -40,7 +40,16 @@ namespace Expressium.LivingDoc.Generators
             foreach (var feature in project.Features)
             {
                 listOfLines.Add($"<tr class='grid-border' data-role='feature' data-tags='{feature.Name} {feature.GetTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
-                listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span></td>");
+
+                var status = feature.GetStatus().ToLower();
+                if (project.ExperimentFlagSymbols)
+                {
+                    var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+                    listOfLines.Add($"<td align='center'><span class='{symbol} color-{status} status-symbol'></span></td>");
+                }
+                else
+                    listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{status}'></span></td>");
+
                 listOfLines.Add($"<td><a href='#'>{feature.Name}</a></td>");
                 listOfLines.Add($"<td align='center' data-scenarios='{feature.GetNumberOfScenariosSortId()}'>{feature.GetNumberOfScenarios()}</td>");
                 listOfLines.Add($"<td align='center' data-completion='{feature.GetPercentageOfPassedSortId()}'>{feature.GetPercentageOfPassed()}%</td>");
@@ -85,7 +94,16 @@ namespace Expressium.LivingDoc.Generators
                 foreach (var scenario in feature.Scenarios)
                 {
                     listOfLines.Add($"<tr class='grid-border' data-role='scenario' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
-                    listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{scenario.GetStatus().ToLower()}'></span></td>");
+
+                    var status = scenario.GetStatus().ToLower();
+                    if (project.ExperimentFlagSymbols)
+                    {
+                        var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+                        listOfLines.Add($"<td align='center'><span class='{symbol} color-{status} status-symbol'></span></td>");
+                    }
+                    else
+                        listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{status}'></span></td>");
+
                     listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
                     listOfLines.Add($"<td align='center' data-order='{scenario.GetOrderSortId()}'>{scenario.GetOrder()}</td>");
                     listOfLines.Add($"<td align='center' data-duration='{scenario.GetDurationSortId()}'>{scenario.GetDuration()}</td>");
@@ -164,7 +182,16 @@ namespace Expressium.LivingDoc.Generators
                                     //    .Count(x => x.Keyword + " " + x.Name == fullName && x.IsFailed());
 
                                     listOfLines.Add($"<tr class='grid-border' data-role='step' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
-                                    listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{step.GetStatus().ToLower()}'></span></td>");
+
+                                    var stepStatus = step.GetStatus().ToLower();
+                                    if (project.ExperimentFlagSymbols)
+                                    {
+                                        var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(stepStatus);
+                                        listOfLines.Add($"<td align='center'><span class='{symbol} color-{stepStatus} status-symbol'></span></td>");
+                                    }
+                                    else
+                                        listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{stepStatus}'></span></td>");
+
                                     listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
                                     //listOfLines.Add($"<td align='center' failure-count='{failures.ToString("D4")}'>{failures}</td>");
                                     listOfLines.Add($"<td align='center' data-count='{count.ToString("D4")}'>{count}</td>");

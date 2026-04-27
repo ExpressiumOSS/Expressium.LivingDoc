@@ -141,12 +141,8 @@ namespace Expressium.LivingDoc.Generators
 
             if (project.ExperimentFlagSymbols)
             {
-                ///////////////////////////////////////////////////////
-                // Alternative visualization with Bootstrap icons...
-                ///////////////////////////////////////////////////////
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
                 listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
-                ///////////////////////////////////////////////////////
             }
             else
             {
@@ -186,12 +182,8 @@ namespace Expressium.LivingDoc.Generators
 
             if (project.ExperimentFlagSymbols)
             {
-                ///////////////////////////////////////////////////////
-                // Alternative visualization with Bootstrap icons...
-                ///////////////////////////////////////////////////////
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
                 listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
-                ///////////////////////////////////////////////////////
             }
             else
             {

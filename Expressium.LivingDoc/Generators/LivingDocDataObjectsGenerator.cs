@@ -59,7 +59,16 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Data Feature Name -->");
             listOfLines.Add("<div>");
-            listOfLines.Add($"<span class='status-dot bgcolor-{feature.GetStatus().ToLower()}'></span>");
+
+            var status = feature.GetStatus().ToLower();
+            if (project.ExperimentFlagSymbols)
+            {
+                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
+            }
+            else
+                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
+
             listOfLines.Add($"<span class='feature-keyword'>Feature: </span><span class='feature-name'>{feature.Name}</span>");
             //listOfLines.Add($"<span class='feature-duration'>{feature.GetDuration()}</span>");
             listOfLines.Add("</div>");
@@ -272,7 +281,16 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<!-- Data Scenario Name -->");
             listOfLines.Add("<div>");
-            listOfLines.Add($"<span class='status-dot bgcolor-{example.GetStatus().ToLower()}'></span>");
+
+            var status = example.GetStatus().ToLower();
+            if (project.ExperimentFlagSymbols)
+            {
+                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
+            }
+            else
+                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
+
             listOfLines.Add("<span class='scenario-keyword'>Scenario: </span>");
             listOfLines.Add("<span class='scenario-name'>" + scenario.Name + "</span>");
 
@@ -370,12 +388,8 @@ namespace Expressium.LivingDoc.Generators
 
             if (project.ExperimentFlagSymbols)
             {
-                ///////////////////////////////////////////////////////
-                // Alternative visualization with Bootstrap icons...
-                ///////////////////////////////////////////////////////
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
                 listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
-                ///////////////////////////////////////////////////////
             }
             else
             {
