@@ -14,6 +14,7 @@ namespace Expressium.LivingDoc.Models
         public List<LivingDocStep> Steps { get; set; }
         public LivingDocDataTable DataTable { get; set; }
         public List<string> Attachments { get; set; }
+        public List<LivingDocExampleHistoryResults> History { get; set; }
 
         public LivingDocExample()
         {
@@ -21,6 +22,7 @@ namespace Expressium.LivingDoc.Models
             Steps = new List<LivingDocStep>();
             DataTable = new LivingDocDataTable();
             Attachments = new List<string>();
+            History = new List<LivingDocExampleHistoryResults>();
         }
 
         public string GetStatus()

@@ -346,6 +346,7 @@
     .grid-collapse,
     .scenario-stacktraces,
     .scenario-attachments,
+    .scenario-history,
     .scenario-backgrounds {
         padding: 1px 4px;
         font-size: 0.9625em;
@@ -491,7 +492,7 @@
     }
 
     .status-symbol {
-        font-size: 0.875em;
+        font-size: 0.9375em;
         padding-right: 1px;
     }
 
@@ -704,16 +705,19 @@
         padding-left: 32px;
     }
 
+    .history,
     .attachments {
         padding-top: 4px;
     }
 
+    .history-keyword,
     .attachments-keyword {
         font-weight: 600;
         color: var(--text-gray-color);
         padding-left: 16px;
     }
 
+    ul.history-files li,
     ul.attachments-files li {
         padding-top: 1px;
         padding-bottom: 1px;

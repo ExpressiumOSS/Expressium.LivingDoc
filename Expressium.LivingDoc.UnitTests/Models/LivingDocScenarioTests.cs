@@ -157,5 +157,120 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(scenario.GetOrder(), Is.EqualTo(order));
             Assert.That(scenario.GetOrderSortId(), Is.EqualTo(expected));
         }
+
+        [Test]
+        public void LivingDocScenario_HasHealth_ReturnsFalse_WhenHealthIsNull()
+        {
+            var scenario = new LivingDocScenario();
+
+            Assert.That(scenario.HasHealth(), Is.False);
+        }
+
+        [TestCase("Broken")]
+        [TestCase("Flaky")]
+        [TestCase("Fixed")]
+        public void LivingDocScenario_HasHealth_ReturnsTrue_WhenHealthIsSet(string health)
+        {
+            var scenario = new LivingDocScenario { Health = health };
+
+            Assert.That(scenario.HasHealth(), Is.True);
+        }
+
+        [Test]
+        public void LivingDocScenario_HasHealth_ReturnsFalse_AfterClearingHealth()
+        {
+            var scenario = new LivingDocScenario { Health = LivingDocHealths.Broken.ToString() };
+
+            Assert.That(scenario.HasHealth(), Is.True);
+
+            scenario.Health = null;
+
+            Assert.That(scenario.HasHealth(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocScenario_GetTags_WithoutHealthOrTags_ReturnsEmptyString()
+        {
+            var scenario = new LivingDocScenario();
+
+            Assert.That(scenario.GetTags(), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void LivingDocScenario_GetTags_WithoutHealth_ReturnsTagsOnly()
+        {
+            var scenario = new LivingDocScenario();
+            scenario.Tags.Add("@TA-1001");
+            scenario.Tags.Add("@Done");
+
+            Assert.That(scenario.GetTags(), Is.EqualTo("@TA-1001 @Done"));
+        }
+
+        [Test]
+        public void LivingDocScenario_GetTags_WithHealth_NoOtherTags()
+        {
+            var scenario = new LivingDocScenario { Health = LivingDocHealths.Broken.ToString() };
+
+            Assert.That(scenario.GetTags(), Is.EqualTo("@Broken"));
+        }
+
+        [Test]
+        public void LivingDocScenario_GetTags_WithHealth_AndExistingTags()
+        {
+            var scenario = new LivingDocScenario { Health = LivingDocHealths.Flaky.ToString() };
+            scenario.Tags.Add("@TA-1001");
+            scenario.Tags.Add("@Done");
+
+            Assert.That(scenario.GetTags(), Is.EqualTo("@TA-1001 @Done @Flaky"));
+        }
+
+        [TestCase("Broken", "@Broken")]
+        [TestCase("Flaky", "@Flaky")]
+        [TestCase("Fixed", "@Fixed")]
+        public void LivingDocScenario_GetTags_WithHealth_AllHealthValues(string health, string expected)
+        {
+            var scenario = new LivingDocScenario { Health = health };
+
+            Assert.That(scenario.GetTags(), Is.EqualTo(expected));
+        }
+        [Test]
+        public void LivingDocScenario_IsBroken_ReturnsTrue_WhenHealthIsBroken()
+        {
+            var scenario = new LivingDocScenario { Health = LivingDocHealths.Broken.ToString() };
+
+            Assert.That(scenario.IsBroken(), Is.True);
+            Assert.That(scenario.IsFlaky(), Is.False);
+            Assert.That(scenario.IsFixed(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocScenario_IsFlaky_ReturnsTrue_WhenHealthIsFlaky()
+        {
+            var scenario = new LivingDocScenario { Health = LivingDocHealths.Flaky.ToString() };
+
+            Assert.That(scenario.IsBroken(), Is.False);
+            Assert.That(scenario.IsFlaky(), Is.True);
+            Assert.That(scenario.IsFixed(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocScenario_IsFixed_ReturnsTrue_WhenHealthIsFixed()
+        {
+            var scenario = new LivingDocScenario { Health = LivingDocHealths.Fixed.ToString() };
+
+            Assert.That(scenario.IsBroken(), Is.False);
+            Assert.That(scenario.IsFlaky(), Is.False);
+            Assert.That(scenario.IsFixed(), Is.True);
+        }
+
+        [Test]
+        public void LivingDocScenario_HealthHelpers_AllReturnFalse_WhenHealthIsNull()
+        {
+            var scenario = new LivingDocScenario();
+
+            Assert.That(scenario.IsBroken(), Is.False);
+            Assert.That(scenario.IsFlaky(), Is.False);
+            Assert.That(scenario.IsFixed(), Is.False);
+        }
     }
 }

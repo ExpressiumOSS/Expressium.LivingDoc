@@ -558,12 +558,12 @@
             var grandParent = x.parentElement?.parentElement;
             if (!grandParent) return;
 
-            var attachments = grandParent.getElementsByClassName('backgrounds');
-            for (var i = 0; i < attachments.length; i++) {
-                if (attachments[i].style.display === "none") {
-                    attachments[i].style.display = "block";
+            var items = grandParent.getElementsByClassName('backgrounds');
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].style.display === "none") {
+                    items[i].style.display = "block";
                 } else {
-                    attachments[i].style.display = "none";
+                    items[i].style.display = "none";
                 }
             }
         }
@@ -573,12 +573,27 @@
             var grandParent = x.parentElement?.parentElement;
             if (!grandParent) return;
 
-            var attachments = grandParent.getElementsByClassName('attachments');
-            for (var i = 0; i < attachments.length; i++) {
-                if (attachments[i].style.display === "none") {
-                    attachments[i].style.display = "block";
+            var items = grandParent.getElementsByClassName('attachments');
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].style.display === "none") {
+                    items[i].style.display = "block";
                 } else {
-                    attachments[i].style.display = "none";
+                    items[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script>
+        function toggleHistory(x) {
+            var grandParent = x.parentElement?.parentElement;
+            if (!grandParent) return;
+
+            var items = grandParent.getElementsByClassName('history');
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].style.display === "none") {
+                    items[i].style.display = "block";
+                } else {
+                    items[i].style.display = "none";
                 }
             }
         }

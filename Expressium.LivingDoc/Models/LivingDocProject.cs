@@ -21,17 +21,20 @@ namespace Expressium.LivingDoc.Models
         public string CpuName { get; set; }
 
         public List<LivingDocFeature> Features { get; set; }
-        public List<LivingDocHistory> Histories { get; set; }
+        public LivingDocProjectHistory History { get; set; }
 
-        internal bool ExperimentFlag { get; set; }
+        internal bool ExperimentFlagSymbols { get; set; }
+        internal bool ExperimentFlagHealth { get; set; }
 
         public LivingDocProject()
         {
             Duration = new TimeSpan();
-            Features = new List<LivingDocFeature>();
-            Histories = new List<LivingDocHistory>();
 
-            ExperimentFlag = false;
+            Features = new List<LivingDocFeature>();
+            History = new LivingDocProjectHistory();
+
+            ExperimentFlagSymbols = false;
+            ExperimentFlagHealth = false;
         }
 
         internal string GetApplicationName()
@@ -166,121 +169,135 @@ namespace Expressium.LivingDoc.Models
 
         public void MergeHistory(LivingDocProject livingDocProject)
         {
-            if (this.Histories.Any(d => d.Date == livingDocProject.Date))
+            if (this.History.Features.Any(d => d.Date == livingDocProject.Date) ||
+                 this.History.Scenarios.Any(d => d.Date == livingDocProject.Date) ||
+                 this.History.Steps.Any(d => d.Date == livingDocProject.Date))
                 return;
 
-            var livingDocHistory = new LivingDocHistory();
-            livingDocHistory.Date = livingDocProject.Date;
+            MergeProjectHistoryResults(livingDocProject);
+            MergeExampleHistoryResults(livingDocProject);
 
-            foreach (var feature in livingDocProject.Features)
+            if (ExperimentFlagHealth)
+                MergeScenarioHistoryHealth();
+        }
+
+        internal void MergeProjectHistoryResults(LivingDocProject livingDocProject)
+        {
+            this.History.Features.Add(new LivingDocProjectHistoryResults
             {
-                if (feature.IsPassed())
-                    livingDocHistory.Features.Passed.Add(feature.Name);
-                else if (feature.IsIncomplete())
-                    livingDocHistory.Features.Incomplete.Add(feature.Name);
-                else if (feature.IsFailed())
-                    livingDocHistory.Features.Failed.Add(feature.Name);
-                else if (feature.IsSkipped())
-                    livingDocHistory.Features.Skipped.Add(feature.Name);
+                Date = livingDocProject.Date,
+                Passed = livingDocProject.GetNumberOfPassedFeatures(),
+                Incomplete = livingDocProject.GetNumberOfIncompleteFeatures(),
+                Failed = livingDocProject.GetNumberOfFailedFeatures(),
+                Skipped = livingDocProject.GetNumberOfSkippedFeatures()
+            });
 
-                foreach (var scenario in feature.Scenarios)
+            this.History.Scenarios.Add(new LivingDocProjectHistoryResults
+            {
+                Date = livingDocProject.Date,
+                Passed = livingDocProject.GetNumberOfPassedScenarios(),
+                Incomplete = livingDocProject.GetNumberOfIncompleteScenarios(),
+                Failed = livingDocProject.GetNumberOfFailedScenarios(),
+                Skipped = livingDocProject.GetNumberOfSkippedScenarios()
+            });
+
+            this.History.Steps.Add(new LivingDocProjectHistoryResults
+            {
+                Date = livingDocProject.Date,
+                Passed = livingDocProject.GetNumberOfPassedSteps(),
+                Incomplete = livingDocProject.GetNumberOfIncompleteSteps(),
+                Failed = livingDocProject.GetNumberOfFailedSteps(),
+                Skipped = livingDocProject.GetNumberOfSkippedSteps()
+            });
+        }
+
+        internal void MergeExampleHistoryResults(LivingDocProject livingDocProject)
+        {
+            foreach (var feature in Features)
+            {
+                var matchingFeature = livingDocProject.Features.FirstOrDefault(x => x.Name == feature.Name);
+                if (matchingFeature != null)
                 {
-                    foreach (var example in scenario.Examples)
+                    foreach (var scenario in feature.Scenarios)
                     {
-                        if (example.IsPassed())
-                            livingDocHistory.Scenarios.Passed.Add(scenario.Name);
-                        else if (example.IsIncomplete())
-                            livingDocHistory.Scenarios.Incomplete.Add(scenario.Name);
-                        else if (example.IsFailed())
-                            livingDocHistory.Scenarios.Failed.Add(scenario.Name);
-                        else if (example.IsSkipped())
-                            livingDocHistory.Scenarios.Skipped.Add(scenario.Name);
-
-                        foreach (var step in example.Steps)
+                        var matchingScenario = matchingFeature.Scenarios.FirstOrDefault(x => x.Name == scenario.Name);
+                        if (matchingScenario != null)
                         {
-                            if (step.IsPassed())
-                                livingDocHistory.Steps.Passed.Add(step.Keyword + " " + step.Name);
-                            else if (step.IsIncomplete())
-                                livingDocHistory.Steps.Incomplete.Add(step.Keyword + " " + step.Name);
-                            else if (step.IsFailed())
-                                livingDocHistory.Steps.Failed.Add(step.Keyword + " " + step.Name);
-                            else if (step.IsSkipped())
-                                livingDocHistory.Steps.Skipped.Add(step.Keyword + " " + step.Name);
+                            var indexId = 0;
+                            foreach (var example in scenario.Examples)
+                            {
+                                if (matchingScenario.Examples.Count > indexId)
+                                {
+                                    var existingExample = example;
+                                    existingExample.History.Add(new LivingDocExampleHistoryResults
+                                    {
+                                        Date = livingDocProject.Date,
+                                        Status = matchingScenario.Examples[indexId].GetStatus()
+                                    });
+                                }
+
+                                indexId++;
+                            }
                         }
                     }
                 }
             }
-
-            Histories.Add(livingDocHistory);
         }
 
-        public int GetMaximumNumberOfHistoryFeatures()
+        internal void MergeScenarioHistoryHealth()
         {
-            return Histories.Max(h => h.GetNumberOfFeatures());
-        }
+            foreach (var feature in Features)
+            {
+                foreach (var scenario in feature.Scenarios)
+                {
+                    scenario.Health = null;
 
-        public int GetMaximumNumberOfHistoryScenarios()
-        {
-            return Histories.Max(h => h.GetNumberOfScenarios());
-        }
+                    foreach (var example in scenario.Examples)
+                    {
+                        var numberOfHistories = example.History.Count;
+                        if (numberOfHistories < 2)
+                            continue;
 
-        public int GetMaximumNumberOfHistorySteps()
-        {
-            return Histories.Max(h => h.GetNumberOfSteps());
-        }
+                        if (scenario.Health != null && scenario.Health != LivingDocHealths.Fixed.ToString())
+                            continue;
 
-        private const int FailedWeight = 100;
-        private const int IncompleteWeight = 10;
-        private const int SkippedWeight = 1;
-        private const int PassedWeight = 0;
-        private const int ReportWeight = FailedWeight;
+                        var prior = numberOfHistories >= 4 ? example.History[numberOfHistories - 4].Status : null;
+                        var oldest = numberOfHistories >= 3 ? example.History[numberOfHistories - 3].Status : null;
+                        var previous = example.History[numberOfHistories - 2].Status;
+                        var newest = example.History[numberOfHistories - 1].Status;
 
-        public List<string> GetHistoryFeatureFailures()
-        {
-            var mapOfFailures = Histories
-                .SelectMany(history =>
-                    history.Features.Failed.Select(name => (name, FailedWeight))
-                    .Concat(history.Features.Incomplete.Select(name => (name, IncompleteWeight)))
-                    .Concat(history.Features.Skipped.Select(name => (name, SkippedWeight)))
-                    .Concat(history.Features.Passed.Select(name => (name, PassedWeight))))
-                .GroupBy(x => x.name)
-                .ToDictionary(g => g.Key, g => g.Sum(x => x.Item2));
+                        var passed = LivingDocStatuses.Passed.ToString();
+                        var failed = LivingDocStatuses.Failed.ToString();
+                        var incomplete = LivingDocStatuses.Incomplete.ToString();
+                        var skipped = LivingDocStatuses.Skipped.ToString();
 
-            var orderedFailures = mapOfFailures.OrderByDescending(x => x.Value).Where(d => d.Value >= ReportWeight);
+                        var activeStatuses = new[] { prior, oldest, previous, newest }
+                            .Where(s => s != null && s != skipped && s != incomplete)
+                            .ToList();
 
-            return orderedFailures.Select(x => x.Key).ToList();
-        }
+                        // Flaky Pattern...
+                        if ((newest == failed || newest == passed) &&
+                            activeStatuses.Take(activeStatuses.Count - 1).Contains(passed) &&
+                            activeStatuses.Take(activeStatuses.Count - 1).Contains(failed))
+                        {
+                            scenario.Health = LivingDocHealths.Flaky.ToString();
+                            continue;
+                        }
 
-        public List<string> GetHistoryScenarioFailures()
-        {
-            var mapOfFailures = Histories
-                .SelectMany(history =>
-                    history.Scenarios.Failed.Select(name => (name, FailedWeight))
-                    .Concat(history.Scenarios.Incomplete.Select(name => (name, IncompleteWeight)))
-                    .Concat(history.Scenarios.Skipped.Select(name => (name, SkippedWeight)))
-                    .Concat(history.Scenarios.Passed.Select(name => (name, PassedWeight))))
-                .GroupBy(x => x.name)
-                .ToDictionary(g => g.Key, g => g.Sum(x => x.Item2));
+                        // Regressed Pattern...
+                        if (newest == failed && previous == passed)
+                            scenario.Health = LivingDocHealths.Regressed.ToString();
 
-            var orderedFailures = mapOfFailures.OrderByDescending(x => x.Value).Where(d => d.Value >= ReportWeight);
+                        // Broken Pattern...
+                        else if (newest == failed && (previous == skipped || previous == incomplete || previous == failed))
+                            scenario.Health = LivingDocHealths.Broken.ToString();
 
-            return orderedFailures.Select(x => x.Key).ToList();
-        }
-
-        public List<string> GetHistoryStepFailures()
-        {
-            var mapOfFailures = Histories
-                .SelectMany(history =>
-                    history.Steps.Failed.Select(name => (name, FailedWeight))
-                    .Concat(history.Steps.Incomplete.Select(name => (name, IncompleteWeight)))
-                    .Concat(history.Steps.Skipped.Select(name => (name, SkippedWeight)))
-                    .Concat(history.Steps.Passed.Select(name => (name, PassedWeight))))
-                .GroupBy(x => x.name)
-                .ToDictionary(g => g.Key, g => g.Sum(x => x.Item2));
-
-            var orderedFailures = mapOfFailures.OrderByDescending(x => x.Value).Where(d => d.Value >= ReportWeight);
-
-            return orderedFailures.Select(x => x.Key).ToList();
+                        // Fixed Pattern...
+                        else if (newest == passed && previous != passed)
+                            scenario.Health = LivingDocHealths.Fixed.ToString();
+                    }
+                }
+            }
         }
     }
 }

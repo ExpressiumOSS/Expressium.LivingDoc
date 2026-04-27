@@ -139,7 +139,7 @@ namespace Expressium.LivingDoc.Generators
 
             var status = feature.GetStatus().ToLower();
 
-            if (project.ExperimentFlag)
+            if (project.ExperimentFlagSymbols)
             {
                 ///////////////////////////////////////////////////////
                 // Alternative visualization with Bootstrap icons...
@@ -184,7 +184,7 @@ namespace Expressium.LivingDoc.Generators
 
             var status = scenario.GetStatus().ToLower();
 
-            if (project.ExperimentFlag)
+            if (project.ExperimentFlagSymbols)
             {
                 ///////////////////////////////////////////////////////
                 // Alternative visualization with Bootstrap icons...
@@ -202,13 +202,13 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</td>");
 
 
-            if (project.ExperimentFlag && scenario.Health != null)
+            if (project.ExperimentFlagHealth && scenario.HasHealth())
             {
-                if (scenario.Health == LivingDocHealths.Fixed.ToString())
+                if (scenario.IsFixed())
                     listOfLines.Add($"<td class='grid-border' align='right'><span class='bi bi-cloud-sun health-symbol' title='{scenario.Health}'></span></td>");
-                else if (scenario.Health == LivingDocHealths.Broken.ToString())
+                else if (scenario.IsBroken())
                     listOfLines.Add($"<td class='grid-border' align='right'><span class='bi bi-cloud-rain health-symbol' title='{scenario.Health}'></span></td>");
-                else if (scenario.Health == LivingDocHealths.Flaky.ToString())
+                else if (scenario.IsFlaky() || scenario.IsRegressed())
                     listOfLines.Add($"<td class='grid-border' align='right'><span class='bi bi-cloud-rain-heavy health-symbol' title='{scenario.Health}'></span></td>");
                 else
                     listOfLines.Add("<td class='grid-border' align='right'></td>");

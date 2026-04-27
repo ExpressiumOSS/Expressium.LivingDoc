@@ -3,11 +3,22 @@ using Expressium.LivingDoc.Parsers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Expressium.LivingDoc.UnitTests.Models
 {
     internal class LivingDocProjectTests
     {
+        [Test]
+        public void LivingDocProject_DefaultConstructor_InitializesCollections()
+        {
+            var livingDocProject = new LivingDocProject();
+
+            Assert.That(livingDocProject.Features, Is.Not.Null);
+            Assert.That(livingDocProject.History, Is.Not.Null);
+            Assert.That(livingDocProject.Duration, Is.EqualTo(TimeSpan.Zero));
+        }
+
         [Test]
         public void LivingDocProject_Number_Of_Objects()
         {
@@ -183,16 +194,101 @@ namespace Expressium.LivingDoc.UnitTests.Models
             livingDocProjectSlave.Features.Add(skippedFeature);
 
             livingDocProjectMaster.MergeHistory(livingDocProjectSlave);
-            Assert.That(livingDocProjectMaster.Histories.Count, Is.EqualTo(1));
-            Assert.That(livingDocProjectMaster.Histories[0].Date, Is.EqualTo(livingDocProjectSlave.Date));
-            Assert.That(livingDocProjectMaster.Histories[0].Features.Passed, Does.Contain("PassedFeature"));
-            Assert.That(livingDocProjectMaster.Histories[0].Features.Failed, Does.Contain("FailedFeature"));
-            Assert.That(livingDocProjectMaster.Histories[0].Features.Incomplete, Does.Contain("IncompleteFeature"));
-            Assert.That(livingDocProjectMaster.Histories[0].Features.Skipped, Does.Contain("SkippedFeature"));
+            Assert.That(livingDocProjectMaster.History.Features.Count, Is.EqualTo(1));
+            Assert.That(livingDocProjectMaster.History.Features[0].Date, Is.EqualTo(livingDocProjectSlave.Date));
+            Assert.That(livingDocProjectMaster.History.Features[0].Passed, Is.EqualTo(1));
+            Assert.That(livingDocProjectMaster.History.Features[0].Failed, Is.EqualTo(1));
+            Assert.That(livingDocProjectMaster.History.Features[0].Incomplete, Is.EqualTo(1));
+            Assert.That(livingDocProjectMaster.History.Features[0].Skipped, Is.EqualTo(1));
 
             // Calling MergeHistory again should omit duplicates...
             livingDocProjectMaster.MergeHistory(livingDocProjectSlave);
-            Assert.That(livingDocProjectMaster.Histories.Count, Is.EqualTo(1));
+            Assert.That(livingDocProjectMaster.History.Features.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void LivingDocProject_MergeProjectHistoryResults()
+        {
+            var masterProject = new LivingDocProject();
+
+            var slaveProject = new LivingDocProject();
+            slaveProject.Date = DateTime.UtcNow;
+
+            var feature = new LivingDocFeature { Name = "Login" };
+            var scenario = new LivingDocScenario();
+            var example = new LivingDocExample();
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            scenario.Examples.Add(example);
+            feature.Scenarios.Add(scenario);
+            slaveProject.Features.Add(feature);
+
+            masterProject.MergeProjectHistoryResults(slaveProject);
+
+            Assert.That(masterProject.History.Features.Count, Is.EqualTo(1));
+            Assert.That(masterProject.History.Scenarios.Count, Is.EqualTo(1));
+            Assert.That(masterProject.History.Steps.Count, Is.EqualTo(1));
+
+            Assert.That(masterProject.History.Features[0].Date, Is.EqualTo(slaveProject.Date));
+            Assert.That(masterProject.History.Features[0].Passed, Is.EqualTo(1));
+
+            Assert.That(masterProject.History.Scenarios[0].Date, Is.EqualTo(slaveProject.Date));
+            Assert.That(masterProject.History.Scenarios[0].Passed, Is.EqualTo(1));
+
+            Assert.That(masterProject.History.Steps[0].Date, Is.EqualTo(slaveProject.Date));
+            Assert.That(masterProject.History.Steps[0].Passed, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void LivingDocProject_MergeExampleHistoryResults()
+        {
+            var masterProject = new LivingDocProject();
+
+            var masterFeature = new LivingDocFeature { Name = "Login" };
+            var masterScenario = new LivingDocScenario { Name = "Successful Login" };
+            var masterExample = new LivingDocExample();
+            masterExample.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            masterScenario.Examples.Add(masterExample);
+            masterFeature.Scenarios.Add(masterScenario);
+            masterProject.Features.Add(masterFeature);
+
+            var slaveProject = new LivingDocProject();
+            slaveProject.Date = DateTime.UtcNow;
+
+            var slaveFeature = new LivingDocFeature { Name = "Login" };
+            var slaveScenario = new LivingDocScenario { Name = "Successful Login" };
+            var slaveExample = new LivingDocExample();
+            slaveExample.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Failed.ToString() });
+            slaveScenario.Examples.Add(slaveExample);
+            slaveFeature.Scenarios.Add(slaveScenario);
+            slaveProject.Features.Add(slaveFeature);
+
+            masterProject.MergeExampleHistoryResults(slaveProject);
+
+            Assert.That(masterExample.History.Count, Is.EqualTo(1));
+            Assert.That(masterExample.History[0].Date, Is.EqualTo(slaveProject.Date));
+            Assert.That(masterExample.History[0].Status, Is.EqualTo(LivingDocStatuses.Failed.ToString()));
+        }
+
+        [Test]
+        public void LivingDocProject_MergeExampleHistoryResults_UnmatchedFeature_IsSkipped()
+        {
+            var masterProject = new LivingDocProject();
+
+            var masterFeature = new LivingDocFeature { Name = "Login" };
+            var masterScenario = new LivingDocScenario { Name = "Successful Login" };
+            var masterExample = new LivingDocExample();
+            masterExample.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            masterScenario.Examples.Add(masterExample);
+            masterFeature.Scenarios.Add(masterScenario);
+            masterProject.Features.Add(masterFeature);
+
+            var slaveProject = new LivingDocProject();
+            slaveProject.Date = DateTime.UtcNow;
+            slaveProject.Features.Add(new LivingDocFeature { Name = "Products" });
+
+            masterProject.MergeExampleHistoryResults(slaveProject);
+
+            Assert.That(masterExample.History.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -200,28 +296,44 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var livingDocProject = new LivingDocProject();
 
-            var historyOne = new LivingDocHistory();
+            var historyOne = new LivingDocProjectHistoryResults();
             historyOne.Date = System.DateTime.UtcNow.AddDays(-1);
-            historyOne.Features.Passed.AddRange(new[] { "F1", "F2" });
-            historyOne.Features.Failed.Add("F3");
-            historyOne.Scenarios.Passed.AddRange(new[] { "S1", "S2", "S3" });
-            historyOne.Scenarios.Incomplete.Add("S4");
-            historyOne.Steps.Passed.AddRange(new[] { "Step1", "Step2", "Step3", "Step4" });
+            historyOne.Passed = 2;
+            historyOne.Failed = 1;
 
-            var historyTwo = new LivingDocHistory();
+            var historyOneScenarios = new LivingDocProjectHistoryResults();
+            historyOneScenarios.Date = System.DateTime.UtcNow.AddDays(-1);
+            historyOneScenarios.Passed = 3;
+            historyOneScenarios.Incomplete = 1;
+
+            var historyOneSteps = new LivingDocProjectHistoryResults();
+            historyOneSteps.Date = System.DateTime.UtcNow.AddDays(-1);
+            historyOneSteps.Passed = 4;
+
+            var historyTwo = new LivingDocProjectHistoryResults();
             historyTwo.Date = System.DateTime.UtcNow;
-            historyTwo.Features.Passed.AddRange(new[] { "F4", "F5", "F6", "F7", "F8" });
-            historyTwo.Scenarios.Passed.AddRange(new[] { "S5", "S6" });
-            historyTwo.Steps.Passed.AddRange(new[] { "Step5", "Step6", "Step7", "Step8", "Step9", "Step10" });
-            historyTwo.Steps.Failed.Add("Step11");
+            historyTwo.Passed = 5;
 
-            livingDocProject.Histories.Add(historyOne);
-            livingDocProject.Histories.Add(historyTwo);
+            var historyTwoScenarios = new LivingDocProjectHistoryResults();
+            historyTwoScenarios.Date = System.DateTime.UtcNow;
+            historyTwoScenarios.Passed = 2;
 
-            Assert.That(livingDocProject.Histories.Count, Is.EqualTo(2));
-            Assert.That(livingDocProject.GetMaximumNumberOfHistoryFeatures(), Is.EqualTo(5));
-            Assert.That(livingDocProject.GetMaximumNumberOfHistoryScenarios(), Is.EqualTo(4));
-            Assert.That(livingDocProject.GetMaximumNumberOfHistorySteps(), Is.EqualTo(7));
+            var historyTwoSteps = new LivingDocProjectHistoryResults();
+            historyTwoSteps.Date = System.DateTime.UtcNow;
+            historyTwoSteps.Passed = 6;
+            historyTwoSteps.Failed = 1;
+
+            livingDocProject.History.Features.Add(historyOne);
+            livingDocProject.History.Features.Add(historyTwo);
+            livingDocProject.History.Scenarios.Add(historyOneScenarios);
+            livingDocProject.History.Scenarios.Add(historyTwoScenarios);
+            livingDocProject.History.Steps.Add(historyOneSteps);
+            livingDocProject.History.Steps.Add(historyTwoSteps);
+
+            Assert.That(livingDocProject.History.Features.Count, Is.EqualTo(2));
+            Assert.That(livingDocProject.History.GetMaximumNumberOfHistoryFeatures(), Is.EqualTo(5));
+            Assert.That(livingDocProject.History.GetMaximumNumberOfHistoryScenarios(), Is.EqualTo(4));
+            Assert.That(livingDocProject.History.GetMaximumNumberOfHistorySteps(), Is.EqualTo(7));
         }
 
         [Test]
@@ -308,23 +420,22 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var livingDocProject = new LivingDocProject();
 
-            var historyOne = new LivingDocHistory();
+            var historyOne = new LivingDocProjectHistoryResults();
             historyOne.Date = DateTime.UtcNow.AddDays(-2);
-            historyOne.Features.Failed.Add("Checkout");
-            historyOne.Features.Passed.Add("Login");
+            historyOne.Failed = 1;
+            historyOne.Passed = 1;
 
-            var historyTwo = new LivingDocHistory();
+            var historyTwo = new LivingDocProjectHistoryResults();
             historyTwo.Date = DateTime.UtcNow.AddDays(-1);
-            historyTwo.Features.Failed.Add("Checkout");
-            historyTwo.Features.Passed.Add("Login");
+            historyTwo.Failed = 1;
+            historyTwo.Passed = 1;
 
-            livingDocProject.Histories.Add(historyOne);
-            livingDocProject.Histories.Add(historyTwo);
+            livingDocProject.History.Features.Add(historyOne);
+            livingDocProject.History.Features.Add(historyTwo);
 
-            var failures = livingDocProject.GetHistoryFeatureFailures();
-
-            Assert.That(failures, Does.Contain("Checkout"));
-            Assert.That(failures, Does.Not.Contain("Login"));
+            Assert.That(livingDocProject.History.Features.Count, Is.EqualTo(2));
+            Assert.That(livingDocProject.History.Features.Sum(h => h.Failed), Is.EqualTo(2));
+            Assert.That(livingDocProject.History.Features.Sum(h => h.Passed), Is.EqualTo(2));
         }
 
         [Test]
@@ -332,29 +443,26 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var livingDocProject = new LivingDocProject();
 
-            var historyOne = new LivingDocHistory();
+            var historyOne = new LivingDocProjectHistoryResults();
             historyOne.Date = DateTime.UtcNow.AddDays(-3);
-            historyOne.Features.Failed.Add("FeatureA");
+            historyOne.Failed = 1;
 
-            var historyTwo = new LivingDocHistory();
+            var historyTwo = new LivingDocProjectHistoryResults();
             historyTwo.Date = DateTime.UtcNow.AddDays(-2);
-            historyTwo.Features.Failed.Add("FeatureA");
-            historyTwo.Features.Failed.Add("FeatureB");
+            historyTwo.Failed = 2;
 
-            var historyThree = new LivingDocHistory();
+            var historyThree = new LivingDocProjectHistoryResults();
             historyThree.Date = DateTime.UtcNow.AddDays(-1);
-            historyThree.Features.Failed.Add("FeatureA");
-            historyThree.Features.Failed.Add("FeatureB");
+            historyThree.Failed = 2;
 
-            livingDocProject.Histories.Add(historyOne);
-            livingDocProject.Histories.Add(historyTwo);
-            livingDocProject.Histories.Add(historyThree);
+            livingDocProject.History.Features.Add(historyOne);
+            livingDocProject.History.Features.Add(historyTwo);
+            livingDocProject.History.Features.Add(historyThree);
 
-            var failures = livingDocProject.GetHistoryFeatureFailures();
-
-            Assert.That(failures.Count, Is.EqualTo(2));
-            Assert.That(failures[0], Is.EqualTo("FeatureA"));
-            Assert.That(failures[1], Is.EqualTo("FeatureB"));
+            Assert.That(livingDocProject.History.Features.Count, Is.EqualTo(3));
+            Assert.That(livingDocProject.History.Features[0].Failed, Is.EqualTo(1));
+            Assert.That(livingDocProject.History.Features[1].Failed, Is.EqualTo(2));
+            Assert.That(livingDocProject.History.Features[2].Failed, Is.EqualTo(2));
         }
 
         [Test]
@@ -362,23 +470,22 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var livingDocProject = new LivingDocProject();
 
-            var historyOne = new LivingDocHistory();
+            var historyOne = new LivingDocProjectHistoryResults();
             historyOne.Date = DateTime.UtcNow.AddDays(-2);
-            historyOne.Scenarios.Failed.Add("Add Item To Basket");
-            historyOne.Scenarios.Passed.Add("View Homepage");
+            historyOne.Failed = 1;
+            historyOne.Passed = 1;
 
-            var historyTwo = new LivingDocHistory();
+            var historyTwo = new LivingDocProjectHistoryResults();
             historyTwo.Date = DateTime.UtcNow.AddDays(-1);
-            historyTwo.Scenarios.Failed.Add("Add Item To Basket");
-            historyTwo.Scenarios.Passed.Add("View Homepage");
+            historyTwo.Failed = 1;
+            historyTwo.Passed = 1;
 
-            livingDocProject.Histories.Add(historyOne);
-            livingDocProject.Histories.Add(historyTwo);
+            livingDocProject.History.Scenarios.Add(historyOne);
+            livingDocProject.History.Scenarios.Add(historyTwo);
 
-            var failures = livingDocProject.GetHistoryScenarioFailures();
-
-            Assert.That(failures, Does.Contain("Add Item To Basket"));
-            Assert.That(failures, Does.Not.Contain("View Homepage"));
+            Assert.That(livingDocProject.History.Scenarios.Count, Is.EqualTo(2));
+            Assert.That(livingDocProject.History.Scenarios.Sum(h => h.Failed), Is.EqualTo(2));
+            Assert.That(livingDocProject.History.Scenarios.Sum(h => h.Passed), Is.EqualTo(2));
         }
 
         [Test]
@@ -386,50 +493,54 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var livingDocProject = new LivingDocProject();
 
-            var historyOne = new LivingDocHistory();
+            var historyOne = new LivingDocProjectHistoryResults();
             historyOne.Date = DateTime.UtcNow.AddDays(-2);
-            historyOne.Steps.Failed.Add("When I click the submit button");
-            historyOne.Steps.Passed.Add("Given I am on the homepage");
+            historyOne.Failed = 1;
+            historyOne.Passed = 1;
 
-            var historyTwo = new LivingDocHistory();
+            var historyTwo = new LivingDocProjectHistoryResults();
             historyTwo.Date = DateTime.UtcNow.AddDays(-1);
-            historyTwo.Steps.Failed.Add("When I click the submit button");
-            historyTwo.Steps.Passed.Add("Given I am on the homepage");
+            historyTwo.Failed = 1;
+            historyTwo.Passed = 1;
 
-            livingDocProject.Histories.Add(historyOne);
-            livingDocProject.Histories.Add(historyTwo);
+            livingDocProject.History.Steps.Add(historyOne);
+            livingDocProject.History.Steps.Add(historyTwo);
 
-            var failures = livingDocProject.GetHistoryStepFailures();
-
-            Assert.That(failures, Does.Contain("When I click the submit button"));
-            Assert.That(failures, Does.Not.Contain("Given I am on the homepage"));
+            Assert.That(livingDocProject.History.Steps.Count, Is.EqualTo(2));
+            Assert.That(livingDocProject.History.Steps.Sum(h => h.Failed), Is.EqualTo(2));
+            Assert.That(livingDocProject.History.Steps.Sum(h => h.Passed), Is.EqualTo(2));
         }
 
         [Test]
-        public void LivingDocProject_GetHistoryFailures_With_No_Faliures()
+        public void LivingDocProject_GetHistoryFailures_With_No_Failures()
         {
             var livingDocProject = new LivingDocProject();
 
-            var history = new LivingDocHistory();
-            history.Date = DateTime.UtcNow.AddDays(-1);
+            var featuresHistory = new LivingDocProjectHistoryResults();
+            featuresHistory.Date = DateTime.UtcNow.AddDays(-1);
+            featuresHistory.Skipped = 1;
+            featuresHistory.Passed = 1;
+            featuresHistory.Incomplete = 1;
 
-            history.Features.Skipped.Add("SlowFeature");
-            history.Features.Passed.Add("StableFeature");
-            history.Features.Incomplete.Add("IncompleteFeature");
+            var scenariosHistory = new LivingDocProjectHistoryResults();
+            scenariosHistory.Date = DateTime.UtcNow.AddDays(-1);
+            scenariosHistory.Skipped = 1;
+            scenariosHistory.Passed = 1;
+            scenariosHistory.Incomplete = 1;
 
-            history.Scenarios.Skipped.Add("Skipped Scenario");
-            history.Scenarios.Passed.Add("Stable Scenario");
-            history.Scenarios.Incomplete.Add("Incomplete Scenario");
+            var stepsHistory = new LivingDocProjectHistoryResults();
+            stepsHistory.Date = DateTime.UtcNow.AddDays(-1);
+            stepsHistory.Skipped = 1;
+            stepsHistory.Passed = 1;
+            stepsHistory.Incomplete = 1;
 
-            history.Steps.Skipped.Add("Given everything is skipped");
-            history.Steps.Passed.Add("Given everything is fine");
-            history.Steps.Incomplete.Add("Given everything is incomplete");
+            livingDocProject.History.Features.Add(featuresHistory);
+            livingDocProject.History.Scenarios.Add(scenariosHistory);
+            livingDocProject.History.Steps.Add(stepsHistory);
 
-            livingDocProject.Histories.Add(history);
-
-            Assert.That(livingDocProject.GetHistoryFeatureFailures(), Is.Empty);
-            Assert.That(livingDocProject.GetHistoryScenarioFailures(), Is.Empty);
-            Assert.That(livingDocProject.GetHistoryStepFailures(), Is.Empty);
+            Assert.That(livingDocProject.History.Features.Sum(h => h.Failed), Is.EqualTo(0));
+            Assert.That(livingDocProject.History.Scenarios.Sum(h => h.Failed), Is.EqualTo(0));
+            Assert.That(livingDocProject.History.Steps.Sum(h => h.Failed), Is.EqualTo(0));
         }
 
         [Test]
@@ -446,6 +557,85 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocProject = new LivingDocProject();
 
             Assert.That(livingDocProject.GetApplicationVersion(), Is.Not.Null);
+        }
+
+        // Non-patterns
+        [TestCase(null, null, null, "Passed", null)]
+        [TestCase(null, null, null, "Incomplete", null)]
+        [TestCase(null, null, null, "Failed", null)]
+        [TestCase(null, null, null, "Skipped", null)]
+
+        // Fixed patterns
+        [TestCase(null, null, "Skipped", "Passed", "Fixed")]
+        [TestCase(null, null, "Incomplete", "Passed", "Fixed")]
+        [TestCase(null, null, "Failed", "Passed", "Fixed")]
+        [TestCase(null, "Failed", "Failed", "Passed", "Fixed")]
+        [TestCase("Failed", "Failed", "Failed", "Passed", "Fixed")]
+        [TestCase("Failed", "Skipped", "Failed", "Passed", "Fixed")]
+        [TestCase("Incomplete", "Skipped", "Failed", "Passed", "Fixed")]
+
+        // Regressed patterns
+        [TestCase(null, null, "Passed", "Failed", "Regressed")]
+        [TestCase(null, "Passed", "Passed", "Failed", "Regressed")]
+        [TestCase("Passed", "Passed", "Passed", "Failed", "Regressed")]
+        [TestCase("Passed", "Skipped", "Passed", "Failed", "Regressed")]
+        [TestCase("Skipped", "Incomplete", "Passed", "Failed", "Regressed")]
+
+        // New Broken patterns
+        [TestCase(null, null, "Skipped", "Failed", "Broken")]
+        [TestCase(null, null, "Incomplete", "Failed", "Broken")]
+        [TestCase(null, "Skipped", "Skipped", "Failed", "Broken")]
+        [TestCase(null, "Incomplete", "Incomplete", "Failed", "Broken")]
+        [TestCase("Passed", "Failed", "Incomplete", "Failed", "Flaky")]
+        [TestCase("Passed", "Failed", "Skipped", "Failed", "Flaky")]
+
+        // Still broken patterns
+        [TestCase(null, null, "Failed", "Failed", "Broken")]
+        [TestCase(null, "Failed", "Failed", "Failed", "Broken")]
+        [TestCase("Failed", "Failed", "Failed", "Failed", "Broken")]
+        [TestCase("Skipped", "Skipped", "Skipped", "Failed", "Broken")]
+
+        // Flaky patterns
+        [TestCase(null, "Failed", "Passed", "Failed", "Flaky")]
+        [TestCase("Passed", "Failed", "Passed", "Failed", "Flaky")]
+        [TestCase("Skipped", "Failed", "Passed", "Failed", "Flaky")]
+        [TestCase("Incomplete", "Failed", "Passed", "Failed", "Flaky")]
+        [TestCase(null, "Passed", "Failed", "Failed", "Flaky")]
+        [TestCase("Passed", "Passed", "Failed", "Failed", "Flaky")]
+
+        // Edge Flaky patterns
+        [TestCase("Failed", "Skipped", "Passed", "Failed", "Flaky")]
+        [TestCase("Failed", "Incomplete", "Passed", "Failed", "Flaky")]
+        [TestCase("Failed", "Passed", "Skipped", "Failed", "Flaky")]
+        [TestCase("Failed", "Passed", "Incomplete", "Failed", "Flaky")]
+
+        public void LivingDocProject_MergeScenarioHistoryHealth(string prior, string oldest, string previous, string newest, string health)
+        {
+            var project = new LivingDocProject();
+
+            var feature = new LivingDocFeature { Name = "Payments" };
+            var scenario = new LivingDocScenario { Name = "Scenario One" };
+            var example = new LivingDocExample();
+
+            if (!string.IsNullOrEmpty(prior))
+                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow.AddDays(-3), Status = prior });
+
+            if (!string.IsNullOrEmpty(oldest))
+                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow.AddDays(-2), Status = oldest });
+
+            if (!string.IsNullOrEmpty(previous))
+                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow.AddDays(-1), Status = previous });
+
+            if (!string.IsNullOrEmpty(newest))
+                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow, Status = newest });
+
+            scenario.Examples.Add(example);
+            feature.Scenarios.Add(scenario);
+            project.Features.Add(feature);
+
+            project.MergeScenarioHistoryHealth();
+
+            Assert.That(scenario.Health, Is.EqualTo(health));
         }
     }
 }

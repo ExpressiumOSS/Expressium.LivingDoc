@@ -13,6 +13,7 @@ namespace Expressium.LivingDoc.Models
         public string Name { get; set; }
         public string Keyword { get; set; }
         public int Order { get; set; }
+        public string Health { get; set; }
 
         public List<LivingDocExample> Examples { get; set; }
 
@@ -27,7 +28,15 @@ namespace Expressium.LivingDoc.Models
 
         public string GetTags()
         {
-            return string.Join(" ", Tags);
+            var tags = string.Join(" ", Tags);
+
+            if (Health != null)
+            {
+                var healthTag = "@" + Health;
+                tags = string.IsNullOrWhiteSpace(tags) ? healthTag : tags + " " + healthTag;
+            }
+
+            return tags;
         }
 
         public string GetStatus()
@@ -137,6 +146,31 @@ namespace Expressium.LivingDoc.Models
         public string GetOrderSortId()
         {
             return Order.ToString("D4");
+        }
+
+        public bool HasHealth()
+        {
+            return Health != null;
+        }
+
+        public bool IsBroken()
+        {
+            return Health == LivingDocHealths.Broken.ToString();
+        }
+
+        public bool IsRegressed()
+        {
+            return Health == LivingDocHealths.Regressed.ToString();
+        }
+
+        public bool IsFlaky()
+        {
+            return Health == LivingDocHealths.Flaky.ToString();
+        }
+
+        public bool IsFixed()
+        {
+            return Health == LivingDocHealths.Fixed.ToString();
         }
 
         public bool HasDataTable()

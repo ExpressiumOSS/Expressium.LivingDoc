@@ -166,6 +166,7 @@ namespace Expressium.LivingDoc.Generators
                         listOfLines.AddRange(GenerateDataScenarioSteps(example));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
                         listOfLines.AddRange(GenerateDataScenarioAttachments(example));
+                        listOfLines.AddRange(GenerateDataScenarioHistory(example));
                         listOfLines.Add("</div>");
                         listOfLines.Add("<hr>");
                     }
@@ -257,6 +258,9 @@ namespace Expressium.LivingDoc.Generators
             foreach (var tag in scenario.Tags)
                 listOfLines.Add("<span class='scenario-tag'>" + tag + "</span>");
 
+            if (scenario.HasHealth())
+                listOfLines.Add($"<span class='scenario-tag color-{scenario.Health.ToLower()}'>@{scenario.Health}</span>");
+
             listOfLines.Add("</div>");
 
             return listOfLines;
@@ -291,6 +295,9 @@ namespace Expressium.LivingDoc.Generators
 
             if (example.Attachments.Count > 0)
                 listOfLines.Add("<button class='scenario-attachments bi bi-list' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></button>");
+
+            if (example.History.Count > 0)
+                listOfLines.Add("<button class='scenario-history bi bi-calendar4' title='Toggle History' onclick=\"toggleHistory(this)\"></button>");
 
             listOfLines.Add("</div>");
 
@@ -361,7 +368,7 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<li>");
 
-            if (project.ExperimentFlag)
+            if (project.ExperimentFlagSymbols)
             {
                 ///////////////////////////////////////////////////////
                 // Alternative visualization with Bootstrap icons...
@@ -514,7 +521,7 @@ namespace Expressium.LivingDoc.Generators
             {
                 listOfLines.Add("<!-- Data Scenario Attachments -->");
                 listOfLines.Add($"<div class='attachments' style='display: none;'>");
-                listOfLines.Add($"<span class='attachments-keyword'>Attachments:</span>");
+                listOfLines.Add($"<span class='attachments-keyword'>Attachments</span>");
                 listOfLines.Add("<ul class='attachments-files'>");
 
                 foreach (var attachment in example.Attachments)
@@ -525,6 +532,27 @@ namespace Expressium.LivingDoc.Generators
 
                     listOfLines.Add($"<li><a target='_blank' href='{attachment}'>{filePath}</a></li>");
                 }
+
+                listOfLines.Add("</ul>");
+                listOfLines.Add("</div>");
+            }
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataScenarioHistory(LivingDocExample example)
+        {
+            var listOfLines = new List<string>();
+
+            if (example.History.Count > 0)
+            {
+                listOfLines.Add("<!-- Data Scenario History -->");
+                listOfLines.Add($"<div class='history' style='display: none;'>");
+                listOfLines.Add($"<span class='history-keyword'>History</span>");
+                listOfLines.Add("<ul class='history-files'>");
+
+                foreach (var history in example.History)
+                    listOfLines.Add($"<li><span class='status-dot bgcolor-{history.Status.ToLower()}'></span> {history.GetDate()}</li>");
 
                 listOfLines.Add("</ul>");
                 listOfLines.Add("</div>");

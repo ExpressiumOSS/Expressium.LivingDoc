@@ -1,4 +1,4 @@
-﻿using Expressium.LivingDoc.Models;
+using Expressium.LivingDoc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +26,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Features.ToString()));
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
-
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Features.ToString()));
-            listOfLines.AddRange(GenerateDataAnalyticsFailures(AnalyticsType.Features.ToString()));
 
             listOfLines.Add("</div>");
 
@@ -45,9 +43,15 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Scenarios.ToString()));
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
-
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Scenarios.ToString()));
-            listOfLines.AddRange(GenerateDataAnalyticsFailures(AnalyticsType.Scenarios.ToString()));
+
+            if (project.ExperimentFlagHealth)
+            {
+#if DEBUG
+                listOfLines.AddRange(GenerateDataAnalyticsHealths());
+                listOfLines.AddRange(GenerateDataAnalyticsFailures());
+#endif
+            }
 
             listOfLines.Add("</div>");
 
@@ -64,9 +68,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Steps.ToString()));
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
-
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Steps.ToString()));
-            listOfLines.AddRange(GenerateDataAnalyticsFailures(AnalyticsType.Steps.ToString()));
 
             listOfLines.Add("</div>");
 
@@ -246,19 +248,24 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            if (project.Histories.Count < 2)
+            int numberOfTotals = 0;
+            if (type == AnalyticsType.Features.ToString())
+                numberOfTotals = project.History.GetMaximumNumberOfHistoryFeatures();
+            else if (type == AnalyticsType.Scenarios.ToString())
+                numberOfTotals = project.History.GetMaximumNumberOfHistoryScenarios();
+            else if (type == AnalyticsType.Steps.ToString())
+                numberOfTotals = project.History.GetMaximumNumberOfHistorySteps();
+
+            if (numberOfTotals < 2)
                 return listOfLines;
 
-            int numberOfTotals = 0;
-
+            List<LivingDocProjectHistoryResults> historyResults = null;
             if (type == AnalyticsType.Features.ToString())
-                numberOfTotals = project.GetMaximumNumberOfHistoryFeatures();
+                historyResults = project.History.Features;
             else if (type == AnalyticsType.Scenarios.ToString())
-                numberOfTotals = project.GetMaximumNumberOfHistoryScenarios();
+                historyResults = project.History.Scenarios;
             else if (type == AnalyticsType.Steps.ToString())
-                numberOfTotals = project.GetMaximumNumberOfHistorySteps();
-
-            var sortedHistories = project.Histories.OrderBy(x => x.Date);
+                historyResults = project.History.Steps;
 
             listOfLines.Add("<hr>");
 
@@ -280,7 +287,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<tr><td></td></tr>");
 
             int rowIndex = 1;
-            foreach (var history in sortedHistories)
+            foreach (var history in historyResults)
             {
                 var percentageOfPassed = 0;
                 var percentageOfIncomplete = 0;
@@ -289,24 +296,24 @@ namespace Expressium.LivingDoc.Generators
 
                 if (type == AnalyticsType.Features.ToString())
                 {
-                    percentageOfPassed = CalculatePercentage(history.Features.GetNumberOfPassed(), numberOfTotals);
-                    percentageOfIncomplete = CalculatePercentage(history.Features.GetNumberOfIncomplete(), numberOfTotals);
-                    percentageOfFailed = CalculatePercentage(history.Features.GetNumberOfFailed(), numberOfTotals);
-                    percentageOfSkipped = CalculatePercentage(history.Features.GetNumberOfSkipped(), numberOfTotals);
+                    percentageOfPassed = CalculatePercentage(history.Passed, numberOfTotals);
+                    percentageOfIncomplete = CalculatePercentage(history.Incomplete, numberOfTotals);
+                    percentageOfFailed = CalculatePercentage(history.Failed, numberOfTotals);
+                    percentageOfSkipped = CalculatePercentage(history.Skipped, numberOfTotals);
                 }
                 else if (type == AnalyticsType.Scenarios.ToString())
                 {
-                    percentageOfPassed = CalculatePercentage(history.Scenarios.GetNumberOfPassed(), numberOfTotals);
-                    percentageOfIncomplete = CalculatePercentage(history.Scenarios.GetNumberOfIncomplete(), numberOfTotals);
-                    percentageOfFailed = CalculatePercentage(history.Scenarios.GetNumberOfFailed(), numberOfTotals);
-                    percentageOfSkipped = CalculatePercentage(history.Scenarios.GetNumberOfSkipped(), numberOfTotals);
+                    percentageOfPassed = CalculatePercentage(history.Passed, numberOfTotals);
+                    percentageOfIncomplete = CalculatePercentage(history.Incomplete, numberOfTotals);
+                    percentageOfFailed = CalculatePercentage(history.Failed, numberOfTotals);
+                    percentageOfSkipped = CalculatePercentage(history.Skipped, numberOfTotals);
                 }
                 else if (type == AnalyticsType.Steps.ToString())
                 {
-                    percentageOfPassed = CalculatePercentage(history.Steps.GetNumberOfPassed(), numberOfTotals);
-                    percentageOfIncomplete = CalculatePercentage(history.Steps.GetNumberOfIncomplete(), numberOfTotals);
-                    percentageOfFailed = CalculatePercentage(history.Steps.GetNumberOfFailed(), numberOfTotals);
-                    percentageOfSkipped = CalculatePercentage(history.Steps.GetNumberOfSkipped(), numberOfTotals);
+                    percentageOfPassed = CalculatePercentage(history.Passed, numberOfTotals);
+                    percentageOfIncomplete = CalculatePercentage(history.Incomplete, numberOfTotals);
+                    percentageOfFailed = CalculatePercentage(history.Failed, numberOfTotals);
+                    percentageOfSkipped = CalculatePercentage(history.Skipped, numberOfTotals);
                 }
 
                 AdjustPercentagesDiscrepancy(ref percentageOfPassed, ref percentageOfIncomplete, ref percentageOfFailed, ref percentageOfSkipped);
@@ -337,23 +344,64 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsFailures(string type)
+        internal List<string> GenerateDataAnalyticsHealths()
         {
             var listOfLines = new List<string>();
 
-            if (project.Histories.Count < 2)
+            var hasHealth = project.Features.SelectMany(f => f.Scenarios).Any(s => s != null);
+            if (!hasHealth)
                 return listOfLines;
 
-            var historyFailureNames = new List<string>();
-            if (type == AnalyticsType.Features.ToString())
-                historyFailureNames = project.GetHistoryFeatureFailures();
-            else if (type == AnalyticsType.Scenarios.ToString())
-                historyFailureNames = project.GetHistoryScenarioFailures();
-            else if (type == AnalyticsType.Steps.ToString())
-                historyFailureNames = project.GetHistoryStepFailures();
+            listOfLines.Add("<hr>");
 
-            if (historyFailureNames.Count == 0)
-                return listOfLines;
+            listOfLines.Add("<!-- Data Analytics Healths Chart -->");
+            listOfLines.Add("<div class='section analytics-healths'>");
+            listOfLines.Add("<span class='chart-name'>Healths</span>");
+            listOfLines.Add("<div class='section'>");
+
+            listOfLines.Add("<table class='analytics-list'>");
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<th>Name</th>");
+            listOfLines.Add("<th align='center' style='text-align: center'>Health</th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+            listOfLines.Add("<tbody>");
+
+            foreach (var feature in project.Features)
+            {
+                foreach (var scenario in feature.Scenarios)
+                {
+                    if (scenario.HasHealth())
+                    {
+                        listOfLines.Add($"<tr class='grid-border' data-role='scenario' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                        listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
+
+                        if (scenario.IsFixed())
+                            listOfLines.Add($"<td class='history-passed'>{LivingDocHealths.Fixed.ToString()}</td>");
+                        else if (scenario.IsBroken())
+                            listOfLines.Add($"<td class='history-failed'>{LivingDocHealths.Broken.ToString()}</td>");
+                        else if (scenario.IsRegressed())
+                            listOfLines.Add($"<td class='history-failed'>{LivingDocHealths.Regressed.ToString()}</td>");
+                        else if (scenario.IsFlaky())
+                            listOfLines.Add($"<td class='history-failed'>{LivingDocHealths.Flaky.ToString()}</td>");
+
+                        listOfLines.Add("</tr>");
+                    }
+                }
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataAnalyticsFailures()
+        {
+            var listOfLines = new List<string>();
 
             listOfLines.Add("<hr>");
 
@@ -367,64 +415,60 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<tr>");
             listOfLines.Add("<th>Name</th>");
 
-            for (int i = 1; i < project.Histories.Count + 1; i++)
+            var listOfDates = project.History.Scenarios.Select(x => x.GetDate()).Distinct();
+
+            for (int i = 1; i < listOfDates.Count() + 1; i++)
                 listOfLines.Add($"<th align='center' style='text-align: center'>{i}</th>");
+            listOfLines.Add($"<th align='center' style='text-align: center'>Health</th>");
 
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody>");
 
-            var orderedHistories = project.Histories.OrderBy(x => x.Date);
-
-            foreach (var failureName in historyFailureNames)
+            foreach (var feature in project.Features)
             {
-                listOfLines.Add("<tr>");
-                listOfLines.Add($"<td>{failureName}</td>");
-
-                foreach (var history in orderedHistories)
+                foreach (var scenario in feature.Scenarios)
                 {
-                    var listOfPassed = new List<string>();
-                    var listOfIncomplete = new List<string>();
-                    var listOfFailed = new List<string>();
-                    var listOfSkipped = new List<string>();
+                    if (scenario.HasHealth())
+                    {
+                        foreach (var example in scenario.Examples)
+                        {
+                            listOfLines.Add("<tr>");
+                            listOfLines.Add($"<td>{scenario.Name}</td>");
 
-                    if (type == AnalyticsType.Features.ToString())
-                    {
-                        listOfPassed = history.Features.Passed;
-                        listOfIncomplete = history.Features.Incomplete;
-                        listOfFailed = history.Features.Failed;
-                        listOfSkipped = history.Features.Skipped;
-                    }
-                    else if (type == AnalyticsType.Scenarios.ToString())
-                    {
-                        listOfPassed = history.Scenarios.Passed;
-                        listOfIncomplete = history.Scenarios.Incomplete;
-                        listOfFailed = history.Scenarios.Failed;
-                        listOfSkipped = history.Scenarios.Skipped;
-                    }
-                    else if (type == AnalyticsType.Steps.ToString())
-                    {
-                        listOfPassed = history.Steps.Passed;
-                        listOfIncomplete = history.Steps.Incomplete;
-                        listOfFailed = history.Steps.Failed;
-                        listOfSkipped = history.Steps.Skipped;
-                    }
+                            foreach (var date in listOfDates)
+                            {
+                                var hasHistory = false;
+                                foreach (var history in example.History)
+                                {
+                                    if (history.GetDate() == date)
+                                    {
+                                        if (history.Status == LivingDocStatuses.Failed.ToString())
+                                            listOfLines.Add($"<td class='history-failed'>Failed</td>");
+                                        else if (history.Status == LivingDocStatuses.Passed.ToString())
+                                            listOfLines.Add($"<td class='history-passed'>Passed</td>");
+                                        else if (history.Status == LivingDocStatuses.Incomplete.ToString())
+                                            listOfLines.Add($"<td class='history-incomplete'>Incomplete</td>");
+                                        else if (history.Status == LivingDocStatuses.Skipped.ToString())
+                                            listOfLines.Add($"<td class='history-skipped'>Skipped</td>");
+                                        else
+                                        {
+                                            listOfLines.Add($"<td class='history-unknown'></td>");
+                                        }
 
-                    if (listOfFailed.Contains(failureName))
-                        listOfLines.Add($"<td class='history-failed'>Failed</td>");
-                    else if (listOfPassed.Contains(failureName))
-                        listOfLines.Add($"<td class='history-passed'>Passed</td>");
-                    else if (listOfIncomplete.Contains(failureName))
-                        listOfLines.Add($"<td class='history-incomplete'>Incomplete</td>");
-                    else if (listOfSkipped.Contains(failureName))
-                        listOfLines.Add($"<td class='history-skipped'>Skipped</td>");
-                    else
-                    {
-                        listOfLines.Add($"<td class='history-unknown'></td>");
+                                        hasHistory = true;
+                                    }
+                                }
+
+                                if (!hasHistory)
+                                    listOfLines.Add($"<td class='history-unknown'></td>");
+                            }
+
+                            listOfLines.Add($"<td class='history-skipped'>{scenario.Health}</td>");
+                            listOfLines.Add("</tr>");
+                        }
                     }
                 }
-
-                listOfLines.Add("</tr>");
             }
 
             listOfLines.Add("</tbody>");

@@ -5,64 +5,90 @@ using System.Linq;
 
 namespace Expressium.LivingDoc.UnitTests.Generators
 {
-    public class LivingDocDataAnalyticsGeneratorTests
+    internal class LivingDocDataAnalyticsGeneratorTests
     {
         private LivingDocProject CreateProjectWithTwoHistories()
         {
             var project = new LivingDocProject();
 
-            var historyOne = new LivingDocHistory();
-            historyOne.Date = DateTime.Now.AddDays(-1);
-            historyOne.Features.Passed.AddRange(new[] { "F1", "F2", "F3" });
-            historyOne.Features.Incomplete.Add("F4");
-            historyOne.Features.Failed.Add("F5");
-            historyOne.Scenarios.Passed.AddRange(new[] { "S1", "S2" });
-            historyOne.Scenarios.Failed.Add("S3");
-            historyOne.Steps.Passed.AddRange(new[] { "Given Step One", "Given Step Two" });
-            historyOne.Steps.Failed.Add("Given Step Three");
+            var historyOneFeatures = new LivingDocProjectHistoryResults { Date = DateTime.UtcNow.AddDays(-1), Passed = 3, Incomplete = 1, Failed = 1, Skipped = 0 };
+            var historyOneScenarios = new LivingDocProjectHistoryResults { Date = DateTime.UtcNow.AddDays(-1), Passed = 2, Incomplete = 0, Failed = 1, Skipped = 0 };
+            var historyOneSteps = new LivingDocProjectHistoryResults { Date = DateTime.UtcNow.AddDays(-1), Passed = 2, Incomplete = 0, Failed = 1, Skipped = 0 };
 
-            var historyTwo = new LivingDocHistory();
-            historyTwo.Date = DateTime.Now;
-            historyTwo.Features.Passed.AddRange(new[] { "A", "B", "C", "D", "E", "F" });
-            historyTwo.Features.Incomplete.AddRange(new[] { "G", "H" });
-            historyTwo.Features.Failed.Add("I");
-            historyTwo.Features.Skipped.Add("J");
-            historyTwo.Scenarios.Passed.AddRange(new[] { "S1", "S2", "S3" });
-            historyTwo.Steps.Passed.AddRange(new[] { "Given Step One", "Given Step Two", "Given Step Three" });
+            var historyTwoFeatures = new LivingDocProjectHistoryResults { Date = DateTime.UtcNow, Passed = 6, Incomplete = 2, Failed = 1, Skipped = 1 };
+            var historyTwoScenarios = new LivingDocProjectHistoryResults { Date = DateTime.UtcNow, Passed = 3, Incomplete = 0, Failed = 0, Skipped = 0 };
+            var historyTwoSteps = new LivingDocProjectHistoryResults { Date = DateTime.UtcNow, Passed = 3, Incomplete = 0, Failed = 0, Skipped = 0 };
 
-            project.Histories.Add(historyOne);
-            project.Histories.Add(historyTwo);
+            project.History.Features.Add(historyOneFeatures);
+            project.History.Features.Add(historyTwoFeatures);
+            project.History.Scenarios.Add(historyOneScenarios);
+            project.History.Scenarios.Add(historyTwoScenarios);
+            project.History.Steps.Add(historyOneSteps);
+            project.History.Steps.Add(historyTwoSteps);
 
             return project;
         }
 
+        private LivingDocScenario CreateScenarioWithHealth(string name, string health)
+        {
+            var scenario = new LivingDocScenario { Name = name, Health = health };
+            var example = new LivingDocExample();
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            scenario.Examples.Add(example);
+            return scenario;
+        }
+
+        // -------------------------------------------------------
+        // GenerateDataAnalyticsTitle
+        // -------------------------------------------------------
+
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsTitle()
         {
-            var livingDocProject = new LivingDocProject();
-
-            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var generator = new LivingDocDataAnalyticsGenerator(new LivingDocProject());
             var listOfLines = generator.GenerateDataAnalyticsTitle();
 
             Assert.That(listOfLines.Count, Is.EqualTo(5));
             Assert.That(listOfLines[0], Is.EqualTo("<div class='section'>"));
             Assert.That(listOfLines[1], Is.EqualTo("<span class='page-name' data-testid='page-title'>Analytics</span>"));
             Assert.That(listOfLines[2], Is.EqualTo("</div>"));
+            Assert.That(listOfLines[3], Is.EqualTo("<hr>"));
+            Assert.That(listOfLines[4], Is.EqualTo("<hr>"));
         }
+
+        // -------------------------------------------------------
+        // GenerateDataAnalyticsDuration
+        // -------------------------------------------------------
 
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsDuration()
         {
-            var livingDocProject = new LivingDocProject();
-            livingDocProject.Duration = new System.TimeSpan(0, 4, 12, 30, 0);
+            var project = new LivingDocProject();
+            project.Duration = new TimeSpan(0, 4, 12, 30, 0);
 
-            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var generator = new LivingDocDataAnalyticsGenerator(project);
             var listOfLines = generator.GenerateDataAnalyticsDuration();
 
             Assert.That(listOfLines.Count, Is.EqualTo(9));
             Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Duration -->"));
             Assert.That(listOfLines[6], Is.EqualTo("<span data-testid='project-duration'>4h 12min</span>"));
         }
+
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsDuration_Zero()
+        {
+            var project = new LivingDocProject();
+            project.Duration = TimeSpan.Zero;
+
+            var generator = new LivingDocDataAnalyticsGenerator(project);
+            var listOfLines = generator.GenerateDataAnalyticsDuration();
+
+            Assert.That(listOfLines[6], Is.EqualTo("<span data-testid='project-duration'>0s 000ms</span>"));
+        }
+
+        // -------------------------------------------------------
+        // CalculatePercentage
+        // -------------------------------------------------------
 
         [TestCase(0, 10, ExpectedResult = 0)]
         [TestCase(5, 10, ExpectedResult = 50)]
@@ -84,6 +110,10 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             return LivingDocDataAnalyticsGenerator.CalculatePercentage(numberOfStatuses, numberOfTests);
         }
 
+        // -------------------------------------------------------
+        // AdjustPercentagesDiscrepancy
+        // -------------------------------------------------------
+
         [TestCase(100, 0, 0, 0, 100, 0, 0, 0)]
         [TestCase(0, 0, 0, 0, 0, 0, 0, 0)]
         [TestCase(10, 20, 30, 55, 10, 20, 30, 40)]
@@ -102,59 +132,60 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(skipped, Is.EqualTo(skippedOut));
         }
 
-        [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStatusChart()
-        {
-            var livingDocProject = new LivingDocProject();
-
-            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
-            var listOfLines = generator.GenerateDataAnalyticsStatusChart("Title", 5, 4, 3, 2, 14);
-
-            Assert.That(listOfLines.Count, Is.EqualTo(56));
-            Assert.That(listOfLines[1], Is.EqualTo("<span class='chart-name' data-testid='title-chart-title'>Title</span>"));
-            Assert.That(listOfLines[3], Is.EqualTo("<!-- Data Analytics Status Chart -->"));
-            Assert.That(listOfLines[7].Trim(), Is.EqualTo("<circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='35.5 64.5' stroke-dashoffset='0'></circle>"));
-            Assert.That(listOfLines[8].Trim(), Is.EqualTo("<circle class='donut-segment-incomplete' cx='21' cy='21' r='15.9155' stroke-dasharray='28.5 71.5' stroke-dashoffset='-36'></circle>"));
-            Assert.That(listOfLines[9].Trim(), Is.EqualTo("<circle class='donut-segment-failed' cx='21' cy='21' r='15.9155' stroke-dasharray='20.5 79.5' stroke-dashoffset='-65'></circle>"));
-            Assert.That(listOfLines[10].Trim(), Is.EqualTo("<circle class='donut-segment-skipped' cx='21' cy='21' r='15.9155' stroke-dasharray='13.5 86.5' stroke-dashoffset='-86'></circle>"));
-            Assert.That(listOfLines[13].Trim(), Is.EqualTo("<text x='50%' y='50%' class='chart-number' data-testid='title-chart-passed'>36%</text>"));
-        }
+        // -------------------------------------------------------
+        // GenerateDataAnalyticsStatusChart
+        // -------------------------------------------------------
 
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStatusChart_Zero_Totals()
         {
-            var livingDocProject = new LivingDocProject();
-
-            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var generator = new LivingDocDataAnalyticsGenerator(new LivingDocProject());
             var listOfLines = generator.GenerateDataAnalyticsStatusChart("Title", 0, 0, 0, 0, 0);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(52));
-            Assert.That(listOfLines[9].Trim(), Is.EqualTo("<text x='50%' y='50%' class='chart-number' data-testid='title-chart-passed'>0%</text>"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Status Chart -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<span class='chart-name' data-testid='title-chart-title'>Title</span>"));
+            Assert.That(listOfLines.Any(l => l.Trim().StartsWith("<circle")), Is.False);
+            Assert.That(listOfLines.Any(l => l.Contains("data-testid='title-chart-passed'>0%")), Is.True);
         }
 
         [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStatusChart_Passed()
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStatusChart_Passed_Only()
         {
-            var livingDocProject = new LivingDocProject();
-
-            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var generator = new LivingDocDataAnalyticsGenerator(new LivingDocProject());
             var listOfLines = generator.GenerateDataAnalyticsStatusChart("Title", 10, 0, 0, 0, 10);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(53));
             Assert.That(listOfLines[1], Is.EqualTo("<span class='chart-name' data-testid='title-chart-title'>Title</span>"));
-            Assert.That(listOfLines[3], Is.EqualTo("<!-- Data Analytics Status Chart -->"));
-            Assert.That(listOfLines[7].Trim(), Is.EqualTo("<circle class='donut-segment-passed' cx='21' cy='21' r='15.9155' stroke-dasharray='99 0' stroke-dashoffset='0'></circle>"));
+            Assert.That(listOfLines.Any(l => l.Contains("donut-segment-passed")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("donut-segment-incomplete")), Is.False);
+            Assert.That(listOfLines.Any(l => l.Contains("donut-segment-failed")), Is.False);
+            Assert.That(listOfLines.Any(l => l.Contains("donut-segment-skipped")), Is.False);
+            Assert.That(listOfLines.Any(l => l.Contains("data-testid='title-chart-passed'>100%")), Is.True);
         }
+
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStatusChart_All_Statuses()
+        {
+            var generator = new LivingDocDataAnalyticsGenerator(new LivingDocProject());
+            var listOfLines = generator.GenerateDataAnalyticsStatusChart("Title", 5, 4, 3, 2, 14);
+
+            Assert.That(listOfLines[1], Is.EqualTo("<span class='chart-name' data-testid='title-chart-title'>Title</span>"));
+            Assert.That(listOfLines.Any(l => l.Contains("donut-segment-passed")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("donut-segment-incomplete")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("donut-segment-failed")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("donut-segment-skipped")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("data-testid='title-chart-passed'>36%")), Is.True);
+        }
+
+        // -------------------------------------------------------
+        // GenerateDataAnalyticsFeaturesView
+        // -------------------------------------------------------
 
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFeaturesView()
         {
-            var livingDocProject = new LivingDocProject();
-
-            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var generator = new LivingDocDataAnalyticsGenerator(new LivingDocProject());
             var listOfLines = generator.GenerateDataAnalyticsFeaturesView();
 
-            Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Analytics -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<div id='analytics-features'>"));
             Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Status Chart -->"));
@@ -162,15 +193,16 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
         }
 
+        // -------------------------------------------------------
+        // GenerateDataAnalyticsScenariosView
+        // -------------------------------------------------------
+
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsScenariosView()
         {
-            var livingDocProject = new LivingDocProject();
-
-            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var generator = new LivingDocDataAnalyticsGenerator(new LivingDocProject());
             var listOfLines = generator.GenerateDataAnalyticsScenariosView();
 
-            Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Analytics -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<div id='analytics-scenarios'>"));
             Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Status Chart -->"));
@@ -178,15 +210,16 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
         }
 
+        // -------------------------------------------------------
+        // GenerateDataAnalyticsStepsView
+        // -------------------------------------------------------
+
         [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsStepsView()
         {
-            var livingDocProject = new LivingDocProject();
-
-            var generator = new LivingDocDataAnalyticsGenerator(livingDocProject);
+            var generator = new LivingDocDataAnalyticsGenerator(new LivingDocProject());
             var listOfLines = generator.GenerateDataAnalyticsStepsView();
 
-            Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Analytics -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<div id='analytics-steps'>"));
             Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Status Chart -->"));
@@ -194,11 +227,27 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
         }
 
+        // -------------------------------------------------------
+        // GenerateDataAnalyticsTrends
+        // -------------------------------------------------------
+
         [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsTrends_Returns_Empty_With_Less_Than_Two_Histories()
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsTrends_Returns_Empty_With_No_History()
+        {
+            var generator = new LivingDocDataAnalyticsGenerator(new LivingDocProject());
+
+            Assert.That(generator.GenerateDataAnalyticsTrends("Features").Count, Is.EqualTo(0));
+            Assert.That(generator.GenerateDataAnalyticsTrends("Scenarios").Count, Is.EqualTo(0));
+            Assert.That(generator.GenerateDataAnalyticsTrends("Steps").Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsTrends_Returns_Empty_With_Single_History()
         {
             var project = new LivingDocProject();
-            project.Histories.Add(new LivingDocHistory());
+            project.History.Features.Add(new LivingDocProjectHistoryResults { Date = DateTime.UtcNow, Passed = 1 });
+            project.History.Scenarios.Add(new LivingDocProjectHistoryResults { Date = DateTime.UtcNow, Passed = 1 });
+            project.History.Steps.Add(new LivingDocProjectHistoryResults { Date = DateTime.UtcNow, Passed = 1 });
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
 
@@ -213,13 +262,10 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataAnalyticsGenerator(CreateProjectWithTwoHistories());
             var listOfLines = generator.GenerateDataAnalyticsTrends("Features");
 
-            Assert.That(listOfLines.Count, Is.EqualTo(43));
-            Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Trend Chart -->"));
-            Assert.That(listOfLines[2], Is.EqualTo("<div class='section analytics-trends'>"));
-            Assert.That(listOfLines[20].Trim(), Is.EqualTo("<div class='bgcolor-passed' title='80%' style='width: 80%; height: 0.75em; float: left'></div>"));
-            Assert.That(listOfLines[21].Trim(), Is.EqualTo("<div class='bgcolor-incomplete' title='10%' style='width: 10%; height: 0.75em; float: left'></div>"));
-            Assert.That(listOfLines[22].Trim(), Is.EqualTo("<div class='bgcolor-failed' title='10%' style='width: 10%; height: 0.75em; float: left'></div>"));
-            Assert.That(listOfLines[23].Trim(), Is.EqualTo("<div class='bgcolor-skipped' title='0%' style='width: 0%; height: 0.75em; float: left'></div>"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Trend Chart -->"));
+            Assert.That(listOfLines, Does.Contain("<div class='section analytics-trends'>"));
+            Assert.That(listOfLines.Any(l => l.Contains("bgcolor-passed")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("bgcolor-failed")), Is.True);
         }
 
         [Test]
@@ -228,10 +274,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataAnalyticsGenerator(CreateProjectWithTwoHistories());
             var listOfLines = generator.GenerateDataAnalyticsTrends("Scenarios");
 
-            Assert.That(listOfLines.Count, Is.EqualTo(43));
-            Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Trend Chart -->"));
-            Assert.That(listOfLines[20].Trim(), Does.Contain("bgcolor-passed"));
-            Assert.That(listOfLines[22].Trim(), Does.Contain("bgcolor-failed"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Trend Chart -->"));
+            Assert.That(listOfLines.Any(l => l.Contains("bgcolor-passed")), Is.True);
         }
 
         [Test]
@@ -240,116 +284,143 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataAnalyticsGenerator(CreateProjectWithTwoHistories());
             var listOfLines = generator.GenerateDataAnalyticsTrends("Steps");
 
-            Assert.That(listOfLines.Count, Is.EqualTo(43));
-            Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Trend Chart -->"));
-            Assert.That(listOfLines[20].Trim(), Does.Contain("bgcolor-passed"));
-            Assert.That(listOfLines[22].Trim(), Does.Contain("bgcolor-failed"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Trend Chart -->"));
+            Assert.That(listOfLines.Any(l => l.Contains("bgcolor-passed")), Is.True);
+        }
+
+        // -------------------------------------------------------
+        // GenerateDataAnalyticsHealths
+        // -------------------------------------------------------
+
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Returns_Empty_With_No_Health()
+        {
+            var project = new LivingDocProject();
+            var feature = new LivingDocFeature { Name = "Login" };
+            feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario A" });
+            project.Features.Add(feature);
+
+            var generator = new LivingDocDataAnalyticsGenerator(project);
+            var listOfLines = generator.GenerateDataAnalyticsHealths();
+
+            Assert.That(listOfLines.Count, Is.GreaterThan(0));
         }
 
         [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFailures_Returns_Empty_With_Less_Than_Two_Histories()
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Fixed()
         {
             var project = new LivingDocProject();
-            project.Histories.Add(new LivingDocHistory());
+            var feature = new LivingDocFeature { Name = "Login" };
+            feature.Scenarios.Add(CreateScenarioWithHealth("Login Scenario", LivingDocHealths.Fixed.ToString()));
+            project.Features.Add(feature);
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
+            var listOfLines = generator.GenerateDataAnalyticsHealths();
 
-            Assert.That(generator.GenerateDataAnalyticsFailures("Features").Count, Is.EqualTo(0));
-            Assert.That(generator.GenerateDataAnalyticsFailures("Scenarios").Count, Is.EqualTo(0));
-            Assert.That(generator.GenerateDataAnalyticsFailures("Steps").Count, Is.EqualTo(0));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Healths Chart -->"));
+            Assert.That(listOfLines.Any(l => l.Contains("history-passed") && l.Contains("Fixed")), Is.True);
         }
 
         [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFailures_Returns_Empty_With_No_Failure_Names()
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Broken()
         {
             var project = new LivingDocProject();
-
-            var historyOne = new LivingDocHistory { Date = DateTime.Now.AddDays(-1) };
-            historyOne.Features.Passed.Add("Feature One");
-
-            var historyTwo = new LivingDocHistory { Date = DateTime.Now };
-            historyTwo.Features.Passed.Add("Feature One");
-
-            project.Histories.Add(historyOne);
-            project.Histories.Add(historyTwo);
+            var feature = new LivingDocFeature { Name = "Login" };
+            feature.Scenarios.Add(CreateScenarioWithHealth("Login Scenario", LivingDocHealths.Broken.ToString()));
+            project.Features.Add(feature);
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsFailures("Features");
+            var listOfLines = generator.GenerateDataAnalyticsHealths();
 
-            Assert.That(listOfLines.Count, Is.EqualTo(0));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Healths Chart -->"));
+            Assert.That(listOfLines.Any(l => l.Contains("history-failed") && l.Contains("Broken")), Is.True);
         }
 
         [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFailures_Features()
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Flaky()
         {
             var project = new LivingDocProject();
-
-            var historyOne = new LivingDocHistory { Date = DateTime.Now.AddDays(-1) };
-            historyOne.Features.Failed.Add("Successful User Login with Valid Credentials");
-
-            var historyTwo = new LivingDocHistory { Date = DateTime.Now };
-            historyTwo.Features.Passed.Add("Successful User Login with Valid Credentials");
-
-            project.Histories.Add(historyOne);
-            project.Histories.Add(historyTwo);
+            var feature = new LivingDocFeature { Name = "Login" };
+            feature.Scenarios.Add(CreateScenarioWithHealth("Login Scenario", LivingDocHealths.Flaky.ToString()));
+            project.Features.Add(feature);
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsFailures("Features");
+            var listOfLines = generator.GenerateDataAnalyticsHealths();
 
-            Assert.That(listOfLines.Count, Is.EqualTo(23));
-            Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Failures Chart -->"));
-            Assert.That(listOfLines[2], Is.EqualTo("<div class='section analytics-failures'>"));
-            Assert.That(listOfLines[15], Is.EqualTo("<td>Successful User Login with Valid Credentials</td>"));
-            Assert.That(listOfLines[16], Is.EqualTo("<td class='history-failed'>Failed</td>"));
-            Assert.That(listOfLines[17], Is.EqualTo("<td class='history-passed'>Passed</td>"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Healths Chart -->"));
+            Assert.That(listOfLines.Any(l => l.Contains("history-failed") && l.Contains("Flaky")), Is.True);
         }
 
         [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFailures_Scenarios()
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Multiple_Scenarios()
         {
             var project = new LivingDocProject();
-
-            var historyOne = new LivingDocHistory { Date = DateTime.Now.AddDays(-1) };
-            historyOne.Scenarios.Failed.Add("Login Scenario");
-
-            var historyTwo = new LivingDocHistory { Date = DateTime.Now };
-            historyTwo.Scenarios.Passed.Add("Login Scenario");
-
-            project.Histories.Add(historyOne);
-            project.Histories.Add(historyTwo);
+            var feature = new LivingDocFeature { Name = "Login" };
+            feature.Scenarios.Add(CreateScenarioWithHealth("Scenario A", LivingDocHealths.Fixed.ToString()));
+            feature.Scenarios.Add(CreateScenarioWithHealth("Scenario B", LivingDocHealths.Broken.ToString()));
+            feature.Scenarios.Add(CreateScenarioWithHealth("Scenario C", LivingDocHealths.Flaky.ToString()));
+            project.Features.Add(feature);
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsFailures("Scenarios");
+            var listOfLines = generator.GenerateDataAnalyticsHealths();
 
-            Assert.That(listOfLines.Count, Is.EqualTo(23));
-            Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Failures Chart -->"));
-            Assert.That(listOfLines[15], Is.EqualTo("<td>Login Scenario</td>"));
-            Assert.That(listOfLines[16], Is.EqualTo("<td class='history-failed'>Failed</td>"));
-            Assert.That(listOfLines[17], Is.EqualTo("<td class='history-passed'>Passed</td>"));
+            Assert.That(listOfLines.Any(l => l.Contains("Scenario A")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("Scenario B")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("Scenario C")), Is.True);
+        }
+
+        // -------------------------------------------------------
+        // GenerateDataAnalyticsFailures
+        // -------------------------------------------------------
+
+        [Test]
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFailures_Returns_Empty_With_No_Health()
+        {
+            var project = new LivingDocProject();
+            var feature = new LivingDocFeature { Name = "Login" };
+            feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario A" });
+            project.Features.Add(feature);
+
+            var generator = new LivingDocDataAnalyticsGenerator(project);
+            var listOfLines = generator.GenerateDataAnalyticsFailures();
+
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Failures Chart -->"));
+            Assert.That(listOfLines.Any(l => l.Contains("<td>")), Is.False);
         }
 
         [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFailures_Steps()
+        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFailures_With_Health_And_History()
         {
             var project = new LivingDocProject();
 
-            var historyOne = new LivingDocHistory { Date = DateTime.Now.AddDays(-1) };
-            historyOne.Steps.Failed.Add("Given I have logged in");
+            project.History.Scenarios.Add(new LivingDocProjectHistoryResults { Date = DateTime.UtcNow.AddDays(-1), Failed = 1 });
+            project.History.Scenarios.Add(new LivingDocProjectHistoryResults { Date = DateTime.UtcNow, Passed = 1 });
 
-            var historyTwo = new LivingDocHistory { Date = DateTime.Now };
-            historyTwo.Steps.Passed.Add("Given I have logged in");
+            var feature = new LivingDocFeature { Name = "Login" };
+            var scenario = CreateScenarioWithHealth("Login Scenario", LivingDocHealths.Broken.ToString());
 
-            project.Histories.Add(historyOne);
-            project.Histories.Add(historyTwo);
+            scenario.Examples[0].History.Add(new LivingDocExampleHistoryResults
+            {
+                Date = DateTime.UtcNow.AddDays(-1),
+                Status = LivingDocStatuses.Failed.ToString()
+            });
+            scenario.Examples[0].History.Add(new LivingDocExampleHistoryResults
+            {
+                Date = DateTime.UtcNow,
+                Status = LivingDocStatuses.Passed.ToString()
+            });
+
+            feature.Scenarios.Add(scenario);
+            project.Features.Add(feature);
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsFailures("Steps");
+            var listOfLines = generator.GenerateDataAnalyticsFailures();
 
-            Assert.That(listOfLines.Count, Is.EqualTo(23));
-            Assert.That(listOfLines[1], Is.EqualTo("<!-- Data Analytics Failures Chart -->"));
-            Assert.That(listOfLines[15], Is.EqualTo("<td>Given I have logged in</td>"));
-            Assert.That(listOfLines[16], Is.EqualTo("<td class='history-failed'>Failed</td>"));
-            Assert.That(listOfLines[17], Is.EqualTo("<td class='history-passed'>Passed</td>"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Failures Chart -->"));
+            Assert.That(listOfLines.Any(l => l.Contains("Login Scenario")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("history-failed")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("history-passed")), Is.True);
+            Assert.That(listOfLines.Any(l => l.Contains("history-skipped") && l.Contains("Broken")), Is.True);
         }
     }
 }

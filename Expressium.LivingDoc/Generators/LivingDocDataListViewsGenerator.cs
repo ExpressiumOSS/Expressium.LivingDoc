@@ -117,6 +117,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<tr data-role='header'>");
             listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Step<span class='sort-column'>&udarr;</span></th>");
+            //listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"failure-count\")'>Failures<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-count\")'>Usage<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th width='100' onClick='sortTableByColumn(3)'>Status<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
@@ -156,9 +157,16 @@ namespace Expressium.LivingDoc.Generators
                                         .SelectMany(example => example.Steps)
                                         .Count(x => x.Keyword + " " + x.Name == fullName);
 
+                                    //var failures = project.Features
+                                    //    .SelectMany(feature => feature.Scenarios)
+                                    //    .SelectMany(scenario => scenario.Examples)
+                                    //    .SelectMany(example => example.Steps)
+                                    //    .Count(x => x.Keyword + " " + x.Name == fullName && x.IsFailed());
+
                                     listOfLines.Add($"<tr class='grid-border' data-role='step' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
                                     listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{step.GetStatus().ToLower()}'></span></td>");
                                     listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
+                                    //listOfLines.Add($"<td align='center' failure-count='{failures.ToString("D4")}'>{failures}</td>");
                                     listOfLines.Add($"<td align='center' data-count='{count.ToString("D4")}'>{count}</td>");
                                     listOfLines.Add($"<td>{step.GetStatus()}</td>");
                                     listOfLines.Add($"</tr>");
@@ -179,5 +187,80 @@ namespace Expressium.LivingDoc.Generators
 
             return listOfLines;
         }
+
+
+        /*
+        internal List<string> GenerateDataDefectsListView()
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Data Defects View -->");
+            listOfLines.Add("<div id='defects-view'>");
+
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<table id='table-grid' class='list-view'>");
+
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr data-role='header'>");
+            listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
+            listOfLines.Add("<th onClick='sortTableByColumn(1)'>Message<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='200' onClick='sortTableByColumn(2)'>Type<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(3, \"data-count\")'>Count<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+
+            listOfLines.Add("<tbody id='table-list'>");
+
+            var mapOfDefects = new Dictionary<string, string>();
+
+            foreach (var feature in project.Features)
+            {
+                foreach (var scenario in feature.Scenarios)
+                {
+                    foreach (var example in scenario.Examples)
+                    {
+                        foreach (var step in example.Steps)
+                        {
+                            if (!step.IsFailed())
+                                continue;
+
+                            if (string.IsNullOrWhiteSpace(step.ExceptionType))
+                                continue;
+
+                            var defectKey = step.ExceptionMessage + "|" + step.ExceptionType;
+
+                            //if (!mapOfDefects.ContainsKey(defectKey))
+                            {
+                                var count = project.Features
+                                    .SelectMany(f => f.Scenarios)
+                                    .SelectMany(s => s.Examples)
+                                    .SelectMany(e => e.Steps)
+                                    .Count(x => x.ExceptionMessage == step.ExceptionMessage && x.ExceptionType == step.ExceptionType);
+
+                                listOfLines.Add($"<tr class='grid-border' data-role='step' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                                listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{step.GetStatus().ToLower()}'></span></td>");
+                                listOfLines.Add($"<td><a href='#'>{step.ExceptionMessage}</a></td>");
+                                listOfLines.Add($"<td>{step.ExceptionType}</td>");
+                                listOfLines.Add($"<td align='center' data-count='{count.ToString("D4")}'>{count}</td>");
+                                listOfLines.Add($"<td>{step.GetStatus()}</td>");
+                                listOfLines.Add($"</tr>");
+
+                                //mapOfDefects.Add(defectKey, defectKey);
+                            }
+                        }
+                    }
+                }
+            }
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+        */
     }
 }

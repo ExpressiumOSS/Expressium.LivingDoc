@@ -22,4 +22,12 @@ namespace Expressium.LivingDoc.Models
         Scenario,
         Unknown
     }
+
+    public enum LivingDocHealths
+    {
+        Broken,      // Persistently failing across several test runs
+        Regressed,   // Was passing but is now failing in latest test run
+        Flaky,       // Was alternating unpredictably in latest test runs
+        Fixed,       // Was failing but is now passing in latest test run
+    }
 }

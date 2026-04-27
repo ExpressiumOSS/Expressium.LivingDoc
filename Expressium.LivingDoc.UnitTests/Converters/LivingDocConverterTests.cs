@@ -153,7 +153,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             livingDocConverter.MergeHistory(livingDocProject, historyPath);
 
-            var livingDocHistories = livingDocProject.Histories;
+            var livingDocHistories = livingDocProject.History.Scenarios;
             Assert.That(livingDocHistories.Count, Is.EqualTo(4));
         }
     }
