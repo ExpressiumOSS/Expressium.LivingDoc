@@ -87,7 +87,7 @@ namespace Expressium.LivingDoc.Generators
             var hasHealth = project.Features.SelectMany(f => f.Scenarios).Any(s => s.Health != null);
             if (hasHealth)
             {
-                listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Health<span class='sort-column'>&udarr;</span></th>");
+                listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(4, \"data-health\")'>Health<span class='sort-column'>&udarr;</span></th>");
                 listOfLines.Add("<th width='100' onClick='sortTableByColumn(5)'>Status<span class='sort-column'>&udarr;</span></th>");
             }
             else
@@ -120,7 +120,7 @@ namespace Expressium.LivingDoc.Generators
                     listOfLines.Add($"<td align='center' data-duration='{scenario.GetDurationSortId()}'>{scenario.GetDuration()}</td>");
 
                     if (hasHealth)
-                        listOfLines.Add($"<td>{scenario.Health}</td>");
+                        listOfLines.Add($"<td data-health='{scenario.GetHealthSortId()}'>{scenario.Health}</td>");
 
                     listOfLines.Add($"<td>{scenario.GetStatus()}</td>");
                     listOfLines.Add($"</tr>");
