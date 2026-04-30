@@ -287,8 +287,13 @@
         padding-right: 4px;
     }
 
-    table.tree-view td:not(.grid-border) {
+    table.tree-view td {
         padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    table.tree-view td.grid-border { 
+        padding-left: 4px;
         padding-right: 2px;
     }
 

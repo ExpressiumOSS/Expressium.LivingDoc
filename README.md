@@ -42,11 +42,13 @@ The formatter configuration may include relative paths and predefined ReqnRoll s
 ## History Analysis
 The Expressium LivingDoc report may optionally include historical test results 
 based on previous Cucumber Messages files.
-Historical test results are visualized as trends and failures 
-in the Analyze section of the LivingDoc report
-and includes a maximum of four of the most recent previous test executions.
+Historical test results are visualized as trends in Analytics
+along with a date-based status list within each scenario.
+An additional health status - Broken, Regressed, Flaky, or Fixed —
+is derived from historical results and displayed in the scenario tags.
+The history analysis is limited to the four most recent test runs.
 In a pipeline, the previous Cucumber message files
-must be preserved in the history folder before executing the next test run.
+must be preserved in the history folder before executing the tests.
 
 ***ReqnRoll.json***
 ```json
@@ -65,6 +67,11 @@ must be preserved in the history folder before executing the next test run.
 <br />
 <p align="center">
 <img src="HistoryAnalysis.png"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
+
+<p align="center">
+<img src="HistoryScenario.png"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 

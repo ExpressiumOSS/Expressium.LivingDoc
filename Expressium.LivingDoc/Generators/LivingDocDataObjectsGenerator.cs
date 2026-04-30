@@ -174,8 +174,9 @@ namespace Expressium.LivingDoc.Generators
                         listOfLines.AddRange(GenerateDataScenarioDescription(scenario));
                         listOfLines.AddRange(GenerateDataScenarioSteps(example));
                         listOfLines.AddRange(GenerateDataScenarioExamples(example));
-                        listOfLines.AddRange(GenerateDataScenarioAttachments(example));
                         listOfLines.AddRange(GenerateDataScenarioHistory(example));
+                        listOfLines.AddRange(GenerateDataScenarioAttachments(example));
+
                         listOfLines.Add("</div>");
                         listOfLines.Add("<hr>");
                     }
@@ -311,11 +312,11 @@ namespace Expressium.LivingDoc.Generators
             if (hasStacktraces)
                 listOfLines.Add("<button class='scenario-stacktraces bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></button>");
 
-            if (example.Attachments.Count > 0)
-                listOfLines.Add("<button class='scenario-attachments bi bi-list' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></button>");
-
             if (example.History.Count > 0)
                 listOfLines.Add("<button class='scenario-history bi bi-calendar4' title='Toggle History' onclick=\"toggleHistory(this)\"></button>");
+
+            if (example.Attachments.Count > 0)
+                listOfLines.Add("<button class='scenario-attachments bi bi-list' title='Toggle Attachments' onclick=\"toggleAttachments(this)\"></button>");
 
             listOfLines.Add("</div>");
 
