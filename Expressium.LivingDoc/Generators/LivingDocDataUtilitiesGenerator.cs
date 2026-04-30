@@ -17,5 +17,19 @@ namespace Expressium.LivingDoc.Generators
             else
                 return "bi bi-question-circle-fill";
         }
+
+        internal static string GetHealtSymbol(string health)
+        {
+            if (health == LivingDocHealths.Broken.ToString())
+                return "bi bi-cloud-rain-heavy";
+            else if (health == LivingDocHealths.Regressed.ToString())
+                return "bi bi-cloud-rain";
+            else if (health == LivingDocHealths.Flaky.ToString())
+                return "bi bi-clouds";
+            else if (health == LivingDocHealths.Fixed.ToString())
+                return "bi bi-cloud-sun";
+            else
+                return string.Empty;
+        }
     }
 }

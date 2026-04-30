@@ -34,7 +34,7 @@ namespace Expressium.LivingDoc.Models
             History = new LivingDocProjectHistory();
 
             ExperimentFlagSymbols = false; // Alternative visualization with Bootstrap icons...
-            ExperimentFlagHealth = false;  // Additional scenario health status based on history...
+            ExperimentFlagHealth = true;  // Additional scenario health status based on history...
         }
 
         internal string GetApplicationName()
@@ -135,6 +135,11 @@ namespace Expressium.LivingDoc.Models
         public int GetNumberOfSkippedSteps()
         {
             return Features.Sum(feature => feature.GetNumberOfSkippedSteps());
+        }
+
+        public bool HasHealth()
+        {
+            return Features.Any(feature => feature.Scenarios.Any(scenario => scenario.Health != null));
         }
 
         public List<string> GetFolders()

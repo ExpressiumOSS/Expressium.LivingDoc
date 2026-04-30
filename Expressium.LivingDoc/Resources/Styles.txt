@@ -281,12 +281,17 @@
         padding-left: 6px;
         padding-right: 6px;
     }
-
+   
     table.tree-view td {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    table.tree-view td:not(.grid-border) {
         padding-left: 2px;
         padding-right: 2px;
     }
-    
+
     table.tree-view tr.active td.grid-border {
         background-color: var(--selected-bg-color);
     }
@@ -555,9 +560,9 @@
     }
 
     .scenario-tag-health {
-        color: var(--bs-gray-700);
-        background-color: var(--bs-gray-150);
-        border-radius: 0.375em;
+        color: var(--tag-text-color);
+        background: var(--tag-bg-color);
+        /* border-radius: 0.375em; */
         padding-top: 3px;
         padding-bottom: 4px;
         padding-left: 6px;
@@ -575,11 +580,7 @@
     .feature-keyword,
     .background-keyword,
     .rule-keyword,
-    .scenario-keyword {
-        color: var(--keyword-text-color);
-        font-weight: 600;
-    }
-
+    .scenario-keyword,
     .step-keyword {
         color: var(--keyword-text-color);
         font-weight: 600;
@@ -733,6 +734,10 @@
     ul.attachments-files li {
         padding-top: 1px;
         padding-bottom: 1px;
+    }
+
+    .attachment-symbol {
+        color: var(--text-gray-color);
     }
 
     .duration-symbol {

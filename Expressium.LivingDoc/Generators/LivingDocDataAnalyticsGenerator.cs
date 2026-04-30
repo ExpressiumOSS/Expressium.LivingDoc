@@ -45,13 +45,10 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Scenarios.ToString()));
 
-            if (project.ExperimentFlagHealth)
-            {
 #if DEBUG
-                listOfLines.AddRange(GenerateDataAnalyticsHealths());
-                listOfLines.AddRange(GenerateDataAnalyticsFailures());
+            //listOfLines.AddRange(GenerateDataAnalyticsHealths());
+            //listOfLines.AddRange(GenerateDataAnalyticsFailures());
 #endif
-            }
 
             listOfLines.Add("</div>");
 
@@ -259,7 +256,7 @@ namespace Expressium.LivingDoc.Generators
             if (numberOfTotals < 2)
                 return listOfLines;
 
-            List<LivingDocProjectHistoryResults> historyResults = null;
+            var historyResults = new List<LivingDocProjectHistoryResults>();
             if (type == AnalyticsType.Features.ToString())
                 historyResults = project.History.Features;
             else if (type == AnalyticsType.Scenarios.ToString())
@@ -277,22 +274,23 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<table class='analytics-list'>");
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
-            listOfLines.Add("<th>Id</th>");
-            listOfLines.Add("<th>Date</th>");
-
+            listOfLines.Add("<th width='50%'>Date</th>");
             listOfLines.Add("<th style='min-width: 300px;'>Status</th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody>");
             listOfLines.Add("<tr><td></td></tr>");
 
-            int rowIndex = 1;
             foreach (var history in historyResults)
             {
                 var percentageOfPassed = 0;
                 var percentageOfIncomplete = 0;
                 var percentageOfFailed = 0;
                 var percentageOfSkipped = 0;
+
+                var maxTotal = Math.Max(history.Passed, Math.Max(history.Incomplete, Math.Max(history.Failed, history.Skipped)));
+                if (maxTotal == 0)
+                    continue;
 
                 if (type == AnalyticsType.Features.ToString())
                 {
@@ -316,23 +314,31 @@ namespace Expressium.LivingDoc.Generators
                     percentageOfSkipped = CalculatePercentage(history.Skipped, numberOfTotals);
                 }
 
-                AdjustPercentagesDiscrepancy(ref percentageOfPassed, ref percentageOfIncomplete, ref percentageOfFailed, ref percentageOfSkipped);
+                var sumOfPercentages = percentageOfPassed + percentageOfIncomplete + percentageOfFailed + percentageOfSkipped;
+                if (sumOfPercentages > 100)
+                {
+                    var discrepancy = sumOfPercentages - 100;
+                    ref var maxReference = ref percentageOfPassed;
+
+                    if (percentageOfIncomplete > maxReference) maxReference = ref percentageOfIncomplete;
+                    if (percentageOfFailed > maxReference) maxReference = ref percentageOfFailed;
+                    if (percentageOfSkipped > maxReference) maxReference = ref percentageOfSkipped;
+
+                    maxReference -= discrepancy;
+                }
 
                 listOfLines.Add($"<tr title='{history.GetDate()}'>");
-                listOfLines.Add($"<td width='24px' style='text-align: center'>{rowIndex}</td>");
-                listOfLines.Add($"<td width='45%'>{history.GetDate()}</td>");
+                listOfLines.Add($"<td>{history.GetDate()}</td>");
 
                 listOfLines.Add("<td>");
                 listOfLines.Add("<div style='width: 100%;'>");
-                listOfLines.Add($"<div class='bgcolor-passed' title='{percentageOfPassed}%' style='width: {percentageOfPassed}%; height: 0.75em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-incomplete' title='{percentageOfIncomplete}%' style='width: {percentageOfIncomplete}%; height: 0.75em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-failed' title='{percentageOfFailed}%' style='width: {percentageOfFailed}%; height: 0.75em; float: left'></div>");
-                listOfLines.Add($"<div class='bgcolor-skipped' title='{percentageOfSkipped}%' style='width: {percentageOfSkipped}%; height: 0.75em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-passed' title='{history.Passed}' style='width: {percentageOfPassed}%; height: 0.75em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-incomplete' title='{history.Incomplete}' style='width: {percentageOfIncomplete}%; height: 0.75em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-failed' title='{history.Failed}' style='width: {percentageOfFailed}%; height: 0.75em; float: left'></div>");
+                listOfLines.Add($"<div class='bgcolor-skipped' title='{history.Skipped}' style='width: {percentageOfSkipped}%; height: 0.75em; float: left'></div>");
                 listOfLines.Add("</div>");
                 listOfLines.Add("</td>");
                 listOfLines.Add("</tr>");
-
-                rowIndex++;
             }
 
             listOfLines.Add("</tbody>");
@@ -348,8 +354,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var hasHealth = project.Features.SelectMany(f => f.Scenarios).Any(s => s.Health != null);
-            if (!hasHealth)
+            if (!project.HasHealth())
                 return listOfLines;
 
             listOfLines.Add("<hr>");
@@ -403,8 +408,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            var hasHealth = project.Features.SelectMany(f => f.Scenarios).Any(s => s.Health != null);
-            if (!hasHealth)
+            if (!project.HasHealth())
                 return listOfLines;
 
             listOfLines.Add("<hr>");
@@ -488,9 +492,9 @@ namespace Expressium.LivingDoc.Generators
             if (numberOfStatuses == 0)
                 return 0;
 
-            var percentage = (int)Math.Round(100.0f / numberOfTests * numberOfStatuses);
+            var percentage = (int)Math.Round(100.0f / numberOfTests * numberOfStatuses, MidpointRounding.AwayFromZero);
 
-            if (numberOfStatuses > 0 && percentage == 0)
+            if (percentage == 0)
                 percentage = 1;
 
             return percentage;

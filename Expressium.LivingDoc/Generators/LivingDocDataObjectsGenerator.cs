@@ -544,7 +544,7 @@ namespace Expressium.LivingDoc.Generators
                     if (!Uri.IsWellFormedUriString(attachment, UriKind.Absolute))
                         filePath = Path.GetFileName(attachment);
 
-                    listOfLines.Add($"<li><a target='_blank' href='{attachment}'>{filePath}</a></li>");
+                    listOfLines.Add($"<li><span class='bi bi-file-text attachment-symbol'></span><a target='_blank' href='{attachment}'>{filePath}</a></li>");
                 }
 
                 listOfLines.Add("</ul>");
