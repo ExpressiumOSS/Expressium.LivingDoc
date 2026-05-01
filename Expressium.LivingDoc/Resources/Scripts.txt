@@ -537,7 +537,7 @@
         }
     </script>
     <script>
-        function clearPrefilters() {
+        function clearAllfilters() {
             var prefilters = document.getElementsByTagName("button");
             for (var i = 0; i < prefilters.length; i++) {
                 var prefilter = prefilters[i].getAttribute("data-prefilter");
@@ -550,7 +550,9 @@
             var input = document.getElementById("filter-by-keywords");
             input.value = '';
 
+            clearActiveListItems();
             filterView();
+            loadAnalytics();
         }
     </script>
     <script>
