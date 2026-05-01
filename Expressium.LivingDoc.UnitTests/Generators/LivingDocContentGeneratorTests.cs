@@ -89,7 +89,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Incomplete'"));
             Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Failed'"));
             Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Skipped'"));
-            Assert.That(listOfLines, Has.Some.Contains("clearPrefilters()"));
+            Assert.That(listOfLines, Has.Some.Contains("clearAllfilters()"));
         }
 
         [Test]
