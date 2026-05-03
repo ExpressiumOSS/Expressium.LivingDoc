@@ -2,8 +2,9 @@
     :root {
         
         /* Bootstrap Grayscale */
-        --bs-gray-075: #fcfcfd;
+        --bs-gray-075: #fdfdfd;
         --bs-gray-100: #f8f9fa;
+        --bs-gray-125: #f4f5f6;
         --bs-gray-150: #f1f3f5;
         --bs-gray-200: #e9ecef;
         --bs-gray-300: #dee2e6;
@@ -24,12 +25,12 @@
         --footer-bg-color: var(--bs-gray-100);
 
         /* Navigation */
-        --navigation-bg-color: var(--bs-gray-150);
+        --navigation-bg-color: var(--bs-gray-125);
         --navigation-underline-color: var(--bs-gray-500);
 
         /* Tables */
         --table-header-text-color: var(--bs-gray-900);
-        --table-header-bg-color: var(--bs-gray-150);
+        --table-header-bg-color: var(--bs-gray-125);
         --table-header-border-color: var(--bs-white);
 
         /* Tags */
@@ -55,12 +56,12 @@
         /* Texts */
         --text-color: var(--bs-gray-900);
         --heading-text-color: var(--bs-gray-900);
-        --text-darkgray-color: var(--bs-gray-650);
+        --text-darkgray-color: var(--bs-gray-700);
         --text-gray-color: var(--bs-gray-600);
 
         /* Special Texts */
         --keyword-text-color: #25576b;
-        --link-text-color: #295f75;
+        --link-text-color: var(--text-darkgray-color); /* #234f62; */
 
         /* Badges */
         --scenario-index-text-color: var(--bs-white);
@@ -74,7 +75,7 @@
         --button-inactive-bg-color: var(--bs-gray-100);
         --button-inactive-text-color: var(--bs-gray-600);
         --button-hover-border-color: var(--bs-gray-500);
-        --button-hover-bg-color: var(--bs-gray-150);
+        --button-hover-bg-color: var(--bs-gray-125);
         --button-selected-bg-color: var(--selected-bg-color);
 
         /* Status colors */
@@ -88,7 +89,7 @@
         --passed-bg-color: #E2F5E3;
         --incomplete-bg-color: #FFF6D0;
         --failed-bg-color: #FCE4E0;
-        --skipped-bg-color: var(--bs-gray-150);
+        --skipped-bg-color: var(--bs-gray-125);
 
         /* Status text */
         --passed-text-color: #2B672F;
@@ -360,7 +361,7 @@
     .scenario-backgrounds {
         padding: 1px 4px;
         font-size: 0.9625em;
-        color: var(--text-darkgray-color);
+        color: var(--text-gray-color);
     }
 
     .grid-border {
@@ -739,6 +740,10 @@
     ul.attachments-files li {
         padding-top: 1px;
         padding-bottom: 1px;
+    }
+
+    .history-files li {
+        color: var(--text-darkgray-color);
     }
 
     .attachment-symbol {
