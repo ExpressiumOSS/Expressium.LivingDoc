@@ -193,12 +193,12 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<a class='grid-heading' href='#'>{scenario.Name}</a>");
             listOfLines.Add("</td>");
 
-            if (project.ExperimentFlagSymbols && scenario.HasHealth())
-            {
-                var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(scenario.Health);
-                listOfLines.Add($"<td class='grid-border' align='right' style='padding-right: 0.75em;'><span class='{symbol} health-symbol' title='{scenario.Health}'></span></td>");
-            }
-            else
+            //if (project.ExperimentFlagHealthFilter && scenario.HasHealth())
+            //{
+            //    var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(scenario.Health);
+            //    listOfLines.Add($"<td class='grid-border' align='right' style='padding-right: 0.75em;'><span class='{symbol} health-symbol' title='{scenario.Health}'></span></td>");
+            //}
+            //else
                 listOfLines.Add("<td class='grid-border' align='right'></td>");
 
             listOfLines.Add("</tr>");

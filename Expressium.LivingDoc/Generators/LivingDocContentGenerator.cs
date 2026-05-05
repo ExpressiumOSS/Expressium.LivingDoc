@@ -57,8 +57,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GeneratePreFilters());
             listOfLines.AddRange(GenerateFilter());
 
-            if (project.ExperimentFlagSymbols && project.HasHealth())
-                listOfLines.AddRange(GeneratePreFiltersHealth());
+            //if (project.ExperimentFlagHealthFilter && project.HasHealth())
+            //    listOfLines.AddRange(GeneratePreFiltersHealth());
 
             listOfLines.Add("<div id='filter-list'></div>");
             //listOfLines.Add("</div>");

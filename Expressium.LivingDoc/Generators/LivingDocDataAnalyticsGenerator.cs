@@ -46,8 +46,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Scenarios.ToString()));
 
 #if DEBUG
-            //listOfLines.AddRange(GenerateDataAnalyticsHealths());
-            //listOfLines.AddRange(GenerateDataAnalyticsFailures());
+            //listOfLines.AddRange(GenerateDataAnalyticsHealth());
 #endif
 
             listOfLines.Add("</div>");
@@ -350,7 +349,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsHealths()
+        internal List<string> GenerateDataAnalyticsHealth()
         {
             var listOfLines = new List<string>();
 
@@ -359,63 +358,9 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<hr>");
 
-            listOfLines.Add("<!-- Data Analytics Healths Chart -->");
+            listOfLines.Add("<!-- Data Analytics Health Chart -->");
             listOfLines.Add("<div class='section analytics-healths'>");
-            listOfLines.Add("<span class='chart-name'>Healths</span>");
-            listOfLines.Add("<div class='section'>");
-
-            listOfLines.Add("<table class='analytics-list'>");
-            listOfLines.Add("<thead>");
-            listOfLines.Add("<tr>");
-            listOfLines.Add("<th>Name</th>");
-            listOfLines.Add("<th align='center' style='text-align: center'>Health</th>");
-            listOfLines.Add("</tr>");
-            listOfLines.Add("</thead>");
-            listOfLines.Add("<tbody>");
-
-            foreach (var feature in project.Features)
-            {
-                foreach (var scenario in feature.Scenarios)
-                {
-                    if (scenario.HasHealth())
-                    {
-                        listOfLines.Add($"<tr class='grid-border' data-role='scenario' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
-                        listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
-
-                        if (scenario.IsFixed())
-                            listOfLines.Add($"<td class='history-passed'>{LivingDocHealths.Fixed.ToString()}</td>");
-                        else if (scenario.IsBroken())
-                            listOfLines.Add($"<td class='history-failed'>{LivingDocHealths.Broken.ToString()}</td>");
-                        else if (scenario.IsRegressed())
-                            listOfLines.Add($"<td class='history-failed'>{LivingDocHealths.Regressed.ToString()}</td>");
-                        else if (scenario.IsFlaky())
-                            listOfLines.Add($"<td class='history-failed'>{LivingDocHealths.Flaky.ToString()}</td>");
-
-                        listOfLines.Add("</tr>");
-                    }
-                }
-            }
-
-            listOfLines.Add("</tbody>");
-            listOfLines.Add("</table>");
-            listOfLines.Add("</div>");
-            listOfLines.Add("</div>");
-
-            return listOfLines;
-        }
-
-        internal List<string> GenerateDataAnalyticsFailures()
-        {
-            var listOfLines = new List<string>();
-
-            if (!project.HasHealth())
-                return listOfLines;
-
-            listOfLines.Add("<hr>");
-
-            listOfLines.Add("<!-- Data Analytics Failures Chart -->");
-            listOfLines.Add("<div class='section analytics-failures'>");
-            listOfLines.Add("<span class='chart-name'>Failures</span>");
+            listOfLines.Add("<span class='chart-name'>Health</span>");
             listOfLines.Add("<div class='section'>");
 
             listOfLines.Add("<table class='analytics-list'>");
@@ -426,7 +371,21 @@ namespace Expressium.LivingDoc.Generators
             var listOfDates = project.History.Scenarios.Select(x => x.GetDate()).Distinct();
 
             for (int i = 1; i < listOfDates.Count() + 1; i++)
-                listOfLines.Add($"<th align='center' style='text-align: center'>{i}</th>");
+            {
+                var name = "Unknown";
+
+                if (i == listOfDates.Count() - 3)
+                    name = "Oldest";
+                else if (i == listOfDates.Count() - 2)
+                    name = "Earlier";
+                else if (i == listOfDates.Count() - 1)
+                    name = "Previous";
+                else if (i == listOfDates.Count())
+                    name = "Latest";
+
+                listOfLines.Add($"<th align='center' style='text-align: center'>{name}</th>");
+            }
+
             listOfLines.Add($"<th align='center' style='text-align: center'>Health</th>");
 
             listOfLines.Add("</tr>");
@@ -441,8 +400,8 @@ namespace Expressium.LivingDoc.Generators
                     {
                         foreach (var example in scenario.Examples)
                         {
-                            listOfLines.Add("<tr>");
-                            listOfLines.Add($"<td>{scenario.Name}</td>");
+                            listOfLines.Add($"<tr data-role='scenario' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                            listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
 
                             foreach (var date in listOfDates)
                             {

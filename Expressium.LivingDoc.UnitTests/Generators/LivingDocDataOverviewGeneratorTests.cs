@@ -118,7 +118,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[0], Does.Contain("data-featureid='"));
             Assert.That(listOfLines[0], Does.Contain("loadFeature(this)"));
             Assert.That(listOfLines[2], Does.Contain("loadCollapse(this)"));
-            Assert.That(listOfLines[4], Does.Contain("bgcolor-passed"));
+            Assert.That(listOfLines[4], Does.Contain("color-passed"));
             Assert.That(listOfLines[5], Does.Contain("Login Feature"));
             Assert.That(listOfLines[8], Is.EqualTo("</tr>"));
         }
@@ -136,7 +136,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[0], Does.Contain("data-featureid='"));
             Assert.That(listOfLines[0], Does.Contain("data-scenarioid='"));
             Assert.That(listOfLines[0], Does.Contain("loadScenario(this)"));
-            Assert.That(listOfLines[4], Does.Contain("bgcolor-passed"));
+            Assert.That(listOfLines[4], Does.Contain("color-passed"));
             Assert.That(listOfLines[5], Does.Contain("Successful User Login with Valid Credentials"));
             Assert.That(listOfLines[8], Is.EqualTo("</tr>"));
         }

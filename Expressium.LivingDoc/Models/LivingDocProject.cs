@@ -24,7 +24,6 @@ namespace Expressium.LivingDoc.Models
         public LivingDocProjectHistory History { get; set; }
 
         internal bool ExperimentFlagSymbols { get; set; }
-        internal bool ExperimentFlagHealth { get; set; }
 
         public LivingDocProject()
         {
@@ -33,8 +32,7 @@ namespace Expressium.LivingDoc.Models
             Features = new List<LivingDocFeature>();
             History = new LivingDocProjectHistory();
 
-            ExperimentFlagSymbols = false; // Alternative visualization with Bootstrap icons...
-            ExperimentFlagHealth = true;  // Additional scenario health status based on history...
+            ExperimentFlagSymbols = true; // Alternative visualization with Bootstrap icons...
         }
 
         internal string GetApplicationName()
@@ -182,8 +180,7 @@ namespace Expressium.LivingDoc.Models
             MergeProjectHistoryResults(livingDocProject);
             MergeExampleHistoryResults(livingDocProject);
 
-            if (ExperimentFlagHealth)
-                MergeScenarioHistoryHealth();
+            MergeScenarioHistoryHealth();
         }
 
         internal void MergeProjectHistoryResults(LivingDocProject livingDocProject)
@@ -266,22 +263,22 @@ namespace Expressium.LivingDoc.Models
                         if (scenario.Health != null && scenario.Health != LivingDocHealths.Fixed.ToString())
                             continue;
 
-                        var prior = numberOfHistories >= 4 ? example.History[numberOfHistories - 4].Status : null;
-                        var oldest = numberOfHistories >= 3 ? example.History[numberOfHistories - 3].Status : null;
+                        var oldest = numberOfHistories >= 4 ? example.History[numberOfHistories - 4].Status : null;
+                        var earlier = numberOfHistories >= 3 ? example.History[numberOfHistories - 3].Status : null;
                         var previous = example.History[numberOfHistories - 2].Status;
-                        var newest = example.History[numberOfHistories - 1].Status;
+                        var latest = example.History[numberOfHistories - 1].Status;
 
                         var passed = LivingDocStatuses.Passed.ToString();
                         var failed = LivingDocStatuses.Failed.ToString();
                         var incomplete = LivingDocStatuses.Incomplete.ToString();
                         var skipped = LivingDocStatuses.Skipped.ToString();
 
-                        var activeStatuses = new[] { prior, oldest, previous, newest }
+                        var activeStatuses = new[] { oldest, earlier, previous, latest }
                             .Where(s => s != null && s != skipped && s != incomplete)
                             .ToList();
 
                         // Flaky Pattern...
-                        if ((newest == failed || (newest == passed && previous == failed)) &&
+                        if ((latest == failed || (latest == passed && previous == failed)) &&
                             activeStatuses.Take(activeStatuses.Count - 1).Contains(passed) &&
                             activeStatuses.Take(activeStatuses.Count - 1).Contains(failed))
                         {
@@ -290,15 +287,15 @@ namespace Expressium.LivingDoc.Models
                         }
 
                         // Regressed Pattern...
-                        if (newest == failed && previous == passed)
+                        if (latest == failed && previous == passed)
                             scenario.Health = LivingDocHealths.Regressed.ToString();
 
                         // Broken Pattern...
-                        else if (newest == failed && (previous == skipped || previous == incomplete || previous == failed))
+                        else if (latest == failed && (previous == skipped || previous == incomplete || previous == failed))
                             scenario.Health = LivingDocHealths.Broken.ToString();
 
                         // Fixed Pattern...
-                        else if (newest == passed && previous != passed)
+                        else if (latest == passed && previous != passed)
                             scenario.Health = LivingDocHealths.Fixed.ToString();
                     }
                 }

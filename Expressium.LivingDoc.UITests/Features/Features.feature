@@ -117,9 +117,9 @@ Scenario: Sort by Feature Column in the Features List
 		| Login        |
 		| Contact Us   |
 
-Scenario: Sort by Completion Column in the Features List
+Scenario: Sort by Passed Column in the Features List
 	Given I have navigated to the Features List
-	When I sort the features by Completion column in the Features List
+	When I sort the features by Passed column in the Features List
 	Then I should have following visible objects in the Features List
 		| Features     |
 		| Login        |

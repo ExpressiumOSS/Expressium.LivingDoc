@@ -387,12 +387,12 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<li>");
 
-            if (project.ExperimentFlagSymbols)
-            {
-                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
-                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
-            }
-            else
+            //if (project.ExperimentFlagSymbols)
+            //{
+            //    var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+            //    listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
+            //}
+            //else
             {
                 var symbol = step.IsPassed() ? "&check;" : "&cross;";
                 listOfLines.Add($"<span class='step-symbol color-{status}'>{symbol}</span>");

@@ -609,7 +609,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase("Failed", "Passed", "Skipped", "Failed", "Flaky")]
         [TestCase("Failed", "Passed", "Incomplete", "Failed", "Flaky")]
 
-        public void LivingDocProject_MergeScenarioHistoryHealth(string prior, string oldest, string previous, string newest, string health)
+        public void LivingDocProject_MergeScenarioHistoryHealth(string oldest, string earlier, string previous, string latest, string health)
         {
             var project = new LivingDocProject();
 
@@ -617,17 +617,17 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var scenario = new LivingDocScenario { Name = "Scenario One" };
             var example = new LivingDocExample();
 
-            if (!string.IsNullOrEmpty(prior))
-                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow.AddDays(-3), Status = prior });
-
             if (!string.IsNullOrEmpty(oldest))
-                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow.AddDays(-2), Status = oldest });
+                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow.AddDays(-3), Status = oldest });
+
+            if (!string.IsNullOrEmpty(earlier))
+                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow.AddDays(-2), Status = earlier });
 
             if (!string.IsNullOrEmpty(previous))
                 example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow.AddDays(-1), Status = previous });
 
-            if (!string.IsNullOrEmpty(newest))
-                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow, Status = newest });
+            if (!string.IsNullOrEmpty(latest))
+                example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow, Status = latest });
 
             scenario.Examples.Add(example);
             feature.Scenarios.Add(scenario);

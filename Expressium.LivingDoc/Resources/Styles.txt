@@ -2,7 +2,7 @@
     :root {
         
         /* Bootstrap Grayscale */
-        --bs-gray-075: #fdfdfd;
+        --bs-gray-075: #fdfdfe;
         --bs-gray-100: #f8f9fa;
         --bs-gray-125: #f4f5f6;
         --bs-gray-150: #f1f3f5;
@@ -79,10 +79,10 @@
         --button-selected-bg-color: var(--selected-bg-color);
 
         /* Status colors */
-        --passed-color: #47A64E;
-        --incomplete-color: #F7C21A;
-        --failed-color: #E84330;
-        --skipped-color: #a5a5a5;
+        --passed-color: #43A047;
+        --incomplete-color: #F4B400;
+        --failed-color: #E53935;
+        --skipped-color: #9E9E9E;
         --total-color: var(--bs-gray-900);
 
         /* Status backgrounds */
@@ -374,7 +374,7 @@
     }
 
     .grid-toggle {
-        color: var(--text-darkgray-color);
+        color: var(--text-gray-color);
         cursor: pointer;
         text-align: center;
         width: 1.5em;
@@ -559,8 +559,8 @@
         border-radius: 0.375em;
         padding-top: 3px;
         padding-bottom: 4px;
-        padding-left: 6px;
-        padding-right: 6px;
+        padding-left: 7px;
+        padding-right: 8px;
         font-size: 0.9375em;
         vertical-align: middle;
     }
@@ -800,11 +800,14 @@
     }
 
     .analytics-trends,
-    .analytics-healths,
-    .analytics-failures {
+    .analytics-healths {
         padding-left: 16px;
         padding-right: 16px;
         margin: auto;
+    }
+
+    .analytics-trends {
+        max-width: 50em;
     }
 
     .analytics-list {

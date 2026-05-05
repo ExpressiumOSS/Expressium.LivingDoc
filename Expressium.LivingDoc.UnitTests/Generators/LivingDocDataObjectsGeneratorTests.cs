@@ -112,7 +112,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Count, Is.EqualTo(5));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Feature Name -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<div>"));
-            Assert.That(listOfLines[2], Is.EqualTo("<span class='status-dot bgcolor-skipped'></span>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='bi bi-dash-circle-fill color-skipped status-symbol'></span>"));
             Assert.That(listOfLines[3], Is.EqualTo("<span class='feature-keyword'>Feature: </span><span class='feature-name'>Feature Name</span>"));
             Assert.That(listOfLines[4], Is.EqualTo("</div>"));
         }
@@ -282,7 +282,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Count, Is.EqualTo(8));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Scenario Name -->"));
             Assert.That(listOfLines[1], Is.EqualTo("<div>"));
-            Assert.That(listOfLines[2], Is.EqualTo("<span class='status-dot bgcolor-skipped'></span>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<span class='bi bi-dash-circle-fill color-skipped status-symbol'></span>"));
             Assert.That(listOfLines[3], Is.EqualTo("<span class='scenario-keyword'>Scenario: </span>"));
             Assert.That(listOfLines[4], Is.EqualTo("<span class='scenario-name'>Scenario Name</span>"));
             Assert.That(listOfLines[5], Is.EqualTo("<span class='scenario-index'>5</span>"));

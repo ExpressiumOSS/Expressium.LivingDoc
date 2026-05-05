@@ -163,7 +163,7 @@ namespace Expressium.LivingDoc.UITests.Pages
 
             foreach (var feature in GetFeatures())
             {
-                var element = feature.FindElement(By.XPath(".//td[span[contains(@class,'status-dot')]]"));
+                var element = feature.FindElement(By.XPath(".//td[span[contains(@class,'status-symbol')]]"));
                 if (element != null)
                     listOfNames.Add(element.GetText(driver));
             }
@@ -206,7 +206,7 @@ namespace Expressium.LivingDoc.UITests.Pages
 
             foreach (var scenario in GetScenarios())
             {
-                var element = scenario.FindElement(By.XPath(".//td[span[contains(@class,'status-dot')]]"));
+                var element = scenario.FindElement(By.XPath(".//td[span[contains(@class,'status-symbol')]]"));
                 if (element != null)
                     listOfNames.Add(element.GetText(driver));
             }

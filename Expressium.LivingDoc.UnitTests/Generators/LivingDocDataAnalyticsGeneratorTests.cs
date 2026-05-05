@@ -253,83 +253,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Returns_Empty_With_No_Health()
-        {
-            var project = new LivingDocProject();
-            var feature = new LivingDocFeature { Name = "Login" };
-            feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario A" });
-            project.Features.Add(feature);
-
-            var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsHealths();
-
-            Assert.That(listOfLines.Count, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Fixed()
-        {
-            var project = new LivingDocProject();
-            var feature = new LivingDocFeature { Name = "Login" };
-            feature.Scenarios.Add(CreateScenarioWithHealth("Login Scenario", LivingDocHealths.Fixed.ToString()));
-            project.Features.Add(feature);
-
-            var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsHealths();
-
-            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Healths Chart -->"));
-            Assert.That(listOfLines.Any(l => l.Contains("history-passed") && l.Contains("Fixed")), Is.True);
-        }
-
-        [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Broken()
-        {
-            var project = new LivingDocProject();
-            var feature = new LivingDocFeature { Name = "Login" };
-            feature.Scenarios.Add(CreateScenarioWithHealth("Login Scenario", LivingDocHealths.Broken.ToString()));
-            project.Features.Add(feature);
-
-            var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsHealths();
-
-            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Healths Chart -->"));
-            Assert.That(listOfLines.Any(l => l.Contains("history-failed") && l.Contains("Broken")), Is.True);
-        }
-
-        [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Flaky()
-        {
-            var project = new LivingDocProject();
-            var feature = new LivingDocFeature { Name = "Login" };
-            feature.Scenarios.Add(CreateScenarioWithHealth("Login Scenario", LivingDocHealths.Flaky.ToString()));
-            project.Features.Add(feature);
-
-            var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsHealths();
-
-            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Healths Chart -->"));
-            Assert.That(listOfLines.Any(l => l.Contains("history-failed") && l.Contains("Flaky")), Is.True);
-        }
-
-        [Test]
-        public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsHealths_Multiple_Scenarios()
-        {
-            var project = new LivingDocProject();
-            var feature = new LivingDocFeature { Name = "Login" };
-            feature.Scenarios.Add(CreateScenarioWithHealth("Scenario A", LivingDocHealths.Fixed.ToString()));
-            feature.Scenarios.Add(CreateScenarioWithHealth("Scenario B", LivingDocHealths.Broken.ToString()));
-            feature.Scenarios.Add(CreateScenarioWithHealth("Scenario C", LivingDocHealths.Flaky.ToString()));
-            project.Features.Add(feature);
-
-            var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsHealths();
-
-            Assert.That(listOfLines.Any(l => l.Contains("Scenario A")), Is.True);
-            Assert.That(listOfLines.Any(l => l.Contains("Scenario B")), Is.True);
-            Assert.That(listOfLines.Any(l => l.Contains("Scenario C")), Is.True);
-        }
-
-        [Test]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsFailures_With_Health_And_History()
         {
             var project = new LivingDocProject();
@@ -355,9 +278,9 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             project.Features.Add(feature);
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsFailures();
+            var listOfLines = generator.GenerateDataAnalyticsHealth();
 
-            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Failures Chart -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Health Chart -->"));
             Assert.That(listOfLines.Any(l => l.Contains("Login Scenario")), Is.True);
             Assert.That(listOfLines.Any(l => l.Contains("history-failed")), Is.True);
             Assert.That(listOfLines.Any(l => l.Contains("history-passed")), Is.True);
