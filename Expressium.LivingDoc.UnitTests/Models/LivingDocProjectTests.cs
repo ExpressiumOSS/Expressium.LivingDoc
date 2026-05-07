@@ -565,14 +565,19 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase(null, null, null, "Failed", null)]
         [TestCase(null, null, null, "Skipped", null)]
 
-        // Fixed patterns
-        [TestCase(null, null, "Skipped", "Passed", "Fixed")]
-        [TestCase(null, null, "Incomplete", "Passed", "Fixed")]
-        [TestCase(null, null, "Failed", "Passed", "Fixed")]
-        [TestCase(null, "Failed", "Failed", "Passed", "Fixed")]
-        [TestCase("Failed", "Failed", "Failed", "Passed", "Fixed")]
-        [TestCase("Failed", "Skipped", "Failed", "Passed", "Fixed")]
-        [TestCase("Incomplete", "Skipped", "Failed", "Passed", "Fixed")]
+        // Dead patterns
+        [TestCase(null, null, "Failed", "Failed", "Dead")]
+        [TestCase(null, "Failed", "Failed", "Failed", "Dead")]
+        [TestCase("Failed", "Failed", "Failed", "Failed", "Dead")]
+
+        // Broken patterns
+        [TestCase(null, null, "Skipped", "Failed", "Broken")]
+        [TestCase(null, null, "Incomplete", "Failed", "Broken")]
+        [TestCase(null, "Skipped", "Skipped", "Failed", "Broken")]
+        [TestCase(null, "Incomplete", "Incomplete", "Failed", "Broken")]
+        [TestCase("Passed", "Failed", "Incomplete", "Failed", "Flaky")]
+        [TestCase("Passed", "Failed", "Skipped", "Failed", "Flaky")]
+        [TestCase("Skipped", "Skipped", "Skipped", "Failed", "Broken")]
 
         // Regressed patterns
         [TestCase(null, null, "Passed", "Failed", "Regressed")]
@@ -581,20 +586,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase("Passed", "Skipped", "Passed", "Failed", "Regressed")]
         [TestCase("Skipped", "Incomplete", "Passed", "Failed", "Regressed")]
 
-        // New Broken patterns
-        [TestCase(null, null, "Skipped", "Failed", "Broken")]
-        [TestCase(null, null, "Incomplete", "Failed", "Broken")]
-        [TestCase(null, "Skipped", "Skipped", "Failed", "Broken")]
-        [TestCase(null, "Incomplete", "Incomplete", "Failed", "Broken")]
-        [TestCase("Passed", "Failed", "Incomplete", "Failed", "Flaky")]
-        [TestCase("Passed", "Failed", "Skipped", "Failed", "Flaky")]
-
-        // Still broken patterns
-        [TestCase(null, null, "Failed", "Failed", "Broken")]
-        [TestCase(null, "Failed", "Failed", "Failed", "Broken")]
-        [TestCase("Failed", "Failed", "Failed", "Failed", "Broken")]
-        [TestCase("Skipped", "Skipped", "Skipped", "Failed", "Broken")]
-
         // Flaky patterns
         [TestCase(null, "Failed", "Passed", "Failed", "Flaky")]
         [TestCase("Passed", "Failed", "Passed", "Failed", "Flaky")]
@@ -602,12 +593,19 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase("Incomplete", "Failed", "Passed", "Failed", "Flaky")]
         [TestCase(null, "Passed", "Failed", "Failed", "Flaky")]
         [TestCase("Passed", "Passed", "Failed", "Failed", "Flaky")]
-
-        // Edge Flaky patterns
         [TestCase("Failed", "Skipped", "Passed", "Failed", "Flaky")]
         [TestCase("Failed", "Incomplete", "Passed", "Failed", "Flaky")]
         [TestCase("Failed", "Passed", "Skipped", "Failed", "Flaky")]
         [TestCase("Failed", "Passed", "Incomplete", "Failed", "Flaky")]
+
+        // Fixed patterns
+        [TestCase(null, null, "Skipped", "Passed", "Fixed")]
+        [TestCase(null, null, "Incomplete", "Passed", "Fixed")]
+        [TestCase(null, null, "Failed", "Passed", "Fixed")]
+        [TestCase(null, "Failed", "Failed", "Passed", "Fixed")]
+        [TestCase("Failed", "Failed", "Failed", "Passed", "Fixed")]
+        [TestCase("Failed", "Skipped", "Failed", "Passed", "Fixed")]
+        [TestCase("Incomplete", "Skipped", "Failed", "Passed", "Fixed")]
 
         public void LivingDocProject_MergeScenarioHistoryHealth(string oldest, string earlier, string previous, string latest, string health)
         {

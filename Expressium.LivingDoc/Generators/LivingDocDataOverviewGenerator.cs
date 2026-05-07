@@ -96,7 +96,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - 1}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add("</td>");
-            listOfLines.Add("<td class='grid-border' colspan='2' align='right'>");
+            listOfLines.Add("<td class='grid-border align-right' colspan='2'>");
             listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
             listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
             listOfLines.Add("</td>");
@@ -118,7 +118,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add("</td>");
-            listOfLines.Add("<td class='grid-border' style='padding-right: 8px;' align='right' ></td>");
+            listOfLines.Add("<td class='grid-border align-right'></td>");
 
             listOfLines.Add("</tr>");
 
@@ -144,7 +144,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<a class='grid-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
 
-            listOfLines.Add($"<td class='grid-border' align='right'></td>");
+            listOfLines.Add($"<td class='grid-border align-right'></td>");
 
             listOfLines.Add($"</tr>");
 
@@ -180,10 +180,10 @@ namespace Expressium.LivingDoc.Generators
             //if (project.ExperimentFlagHealthFilter && scenario.HasHealth())
             //{
             //    var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(scenario.Health);
-            //    listOfLines.Add($"<td class='grid-border' align='right' style='padding-right: 0.75em;'><span class='{symbol} health-symbol' title='{scenario.Health}'></span></td>");
+            //    listOfLines.Add($"<td class='grid-border align-right'><span class='{symbol} health-symbol' title='{scenario.Health}'></span></td>");
             //}
             //else
-            listOfLines.Add("<td class='grid-border' align='right'></td>");
+            listOfLines.Add("<td class='grid-border align-right'></td>");
 
             listOfLines.Add("</tr>");
 

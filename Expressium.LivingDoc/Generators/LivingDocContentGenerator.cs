@@ -58,7 +58,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateFilter());
 
             //if (project.ExperimentFlagHealthFilter && project.HasHealth())
-            //    listOfLines.AddRange(GeneratePreFiltersHealth());
+            // listOfLines.AddRange(GeneratePreFiltersHealth());
 
             listOfLines.Add("<div id='filter-list'></div>");
             //listOfLines.Add("</div>");
@@ -97,17 +97,12 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- PreFilters Section -->");
 
             // Status Symbols...
-            var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol("passed");
-            listOfLines.Add($"<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'><span class='{symbol} color-passed status-symbol' style='margin-right: 0.25em;'></span><span>Passed</span></button>");
-
-            symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol("incomplete");
-            listOfLines.Add($"<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'><span class='{symbol} color-incomplete status-symbol' style='margin-right: 0.25em;'></span><span>Incomplete</span></button>");
-
-            symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol("failed");
-            listOfLines.Add($"<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'><span class='{symbol} color-failed status-symbol' style='margin-right: 0.25em;'></span><span>Failed</span></button>");
-
-            symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol("skipped");
-            listOfLines.Add($"<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'><span class='{symbol} color-skipped status-symbol' style='margin-right: 0.25em;'></span><span>Skipped</span></button>");
+            var listOfPrefilters = new List<string>() { "Passed", "Incomplete", "Failed", "Skipped" };
+            foreach (var prefilter in listOfPrefilters)
+            {
+                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(prefilter.ToLower());
+                listOfLines.Add($"<button class='filter-option' data-prefilter='{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
+            }
             listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearAllfilters()'>Clear</button>");
 
             // Status Badges...
@@ -134,17 +129,12 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div class='layout-column align-left'>");
             listOfLines.Add("<!-- PreFilters Section -->");
 
-            var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(LivingDocHealths.Broken.ToString());
-            listOfLines.Add($"<button class='filter-option' data-prefilter='Broken' title='Preset Filter with Broken' onclick='togglePrefilter(this)'><span class='{symbol} color-broken status-symbol'></span><span>Broken</span></button>");
-
-            symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(LivingDocHealths.Regressed.ToString());
-            listOfLines.Add($"<button class='filter-option' data-prefilter='Regressed' title='Preset Filter with Regressed' onclick='togglePrefilter(this)'><span class='{symbol} color-regressed status-symbol'></span><span>Regressed</span></button>");
-
-            symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(LivingDocHealths.Flaky.ToString());
-            listOfLines.Add($"<button class='filter-option' data-prefilter='Flaky' title='Preset Filter with Flaky' onclick='togglePrefilter(this)'><span class='{symbol} color-flaky status-symbol'></span><span>Flaky</span></button>");
-
-            symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(LivingDocHealths.Fixed.ToString());
-            listOfLines.Add($"<button class='filter-option' data-prefilter='Fixed' title='Preset Filter with Fixed' onclick='togglePrefilter(this)'><span class='{symbol} color-fixed status-symbol'></span><span>Fixed</span></button>");
+            foreach (var health in Enum.GetValues(typeof(LivingDocHealths)))
+            {
+                var name = health.ToString();
+                var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(name);
+                listOfLines.Add($"<button class='filter-option' data-prefilter='{name}' title='Preset Filter with {name}' onclick='togglePrefilter(this)'><span class='{symbol} color-total status-symbol'></span><span>{name}</span></button>");
+            }
 
             listOfLines.Add("</div>");
 

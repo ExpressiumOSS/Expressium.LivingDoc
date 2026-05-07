@@ -155,15 +155,18 @@ namespace Expressium.LivingDoc.Models
 
         public string GetHealthSortId()
         {
-            if (Health == LivingDocHealths.Broken.ToString())
+            if (Health == LivingDocHealths.Dead.ToString())
                 return "1";
-            if (Health == LivingDocHealths.Regressed.ToString())
+            else if (Health == LivingDocHealths.Broken.ToString())
                 return "2";
-            if (Health == LivingDocHealths.Flaky.ToString())
+            else if (Health == LivingDocHealths.Regressed.ToString())
                 return "3";
-            if (Health == LivingDocHealths.Fixed.ToString())
+            else if (Health == LivingDocHealths.Flaky.ToString())
                 return "4";
-            return "5";
+            else if (Health == LivingDocHealths.Fixed.ToString())
+                return "5";
+
+            return "6";
         }
 
         public bool IsBroken()

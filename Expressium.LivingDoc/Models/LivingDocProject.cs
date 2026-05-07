@@ -290,6 +290,10 @@ namespace Expressium.LivingDoc.Models
                         if (latest == failed && previous == passed)
                             scenario.Health = LivingDocHealths.Regressed.ToString();
 
+                        // Dead Pattern...
+                        else if (latest == failed && activeStatuses.All(s => s == failed) && activeStatuses.Count == numberOfHistories)
+                            scenario.Health = LivingDocHealths.Dead.ToString();
+
                         // Broken Pattern...
                         else if (latest == failed && (previous == skipped || previous == incomplete || previous == failed))
                             scenario.Health = LivingDocHealths.Broken.ToString();

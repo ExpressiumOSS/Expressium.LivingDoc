@@ -62,7 +62,7 @@
 
         /* Special Texts */
         --keyword-text-color: #25576b;
-        --link-text-color: var(--bs-gray-650); /* #295f75; */
+        --link-text-color: #295f75; /* var(--bs-gray-650); */
 
         /* Badges */
         --scenario-index-text-color: var(--bs-white);
@@ -488,6 +488,10 @@
         background: var(--skipped-color);
     }
 
+    .color-total {
+        color: var(--total-color);
+    }
+
     .bgcolor-total {
         background: var(--total-color);
     }
@@ -517,6 +521,10 @@
         font-size: 1.0em;
         padding-right: 2px;
         padding-left: 2px;
+    }
+
+    button.filter-option .status-symbol {
+        margin-right: 0.25em;
     }
 
     .health-symbol {
@@ -807,12 +815,7 @@
         margin: auto;
     }
 
-    .analytics-trends {
-        max-width: 50em;
-    }
-
     .analytics-list {
-        border: 1px;
         width: 100%;
     }
 

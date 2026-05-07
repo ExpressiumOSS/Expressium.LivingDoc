@@ -20,7 +20,9 @@ namespace Expressium.LivingDoc.Generators
 
         internal static string GetHealtSymbol(string health)
         {
-            if (health == LivingDocHealths.Broken.ToString())
+            if (health == LivingDocHealths.Dead.ToString())
+                return "bi bi-cloud-haze";
+            else if (health == LivingDocHealths.Broken.ToString())
                 return "bi bi-cloud-rain-heavy";
             else if (health == LivingDocHealths.Regressed.ToString())
                 return "bi bi-cloud-rain";

@@ -173,7 +173,7 @@ namespace Expressium.LivingDoc.Generators
 
             {
                 listOfLines.Add("<div class='section' style='text-align: center; margin: auto;'>");
-                listOfLines.Add("<table align='center'>");
+                listOfLines.Add("<table class='align-center'>");
                 listOfLines.Add("<tr>");
 
                 listOfLines.Add("<td class='color-passed chart-count'>");
@@ -274,7 +274,16 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
             listOfLines.Add("<th width='50%'>Date</th>");
+
+            //listOfLines.Add("<th class='align-center' width='80'>Passed</th>");
+            //listOfLines.Add("<th class='align-center' width='80'>Incomplete</th>");
+            //listOfLines.Add("<th class='align-center' width='80'>Failed</th>");
+            //listOfLines.Add("<th class='align-center' width='80'>Skipped</th>");
+            //listOfLines.Add("<th class='align-center' width='80'>Passed</th>");
+            //listOfLines.Add("<th class='align-center' width='80'>Total</th>");
+
             listOfLines.Add("<th style='min-width: 300px;'>Status</th>");
+
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody>");
@@ -328,6 +337,14 @@ namespace Expressium.LivingDoc.Generators
 
                 listOfLines.Add($"<tr title='{history.GetDate()}'>");
                 listOfLines.Add($"<td>{history.GetDate()}</td>");
+
+                //var total = history.Passed + history.Incomplete + history.Failed + history.Skipped;
+                //listOfLines.Add($"<td class='align-center'>{history.Passed}</td>");
+                //listOfLines.Add($"<td class='align-center'>{history.Incomplete}</td>");
+                //listOfLines.Add($"<td class='align-center'>{history.Failed}</td>");
+                //listOfLines.Add($"<td class='align-center'>{history.Skipped}</td>");
+                //listOfLines.Add($"<td class='align-center'>{percentageOfPassed}%</td>");
+                //listOfLines.Add($"<td class='align-center'>{total}</td>");
 
                 listOfLines.Add("<td>");
                 listOfLines.Add("<div style='width: 100%;'>");
@@ -383,56 +400,59 @@ namespace Expressium.LivingDoc.Generators
                 else if (i == listOfDates.Count())
                     name = "Latest";
 
-                listOfLines.Add($"<th align='center' style='text-align: center'>{name}</th>");
+                listOfLines.Add($"<th class='align-center'>{name}</th>");
             }
 
-            listOfLines.Add($"<th align='center' style='text-align: center'>Health</th>");
+            listOfLines.Add($"<th class='align-center'>Health</th>");
 
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody>");
 
-            foreach (var feature in project.Features)
+            foreach (var status in Enum.GetValues(typeof(LivingDocHealths)))
             {
-                foreach (var scenario in feature.Scenarios)
+                foreach (var feature in project.Features)
                 {
-                    if (scenario.HasHealth())
+                    foreach (var scenario in feature.Scenarios)
                     {
-                        foreach (var example in scenario.Examples)
+                        if (scenario.HasHealth() && scenario.Health == status.ToString())
                         {
-                            listOfLines.Add($"<tr data-role='scenario' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
-                            listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
-
-                            foreach (var date in listOfDates)
+                            foreach (var example in scenario.Examples)
                             {
-                                var hasHistory = false;
-                                foreach (var history in example.History)
-                                {
-                                    if (history.GetDate() == date)
-                                    {
-                                        if (history.Status == LivingDocStatuses.Failed.ToString())
-                                            listOfLines.Add($"<td class='history-failed'>Failed</td>");
-                                        else if (history.Status == LivingDocStatuses.Passed.ToString())
-                                            listOfLines.Add($"<td class='history-passed'>Passed</td>");
-                                        else if (history.Status == LivingDocStatuses.Incomplete.ToString())
-                                            listOfLines.Add($"<td class='history-incomplete'>Incomplete</td>");
-                                        else if (history.Status == LivingDocStatuses.Skipped.ToString())
-                                            listOfLines.Add($"<td class='history-skipped'>Skipped</td>");
-                                        else
-                                        {
-                                            listOfLines.Add($"<td class='history-unknown'></td>");
-                                        }
+                                listOfLines.Add($"<tr data-role='scenario' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                                listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
 
-                                        hasHistory = true;
+                                foreach (var date in listOfDates)
+                                {
+                                    var hasHistory = false;
+                                    foreach (var history in example.History)
+                                    {
+                                        if (history.GetDate() == date)
+                                        {
+                                            if (history.Status == LivingDocStatuses.Failed.ToString())
+                                                listOfLines.Add($"<td class='history-failed'>Failed</td>");
+                                            else if (history.Status == LivingDocStatuses.Passed.ToString())
+                                                listOfLines.Add($"<td class='history-passed'>Passed</td>");
+                                            else if (history.Status == LivingDocStatuses.Incomplete.ToString())
+                                                listOfLines.Add($"<td class='history-incomplete'>Incomplete</td>");
+                                            else if (history.Status == LivingDocStatuses.Skipped.ToString())
+                                                listOfLines.Add($"<td class='history-skipped'>Skipped</td>");
+                                            else
+                                            {
+                                                listOfLines.Add($"<td class='history-unknown'></td>");
+                                            }
+
+                                            hasHistory = true;
+                                        }
                                     }
+
+                                    if (!hasHistory)
+                                        listOfLines.Add($"<td class='history-unknown'></td>");
                                 }
 
-                                if (!hasHistory)
-                                    listOfLines.Add($"<td class='history-unknown'></td>");
+                                listOfLines.Add($"<td class='history-skipped'>{scenario.Health}</td>");
+                                listOfLines.Add("</tr>");
                             }
-
-                            listOfLines.Add($"<td class='history-skipped'>{scenario.Health}</td>");
-                            listOfLines.Add("</tr>");
                         }
                     }
                 }
