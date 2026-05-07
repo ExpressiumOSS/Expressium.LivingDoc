@@ -42,13 +42,8 @@ namespace Expressium.LivingDoc.Generators
                 listOfLines.Add($"<tr class='grid-border' data-role='feature' data-tags='{feature.Name} {feature.GetTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
 
                 var status = feature.GetStatus().ToLower();
-                if (project.ExperimentFlagSymbols)
-                {
-                    var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
-                    listOfLines.Add($"<td align='center'><span class='{symbol} color-{status} status-symbol'></span></td>");
-                }
-                else
-                    listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{status}'></span></td>");
+                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+                listOfLines.Add($"<td align='center'><span class='{symbol} color-{status} status-symbol'></span></td>");
 
                 listOfLines.Add($"<td><a href='#'>{feature.Name}</a></td>");
                 listOfLines.Add($"<td align='center' data-scenarios='{feature.GetNumberOfScenariosSortId()}'>{feature.GetNumberOfScenarios()}</td>");
@@ -108,13 +103,8 @@ namespace Expressium.LivingDoc.Generators
                     listOfLines.Add($"<tr class='grid-border' data-role='scenario' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
                     var status = scenario.GetStatus().ToLower();
-                    if (project.ExperimentFlagSymbols)
-                    {
-                        var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
-                        listOfLines.Add($"<td align='center'><span class='{symbol} color-{status} status-symbol'></span></td>");
-                    }
-                    else
-                        listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{status}'></span></td>");
+                    var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+                    listOfLines.Add($"<td align='center'><span class='{symbol} color-{status} status-symbol'></span></td>");
 
                     listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
                     listOfLines.Add($"<td align='center' data-order='{scenario.GetOrderSortId()}'>{scenario.GetOrder()}</td>");
@@ -200,13 +190,8 @@ namespace Expressium.LivingDoc.Generators
                                     listOfLines.Add($"<tr class='grid-border' data-role='step' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
                                     var stepStatus = step.GetStatus().ToLower();
-                                    if (project.ExperimentFlagSymbols)
-                                    {
-                                        var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(stepStatus);
-                                        listOfLines.Add($"<td align='center'><span class='{symbol} color-{stepStatus} status-symbol'></span></td>");
-                                    }
-                                    else
-                                        listOfLines.Add($"<td align='center'><span class='status-dot bgcolor-{stepStatus}'></span></td>");
+                                    var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(stepStatus);
+                                    listOfLines.Add($"<td align='center'><span class='{symbol} color-{stepStatus} status-symbol'></span></td>");
 
                                     listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
                                     //listOfLines.Add($"<td align='center' failure-count='{failures.ToString("D4")}'>{failures}</td>");

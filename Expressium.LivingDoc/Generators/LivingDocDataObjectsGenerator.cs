@@ -61,13 +61,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div>");
 
             var status = feature.GetStatus().ToLower();
-            if (project.ExperimentFlagSymbols)
-            {
-                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
-                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
-            }
-            else
-                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
+            var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+            listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
 
             listOfLines.Add($"<span class='feature-keyword'>Feature: </span><span class='feature-name'>{feature.Name}</span>");
             //listOfLines.Add($"<span class='feature-duration'>{feature.GetDuration()}</span>");
@@ -284,13 +279,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<div>");
 
             var status = example.GetStatus().ToLower();
-            if (project.ExperimentFlagSymbols)
-            {
-                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
-                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
-            }
-            else
-                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
+            var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+            listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
 
             listOfLines.Add("<span class='scenario-keyword'>Scenario: </span>");
             listOfLines.Add("<span class='scenario-name'>" + scenario.Name + "</span>");

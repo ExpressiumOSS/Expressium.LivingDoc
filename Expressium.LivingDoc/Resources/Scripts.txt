@@ -72,6 +72,7 @@
             }
 
             filterView();
+            ScrollFilterListToTop();
             loadAnalytics();
         }
     </script>
@@ -552,7 +553,13 @@
 
             clearActiveListItems();
             filterView();
+            ScrollFilterListToTop();
             loadAnalytics();
+        }
+    </script>
+    <script>
+        function ScrollFilterListToTop() {
+            document.getElementById("filter-list").scrollTop = 0;
         }
     </script>
     <script>

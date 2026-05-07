@@ -23,7 +23,7 @@ namespace Expressium.LivingDoc.Models
         public List<LivingDocFeature> Features { get; set; }
         public LivingDocProjectHistory History { get; set; }
 
-        internal bool ExperimentFlagSymbols { get; set; }
+        internal bool ExperimentFlag { get; set; }
 
         public LivingDocProject()
         {
@@ -32,7 +32,7 @@ namespace Expressium.LivingDoc.Models
             Features = new List<LivingDocFeature>();
             History = new LivingDocProjectHistory();
 
-            ExperimentFlagSymbols = true; // Alternative visualization with Bootstrap icons...
+            ExperimentFlag = false; // Alternative visualization with Bootstrap icons...
         }
 
         internal string GetApplicationName()

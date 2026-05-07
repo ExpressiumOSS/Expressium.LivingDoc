@@ -3,8 +3,9 @@
         
         /* Bootstrap Grayscale */
         --bs-gray-075: #fdfdfe;
+        --bs-gray-090: #f9fafb;
         --bs-gray-100: #f8f9fa;
-        --bs-gray-125: #f4f5f6;
+        --bs-gray-125: #f6f7f8;
         --bs-gray-150: #f1f3f5;
         --bs-gray-200: #e9ecef;
         --bs-gray-300: #dee2e6;
@@ -12,20 +13,20 @@
         --bs-gray-450: #bec5cc;
         --bs-gray-500: #adb5bd;
         --bs-gray-600: #6c757d;
-        --bs-gray-650: #5b636a;
+        --bs-gray-650: #565d63; /* 5b636a */;
         --bs-gray-700: #495057;
         --bs-gray-800: #343a40;
         --bs-gray-900: #212529;
 
         /* Header */
-        --header-bg-color: #cfdbea;
+        --header-bg-color: #d4dfec; /* #cfdbea; */
 
         /* Footer */
         --footer-text-color: var(--bs-gray-600);
         --footer-bg-color: var(--bs-gray-100);
 
         /* Navigation */
-        --navigation-bg-color: var(--bs-gray-125);
+        --navigation-bg-color: var(--bs-gray-100);
         --navigation-underline-color: var(--bs-gray-500);
 
         /* Tables */
@@ -39,11 +40,11 @@
 
         /* Groups */
         --group-bg-color: var(--bs-gray-075);
-        --group-border-color: var(--bs-gray-300);
+        --group-border-color: #E9E9E9; /* var(--bs-gray-300); */
 
         /* Outlines */
-        --grid-border-color: #EAEAEA;
-        --splitter-border-color: #E0E0E0;
+        --grid-border-color: #E9E9E9;
+        --splitter-border-color: #E9E9E9;
 
         /* Scrollbars */
         --scrollbar-text-color: #969696;
@@ -61,7 +62,7 @@
 
         /* Special Texts */
         --keyword-text-color: #25576b;
-        --link-text-color: var(--text-darkgray-color); /* #234f62; */
+        --link-text-color: var(--bs-gray-650); /* #295f75; */
 
         /* Badges */
         --scenario-index-text-color: var(--bs-white);
@@ -69,19 +70,19 @@
 
         /* Buttons */
         --button-border-color: var(--bs-gray-450);
-        --button-bg-color: var(--bs-gray-100);
+        --button-bg-color: var(--bs-gray-090);
         --button-text-color: var(--bs-gray-900);
         --button-inactive-border-color: var(--bs-gray-400);
-        --button-inactive-bg-color: var(--bs-gray-100);
+        --button-inactive-bg-color: var(--bs-gray-090);
         --button-inactive-text-color: var(--bs-gray-600);
         --button-hover-border-color: var(--bs-gray-500);
         --button-hover-bg-color: var(--bs-gray-125);
         --button-selected-bg-color: var(--selected-bg-color);
 
         /* Status colors */
-        --passed-color: #43A047;
-        --incomplete-color: #F4B400;
-        --failed-color: #E53935;
+        --passed-color: #47A64E; /* #43A047 */
+        --incomplete-color: #F7C21A; /* #F4B400 */
+        --failed-color: #E84330; /* #E53935 */
         --skipped-color: #9E9E9E;
         --total-color: var(--bs-gray-900);
 
@@ -96,7 +97,7 @@
         --incomplete-text-color: #7A5E00;
         --incomplete-text-color: #745A00;
         --failed-text-color: #99271E;
-        --skipped-text-color: var(--bs-gray-800);
+        --skipped-text-color: var(--bs-gray-700);
     }
    
     body, html {
@@ -121,7 +122,7 @@
 
     .project-date {
         color: var(--text-darkgray-color);      
-        padding-left: 2px;
+        padding-left: 0.125em;
     }
 
     .navigation {
@@ -133,9 +134,9 @@
     a.navigation-link {
         color: var(--text-color);
         position: relative;
-        padding-left: 1px;
-        padding-right: 1px;
-        margin-right: 12px;
+        padding-left: 0.0625em;
+        padding-right: 0.0625em;
+        margin-right: 0.75em;
         font-size: 1.0625em;
         text-decoration: none; /* remove default underline */
     }
@@ -192,7 +193,7 @@
     }
 
     .section {
-        padding-bottom: 8px;
+        padding-bottom: 0.50em;
     }
 
     .layout-row {
@@ -227,8 +228,8 @@
     }
 
     .filter-symbol {
-        padding-left: 4px;
-        padding-right: 6px;
+        padding-left: 0.25em;
+        padding-right: 0.375em;
         color: var(--text-gray-color);
     }
 
@@ -262,12 +263,10 @@
     }
     
     table.tree-view {
-        border: 1px;
         width: 100%;
     }
 
     table.list-view {
-        border: 1px;
         width: 100%;
         margin-top: 0.125em;
     }
@@ -283,11 +282,6 @@
         padding-right: 6px;
     }
    
-    table.tree-view td {
-        padding-left: 4px;
-        padding-right: 4px;
-    }
-
     table.tree-view td {
         padding-left: 2px;
         padding-right: 2px;
@@ -313,6 +307,11 @@
         background-color: var(--button-bg-color);
         border-radius: 0.375em;
         padding: 2px 6px;
+    }
+
+    button.filter-option {
+        display: inline-flex;              /* enables centering */
+        align-items: center;               /* vertical centering */
     }
 
     /* Hover Buttons */
@@ -502,9 +501,22 @@
         margin-right: 2px;
     }
 
+    .status-badge {
+      display: inline-flex;              /* enables centering */
+      align-items: center;               /* vertical centering */
+      justify-content: center;           /* horizontal centering */
+      color: white;
+      font-size: 0.78em;
+      font-weight: 600;
+      padding: 0.0625em 0.625em;
+      border-radius: 999px;
+      margin-right: 0.375em;
+    }
+
     .status-symbol {
-        font-size: 0.9375em;
-        padding-right: 1px;
+        font-size: 1.0em;
+        padding-right: 2px;
+        padding-left: 2px;
     }
 
     .health-symbol {
@@ -553,7 +565,8 @@
 
     .feature-tag,
     .rule-tag,
-    .scenario-tag {
+    .scenario-tag,
+    .scenario-tag-health {
         color: var(--tag-text-color);
         background: var(--tag-bg-color);
         border-radius: 0.375em;
@@ -562,25 +575,12 @@
         padding-left: 7px;
         padding-right: 8px;
         font-size: 0.9375em;
-        vertical-align: middle;
-    }
-
-    .scenario-tag-health {
-        color: var(--tag-text-color);
-        background: var(--tag-bg-color);
-        /* border-radius: 0.375em; */
-        padding-top: 3px;
-        padding-bottom: 4px;
-        padding-left: 6px;
-        padding-right: 6px;
-        font-size: 0.9375em;
-        vertical-align: middle;
     }
 
     .feature-tag-group,
     .rule-tag-group,
     .scenario-tag-group {
-        padding-bottom: 2px;
+        padding-bottom: 0.25em;
     }
 
     .feature-keyword,
@@ -616,14 +616,15 @@
     }
 
     .scenario-index {
-        width: 1.70em;
-        height: 1.70em;
+        width: 1.80em;
+        height: 1.80em;
+        font-weight: 600;
         border-radius: 50%;
         background-color: var(--scenario-index-bg-color);
         color: var(--scenario-index-text-color);
         text-align: center;
-        line-height: 1.70em; /* Centers the text vertically */
-        font-size: 0.850em;
+        line-height: 1.80em; /* Centers the text vertically */
+        font-size: 0.8125em;
         display: inline-block; /* Allows the circle to be displayed inline */
         margin-left: 3px;
     }

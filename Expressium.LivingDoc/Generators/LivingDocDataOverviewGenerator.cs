@@ -138,16 +138,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
 
             var status = feature.GetStatus().ToLower();
-
-            if (project.ExperimentFlagSymbols)
-            {
-                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
-                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
-            }
-            else
-            {
-                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
-            }
+            var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+            listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
 
             listOfLines.Add($"<a class='grid-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
@@ -179,16 +171,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
 
             var status = scenario.GetStatus().ToLower();
-
-            if (project.ExperimentFlagSymbols)
-            {
-                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
-                listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
-            }
-            else
-            {
-                listOfLines.Add($"<span class='status-dot bgcolor-{status}'></span>");
-            }
+            var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
+            listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
 
             listOfLines.Add($"<a class='grid-heading' href='#'>{scenario.Name}</a>");
             listOfLines.Add("</td>");
@@ -199,7 +183,7 @@ namespace Expressium.LivingDoc.Generators
             //    listOfLines.Add($"<td class='grid-border' align='right' style='padding-right: 0.75em;'><span class='{symbol} health-symbol' title='{scenario.Health}'></span></td>");
             //}
             //else
-                listOfLines.Add("<td class='grid-border' align='right'></td>");
+            listOfLines.Add("<td class='grid-border' align='right'></td>");
 
             listOfLines.Add("</tr>");
 
