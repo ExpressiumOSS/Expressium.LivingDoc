@@ -233,6 +233,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             Assert.That(scenario.GetTags(), Is.EqualTo(expected));
         }
+
         [Test]
         public void LivingDocScenario_IsBroken_ReturnsTrue_WhenHealthIsBroken()
         {
@@ -241,6 +242,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(scenario.IsBroken(), Is.True);
             Assert.That(scenario.IsFlaky(), Is.False);
             Assert.That(scenario.IsFixed(), Is.False);
+            Assert.That(scenario.IsRegressed(), Is.False);
         }
 
         [Test]
@@ -251,6 +253,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(scenario.IsBroken(), Is.False);
             Assert.That(scenario.IsFlaky(), Is.True);
             Assert.That(scenario.IsFixed(), Is.False);
+            Assert.That(scenario.IsRegressed(), Is.False);
         }
 
         [Test]
@@ -261,6 +264,18 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(scenario.IsBroken(), Is.False);
             Assert.That(scenario.IsFlaky(), Is.False);
             Assert.That(scenario.IsFixed(), Is.True);
+            Assert.That(scenario.IsRegressed(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocScenario_IsRegressed_ReturnsTrue_WhenHealthIsRegressed()
+        {
+            var scenario = new LivingDocScenario { Health = LivingDocHealths.Regressed.ToString() };
+
+            Assert.That(scenario.IsRegressed(), Is.True);
+            Assert.That(scenario.IsBroken(), Is.False);
+            Assert.That(scenario.IsFlaky(), Is.False);
+            Assert.That(scenario.IsFixed(), Is.False);
         }
 
         [Test]
@@ -271,6 +286,65 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(scenario.IsBroken(), Is.False);
             Assert.That(scenario.IsFlaky(), Is.False);
             Assert.That(scenario.IsFixed(), Is.False);
+            Assert.That(scenario.IsRegressed(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocScenario_Constructor_DefaultsAreCorrect()
+        {
+            var scenario = new LivingDocScenario();
+
+            Assert.That(scenario.Id, Is.Not.Null);
+            Assert.That(scenario.Id, Is.Not.Empty);
+            Assert.That(scenario.Order, Is.EqualTo(0));
+            Assert.That(scenario.Health, Is.Null);
+            Assert.That(scenario.Tags, Is.Not.Null);
+            Assert.That(scenario.Tags, Is.Empty);
+            Assert.That(scenario.Examples, Is.Not.Null);
+            Assert.That(scenario.Examples, Is.Empty);
+        }
+
+        [TestCase("Dead", "1")]
+        [TestCase("Broken", "2")]
+        [TestCase("Regressed", "3")]
+        [TestCase("Flaky", "4")]
+        [TestCase("Fixed", "5")]
+        [TestCase(null, "6")]
+        [TestCase("Unknown", "6")]
+        public void LivingDocScenario_GetHealthSortId_ReturnsCorrectRank(string health, string expected)
+        {
+            var scenario = new LivingDocScenario { Health = health };
+
+            Assert.That(scenario.GetHealthSortId(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void LivingDocScenario_GetDurationSortId_FormatsAsExpected()
+        {
+            var scenario = new LivingDocScenario();
+
+            var example = new LivingDocExample
+            {
+                Duration = new System.TimeSpan(0, 0, 0, 3, 478)
+            };
+            scenario.Examples.Add(example);
+
+            Assert.That(scenario.GetDurationSortId(), Is.EqualTo("00:03:478"));
+        }
+
+        [Test]
+        public void LivingDocScenario_GetStatus_Unknown_WhenNoExamplesMatchAnyBranch()
+        {
+            var scenario = new LivingDocScenario();
+
+            var example = new LivingDocExample();
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            scenario.Examples.Add(example);
+
+            Assert.That(scenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
+
+            var scenario2 = new LivingDocScenario();
+            Assert.That(scenario2.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
         }
     }
 }

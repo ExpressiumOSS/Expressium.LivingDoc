@@ -57,8 +57,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GeneratePreFilters());
             listOfLines.AddRange(GenerateFilter());
 
-            //if (project.ExperimentFlagHealthFilter && project.HasHealth())
-            // listOfLines.AddRange(GeneratePreFiltersHealth());
+            if (project.ExperimentFlag && project.HasHealth())
+                listOfLines.AddRange(GeneratePreFiltersHealth());
 
             listOfLines.Add("<div id='filter-list'></div>");
             //listOfLines.Add("</div>");
@@ -123,23 +123,23 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<div class='section layout-row'>");
-
-            listOfLines.Add("<!-- View Title Section -->");
-            listOfLines.Add("<div class='layout-column align-left'>");
             listOfLines.Add("<!-- PreFilters Section -->");
+            listOfLines.Add("<div class='layout-row filter-group' style='padding-left: 12px;'>");
+
+            listOfLines.Add("<div class='layout-column align-left'>");
 
             foreach (var health in Enum.GetValues(typeof(LivingDocHealths)))
             {
                 var name = health.ToString();
                 var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(name);
-                listOfLines.Add($"<button class='filter-option' data-prefilter='{name}' title='Preset Filter with {name}' onclick='togglePrefilter(this)'><span class='{symbol} color-total status-symbol'></span><span>{name}</span></button>");
+                listOfLines.Add($"<button class='filter-option' data-prefilter='{name}' title='Preset Filter with {name}' onclick='togglePrefilter(this)'><span class='{symbol} status-symbol health-symbol'></span><span>{name}</span></button>");
             }
 
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='layout-column align-right'>");
             listOfLines.Add("</div>");
+
             listOfLines.Add("</div>");
 
             return listOfLines;

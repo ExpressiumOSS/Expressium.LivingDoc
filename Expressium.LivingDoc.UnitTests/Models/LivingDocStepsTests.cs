@@ -1,4 +1,4 @@
-﻿using Expressium.LivingDoc.Models;
+using Expressium.LivingDoc.Models;
 using System.IO;
 
 namespace Expressium.LivingDoc.UnitTests.Models
@@ -82,6 +82,78 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocStep.IsPassed(), Is.False);
             Assert.That(livingDocStep.IsFailed(), Is.False);
             Assert.That(livingDocStep.IsIncomplete(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocStep_Copy_CopiesAllFields()
+        {
+            var original = new LivingDocStep
+            {
+                Id = "step-001",
+                Keyword = "Given",
+                Name = "I am logged in",
+                Type = LivingDocStepTypes.Scenario.ToString(),
+                Status = LivingDocStatuses.Passed.ToString(),
+                Duration = new System.TimeSpan(0, 0, 0, 1, 250),
+                Message = "Some message",
+                DataTable = new LivingDocDataTable()
+            };
+            original.DataTable.Rows.Add(new LivingDocDataTableRow());
+
+            var copy = new LivingDocStep().Copy(original);
+
+            Assert.That(copy.Id, Is.EqualTo(original.Id));
+            Assert.That(copy.Keyword, Is.EqualTo(original.Keyword));
+            Assert.That(copy.Name, Is.EqualTo(original.Name));
+            Assert.That(copy.Type, Is.EqualTo(original.Type));
+            Assert.That(copy.Status, Is.EqualTo(original.Status));
+            Assert.That(copy.Duration, Is.EqualTo(original.Duration));
+            Assert.That(copy.Message, Is.EqualTo(original.Message));
+            Assert.That(copy.DataTable, Is.SameAs(original.DataTable));
+        }
+
+        [Test]
+        public void LivingDocStep_IsIncomplete_Pending_ReturnsTrue()
+        {
+            var step = new LivingDocStep { Status = LivingDocStatuses.Pending.ToString() };
+
+            Assert.That(step.IsIncomplete(), Is.True);
+            Assert.That(step.IsPassed(), Is.False);
+            Assert.That(step.IsFailed(), Is.False);
+            Assert.That(step.IsSkipped(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocStep_IsIncomplete_Undefined_ReturnsTrue()
+        {
+            var step = new LivingDocStep { Status = LivingDocStatuses.Undefined.ToString() };
+
+            Assert.That(step.IsIncomplete(), Is.True);
+            Assert.That(step.IsPassed(), Is.False);
+            Assert.That(step.IsFailed(), Is.False);
+            Assert.That(step.IsSkipped(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocStep_IsIncomplete_Ambiguous_ReturnsTrue()
+        {
+            var step = new LivingDocStep { Status = LivingDocStatuses.Ambiguous.ToString() };
+
+            Assert.That(step.IsIncomplete(), Is.True);
+            Assert.That(step.IsPassed(), Is.False);
+            Assert.That(step.IsFailed(), Is.False);
+            Assert.That(step.IsSkipped(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocStep_IsSkipped_UnknownStatus_ReturnsTrue()
+        {
+            var step = new LivingDocStep { Status = LivingDocStatuses.Unknown.ToString() };
+
+            Assert.That(step.IsSkipped(), Is.True);
+            Assert.That(step.IsPassed(), Is.False);
+            Assert.That(step.IsFailed(), Is.False);
+            Assert.That(step.IsIncomplete(), Is.False);
         }
     }
 }

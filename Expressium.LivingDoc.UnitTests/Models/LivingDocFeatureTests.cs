@@ -147,7 +147,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetNumberOfSkippedScenarios(), Is.EqualTo(0));
         }
 
-        // NEW
         [Test]
         public void LivingDocFeature_GetNumberOfSteps_ByStatus()
         {
@@ -215,6 +214,86 @@ namespace Expressium.LivingDoc.UnitTests.Models
             feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario without a rule" });
 
             Assert.That(feature.GetNumberOfRules(), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void LivingDocFeature_Constructor_DefaultsAreCorrect()
+        {
+            var feature = new LivingDocFeature();
+
+            Assert.That(feature.Id, Is.Not.Null);
+            Assert.That(feature.Id, Is.Not.Empty);
+            Assert.That(feature.Tags, Is.Not.Null);
+            Assert.That(feature.Tags, Is.Empty);
+            Assert.That(feature.Rules, Is.Not.Null);
+            Assert.That(feature.Rules, Is.Empty);
+            Assert.That(feature.Scenarios, Is.Not.Null);
+            Assert.That(feature.Scenarios, Is.Empty);
+        }
+
+        [Test]
+        public void LivingDocFeature_GetTags_WithMultipleTags_ReturnsSpaceSeparated()
+        {
+            var feature = new LivingDocFeature();
+            feature.Tags.Add("@smoke");
+            feature.Tags.Add("@regression");
+            feature.Tags.Add("@login");
+
+            Assert.That(feature.GetTags(), Is.EqualTo("@smoke @regression @login"));
+        }
+
+        [Test]
+        public void LivingDocFeature_GetTags_WithNoTags_ReturnsEmptyString()
+        {
+            var feature = new LivingDocFeature();
+
+            Assert.That(feature.GetTags(), Is.EqualTo(""));
+        }
+
+        [Test]
+        public void LivingDocFeature_GetFolder_ReturnsNull_WhenUriIsNull()
+        {
+            var feature = new LivingDocFeature();
+
+            Assert.That(feature.GetFolder(), Is.Null);
+        }
+
+        [Test]
+        public void LivingDocFeature_GetFolder_ReturnsNull_WhenUriIsWhitespace()
+        {
+            var feature = new LivingDocFeature { Uri = "   " };
+
+            Assert.That(feature.GetFolder(), Is.Null);
+        }
+
+        [Test]
+        public void LivingDocFeature_GetFolder_ReturnsNull_WhenUriHasNoDirectory()
+        {
+            var feature = new LivingDocFeature { Uri = "Login.feature" };
+
+            Assert.That(feature.GetFolder(), Is.Null);
+        }
+
+        [Test]
+        public void LivingDocFeature_GetStatus_Unknown_WhenNoScenariosMatchAnyBranch()
+        {
+            var feature = new LivingDocFeature();
+
+            var scenario = new LivingDocScenario();
+            var example = new LivingDocExample();
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            scenario.Examples.Add(example);
+            feature.Scenarios.Add(scenario);
+
+            Assert.That(feature.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
+        }
+
+        [Test]
+        public void LivingDocFeature_GetPercentageOfPassed_ReturnsZero_WhenNoScenarios()
+        {
+            var feature = new LivingDocFeature();
+
+            Assert.That(feature.GetPercentageOfPassed(), Is.EqualTo(0));
         }
     }
 }

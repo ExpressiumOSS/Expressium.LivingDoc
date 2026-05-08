@@ -32,7 +32,7 @@ namespace Expressium.LivingDoc.Models
             Features = new List<LivingDocFeature>();
             History = new LivingDocProjectHistory();
 
-            ExperimentFlag = false; // Alternative visualization with Bootstrap icons...
+            ExperimentFlag = false; // Additional health visualization...
         }
 
         internal string GetApplicationName()
@@ -291,7 +291,7 @@ namespace Expressium.LivingDoc.Models
                             scenario.Health = LivingDocHealths.Regressed.ToString();
 
                         // Dead Pattern...
-                        else if (latest == failed && activeStatuses.All(s => s == failed) && activeStatuses.Count == numberOfHistories)
+                        else if (latest == failed && activeStatuses.All(s => s == failed) && activeStatuses.Count > 3)
                             scenario.Health = LivingDocHealths.Dead.ToString();
 
                         // Broken Pattern...

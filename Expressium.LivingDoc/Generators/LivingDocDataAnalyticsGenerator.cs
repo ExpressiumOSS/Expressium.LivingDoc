@@ -45,9 +45,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Scenarios.ToString()));
 
-#if DEBUG
-            //listOfLines.AddRange(GenerateDataAnalyticsHealth());
-#endif
+            if (project.ExperimentFlag)
+                listOfLines.AddRange(GenerateDataAnalyticsHealth());
 
             listOfLines.Add("</div>");
 

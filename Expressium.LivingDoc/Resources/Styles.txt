@@ -40,11 +40,11 @@
 
         /* Groups */
         --group-bg-color: var(--bs-gray-075);
-        --group-border-color: #E9E9E9; /* var(--bs-gray-300); */
+        --group-border-color: #ECECEC; /* var(--bs-gray-300); */
 
         /* Outlines */
-        --grid-border-color: #E9E9E9;
-        --splitter-border-color: #E9E9E9;
+        --grid-border-color: #ECECEC;
+        --splitter-border-color: #ECECEC;
 
         /* Scrollbars */
         --scrollbar-text-color: #969696;
@@ -87,16 +87,15 @@
         --total-color: var(--bs-gray-900);
 
         /* Status backgrounds */
-        --passed-bg-color: #E2F5E3;
-        --incomplete-bg-color: #FFF6D0;
-        --failed-bg-color: #FCE4E0;
-        --skipped-bg-color: var(--bs-gray-125);
+        --passed-bg-color: #EAF6EB;
+        --incomplete-bg-color: #FFF6D8;
+        --failed-bg-color: #FAE8E5;
+        --skipped-bg-color: #F0F2F4;
 
         /* Status text */
-        --passed-text-color: #2B672F;
-        --incomplete-text-color: #7A5E00;
-        --incomplete-text-color: #745A00;
-        --failed-text-color: #99271E;
+        --passed-text-color: #2C5F30;
+        --incomplete-text-color: #8A6500;
+        --failed-text-color: #9E2B21;
         --skipped-text-color: var(--bs-gray-700);
     }
    
@@ -121,7 +120,7 @@
     }
 
     .project-date {
-        color: var(--text-darkgray-color);      
+        color: var(--text-gray-color);      
         padding-left: 0.125em;
     }
 
@@ -246,7 +245,6 @@
         flex: 1;
         overflow: auto;
         height: calc(100% - 4.75em); /* Adjust for filter and search height */
-        /* margin-top: 0.50em; */
         padding-right: 0.375em;
     }
 
@@ -305,7 +303,7 @@
         color: var(--button-text-color);
         border: 1px solid var(--button-border-color);
         background-color: var(--button-bg-color);
-        border-radius: 0.375em;
+        border-radius: 0.5em;
         padding: 2px 6px;
     }
 
@@ -510,11 +508,11 @@
       align-items: center;               /* vertical centering */
       justify-content: center;           /* horizontal centering */
       color: white;
-      font-size: 0.78em;
+      font-size: 0.8125em;
       font-weight: 600;
       padding: 0.0625em 0.625em;
       border-radius: 999px;
-      margin-right: 0.375em;
+      /* margin-right: 0.375em; */
     }
 
     .status-symbol {
@@ -524,7 +522,7 @@
     }
 
     button.filter-option .status-symbol {
-        margin-right: 0.25em;
+        margin-right: 3px;
     }
 
     .health-symbol {

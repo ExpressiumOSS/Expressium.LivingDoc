@@ -144,7 +144,19 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<a class='grid-heading' href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
 
-            listOfLines.Add($"<td class='grid-border align-right'></td>");
+            if (project.ExperimentFlag)
+            {
+                listOfLines.Add($"<td class='grid-border align-right' width='100'>");
+                listOfLines.Add($"<span class='status-badge bgcolor-skipped'>{feature.GetNumberOfScenarios()}x</span>");
+                listOfLines.Add($"<span class='status-badge bgcolor-passed' style='width: 50px;'>{feature.GetPercentageOfPassed()}%</span>");
+                listOfLines.Add($"</td>");
+            }
+            else
+            {
+                listOfLines.Add($"<td class='grid-border align-right'></td>");
+            }
+
+
 
             listOfLines.Add($"</tr>");
 
@@ -177,13 +189,13 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<a class='grid-heading' href='#'>{scenario.Name}</a>");
             listOfLines.Add("</td>");
 
-            //if (project.ExperimentFlagHealthFilter && scenario.HasHealth())
-            //{
-            //    var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(scenario.Health);
-            //    listOfLines.Add($"<td class='grid-border align-right'><span class='{symbol} health-symbol' title='{scenario.Health}'></span></td>");
-            //}
-            //else
-            listOfLines.Add("<td class='grid-border align-right'></td>");
+            if (project.ExperimentFlag && scenario.HasHealth())
+            {
+                symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(scenario.Health);
+                listOfLines.Add($"<td class='grid-border align-right'><span class='{symbol} health-symbol' title='{scenario.Health}'></span></td>");
+            }
+            else
+                listOfLines.Add("<td class='grid-border align-right'></td>");
 
             listOfLines.Add("</tr>");
 

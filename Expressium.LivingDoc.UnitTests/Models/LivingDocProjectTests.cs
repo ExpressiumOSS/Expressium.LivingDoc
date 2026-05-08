@@ -162,7 +162,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocProjectSlave = new LivingDocProject();
             livingDocProjectSlave.Date = System.DateTime.UtcNow;
 
-            // Passed feature
             var passedFeature = new LivingDocFeature { Name = "PassedFeature" };
             var passedScenario = new LivingDocScenario();
             var passedExample = new LivingDocExample();
@@ -171,7 +170,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             passedFeature.Scenarios.Add(passedScenario);
             livingDocProjectSlave.Features.Add(passedFeature);
 
-            // Failed feature
             var failedFeature = new LivingDocFeature { Name = "FailedFeature" };
             var failedScenario = new LivingDocScenario();
             var failedExample = new LivingDocExample();
@@ -180,7 +178,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             failedFeature.Scenarios.Add(failedScenario);
             livingDocProjectSlave.Features.Add(failedFeature);
 
-            // Incomplete feature
             var incompleteFeature = new LivingDocFeature { Name = "IncompleteFeature" };
             var incompleteScenario = new LivingDocScenario();
             var incompleteExample = new LivingDocExample();
@@ -189,7 +186,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             incompleteFeature.Scenarios.Add(incompleteScenario);
             livingDocProjectSlave.Features.Add(incompleteFeature);
 
-            // Skipped feature
             var skippedFeature = new LivingDocFeature { Name = "SkippedFeature" };
             livingDocProjectSlave.Features.Add(skippedFeature);
 
@@ -201,7 +197,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocProjectMaster.History.Features[0].Incomplete, Is.EqualTo(1));
             Assert.That(livingDocProjectMaster.History.Features[0].Skipped, Is.EqualTo(1));
 
-            // Calling MergeHistory again should omit duplicates...
             livingDocProjectMaster.MergeHistory(livingDocProjectSlave);
             Assert.That(livingDocProjectMaster.History.Features.Count, Is.EqualTo(1));
         }
@@ -285,6 +280,31 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var slaveProject = new LivingDocProject();
             slaveProject.Date = DateTime.UtcNow;
             slaveProject.Features.Add(new LivingDocFeature { Name = "Products" });
+
+            masterProject.MergeExampleHistoryResults(slaveProject);
+
+            Assert.That(masterExample.History.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void LivingDocProject_MergeExampleHistoryResults_UnmatchedScenario_IsSkipped()
+        {
+            var masterProject = new LivingDocProject();
+
+            var masterFeature = new LivingDocFeature { Name = "Login" };
+            var masterScenario = new LivingDocScenario { Name = "Successful Login" };
+            var masterExample = new LivingDocExample();
+            masterExample.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            masterScenario.Examples.Add(masterExample);
+            masterFeature.Scenarios.Add(masterScenario);
+            masterProject.Features.Add(masterFeature);
+
+            var slaveProject = new LivingDocProject();
+            slaveProject.Date = DateTime.UtcNow;
+
+            var slaveFeature = new LivingDocFeature { Name = "Login" };
+            slaveFeature.Scenarios.Add(new LivingDocScenario { Name = "Failed Login" });
+            slaveProject.Features.Add(slaveFeature);
 
             masterProject.MergeExampleHistoryResults(slaveProject);
 
@@ -400,6 +420,25 @@ namespace Expressium.LivingDoc.UnitTests.Models
         }
 
         [Test]
+        public void LivingDocProject_Merge_SkipsDuplicateFeatures()
+        {
+            var masterProject = new LivingDocProject();
+            masterProject.Features.Add(new LivingDocFeature { Name = "Login" });
+            masterProject.Features.Add(new LivingDocFeature { Name = "Products" });
+
+            var slaveProject = new LivingDocProject();
+            slaveProject.Features.Add(new LivingDocFeature { Name = "Login" });
+            slaveProject.Features.Add(new LivingDocFeature { Name = "Orders" });
+
+            masterProject.Merge(slaveProject);
+
+            Assert.That(masterProject.GetNumberOfFeatures(), Is.EqualTo(3));
+            Assert.That(masterProject.Features.Count(f => f.Name == "Login"), Is.EqualTo(1));
+            Assert.That(masterProject.Features.Any(f => f.Name == "Products"), Is.True);
+            Assert.That(masterProject.Features.Any(f => f.Name == "Orders"), Is.True);
+        }
+
+        [Test]
         public void LivingDocProject_Merge_DeepClone_Independence()
         {
             var masterProject = new LivingDocProject();
@@ -413,6 +452,32 @@ namespace Expressium.LivingDoc.UnitTests.Models
             slaveFeature.Name = "MUTATED";
 
             Assert.That(masterProject.Features[0].Name, Is.EqualTo("Orders"));
+        }
+
+        [Test]
+        public void LivingDocProject_HasHealth_ReturnsFalse_WhenNoScenarioHasHealth()
+        {
+            var project = new LivingDocProject();
+
+            var feature = new LivingDocFeature { Name = "Login" };
+            feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario One" });
+            feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario Two" });
+            project.Features.Add(feature);
+
+            Assert.That(project.HasHealth(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocProject_HasHealth_ReturnsTrue_WhenAnyScenarioHasHealth()
+        {
+            var project = new LivingDocProject();
+
+            var feature = new LivingDocFeature { Name = "Login" };
+            feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario One" });
+            feature.Scenarios.Add(new LivingDocScenario { Name = "Scenario Two", Health = LivingDocHealths.Flaky.ToString() });
+            project.Features.Add(feature);
+
+            Assert.That(project.HasHealth(), Is.True);
         }
 
         [Test]
@@ -559,6 +624,25 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocProject.GetApplicationVersion(), Is.Not.Null);
         }
 
+        [Test]
+        public void LivingDocProject_MergeScenarioHistoryHealth_SingleHistory_HealthRemainsNull()
+        {
+            var project = new LivingDocProject();
+
+            var feature = new LivingDocFeature { Name = "Payments" };
+            var scenario = new LivingDocScenario { Name = "Scenario One" };
+            var example = new LivingDocExample();
+            example.History.Add(new LivingDocExampleHistoryResults { Date = DateTime.UtcNow, Status = LivingDocStatuses.Failed.ToString() });
+
+            scenario.Examples.Add(example);
+            feature.Scenarios.Add(scenario);
+            project.Features.Add(feature);
+
+            project.MergeScenarioHistoryHealth();
+
+            Assert.That(scenario.Health, Is.Null);
+        }
+
         // Non-patterns
         [TestCase(null, null, null, "Passed", null)]
         [TestCase(null, null, null, "Incomplete", null)]
@@ -566,17 +650,15 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase(null, null, null, "Skipped", null)]
 
         // Dead patterns
-        [TestCase(null, null, "Failed", "Failed", "Dead")]
-        [TestCase(null, "Failed", "Failed", "Failed", "Dead")]
         [TestCase("Failed", "Failed", "Failed", "Failed", "Dead")]
 
         // Broken patterns
+        [TestCase(null, null, "Failed", "Failed", "Broken")]
         [TestCase(null, null, "Skipped", "Failed", "Broken")]
         [TestCase(null, null, "Incomplete", "Failed", "Broken")]
         [TestCase(null, "Skipped", "Skipped", "Failed", "Broken")]
+        [TestCase(null, "Failed", "Failed", "Failed", "Broken")]
         [TestCase(null, "Incomplete", "Incomplete", "Failed", "Broken")]
-        [TestCase("Passed", "Failed", "Incomplete", "Failed", "Flaky")]
-        [TestCase("Passed", "Failed", "Skipped", "Failed", "Flaky")]
         [TestCase("Skipped", "Skipped", "Skipped", "Failed", "Broken")]
 
         // Regressed patterns
@@ -597,6 +679,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase("Failed", "Incomplete", "Passed", "Failed", "Flaky")]
         [TestCase("Failed", "Passed", "Skipped", "Failed", "Flaky")]
         [TestCase("Failed", "Passed", "Incomplete", "Failed", "Flaky")]
+        [TestCase("Passed", "Failed", "Incomplete", "Failed", "Flaky")]
+        [TestCase("Passed", "Failed", "Skipped", "Failed", "Flaky")]
+        [TestCase("Passed", "Failed", "Failed", "Failed", "Flaky")]
 
         // Fixed patterns
         [TestCase(null, null, "Skipped", "Passed", "Fixed")]
