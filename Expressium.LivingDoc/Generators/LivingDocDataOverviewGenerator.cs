@@ -141,14 +141,14 @@ namespace Expressium.LivingDoc.Generators
             var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
             listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
 
-            listOfLines.Add($"<a class='grid-heading' href='#'>{feature.Name}</a>");
+            listOfLines.Add($"<a href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
 
             if (project.ExperimentFlag)
             {
                 listOfLines.Add($"<td class='grid-border align-right' width='100'>");
-                listOfLines.Add($"<span class='status-badge bgcolor-skipped'>{feature.GetNumberOfScenarios()}x</span>");
-                listOfLines.Add($"<span class='status-badge bgcolor-passed' style='width: 50px;'>{feature.GetPercentageOfPassed()}%</span>");
+                listOfLines.Add($"<span class='status-pill bgcolor-skipped'>{feature.GetNumberOfScenarios()}x</span>");
+                listOfLines.Add($"<span class='status-pill bgcolor-passed' style='width: 50px;'>{feature.GetPercentageOfPassed()}%</span>");
                 listOfLines.Add($"</td>");
             }
             else
@@ -186,7 +186,7 @@ namespace Expressium.LivingDoc.Generators
             var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
             listOfLines.Add($"<span class='{symbol} color-{status} status-symbol'></span>");
 
-            listOfLines.Add($"<a class='grid-heading' href='#'>{scenario.Name}</a>");
+            listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
             listOfLines.Add("</td>");
 
             if (project.ExperimentFlag && scenario.HasHealth())
