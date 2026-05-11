@@ -120,7 +120,7 @@
     }
 
     .project-date {
-        color: var(--text-gray-color);      
+        color: var(--text-darkgray-color);      
         padding-left: 0.125em;
     }
 
@@ -404,6 +404,15 @@
         border: 1px solid var(--group-border-color);
     }
 
+    .chart-filter {
+        padding: 1.0em 1.0em;
+        padding-bottom: 0.5em;
+        background-color: var(--group-bg-color);
+        border-radius: 1.00em;
+        border: 1px solid var(--group-border-color);
+        margin-bottom: 0.50em;
+    }
+
     .chart-status {
       width: 160px;
       height: 164px;
@@ -527,6 +536,11 @@
 
     .health-symbol {
         color: var(--text-gray-color);
+    }
+
+    .clear-symbol {
+        color: var(--text-gray-color);
+        font-weight: 600;
     }
 
     .sort-column {
@@ -831,5 +845,13 @@
     .analytics-list td {
         border: 1px solid;
         border-color: var(--table-header-border-color);
+    }
+
+    .card {
+        width: 100%;
+        height: 100%;
+        border: none;
+        padding: 1.0em;
+        padding-bottom: 0.0em;
     }
 </style>

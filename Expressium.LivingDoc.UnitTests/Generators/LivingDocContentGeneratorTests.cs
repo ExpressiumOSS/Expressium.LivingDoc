@@ -73,16 +73,16 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        public void LivingDocContentGenerator_GeneratePreFilters()
+        public void LivingDocContentGenerator_GenerateStatusFilters()
         {
             var project = new LivingDocProject();
 
             var generator = new LivingDocContentGenerator(project);
-            var listOfLines = generator.GeneratePreFilters();
+            var listOfLines = generator.GenerateStatusFilters();
 
             Assert.That(listOfLines, Is.Not.Null);
             Assert.That(listOfLines, Does.Contain("<!-- View Title Section -->"));
-            Assert.That(listOfLines, Does.Contain("<!-- PreFilters Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Status Filters Section -->"));
             Assert.That(listOfLines, Does.Contain("<span id='view-title' class='page-name'>Overview</span>"));
             Assert.That(listOfLines.Count(l => l.Contains("data-prefilter")), Is.EqualTo(4));
             Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Passed'"));
@@ -93,29 +93,17 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        public void LivingDocContentGenerator_GenerateFilter()
+        public void LivingDocContentGenerator_GenerateSearchFilter()
         {
             var project = new LivingDocProject();
 
             var generator = new LivingDocContentGenerator(project);
-            var listOfLines = generator.GenerateFilter();
+            var listOfLines = generator.GenerateSearchFilter();
 
             Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines, Does.Contain("<!-- Filter Section -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Search Filter Section -->"));
             Assert.That(listOfLines, Does.Contain("<span class='bi bi-search'></span>"));
             Assert.That(listOfLines, Does.Contain("<input onkeyup='filterView()' class='filter-keywords' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>"));
-        }
-
-        [Test]
-        public void LivingDocContentGenerator_GenerateToolbar()
-        {
-            var project = new LivingDocProject();
-
-            var generator = new LivingDocContentGenerator(project);
-            var listOfLines = generator.GenerateToolbar();
-
-            Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(0));
         }
 
         [Test]

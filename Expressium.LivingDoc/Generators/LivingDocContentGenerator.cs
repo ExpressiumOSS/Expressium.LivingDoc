@@ -54,12 +54,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- Left Splitter Section -->");
             listOfLines.Add("<div id='splitter-left' class='bg-white p-3'>");
             //listOfLines.Add("<div class='card'>");
-            listOfLines.AddRange(GeneratePreFilters());
-            listOfLines.AddRange(GenerateFilter());
-
-            if (project.ExperimentFlag && project.HasHealth())
-                listOfLines.AddRange(GeneratePreFiltersHealth());
-
+            listOfLines.AddRange(GenerateFilters());
             listOfLines.Add("<div id='filter-list'></div>");
             //listOfLines.Add("</div>");
             listOfLines.Add("</div>");
@@ -82,10 +77,45 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GeneratePreFilters()
+        internal List<string> GenerateFilters()
         {
             var listOfLines = new List<string>();
 
+            listOfLines.AddRange(GenerateStatusFilters());
+            listOfLines.AddRange(GenerateSearchFilter());
+
+            if (project.ExperimentFlag && project.HasHealth())
+                listOfLines.AddRange(GenerateHealthFilters());
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateSearchFilter()
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Search Filter Section -->");
+
+            listOfLines.Add("<div class='layout-row filter-group'>");
+
+            listOfLines.Add("<div class='filter-symbol'>");
+            listOfLines.Add("<span class='bi bi-search'></span>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<div style='width: 100%'>");
+            listOfLines.Add("<input onkeyup='filterView()' class='filter-keywords' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateStatusFilters()
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Status Filters Section -->");
             listOfLines.Add("<div class='section layout-row'>");
 
             listOfLines.Add("<!-- View Title Section -->");
@@ -94,23 +124,14 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='layout-column align-right'>");
-            listOfLines.Add("<!-- PreFilters Section -->");
 
-            // Status Symbols...
-            var listOfPrefilters = new List<string>() { "Passed", "Incomplete", "Failed", "Skipped" };
-            foreach (var prefilter in listOfPrefilters)
+            var listOffilters = new List<string>() { "Passed", "Incomplete", "Failed", "Skipped" };
+            foreach (var prefilter in listOffilters)
             {
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(prefilter.ToLower());
                 listOfLines.Add($"<button class='filter-option' data-prefilter='{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
             }
-            listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearAllfilters()'>Clear</button>");
-
-            // Status Badges...
-            //listOfLines.Add($"<button class='filter-option' data-prefilter='Passed' title='Preset Filter with Passed' onclick='togglePrefilter(this)'><span class='status-badge bgcolor-passed'>{project.GetNumberOfPassedScenarios()}</span><span>Passed</span></button>");
-            //listOfLines.Add($"<button class='filter-option' data-prefilter='Incomplete' title='Preset Filter with Incomplete' onclick='togglePrefilter(this)'><span class='status-badge bgcolor-incomplete'>{project.GetNumberOfIncompleteScenarios()}</span><span>Incomplete</span></button>");
-            //listOfLines.Add($"<button class='filter-option' data-prefilter='Failed' title='Preset Filter with Failed' onclick='togglePrefilter(this)'><span class='status-badge bgcolor-failed'>{project.GetNumberOfFailedScenarios()}</span><span>Failed</span></button>");
-            //listOfLines.Add($"<button class='filter-option' data-prefilter='Skipped' title='Preset Filter with Skipped' onclick='togglePrefilter(this)'><span class='status-badge bgcolor-skipped'>{project.GetNumberOfSkippedScenarios()}</span><span>Skipped</span></button>");
-            //listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearAllfilters()'>Clear</button>");
+            listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearAllfilters()'><span class='clear-symbol'>&#10005;</span><span>Clear</span></button>");
 
             listOfLines.Add("</div>");
 
@@ -119,12 +140,12 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GeneratePreFiltersHealth()
+        internal List<string> GenerateHealthFilters()
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- PreFilters Section -->");
-            listOfLines.Add("<div class='layout-row filter-group' style='padding-left: 12px;'>");
+            listOfLines.Add("<!-- Health Filters Section -->");
+            listOfLines.Add("<div class='section layout-row'>");
 
             listOfLines.Add("<div class='layout-column align-left'>");
 
@@ -145,36 +166,57 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateFilter()
+        internal List<string> GenerateNewFilters()
         {
             var listOfLines = new List<string>();
 
-            listOfLines.Add("<!-- Filter Section -->");
-
-            listOfLines.Add("<div class='layout-row filter-group'>");
-
-            listOfLines.Add("<div class='filter-symbol'>");
-            listOfLines.Add("<span class='bi bi-search'></span>");
+            listOfLines.Add("<!-- View Title Section -->");
+            listOfLines.Add("<div class='section layout-row'>");
+            listOfLines.Add("<div class='layout-column align-left'>");
+            listOfLines.Add("<span id='view-title' class='page-name'>Overview</span>");
+            listOfLines.Add("</div>");
+            listOfLines.Add("<div class='layout-column align-right'>");
+            listOfLines.Add("</div>");
             listOfLines.Add("</div>");
 
-            listOfLines.Add("<div style='width: 100%'>");
-            listOfLines.Add("<input onkeyup='filterView()' class='filter-keywords' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
-            listOfLines.Add("</div>");
+            listOfLines.Add("<div class='section chart-filter'>");
+
+            listOfLines.AddRange(GenerateSearchFilter());
+            listOfLines.AddRange(GenerateStatusNewFilters());
+
+            if (project.ExperimentFlag && project.HasHealth())
+                listOfLines.AddRange(GenerateHealthFilters());
 
             listOfLines.Add("</div>");
 
             return listOfLines;
         }
 
-        internal List<string> GenerateToolbar()
+        internal List<string> GenerateStatusNewFilters()
         {
             var listOfLines = new List<string>();
 
-            //listOfLines.Add("<!-- Toolbar Section -->");
-            //listOfLines.Add($"<div class='grid-toolbar'>");
-            //listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
-            //listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
-            //listOfLines.Add($"</div>");
+            listOfLines.Add("<!-- Status Filters Section -->");
+            listOfLines.Add("<div class='section layout-row'>");
+
+            listOfLines.Add("<!-- View Title Section -->");
+            listOfLines.Add("<div class='layout-column align-left'>");
+
+            var listOffilters = new List<string>() { "Passed", "Incomplete", "Failed", "Skipped" };
+            foreach (var prefilter in listOffilters)
+            {
+                var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(prefilter.ToLower());
+                listOfLines.Add($"<button class='filter-option' data-prefilter='{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
+            }
+            listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearAllfilters()'><span class='clear-symbol'>&#10005;</span><span>Clear</span></button>");
+
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<div class='layout-column align-right'>");
+
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
 
             return listOfLines;
         }
