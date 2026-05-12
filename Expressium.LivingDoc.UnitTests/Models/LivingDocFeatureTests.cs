@@ -20,7 +20,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0001"));
             Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(0));
             Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
-            Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
+            Assert.That(livingDocFeature.GetDataTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
             Assert.That(livingDocFeature.IsFailed(), Is.True);
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 003ms"));
@@ -42,7 +42,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0003"));
             Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(0));
             Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
-            Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
+            Assert.That(livingDocFeature.GetDataTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
             Assert.That(livingDocFeature.IsIncomplete(), Is.True);
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 013ms"));
@@ -64,7 +64,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0001"));
             Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(100));
             Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0100"));
-            Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
+            Assert.That(livingDocFeature.GetDataTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
             Assert.That(livingDocFeature.IsPassed(), Is.True);
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 003ms"));
@@ -86,7 +86,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(livingDocFeature.GetNumberOfScenariosSortId(), Is.EqualTo("0001"));
             Assert.That(livingDocFeature.GetPercentageOfPassed(), Is.EqualTo(0));
             Assert.That(livingDocFeature.GetPercentageOfPassedSortId(), Is.EqualTo("0000"));
-            Assert.That(livingDocFeature.GetTags(), Is.EqualTo(""));
+            Assert.That(livingDocFeature.GetDataTags(), Is.EqualTo(""));
             Assert.That(livingDocFeature.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
             Assert.That(livingDocFeature.IsSkipped(), Is.True);
             Assert.That(livingDocFeature.GetDuration(), Is.EqualTo("0s 000ms"));
@@ -239,7 +239,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             feature.Tags.Add("@regression");
             feature.Tags.Add("@login");
 
-            Assert.That(feature.GetTags(), Is.EqualTo("@smoke @regression @login"));
+            Assert.That(feature.GetDataTags(), Is.EqualTo("@smoke @regression @login"));
         }
 
         [Test]
@@ -247,7 +247,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var feature = new LivingDocFeature();
 
-            Assert.That(feature.GetTags(), Is.EqualTo(""));
+            Assert.That(feature.GetDataTags(), Is.EqualTo(""));
         }
 
         [Test]

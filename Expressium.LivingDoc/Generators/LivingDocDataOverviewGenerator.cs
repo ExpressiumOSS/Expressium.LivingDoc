@@ -174,7 +174,7 @@ namespace Expressium.LivingDoc.Generators
 
             var listOfLines = new List<string>();
 
-            listOfLines.Add($"<tr data-parent='{feature.Id}' data-role='scenario' data-tags='{feature.Name} {scenario.GetStatus()} {feature.GetTags()} {scenario.GetTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+            listOfLines.Add($"<tr data-parent='{feature.Id}' data-role='scenario' data-tags='{feature.Name} {scenario.GetDataStatus()} {feature.GetDataTags()} {scenario.GetDataTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
             for (var i = 0; i < indent; i++)
                 listOfLines.Add("<td></td>");

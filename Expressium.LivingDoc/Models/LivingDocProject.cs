@@ -262,6 +262,8 @@ namespace Expressium.LivingDoc.Models
 
         internal void MergeScenarioHistoryHealth()
         {
+            var numberOfTestRuns = History.Scenarios.Count;
+
             foreach (var feature in Features)
             {
                 foreach (var scenario in feature.Scenarios)
@@ -270,6 +272,12 @@ namespace Expressium.LivingDoc.Models
 
                     foreach (var example in scenario.Examples)
                     {
+                        if (numberOfTestRuns > 1 && example.History.Count == 1)
+                        {
+                            scenario.Health = LivingDocHealths.New.ToString();
+                            continue;
+                        }
+
                         var numberOfHistories = example.History.Count;
                         if (numberOfHistories < 2)
                             continue;
@@ -303,10 +311,6 @@ namespace Expressium.LivingDoc.Models
                         // Regressed Pattern...
                         if (latest == failed && previous == passed)
                             scenario.Health = LivingDocHealths.Regressed.ToString();
-
-                        // Dead Pattern...
-                        else if (latest == failed && activeStatuses.All(s => s == failed) && activeStatuses.Count > 3)
-                            scenario.Health = LivingDocHealths.Dead.ToString();
 
                         // Broken Pattern...
                         else if (latest == failed && (previous == skipped || previous == incomplete || previous == failed))

@@ -63,14 +63,12 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(result, Is.EqualTo("bi bi-question-circle-fill"));
         }
 
-        // GetHealtSymbol
-
         [Test]
-        public void LivingDocDataUtilitiesGenerator_GetHealtSymbol_Dead_ReturnsExpectedClass()
+        public void LivingDocDataUtilitiesGenerator_GetHealtSymbol_New_ReturnsExpectedClass()
         {
-            var result = LivingDocDataUtilitiesGenerator.GetHealtSymbol(LivingDocHealths.Dead.ToString());
+            var result = LivingDocDataUtilitiesGenerator.GetHealtSymbol(LivingDocHealths.New.ToString());
 
-            Assert.That(result, Is.EqualTo("bi bi-cloud-haze"));
+            Assert.That(result, Is.EqualTo("bi bi-cloud-plus"));
         }
 
         [Test]

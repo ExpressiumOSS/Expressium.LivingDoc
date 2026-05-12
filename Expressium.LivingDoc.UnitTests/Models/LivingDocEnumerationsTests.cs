@@ -62,12 +62,10 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(values.Length, Is.EqualTo(8));
         }
 
-        // LivingDocHealths
-
         [Test]
-        public void LivingDocHealths_Dead_StringValue_IsExpected()
+        public void LivingDocHealths_New_StringValue_IsExpected()
         {
-            Assert.That(LivingDocHealths.Dead.ToString(), Is.EqualTo("Dead"));
+            Assert.That(LivingDocHealths.New.ToString(), Is.EqualTo("New"));
         }
 
         [Test]
@@ -101,8 +99,6 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             Assert.That(values.Length, Is.EqualTo(5));
         }
-
-        // LivingDocStepTypes
 
         [Test]
         public void LivingDocStepTypes_Hook_StringValue_IsExpected()

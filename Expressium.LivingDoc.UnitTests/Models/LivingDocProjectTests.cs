@@ -643,14 +643,43 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(scenario.Health, Is.Null);
         }
 
+        [Test]
+        public void LivingDocProject_MergeScenarioHistoryHealth_History_New()
+        {
+            var project = new LivingDocProject();
+
+            var feature = new LivingDocFeature { Name = "Payments" };
+
+            var yesterday = DateTime.UtcNow.AddDays(-1);
+            var today = DateTime.UtcNow;
+
+            project.History.Scenarios.Add(new LivingDocProjectHistoryResults() { Date = yesterday, Passed = 1 });
+            project.History.Scenarios.Add(new LivingDocProjectHistoryResults() { Date = today, Failed = 2 });
+
+            var scenarioOne = new LivingDocScenario { Name = "Scenario One" };
+            var exampleOne = new LivingDocExample();
+            exampleOne.History.Add(new LivingDocExampleHistoryResults { Date = yesterday, Status = LivingDocStatuses.Passed.ToString() });
+            exampleOne.History.Add(new LivingDocExampleHistoryResults { Date = today, Status = LivingDocStatuses.Failed.ToString() });
+            scenarioOne.Examples.Add(exampleOne);
+            feature.Scenarios.Add(scenarioOne);
+
+            var scenarioTwo = new LivingDocScenario { Name = "Scenario Two" };
+            var exampleTwo = new LivingDocExample();
+            exampleTwo.History.Add(new LivingDocExampleHistoryResults { Date = today, Status = LivingDocStatuses.Passed.ToString() });
+            scenarioTwo.Examples.Add(exampleTwo);
+            feature.Scenarios.Add(scenarioTwo);
+
+            project.Features.Add(feature);
+            project.MergeScenarioHistoryHealth();
+
+            Assert.That(scenarioTwo.Health, Is.EqualTo(LivingDocHealths.New.ToString()));
+        }
+
         // Non-patterns
         [TestCase(null, null, null, "Passed", null)]
         [TestCase(null, null, null, "Incomplete", null)]
         [TestCase(null, null, null, "Failed", null)]
         [TestCase(null, null, null, "Skipped", null)]
-
-        // Dead patterns
-        [TestCase("Failed", "Failed", "Failed", "Failed", "Dead")]
 
         // Broken patterns
         [TestCase(null, null, "Failed", "Failed", "Broken")]
@@ -660,6 +689,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase(null, "Failed", "Failed", "Failed", "Broken")]
         [TestCase(null, "Incomplete", "Incomplete", "Failed", "Broken")]
         [TestCase("Skipped", "Skipped", "Skipped", "Failed", "Broken")]
+        [TestCase("Failed", "Failed", "Failed", "Failed", "Broken")]
 
         // Regressed patterns
         [TestCase(null, null, "Passed", "Failed", "Regressed")]

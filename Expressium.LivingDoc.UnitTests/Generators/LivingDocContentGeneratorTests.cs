@@ -85,10 +85,10 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines, Does.Contain("<!-- Status Filters Section -->"));
             Assert.That(listOfLines, Does.Contain("<span id='view-title' class='page-name'>Overview</span>"));
             Assert.That(listOfLines.Count(l => l.Contains("data-prefilter")), Is.EqualTo(4));
-            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Passed'"));
-            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Incomplete'"));
-            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Failed'"));
-            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='Skipped'"));
+            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='@Passed'"));
+            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='@Incomplete'"));
+            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='@Failed'"));
+            Assert.That(listOfLines, Has.Some.Contains("data-prefilter='@Skipped'"));
             Assert.That(listOfLines, Has.Some.Contains("clearAllfilters()"));
         }
 

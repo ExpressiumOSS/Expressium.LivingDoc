@@ -39,7 +39,7 @@ namespace Expressium.LivingDoc.Generators
 
             foreach (var feature in project.Features)
             {
-                listOfLines.Add($"<tr class='grid-border' data-role='feature' data-tags='{feature.Name} {feature.GetTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+                listOfLines.Add($"<tr class='grid-border' data-role='feature' data-tags='{feature.GetDataStatus()} {feature.Name} {feature.GetDataTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
 
                 var status = feature.GetStatus().ToLower();
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
@@ -100,7 +100,7 @@ namespace Expressium.LivingDoc.Generators
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr class='grid-border' data-role='scenario' data-tags='{scenario.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                    listOfLines.Add($"<tr class='grid-border' data-role='scenario' data-tags='{scenario.GetDataStatus()} {feature.Name} {feature.GetDataTags()} {scenario.GetDataTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
                     var status = scenario.GetStatus().ToLower();
                     var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
@@ -187,7 +187,7 @@ namespace Expressium.LivingDoc.Generators
                                     //    .SelectMany(example => example.Steps)
                                     //    .Count(x => x.Keyword + " " + x.Name == fullName && x.IsFailed());
 
-                                    listOfLines.Add($"<tr class='grid-border' data-role='step' data-tags='{step.GetStatus()} {feature.Name} {feature.GetTags()} {scenario.GetTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                                    listOfLines.Add($"<tr class='grid-border' data-role='step' data-tags='{step.GetDataStatus()} {feature.Name} {feature.GetDataTags()} {scenario.GetDataTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
                                     var stepStatus = step.GetStatus().ToLower();
                                     var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(stepStatus);

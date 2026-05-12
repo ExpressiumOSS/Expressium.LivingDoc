@@ -125,11 +125,18 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<div class='layout-column align-right'>");
 
-            var listOffilters = new List<string>() { "Passed", "Incomplete", "Failed", "Skipped" };
-            foreach (var prefilter in listOffilters)
+            var listOfFilters = new List<string>()
+            {
+                LivingDocStatuses.Passed.ToString(),
+                LivingDocStatuses.Incomplete.ToString(),
+                LivingDocStatuses.Failed.ToString(),
+                LivingDocStatuses.Skipped.ToString()
+            };
+
+            foreach (var prefilter in listOfFilters)
             {
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(prefilter.ToLower());
-                listOfLines.Add($"<button class='filter-option' data-prefilter='{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
+                listOfLines.Add($"<button class='filter-option' data-prefilter='@{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
             }
             listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearAllfilters()'><span class='clear-symbol'>&#10005;</span><span>Clear</span></button>");
 
@@ -151,9 +158,9 @@ namespace Expressium.LivingDoc.Generators
 
             foreach (var health in Enum.GetValues(typeof(LivingDocHealths)))
             {
-                var name = health.ToString();
-                var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(name);
-                listOfLines.Add($"<button class='filter-option' data-prefilter='{name}' title='Preset Filter with {name}' onclick='togglePrefilter(this)'><span class='{symbol} status-symbol health-symbol'></span><span>{name}</span></button>");
+                var prefilters = health.ToString();
+                var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(prefilters);
+                listOfLines.Add($"<button class='filter-option' data-prefilter='@{prefilters}' title='Preset Filter with {prefilters}' onclick='togglePrefilter(this)'><span class='{symbol} status-symbol health-symbol'></span><span>{prefilters}</span></button>");
             }
 
             listOfLines.Add("</div>");
@@ -206,7 +213,7 @@ namespace Expressium.LivingDoc.Generators
             foreach (var prefilter in listOffilters)
             {
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(prefilter.ToLower());
-                listOfLines.Add($"<button class='filter-option' data-prefilter='{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
+                listOfLines.Add($"<button class='filter-option' data-prefilter='@{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
             }
             listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearAllfilters()'><span class='clear-symbol'>&#10005;</span><span>Clear</span></button>");
 

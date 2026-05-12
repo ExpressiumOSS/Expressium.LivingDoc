@@ -15,7 +15,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocScenario = livingDocProject.Features[0].Scenarios[0];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
-            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1002 @Ignored"));
+            Assert.That(livingDocScenario.GetDataTags(), Is.EqualTo("@TA-1002 @Ignored"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
             Assert.That(livingDocScenario.IsSkipped(), Is.True);
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("0s 000ms"));
@@ -33,7 +33,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocScenario = livingDocProject.Features[0].Scenarios[1];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
-            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1003 @Done"));
+            Assert.That(livingDocScenario.GetDataTags(), Is.EqualTo("@TA-1003 @Done"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Failed.ToString()));
             Assert.That(livingDocScenario.IsFailed(), Is.True);
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("3s 478ms"));
@@ -51,7 +51,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocScenario = livingDocProject.Features[0].Scenarios[2];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
-            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1004 @Done"));
+            Assert.That(livingDocScenario.GetDataTags(), Is.EqualTo("@TA-1004 @Done"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Incomplete.ToString()));
             Assert.That(livingDocScenario.IsIncomplete(), Is.True);
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("5s 641ms"));
@@ -69,7 +69,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var livingDocScenario = livingDocProject.Features[0].Scenarios[3];
 
             Assert.That(livingDocScenario.Id, Is.Not.Null);
-            Assert.That(livingDocScenario.GetTags(), Is.EqualTo("@TA-1005 @Review"));
+            Assert.That(livingDocScenario.GetDataTags(), Is.EqualTo("@TA-1005 @Review"));
             Assert.That(livingDocScenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
             Assert.That(livingDocScenario.IsPassed(), Is.True);
             Assert.That(livingDocScenario.GetDuration(), Is.EqualTo("4s 495ms"));
@@ -193,7 +193,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var scenario = new LivingDocScenario();
 
-            Assert.That(scenario.GetTags(), Is.EqualTo(string.Empty));
+            Assert.That(scenario.GetDataTags(), Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             scenario.Tags.Add("@TA-1001");
             scenario.Tags.Add("@Done");
 
-            Assert.That(scenario.GetTags(), Is.EqualTo("@TA-1001 @Done"));
+            Assert.That(scenario.GetDataTags(), Is.EqualTo("@TA-1001 @Done"));
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var scenario = new LivingDocScenario { Health = LivingDocHealths.Broken.ToString() };
 
-            Assert.That(scenario.GetTags(), Is.EqualTo("@Broken"));
+            Assert.That(scenario.GetDataTags(), Is.EqualTo("@Broken"));
         }
 
         [Test]
@@ -221,7 +221,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             scenario.Tags.Add("@TA-1001");
             scenario.Tags.Add("@Done");
 
-            Assert.That(scenario.GetTags(), Is.EqualTo("@TA-1001 @Done @Flaky"));
+            Assert.That(scenario.GetDataTags(), Is.EqualTo("@TA-1001 @Done @Flaky"));
         }
 
         [TestCase("Broken", "@Broken")]
@@ -231,7 +231,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             var scenario = new LivingDocScenario { Health = health };
 
-            Assert.That(scenario.GetTags(), Is.EqualTo(expected));
+            Assert.That(scenario.GetDataTags(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -304,10 +304,10 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(scenario.Examples, Is.Empty);
         }
 
-        [TestCase("Dead", "1")]
-        [TestCase("Broken", "2")]
-        [TestCase("Regressed", "3")]
-        [TestCase("Flaky", "4")]
+        [TestCase("Broken", "1")]
+        [TestCase("Regressed", "2")]
+        [TestCase("Flaky", "3")]
+        [TestCase("New", "4")]
         [TestCase("Fixed", "5")]
         [TestCase(null, "6")]
         [TestCase("Unknown", "6")]

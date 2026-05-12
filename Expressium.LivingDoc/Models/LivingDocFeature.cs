@@ -27,9 +27,14 @@ namespace Expressium.LivingDoc.Models
             Scenarios = new List<LivingDocScenario>();
         }
 
-        public string GetTags()
+        public string GetDataTags()
         {
             return string.Join(" ", Tags);
+        }
+
+        public string GetDataStatus()
+        {
+            return "@" + GetStatus();
         }
 
         public string GetStatus()

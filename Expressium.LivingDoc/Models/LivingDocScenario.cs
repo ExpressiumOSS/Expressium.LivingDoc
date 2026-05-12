@@ -26,7 +26,7 @@ namespace Expressium.LivingDoc.Models
             Examples = new List<LivingDocExample>();
         }
 
-        public string GetTags()
+        public string GetDataTags()
         {
             var tags = string.Join(" ", Tags);
 
@@ -37,6 +37,11 @@ namespace Expressium.LivingDoc.Models
             }
 
             return tags;
+        }
+
+        public string GetDataStatus()
+        {
+            return "@" + GetStatus();
         }
 
         public string GetStatus()
@@ -155,13 +160,13 @@ namespace Expressium.LivingDoc.Models
 
         public string GetHealthSortId()
         {
-            if (Health == LivingDocHealths.Dead.ToString())
+            if (Health == LivingDocHealths.Broken.ToString())
                 return "1";
-            else if (Health == LivingDocHealths.Broken.ToString())
-                return "2";
             else if (Health == LivingDocHealths.Regressed.ToString())
-                return "3";
+                return "2";
             else if (Health == LivingDocHealths.Flaky.ToString())
+                return "3";
+            else if (Health == LivingDocHealths.New.ToString())
                 return "4";
             else if (Health == LivingDocHealths.Fixed.ToString())
                 return "5";

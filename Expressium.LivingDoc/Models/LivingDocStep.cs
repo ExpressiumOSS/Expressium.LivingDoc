@@ -98,6 +98,11 @@ namespace Expressium.LivingDoc.Models
             return false;
         }
 
+        public string GetDataStatus()
+        {
+            return "@" + GetStatus();
+        }
+
         public string GetStatus()
         {
             if (IsFailed())
