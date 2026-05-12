@@ -135,6 +135,20 @@ namespace Expressium.LivingDoc.Models
             return Features.Sum(feature => feature.GetNumberOfSkippedSteps());
         }
 
+        public bool HasHistory()
+        {
+            if (History.Features.Count() > 1)
+                return true;
+
+            if (History.Scenarios.Count() > 1)
+                return true;
+
+            if (History.Steps.Count() > 1)
+                return true;
+
+            return false;
+        }
+
         public bool HasHealth()
         {
             return Features.Any(feature => feature.Scenarios.Any(scenario => scenario.Health != null));

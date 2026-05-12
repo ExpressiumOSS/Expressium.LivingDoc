@@ -243,6 +243,9 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
+            if (!project.HasHistory())
+                return listOfLines;
+
             int numberOfTotals = 0;
             if (type == AnalyticsType.Features.ToString())
                 numberOfTotals = project.History.GetMaximumNumberOfHistoryFeatures();
@@ -250,9 +253,6 @@ namespace Expressium.LivingDoc.Generators
                 numberOfTotals = project.History.GetMaximumNumberOfHistoryScenarios();
             else if (type == AnalyticsType.Steps.ToString())
                 numberOfTotals = project.History.GetMaximumNumberOfHistorySteps();
-
-            if (numberOfTotals < 2)
-                return listOfLines;
 
             var historyResults = new List<LivingDocProjectHistoryResults>();
             if (type == AnalyticsType.Features.ToString())
@@ -273,14 +273,6 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
             listOfLines.Add("<th width='50%'>Date</th>");
-
-            //listOfLines.Add("<th class='align-center' width='80'>Passed</th>");
-            //listOfLines.Add("<th class='align-center' width='80'>Incomplete</th>");
-            //listOfLines.Add("<th class='align-center' width='80'>Failed</th>");
-            //listOfLines.Add("<th class='align-center' width='80'>Skipped</th>");
-            //listOfLines.Add("<th class='align-center' width='80'>Passed</th>");
-            //listOfLines.Add("<th class='align-center' width='80'>Total</th>");
-
             listOfLines.Add("<th style='min-width: 300px;'>Status</th>");
 
             listOfLines.Add("</tr>");
@@ -334,16 +326,8 @@ namespace Expressium.LivingDoc.Generators
                     maxReference -= discrepancy;
                 }
 
-                listOfLines.Add($"<tr title='{history.GetDate()}'>");
+                listOfLines.Add($"<tr>");
                 listOfLines.Add($"<td>{history.GetDate()}</td>");
-
-                //var total = history.Passed + history.Incomplete + history.Failed + history.Skipped;
-                //listOfLines.Add($"<td class='align-center'>{history.Passed}</td>");
-                //listOfLines.Add($"<td class='align-center'>{history.Incomplete}</td>");
-                //listOfLines.Add($"<td class='align-center'>{history.Failed}</td>");
-                //listOfLines.Add($"<td class='align-center'>{history.Skipped}</td>");
-                //listOfLines.Add($"<td class='align-center'>{percentageOfPassed}%</td>");
-                //listOfLines.Add($"<td class='align-center'>{total}</td>");
 
                 listOfLines.Add("<td>");
                 listOfLines.Add("<div style='width: 100%;'>");

@@ -445,6 +445,13 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataObjectsGenerator(new LivingDocProject());
             var scenario = new LivingDocScenario { Name = "Login" };
             var example = new LivingDocExample();
+
+            example.History.Add(new LivingDocExampleHistoryResults
+            {
+                Date = DateTime.UtcNow.AddDays(-1),
+                Status = LivingDocStatuses.Passed.ToString()
+            });
+
             example.History.Add(new LivingDocExampleHistoryResults
             {
                 Date = DateTime.UtcNow,
