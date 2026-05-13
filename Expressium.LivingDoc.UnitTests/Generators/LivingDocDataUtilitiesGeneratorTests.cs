@@ -68,7 +68,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         {
             var result = LivingDocDataUtilitiesGenerator.GetHealtSymbol(LivingDocHealths.New.ToString());
 
-            Assert.That(result, Is.EqualTo("bi bi-cloud-plus"));
+            Assert.That(result, Is.EqualTo("bi bi-cloud-moon"));
         }
 
         [Test]
