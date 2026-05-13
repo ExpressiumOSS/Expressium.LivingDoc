@@ -42,6 +42,10 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Scenarios.ToString()));
+
+            if (project.ExperimentFlag)
+                listOfLines.AddRange(GenerateDataAnalyticsHealthOverview());
+
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Scenarios.ToString()));
 
@@ -342,6 +346,52 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("</tbody>");
             listOfLines.Add("</table>");
+
+            listOfLines.Add("</div>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataAnalyticsHealthOverview()
+        {
+            var listOfLines = new List<string>();
+
+            if (!project.HasHealth())
+                return listOfLines;
+
+            var title = "Health";
+
+            listOfLines.Add("<hr>");
+
+            listOfLines.Add("<div class='section' style='width: fit-content; margin: auto;'>");
+            listOfLines.Add($"<span class='chart-name' data-testid='{title.ToLower()}-chart-title'>{title}</span>");
+            listOfLines.Add("<div class='section chart-outline'>");
+
+            {
+                listOfLines.Add("<div class='section' style='text-align: center; margin: auto;'>");
+                listOfLines.Add("<table class='align-center'>");
+                listOfLines.Add("<tr>");
+
+                foreach (var health in Enum.GetValues(typeof(LivingDocHealths)))
+                {
+                    var status = health.ToString();
+
+                    var count = project.Features.SelectMany(feature => feature.Scenarios).Count(scenario => scenario.Health == status);
+                    var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(status);
+
+                    listOfLines.Add("<td class='color-health chart-health'>");
+                    listOfLines.Add($"<span class='chart-health-number'>{count}</span><br />");
+                    listOfLines.Add($"<span class='chart-health-percentage {symbol}'></span><br />");
+                    listOfLines.Add($"<span class='chart-health-status'>{status}</span><br />");
+                    listOfLines.Add("<div class='chart-health-bar bgcolor-health'></div>");
+                    listOfLines.Add("</td>");
+                }
+
+                listOfLines.Add("</tr>");
+                listOfLines.Add("</table>");
+                listOfLines.Add("</div>");
+            }
 
             listOfLines.Add("</div>");
             listOfLines.Add("</div>");

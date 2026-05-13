@@ -450,6 +450,28 @@
         height: 0.475em;
     }
 
+
+    .chart-health {
+        text-align: center;
+    }
+
+    .chart-health-number {
+        font-size: 1.125em;
+    }
+
+    .chart-health-percentage {
+        font-size: 1.0625em;
+    }
+
+    .chart-health-status {
+        font-size: 1.0625em;
+    }
+
+    .chart-health-bar {
+        width: 96px;
+        height: 0.475em;
+    }
+
     a {
         color: var(--color-text-link);
         text-decoration: none;
@@ -493,6 +515,14 @@
 
     .bgcolor-total {
         background: var(--color-total);
+    }
+
+    .color-health {
+        color: var(--color-text-darkgray);
+    }
+
+    .bgcolor-health {
+        background: #A7A7A7;
     }
 
     .status-dot {
