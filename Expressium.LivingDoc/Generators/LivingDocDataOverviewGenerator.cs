@@ -148,7 +148,7 @@ namespace Expressium.LivingDoc.Generators
             {
                 listOfLines.Add($"<td class='grid-border align-right' width='100'>");
                 listOfLines.Add($"<span class='status-pill bgcolor-skipped'>{feature.GetNumberOfScenarios()}x</span>");
-                listOfLines.Add($"<span class='status-pill bgcolor-passed' style='width: 50px;'>{feature.GetPercentageOfPassed()}%</span>");
+                listOfLines.Add($"<span class='status-pill bgcolor-passed' style='width: 50px;'>{feature.GetCoverage()}%</span>");
                 listOfLines.Add($"</td>");
             }
             else

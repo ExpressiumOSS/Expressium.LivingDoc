@@ -117,25 +117,25 @@ Scenario: Sort by Feature Column in the Features List
 		| Login        |
 		| Contact Us   |
 
-Scenario: Sort by Passed Column in the Features List
+Scenario: Sort by Pass Rate Column in the Features List
 	Given I have navigated to the Features List
-	When I sort the features by Passed column in the Features List
+	When I sort the features by Pass Rate column in the Features List
 	Then I should have following visible objects in the Features List
 		| Features     |
 		| Login        |
-		| Contact Us   |
 		| Registration |
+		| Contact Us   |
 		| Orders       |
 
-Scenario: Sort by Duration Column in the Features List
+Scenario: Sort by Coverage Column in the Features List
 	Given I have navigated to the Features List
-	When I sort the features by Duration column in the Features List
+	When I sort the features by Coverage column in the Features List
 	Then I should have following visible objects in the Features List
 		| Features     |
 		| Orders       |
+		| Registration |
 		| Login        |
 		| Contact Us   |
-		| Registration |
 
 Scenario: Sort by Status Column in the Features List
 	Given I have navigated to the Features List

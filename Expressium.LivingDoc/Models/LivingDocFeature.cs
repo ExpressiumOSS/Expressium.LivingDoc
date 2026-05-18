@@ -134,22 +134,6 @@ namespace Expressium.LivingDoc.Models
             return GetNumberOfScenarios().ToString("D4");
         }
 
-        public int GetPercentageOfPassed()
-        {
-            var numberOfScenarios = GetNumberOfScenarios();
-            if (numberOfScenarios == 0)
-                return 0;
-
-            var numberOfPassed = GetNumberOfPassedScenarios();
-
-            return (int)Math.Round(100.0f / numberOfScenarios * numberOfPassed);
-        }
-
-        public string GetPercentageOfPassedSortId()
-        {
-            return GetPercentageOfPassed().ToString("D4");
-        }
-
         public TimeSpan GetSumOfDuration()
         {
             var duration = new TimeSpan();
@@ -171,11 +155,61 @@ namespace Expressium.LivingDoc.Models
             return $"{duration.Minutes.ToString("D2")}:{duration.Seconds.ToString("D2")}:{duration.Milliseconds.ToString("D3")}";
         }
 
+        public int GetPassRate()
+        {
+            var numberOfPassed = GetNumberOfPassedScenarios();
+            var numberOfFailed = GetNumberOfFailedScenarios();
+
+            var numberOfScenarios = numberOfPassed + numberOfFailed;
+            if (numberOfScenarios == 0)
+                return 0;
+
+            return (int)Math.Round(numberOfPassed * 100.0 / numberOfScenarios, MidpointRounding.AwayFromZero);
+        }
+
+        public string GetPassRateSortId()
+        {
+            return GetPassRate().ToString("D3");
+        }
+
+        public int GetFlakyRate()
+        {
+            var numberOfScenarios = GetNumberOfScenarios();
+            if (numberOfScenarios == 0)
+                return 0;
+
+            var flakyScenarios = Scenarios.Sum(s => (s.IsFlaky() ? 1 : 0) * s.Examples.Count);
+
+            return (int)Math.Round(flakyScenarios * 100.0 / numberOfScenarios, MidpointRounding.AwayFromZero);
+        }
+
+        public string GetFlakyRateSortId()
+        {
+            return GetFlakyRate().ToString("D3");
+        }
+
+        public int GetCoverage()
+        {
+            var numberOfScenarios = GetNumberOfScenarios();
+            if (numberOfScenarios == 0)
+                return 0;
+
+            var numberOfPassed = GetNumberOfPassedScenarios();
+            var numberOfFailed = GetNumberOfFailedScenarios();
+
+            return (int)Math.Round(100.0f / numberOfScenarios * (numberOfPassed + numberOfFailed), MidpointRounding.AwayFromZero);
+        }
+
+        public string GetCoverageSortId()
+        {
+            return GetCoverage().ToString("D3");
+        }
+
         public string GetFolder()
         {
             if (!string.IsNullOrWhiteSpace(Uri))
             {
-                var folders = Path.GetDirectoryName(Uri).Replace("/", "\\");
+                var folders = Path.GetDirectoryName(Uri)?.Replace("/", "\\");
                 if (string.IsNullOrWhiteSpace(folders))
                     folders = null;
 

@@ -79,7 +79,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var listOfLines = generator.GenerateDataListViews();
 
             Assert.That(listOfLines, Is.Not.Null);
-            Assert.That(listOfLines.Count, Is.EqualTo(54));
+            Assert.That(listOfLines.Count, Is.EqualTo(55));
             Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Features View -->"));
             Assert.That(listOfLines, Does.Contain("<!-- Data Scenarios View -->"));
             Assert.That(listOfLines, Does.Contain("<!-- Data Steps View -->"));

@@ -29,9 +29,22 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Feature<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(2, \"data-scenarios\")'>Scenarios<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(3, \"data-passed\")'>Passed<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(4, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='100' onClick='sortTableByColumn(5)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(3, \"data-passrate\")'>Pass Rate<span class='sort-column'>&udarr;</span></th>");
+
+            if (project.HasHealth())
+            {
+                listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(4, \"data-flakyrate\")'>Flaky Rate<span class='sort-column'>&udarr;</span></th>");
+                listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(5, \"data-coverage\")'>Coverage<span class='sort-column'>&udarr;</span></th>");
+                //listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(6, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
+                listOfLines.Add("<th width='100' onClick='sortTableByColumn(7)'>Status<span class='sort-column'>&udarr;</span></th>");
+            }
+            else
+            {
+                listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(4, \"data-coverage\")'>Coverage<span class='sort-column'>&udarr;</span></th>");
+                //listOfLines.Add("<th width='110' onClick='sortTableByColumnByAttibute(5, \"data-duration\")'>Duration<span class='sort-column'>&udarr;</span></th>");
+                listOfLines.Add("<th width='100' onClick='sortTableByColumn(5)'>Status<span class='sort-column'>&udarr;</span></th>");
+            }
+
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
@@ -39,16 +52,21 @@ namespace Expressium.LivingDoc.Generators
 
             foreach (var feature in project.Features)
             {
-                listOfLines.Add($"<tr class='grid-border' data-role='feature' data-tags='{feature.GetDataStatus()} {feature.Name} {feature.GetDataTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
-
                 var status = feature.GetStatus().ToLower();
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
-                listOfLines.Add($"<td class='align-center'><span class='{symbol} color-{status} status-symbol'></span></td>");
 
+                listOfLines.Add($"<tr class='grid-border' data-role='feature' data-tags='{feature.GetDataStatus()} {feature.Name} {feature.GetDataTags()}' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
+                listOfLines.Add($"<td class='align-center'><span class='{symbol} color-{status} status-symbol'></span></td>");
                 listOfLines.Add($"<td><a href='#'>{feature.Name}</a></td>");
                 listOfLines.Add($"<td class='align-center' data-scenarios='{feature.GetNumberOfScenariosSortId()}'>{feature.GetNumberOfScenarios()}</td>");
-                listOfLines.Add($"<td class='align-center' data-passed='{feature.GetPercentageOfPassedSortId()}'>{feature.GetPercentageOfPassed()}%</td>");
-                listOfLines.Add($"<td class='align-center' data-duration='{feature.GetDurationSortId()}'>{feature.GetDuration()}</td>");
+                listOfLines.Add($"<td class='align-center' data-passrate='{feature.GetPassRateSortId()}'>{feature.GetPassRate()}%</td>");
+
+                if (project.HasHealth())
+                    listOfLines.Add($"<td class='align-center' data-flakyrate='{feature.GetFlakyRateSortId()}'>{feature.GetFlakyRate()}%</td>");
+
+                listOfLines.Add($"<td class='align-center' data-coverage='{feature.GetCoverageSortId()}'>{feature.GetCoverage()}%</td>");
+                //listOfLines.Add($"<td class='align-center' data-duration='{feature.GetDurationSortId()}'>{feature.GetDuration()}</td>");
+
                 listOfLines.Add($"<td>{feature.GetStatus()}</td>");
                 listOfLines.Add($"</tr>");
             }
@@ -76,9 +94,9 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<tr data-role='header'>");
             listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Scenario<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-order\")'>Order<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='90' onClick='sortTableByColumnByAttibute(2, \"data-order\")'>Order<span class='sort-column'>&udarr;</span></th>");
 
-            var hasHealth = project.Features.SelectMany(f => f.Scenarios).Any(s => s.Health != null);
+            var hasHealth = project.HasHealth();
             if (hasHealth)
             {
                 listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(3, \"data-health\")'>Health<span class='sort-column'>&udarr;</span></th>");
@@ -100,12 +118,11 @@ namespace Expressium.LivingDoc.Generators
             {
                 foreach (var scenario in feature.Scenarios)
                 {
-                    listOfLines.Add($"<tr class='grid-border' data-role='scenario' data-tags='{scenario.GetDataStatus()} {feature.Name} {feature.GetDataTags()} {scenario.GetDataTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
-
                     var status = scenario.GetStatus().ToLower();
                     var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(status);
-                    listOfLines.Add($"<td class='align-center'><span class='{symbol} color-{status} status-symbol'></span></td>");
 
+                    listOfLines.Add($"<tr class='grid-border' data-role='scenario' data-tags='{scenario.GetDataStatus()} {feature.Name} {feature.GetDataTags()} {scenario.GetDataTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                    listOfLines.Add($"<td class='align-center'><span class='{symbol} color-{status} status-symbol'></span></td>");
                     listOfLines.Add($"<td><a href='#'>{scenario.Name}</a></td>");
                     listOfLines.Add($"<td class='align-center' data-order='{scenario.GetOrderSortId()}'>{scenario.GetOrder()}</td>");
 
@@ -141,9 +158,9 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<tr data-role='header'>");
             listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Step<span class='sort-column'>&udarr;</span></th>");
-            //listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"failure-count\")'>Failures<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-count\")'>Usage<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='100' onClick='sortTableByColumn(3)'>Status<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-used\")'>Used<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(3, \"data-failure\")'>Failure<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
 
@@ -175,27 +192,30 @@ namespace Expressium.LivingDoc.Generators
                                 var fullName = step.Keyword + " " + step.Name;
                                 if (!mapOfSteps.ContainsKey(fullName))
                                 {
-                                    var count = project.Features
+                                    var used = project.Features
                                         .SelectMany(feature => feature.Scenarios)
                                         .SelectMany(scenario => scenario.Examples)
                                         .SelectMany(example => example.Steps)
                                         .Count(x => x.Keyword + " " + x.Name == fullName);
 
-                                    //var failures = project.Features
-                                    //    .SelectMany(feature => feature.Scenarios)
-                                    //    .SelectMany(scenario => scenario.Examples)
-                                    //    .SelectMany(example => example.Steps)
-                                    //    .Count(x => x.Keyword + " " + x.Name == fullName && x.IsFailed());
+                                    var failed = project.Features
+                                        .SelectMany(feature => feature.Scenarios)
+                                        .SelectMany(scenario => scenario.Examples)
+                                        .SelectMany(example => example.Steps)
+                                        .Count(x => x.Keyword + " " + x.Name == fullName && x.IsFailed());
 
-                                    listOfLines.Add($"<tr class='grid-border' data-role='step' data-tags='{step.GetDataStatus()} {feature.Name} {feature.GetDataTags()} {scenario.GetDataTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                                    var failure = 0;
+                                    if (used != 0)
+                                        failure = (int)Math.Round(failed * 100.0 / used, MidpointRounding.AwayFromZero);
 
                                     var stepStatus = step.GetStatus().ToLower();
                                     var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(stepStatus);
-                                    listOfLines.Add($"<td class='align-center'><span class='{symbol} color-{stepStatus} status-symbol'></span></td>");
 
+                                    listOfLines.Add($"<tr class='grid-border' data-role='step' data-tags='{step.GetDataStatus()} {feature.Name} {feature.GetDataTags()} {scenario.GetDataTags()}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
+                                    listOfLines.Add($"<td class='align-center'><span class='{symbol} color-{stepStatus} status-symbol'></span></td>");
                                     listOfLines.Add($"<td><a href='#'>{fullName}</a></td>");
-                                    //listOfLines.Add($"<td class='align-center' failure-count='{failures.ToString("D4")}'>{failures}</td>");
-                                    listOfLines.Add($"<td class='align-center' data-count='{count.ToString("D4")}'>{count}</td>");
+                                    listOfLines.Add($"<td class='align-center' data-used='{used.ToString("D4")}'>{used}</td>");
+                                    listOfLines.Add($"<td class='align-center' data-failure='{failure.ToString("D4")}'>{failure}%</td>");
                                     listOfLines.Add($"<td>{step.GetStatus()}</td>");
                                     listOfLines.Add($"</tr>");
 
