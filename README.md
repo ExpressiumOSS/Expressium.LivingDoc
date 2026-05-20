@@ -44,7 +44,8 @@ The Expressium LivingDoc report may optionally include historical test results
 based on previous Cucumber Messages files.
 Historical test results are visualized as trends in Analytics
 along with a date-based status list within each scenario.
-An additional health status - Broken, Regressed, Flaky, or Fixed —
+
+An additional health status - Broken, Regressed, Flaky, New, or Fixed —
 is derived from historical results and displayed in the scenario tags.
 The history analysis is limited to the four most recent test runs.
 In a pipeline, the previous Cucumber message files
