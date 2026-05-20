@@ -10,7 +10,7 @@ be distributed to a public location enabling easy access by the stackholders.
 
 <br />
 <p align="center">
-<img src="ExpressiumLivingDoc.png"
+<img src="LivingDoc.png"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 
