@@ -158,8 +158,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<tr data-role='header'>");
             listOfLines.Add("<th width='20' class='align-center' onClick='sortTableByColumn(0)'></th>");
             listOfLines.Add("<th onClick='sortTableByColumn(1)'>Step<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(2, \"data-used\")'>Used<span class='sort-column'>&udarr;</span></th>");
-            listOfLines.Add("<th width='100' onClick='sortTableByColumnByAttibute(3, \"data-failure\")'>Failure<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='90' onClick='sortTableByColumnByAttibute(2, \"data-used\")'>Used<span class='sort-column'>&udarr;</span></th>");
+            listOfLines.Add("<th width='90' onClick='sortTableByColumnByAttibute(3, \"data-failure\")'>Failure<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("<th width='100' onClick='sortTableByColumn(4)'>Status<span class='sort-column'>&udarr;</span></th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");

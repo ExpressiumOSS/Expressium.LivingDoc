@@ -138,7 +138,7 @@ namespace Expressium.LivingDoc.Generators
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(prefilter.ToLower());
                 listOfLines.Add($"<button class='filter-option' data-prefilter='@{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
             }
-            listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearAllfilters()'><span class='clear-symbol'>&#10005;</span><span>Clear</span></button>");
+            listOfLines.Add("<button title='Clear All Filters' onclick='clearAllfilters()'><span>Clear</span></button>");
 
             listOfLines.Add("</div>");
 
@@ -188,11 +188,36 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<div class='section chart-filter'>");
 
-            listOfLines.AddRange(GenerateSearchFilter());
+            listOfLines.AddRange(GenerateSearchNewFilter());
             listOfLines.AddRange(GenerateStatusNewFilters());
 
             if (project.ExperimentFlag && project.HasHealth())
                 listOfLines.AddRange(GenerateHealthFilters());
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateSearchNewFilter()
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Search Filter Section -->");
+
+            listOfLines.Add("<div class='layout-row filter-group'>");
+
+            listOfLines.Add("<div class='filter-symbol'>");
+            listOfLines.Add("<span class='bi bi-search'></span>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<div style='width: 100%'>");
+            listOfLines.Add("<input onkeyup='filterView()' class='filter-keywords' id='filter-by-keywords' type='text' placeholder='Filter by Keywords'>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("<div class='filter-symbol'>");
+            listOfLines.Add("<span class='filter-option bi bi-x-lg' title='Clear All Filters' onclick='clearAllfilters()'></span>");
+            listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");
 
@@ -209,18 +234,23 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- View Title Section -->");
             listOfLines.Add("<div class='layout-column align-left'>");
 
-            var listOffilters = new List<string>() { "Passed", "Incomplete", "Failed", "Skipped" };
-            foreach (var prefilter in listOffilters)
+            var listOfFilters = new List<string>()
+            {
+                LivingDocStatuses.Passed.ToString(),
+                LivingDocStatuses.Incomplete.ToString(),
+                LivingDocStatuses.Failed.ToString(),
+                LivingDocStatuses.Skipped.ToString()
+            };
+
+            foreach (var prefilter in listOfFilters)
             {
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(prefilter.ToLower());
                 listOfLines.Add($"<button class='filter-option' data-prefilter='@{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
             }
-            listOfLines.Add("<button class='selected' title='Clear All Filters' onclick='clearAllfilters()'><span class='clear-symbol'>&#10005;</span><span>Clear</span></button>");
 
             listOfLines.Add("</div>");
 
             listOfLines.Add("<div class='layout-column align-right'>");
-
             listOfLines.Add("</div>");
 
             listOfLines.Add("</div>");

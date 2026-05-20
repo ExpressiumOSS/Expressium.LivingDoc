@@ -97,8 +97,13 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add("</td>");
             listOfLines.Add("<td class='grid-border align-right' colspan='2'>");
-            listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
-            listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
+
+            //listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
+            //listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
+
+            listOfLines.Add("<button class='grid-expand bi bi-chevron-down' title='Expand All Features' onclick='loadExpandAll()'></button>");
+            listOfLines.Add("<button class='grid-collapse bi bi-chevron-up' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
+
             listOfLines.Add("</td>");
             listOfLines.Add("</tr>");
 
@@ -147,8 +152,8 @@ namespace Expressium.LivingDoc.Generators
             if (project.ExperimentFlag)
             {
                 listOfLines.Add($"<td class='grid-border align-right' width='100'>");
-                listOfLines.Add($"<span class='status-pill bgcolor-skipped'>{feature.GetNumberOfScenarios()}x</span>");
-                listOfLines.Add($"<span class='status-pill bgcolor-passed' style='width: 50px;'>{feature.GetCoverage()}%</span>");
+                listOfLines.Add($"<span class='status-pill bgcolor-skipped' title='Scenarios'>{feature.GetNumberOfScenarios()}x</span>");
+                listOfLines.Add($"<span class='status-pill bgcolor-passed' style='width: 50px;' title='Coverage'>{feature.GetCoverage()}%</span>");
                 listOfLines.Add($"</td>");
             }
             else

@@ -71,10 +71,10 @@
         /* Buttons */
         --color-text-button: var(--bs-gray-900);
         --color-bg-button: var(--bs-gray-090);
-        --color-border-button: var(--bs-gray-450);
+        --color-border-button: var(--bs-gray-400);
         --color-text-button-inactive: var(--bs-gray-600);
         --color-bg-button-inactive: var(--bs-gray-090);
-        --color-border-button-inactive: var(--bs-gray-400);
+        --color-border-button-inactive: var(--bs-gray-300);
         --color-text-button-hover: var(--bs-gray-900);
         --color-bg-button-hover: var(--bs-gray-125);
         --color-border-button-hover: var(--bs-gray-500);
@@ -357,7 +357,7 @@
     .scenario-backgrounds {
         padding: 1px 4px;
         font-size: 0.9625em;
-        color: var(--color-text-gray);
+        color: var(--color-text-button-inactive);
     }
 
     .grid-border {
