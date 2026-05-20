@@ -78,7 +78,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         {
             LivingDocFeature nullFeature = null;
 
-            Assert.Throws<ArgumentNullException>(() => LivingDocExtensions.DeepClone(nullFeature));
+            Assert.Throws<ArgumentNullException>((Action)(() => LivingDocExtensions.DeepClone(nullFeature)));
         }
     }
 }

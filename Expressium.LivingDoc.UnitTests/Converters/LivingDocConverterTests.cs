@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Expressium.LivingDoc.UnitTests.Converters
 {
@@ -24,7 +25,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             var livingDocConverter = new LivingDocConverter();
 
-            var exception = Assert.Throws<IOException>(() => livingDocConverter.Import(inputFilePath));
+            var exception = Assert.Throws<IOException>((Action)(() => livingDocConverter.Import(inputFilePath)));
             Assert.That(exception.Message, Does.StartWith("IO error:"));
         }
 
@@ -55,7 +56,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var livingDocConverter = new LivingDocConverter();
             var livingDocProject = livingDocConverter.Import(inputFilePath);
 
-            var exception = Assert.Throws<IOException>(() => livingDocConverter.Export(livingDocProject, outputFilePath));
+            var exception = Assert.Throws<IOException>((Action)(() => livingDocConverter.Export(livingDocProject, outputFilePath)));
             Assert.That(exception.Message, Does.StartWith("IO error:"));
         }
 
@@ -79,7 +80,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             var livingDocConverter = new LivingDocConverter();
 
-            var exception = Assert.Throws<IOException>(() => livingDocConverter.Convert(inputFilePath, "MyProjectTitle"));
+            var exception = Assert.Throws<IOException>((Action)(() => livingDocConverter.Convert(inputFilePath, "MyProjectTitle")));
             Assert.That(exception.Message, Does.StartWith("IO error:"));
         }
 
@@ -122,7 +123,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var livingDocConverter = new LivingDocConverter();
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle");
 
-            var exception = Assert.Throws<IOException>(() => livingDocConverter.Generate(livingDocProject, outputFilePath));
+            var exception = Assert.Throws<IOException>((Action)(() => livingDocConverter.Generate(livingDocProject, outputFilePath)));
             Assert.That(exception.Message, Does.StartWith("IO error:"));
         }
 

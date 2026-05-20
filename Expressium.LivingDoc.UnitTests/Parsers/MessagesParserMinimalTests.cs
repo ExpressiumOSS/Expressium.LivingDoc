@@ -21,7 +21,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
             var scenario = livingDocProject.Features[0].Scenarios[0];
 
             Assert.That(scenario.Name, Is.EqualTo("cukes"));
-            Assert.That(scenario.GetStatus, Is.EqualTo(LivingDocStatuses.Passed.ToString()));
+            Assert.That(scenario.GetStatus(), Is.EqualTo(LivingDocStatuses.Passed.ToString()));
 
             Assert.That(scenario.Examples[0].Steps[0].Keyword, Is.EqualTo("Given"));
             Assert.That(scenario.Examples[0].Steps[0].Name, Is.EqualTo("I have 42 cukes in my belly"));

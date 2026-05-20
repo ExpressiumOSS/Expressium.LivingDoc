@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Html.Parser;
 using Expressium.LivingDoc.Generators;
 using Expressium.LivingDoc.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -303,7 +304,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             var inputLines = new List<string> { "<html></html>" };
 
-            Assert.Throws<IOException>(() => LivingDocProjectGenerator.SaveHtmlFile(outputFilePath, inputLines));
+            Assert.Throws<IOException>((Action)(() => LivingDocProjectGenerator.SaveHtmlFile(outputFilePath, inputLines)));
         }
     }
 }
