@@ -302,7 +302,7 @@ namespace Expressium.LivingDoc.Generators
             if (hasStacktraces)
                 listOfLines.Add("<button class='scenario-stacktraces bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></button>");
 
-            if (example.History.Count > 1)
+            if (example.History.Count > 0)
                 listOfLines.Add("<button class='scenario-history bi bi-calendar4' title='Toggle History' onclick=\"toggleHistory(this)\"></button>");
 
             if (example.Attachments.Count > 0)
@@ -549,7 +549,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            if (example.History.Count > 1)
+            if (example.History.Count > 0)
             {
                 listOfLines.Add("<!-- Data Scenario History -->");
                 listOfLines.Add($"<div class='history' style='display: none;'>");
