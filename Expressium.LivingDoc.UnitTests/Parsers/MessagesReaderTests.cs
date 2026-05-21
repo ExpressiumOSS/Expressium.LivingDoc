@@ -8,7 +8,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
         [Test]
         public void Reading_Cucumber_Messages_File()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "examples-tables", "examples-tables.ndjson");
 
             int numberOfEnvelopes = 0;
             int numberOfScenarios = 0;
@@ -40,7 +40,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
                 }
             }
 
-            Assert.That(numberOfEnvelopes, Is.EqualTo(100));
+            Assert.That(numberOfEnvelopes, Is.EqualTo(80));
             Assert.That(numberOfScenarios, Is.EqualTo(2));
             Assert.That(numberOfSteps, Is.EqualTo(6));
         }

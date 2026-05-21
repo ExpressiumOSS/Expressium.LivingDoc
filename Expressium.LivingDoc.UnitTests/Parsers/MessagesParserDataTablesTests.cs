@@ -8,7 +8,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
         [Test]
         public void Converting_Step_DataTables()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "data-tables.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "data-tables", "data-tables.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);

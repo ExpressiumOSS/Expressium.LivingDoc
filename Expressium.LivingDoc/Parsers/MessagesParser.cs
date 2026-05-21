@@ -341,11 +341,14 @@ namespace Expressium.LivingDoc.Parsers
                         example.Duration = testCaseStarted.Timestamp.ToTimeSpan(testCaseFinished.Timestamp);
 
                         // Assign Scenario Attachments...
-                        var attachments = listOfAttachment.FindAll(a => a.TestCaseStartedId.Contains(testCaseStarted.Id));
-                        if (attachments.Count > 0)
+                        if (testCaseStarted.Id != null)
                         {
-                            foreach (var attachment in attachments)
-                                ParseTestResultsAttachments(example, attachment);
+                            var attachments = listOfAttachment.FindAll(a => a.TestCaseStartedId != null && a.TestCaseStartedId.Contains(testCaseStarted.Id));
+                            if (attachments.Count > 0)
+                            {
+                                foreach (var attachment in attachments)
+                                    ParseTestResultsAttachments(example, attachment);
+                            }
                         }
                     }
                 }

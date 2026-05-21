@@ -63,7 +63,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         [Test]
         public void LivingDocConverter_Convert()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "minimal", "minimal.ndjson");
 
             var livingDocConverter = new LivingDocConverter();
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle");
@@ -76,7 +76,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         [Test]
         public void LivingDocConverter_Convert_Invalid_Input_Path()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "unknown.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "unknown", "unknown.ndjson");
 
             var livingDocConverter = new LivingDocConverter();
 
@@ -87,7 +87,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         [Test]
         public void LivingDocConverter_Convert_NullTitle()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "minimal", "minimal.ndjson");
 
             var livingDocConverter = new LivingDocConverter();
             var livingDocProject = livingDocConverter.Convert(inputFilePath, null);
@@ -99,7 +99,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         [Test]
         public void LivingDocConverter_Generate()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "minimal", "minimal.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "dummy.html");
 
             File.Delete(outputFilePath);
@@ -117,7 +117,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         [Test]
         public void LivingDocConverter_Generate_Invalid_Output_Path()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "minimal", "minimal.ndjson");
             var outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "NonExistent", "Subfolder", "dummy.html");
 
             var livingDocConverter = new LivingDocConverter();
@@ -146,7 +146,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         [Test]
         public void LivingDocConverter_MergeHistory()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.ndjson");
             var historyPath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "History/coffeeshop*.ndjson");
 
             var livingDocConverter = new LivingDocConverter();

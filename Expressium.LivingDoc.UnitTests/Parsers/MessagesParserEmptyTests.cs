@@ -8,7 +8,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
         [Test]
         public void Converting_Empty_Scenario()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "empty.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "empty", "empty.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);

@@ -359,7 +359,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocProject_GetNumberOfStatuses()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);

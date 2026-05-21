@@ -9,14 +9,14 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
         [Test]
         public void Converting_Scenario_ExampleTables()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "examples-tables.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "examples-tables", "examples-tables.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(9));
-            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(27));
+            Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(7));
+            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(21));
 
             var scenario = livingDocProject.Features[0].Scenarios[0];
 

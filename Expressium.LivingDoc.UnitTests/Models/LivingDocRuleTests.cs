@@ -9,7 +9,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocRule_GetTags()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "rules.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "rules", "rules.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);

@@ -8,7 +8,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
         [Test]
         public void Converting_Scenario_Coffeeshop()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);

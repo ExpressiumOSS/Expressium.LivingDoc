@@ -9,14 +9,14 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
         [Test]
         public void Converting_Ambiguous_Step_Definition()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "ambiguous.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "ambiguous", "ambiguous.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(1));
             Assert.That(livingDocProject.GetNumberOfScenarios(), Is.EqualTo(1));
-            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(2));
+            Assert.That(livingDocProject.GetNumberOfSteps(), Is.EqualTo(1));
 
             var scenario = livingDocProject.Features[0].Scenarios[0];
 

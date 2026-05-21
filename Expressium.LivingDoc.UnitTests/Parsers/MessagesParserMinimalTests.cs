@@ -9,7 +9,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
         [Test]
         public void Converting_Minimal_Scenario()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "minimal", "minimal.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);

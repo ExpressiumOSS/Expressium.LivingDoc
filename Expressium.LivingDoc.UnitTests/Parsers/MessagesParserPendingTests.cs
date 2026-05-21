@@ -9,7 +9,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
         [Test]
         public void Converting_Pending_Step_Definition()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "pending.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "pending", "pending.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);

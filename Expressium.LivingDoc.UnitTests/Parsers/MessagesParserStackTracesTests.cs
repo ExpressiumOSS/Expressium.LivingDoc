@@ -8,7 +8,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
         [Test]
         public void Converting_Step_StackTraces()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "stack-traces.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "stack-traces", "stack-traces.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
@@ -23,7 +23,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
             Assert.That(scenario.Examples[0].Steps[0].Message, Is.EqualTo(null));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionType, Is.EqualTo("Error"));
             Assert.That(scenario.Examples[0].Steps[0].ExceptionMessage, Is.EqualTo("BOOM"));
-            Assert.That(scenario.Examples[0].Steps[0].ExceptionStackTrace, Is.EqualTo(null));
+            Assert.That(scenario.Examples[0].Steps[0].ExceptionStackTrace, Is.EqualTo("Error: BOOM\nsamples/stack-traces/stack-traces.feature:10"));
         }
 
         [Test]

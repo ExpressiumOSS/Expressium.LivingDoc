@@ -187,7 +187,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocFeature_GetStatus_Failed_FromFile()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "stack-traces.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "stack-traces", "stack-traces.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
@@ -211,7 +211,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocFeature_GetStatus_Incomplete_FromFile()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "pending.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "pending", "pending.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
@@ -233,7 +233,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocFeature_GetStatus_Passed_FromFile()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "minimal.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "minimal", "minimal.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
@@ -255,7 +255,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocFeature_GetStatus_Skipped_FromFile()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "empty.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "CCK", "Samples", "empty", "empty.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
@@ -302,7 +302,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocFeature_GetNumberOfStatuses_FromFile()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
@@ -378,7 +378,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocFeature_GetNumberOfSteps_ByStatus_FromFile()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
@@ -395,7 +395,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [Test]
         public void LivingDocFeature_GetNumberOfSteps_MixedStatuses_FromFile()
         {
-            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.feature.ndjson");
+            var inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Samples", "coffeeshop.ndjson");
 
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
