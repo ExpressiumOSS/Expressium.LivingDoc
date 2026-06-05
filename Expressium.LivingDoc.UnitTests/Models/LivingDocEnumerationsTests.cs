@@ -93,11 +93,17 @@ namespace Expressium.LivingDoc.UnitTests.Models
         }
 
         [Test]
-        public void LivingDocHealths_ContainsExactlyFiveValues()
+        public void LivingDocHealths_Invalid_StringValue_IsExpected()
+        {
+            Assert.That(LivingDocHealths.Invalid.ToString(), Is.EqualTo("Invalid"));
+        }
+
+        [Test]
+        public void LivingDocHealths_ContainsExactlySixValues()
         {
             var values = System.Enum.GetValues(typeof(LivingDocHealths));
 
-            Assert.That(values.Length, Is.EqualTo(5));
+            Assert.That(values.Length, Is.EqualTo(6));
         }
 
         [Test]

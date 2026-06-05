@@ -85,6 +85,12 @@
         --color-incomplete: #F7C21A;
         --color-failed: #E84330;
         --color-skipped: #9E9E9E;
+
+        --color-passed: #439C49;
+        --color-incomplete: #F5C01A;
+        --color-failed: #E24330;
+        --color-skipped: #9B9B9B;
+
         --color-total: var(--bs-gray-900);
 
         /* Status backgrounds */

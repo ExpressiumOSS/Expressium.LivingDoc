@@ -170,8 +170,10 @@ namespace Expressium.LivingDoc.Models
                 return "4";
             else if (Health == LivingDocHealths.Fixed.ToString())
                 return "5";
+            else if (Health == LivingDocHealths.Invalid.ToString())
+                return "6";
 
-            return "6";
+            return "7";
         }
 
         public bool IsBroken()
@@ -192,6 +194,11 @@ namespace Expressium.LivingDoc.Models
         public bool IsFixed()
         {
             return Health == LivingDocHealths.Fixed.ToString();
+        }
+
+        public bool IsInvalid()
+        {
+            return Health == LivingDocHealths.Invalid.ToString();
         }
 
         public bool HasDataTable()

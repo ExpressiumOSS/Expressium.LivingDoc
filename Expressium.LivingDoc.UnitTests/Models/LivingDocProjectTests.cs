@@ -722,6 +722,16 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase("Failed", "Skipped", "Failed", "Passed", "Fixed")]
         [TestCase("Incomplete", "Skipped", "Failed", "Passed", "Fixed")]
 
+        // Invalid patterns
+        [TestCase(null, null, "Incomplete", "Incomplete", "Invalid")]
+        [TestCase(null, "Incomplete", "Incomplete", "Incomplete", "Invalid")]
+        [TestCase("Incomplete", "Incomplete", "Incomplete", "Incomplete", "Invalid")]
+        [TestCase(null, "Skipped", "Incomplete", "Incomplete", "Invalid")]
+        [TestCase(null, "Skipped", "Skipped", "Incomplete", "Invalid")]
+        [TestCase(null, "Passed", "Skipped", "Incomplete", "Invalid")]
+        [TestCase(null, "Passed", "Failed", "Incomplete", "Invalid")]
+        [TestCase("Failed", "Failed", "Failed", "Incomplete", "Invalid")]
+
         public void LivingDocProject_MergeScenarioHistoryHealth(string oldest, string earlier, string previous, string latest, string health)
         {
             var project = new LivingDocProject();

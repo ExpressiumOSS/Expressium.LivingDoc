@@ -30,6 +30,8 @@ namespace Expressium.LivingDoc.Generators
                 return "bi bi-cloud-moon";
             else if (health == LivingDocHealths.Fixed.ToString())
                 return "bi bi-cloud-sun";
+            else if (health == LivingDocHealths.Invalid.ToString())
+                return "bi bi-cloud-fog";
             else
                 return string.Empty;
         }

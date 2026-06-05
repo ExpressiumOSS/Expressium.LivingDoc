@@ -42,15 +42,14 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.AddRange(GenerateDataAnalyticsTitle());
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Scenarios.ToString()));
-
-            if (project.ExperimentFlag)
-                listOfLines.AddRange(GenerateDataAnalyticsHealthOverview());
-
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Scenarios.ToString()));
 
             if (project.ExperimentFlag)
+            {
+                listOfLines.AddRange(GenerateDataAnalyticsHealthOverview());
                 listOfLines.AddRange(GenerateDataAnalyticsHealth());
+            }
 
             listOfLines.Add("</div>");
 

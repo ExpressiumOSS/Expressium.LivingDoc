@@ -30,5 +30,6 @@ namespace Expressium.LivingDoc.Models
         Flaky,       // Was alternating unpredictably in latest test runs
         New,         // Was not present but is now in latest test run
         Fixed,       // Was failing but is now passing in latest test run
+        Invalid,     // Was incomplete in latest test run
     }
 }

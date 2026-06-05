@@ -169,6 +169,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase("Broken")]
         [TestCase("Flaky")]
         [TestCase("Fixed")]
+        [TestCase("Invalid")]
         public void LivingDocScenario_HasHealth_ReturnsTrue_WhenHealthIsSet(string health)
         {
             var scenario = new LivingDocScenario { Health = health };
@@ -227,6 +228,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase("Broken", "@Broken")]
         [TestCase("Flaky", "@Flaky")]
         [TestCase("Fixed", "@Fixed")]
+        [TestCase("Invalid", "@Invalid")]
         public void LivingDocScenario_GetTags_WithHealth_AllHealthValues(string health, string expected)
         {
             var scenario = new LivingDocScenario { Health = health };
@@ -276,6 +278,19 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(scenario.IsBroken(), Is.False);
             Assert.That(scenario.IsFlaky(), Is.False);
             Assert.That(scenario.IsFixed(), Is.False);
+            Assert.That(scenario.IsInvalid(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocScenario_IsInvalid_ReturnsTrue_WhenHealthIsInvalid()
+        {
+            var scenario = new LivingDocScenario { Health = LivingDocHealths.Invalid.ToString() };
+
+            Assert.That(scenario.IsInvalid(), Is.True);
+            Assert.That(scenario.IsBroken(), Is.False);
+            Assert.That(scenario.IsFlaky(), Is.False);
+            Assert.That(scenario.IsFixed(), Is.False);
+            Assert.That(scenario.IsRegressed(), Is.False);
         }
 
         [Test]
@@ -287,6 +302,7 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(scenario.IsFlaky(), Is.False);
             Assert.That(scenario.IsFixed(), Is.False);
             Assert.That(scenario.IsRegressed(), Is.False);
+            Assert.That(scenario.IsInvalid(), Is.False);
         }
 
         [Test]
@@ -309,8 +325,9 @@ namespace Expressium.LivingDoc.UnitTests.Models
         [TestCase("Flaky", "3")]
         [TestCase("New", "4")]
         [TestCase("Fixed", "5")]
-        [TestCase(null, "6")]
-        [TestCase("Unknown", "6")]
+        [TestCase("Invalid", "6")]
+        [TestCase(null, "7")]
+        [TestCase("Unknown", "7")]
         public void LivingDocScenario_GetHealthSortId_ReturnsCorrectRank(string health, string expected)
         {
             var scenario = new LivingDocScenario { Health = health };

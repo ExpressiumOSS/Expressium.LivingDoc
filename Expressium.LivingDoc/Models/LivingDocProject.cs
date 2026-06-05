@@ -319,6 +319,10 @@ namespace Expressium.LivingDoc.Models
                         // Fixed Pattern...
                         else if (latest == passed && previous != passed)
                             scenario.Health = LivingDocHealths.Fixed.ToString();
+
+                        // Invalid Pattern...
+                        else if (latest == incomplete)
+                            scenario.Health = LivingDocHealths.Invalid.ToString();
                     }
                 }
             }
