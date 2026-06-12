@@ -175,7 +175,7 @@ namespace Expressium.LivingDoc.Generators
                     {
                         foreach (var step in example.Steps)
                         {
-                            var name = step.Keyword + " " + step.Name;
+                            var name = step.GetFullName();
 
                             mapOfUsedSteps.TryGetValue(name, out var usedCount);
                             mapOfUsedSteps[name] = usedCount + 1;
@@ -213,7 +213,7 @@ namespace Expressium.LivingDoc.Generators
                                 if (status != step.GetStatus())
                                     continue;
 
-                                var fullName = step.Keyword + " " + step.Name;
+                                var fullName = step.GetFullName();
                                 if (!mapOfSteps.ContainsKey(fullName))
                                 {
                                     var used = mapOfUsedSteps[fullName];

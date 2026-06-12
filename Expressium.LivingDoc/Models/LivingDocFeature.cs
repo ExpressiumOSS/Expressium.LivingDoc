@@ -234,5 +234,10 @@ namespace Expressium.LivingDoc.Models
 
             return null;
         }
+
+        public bool HasBackground()
+        {
+            return Background != null && Background.Steps.Count > 0;
+        }
     }
 }

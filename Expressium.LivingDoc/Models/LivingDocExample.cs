@@ -71,5 +71,10 @@ namespace Expressium.LivingDoc.Models
         {
             return DataTable.Rows.Count > 0;
         }
+
+        public bool HasStacktraces()
+        {
+            return Steps?.Any(step => step.ExceptionStackTrace != null) ?? false;
+        }
     }
 }

@@ -98,7 +98,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            if (feature.Background != null && feature.Background.Steps.Count > 0)
+            if (feature.HasBackground())
             {
                 listOfLines.Add("<!-- Data Feature Background -->");
                 listOfLines.Add("<div>");
@@ -298,8 +298,7 @@ namespace Expressium.LivingDoc.Generators
             //    listOfLines.Add("<button class='scenario-backgrounds bi bi-chevron-double-down' title='Toggle Backgrounds' onclick=\"toggleBackgrounds(this)\"></button>");
             ///////////////////////////////////////////////////////
 
-            var hasStacktraces = example.Steps?.Any(x => x.ExceptionStackTrace != null) ?? false;
-            if (hasStacktraces)
+            if (example.HasStacktraces())
                 listOfLines.Add("<button class='scenario-stacktraces bi bi-code-slash' title='Toggle Stacktrace' onclick=\"toggleStacktraces(this)\"></button>");
 
             if (example.History.Count > 0)

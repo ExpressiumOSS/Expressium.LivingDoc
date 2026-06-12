@@ -98,6 +98,11 @@ namespace Expressium.LivingDoc.Models
             return false;
         }
 
+        public string GetFullName()
+        {
+            return Keyword + " " + Name;
+        }
+
         public string GetDataStatus()
         {
             return "@" + GetStatus();
