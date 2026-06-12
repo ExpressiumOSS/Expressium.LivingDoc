@@ -119,5 +119,21 @@ namespace Expressium.LivingDoc.Models
 
             return LivingDocStatuses.Undefined.ToString();
         }
+
+        public string GetStatusSortId()
+        {
+            var status = GetStatus();
+
+            if (status == LivingDocStatuses.Failed.ToString())
+                return "1";
+            else if (status == LivingDocStatuses.Incomplete.ToString())
+                return "2";
+            else if (status == LivingDocStatuses.Passed.ToString())
+                return "3";
+            else if (status == LivingDocStatuses.Skipped.ToString())
+                return "4";
+
+            return "5";
+        }
     }
 }
