@@ -1,7 +1,6 @@
 ﻿using Expressium.LivingDoc.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Expressium.LivingDoc.Generators
 {
@@ -166,6 +165,31 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<tbody id='table-list'>");
 
+            var mapOfUsedSteps = new Dictionary<string, int>();
+            var mapOfFailedSteps = new Dictionary<string, int>();
+            foreach (var feature in project.Features)
+            {
+                foreach (var scenario in feature.Scenarios)
+                {
+                    foreach (var example in scenario.Examples)
+                    {
+                        foreach (var step in example.Steps)
+                        {
+                            var name = step.Keyword + " " + step.Name;
+
+                            mapOfUsedSteps.TryGetValue(name, out var usedCount);
+                            mapOfUsedSteps[name] = usedCount + 1;
+
+                            if (step.IsFailed())
+                            {
+                                mapOfFailedSteps.TryGetValue(name, out var failedCount);
+                                mapOfFailedSteps[name] = failedCount + 1;
+                            }
+                        }
+                    }
+                }
+            }
+
             var mapOfSteps = new Dictionary<string, string>();
 
             var listOfStatuses = new List<string>
@@ -192,17 +216,8 @@ namespace Expressium.LivingDoc.Generators
                                 var fullName = step.Keyword + " " + step.Name;
                                 if (!mapOfSteps.ContainsKey(fullName))
                                 {
-                                    var used = project.Features
-                                        .SelectMany(feature => feature.Scenarios)
-                                        .SelectMany(scenario => scenario.Examples)
-                                        .SelectMany(example => example.Steps)
-                                        .Count(x => x.Keyword + " " + x.Name == fullName);
-
-                                    var failed = project.Features
-                                        .SelectMany(feature => feature.Scenarios)
-                                        .SelectMany(scenario => scenario.Examples)
-                                        .SelectMany(example => example.Steps)
-                                        .Count(x => x.Keyword + " " + x.Name == fullName && x.IsFailed());
+                                    var used = mapOfUsedSteps[fullName];
+                                    mapOfFailedSteps.TryGetValue(fullName, out var failed);
 
                                     var failure = 0;
                                     if (used != 0)
