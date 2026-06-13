@@ -18,7 +18,6 @@ namespace Expressium.LivingDoc.Models
 
         public LivingDocExample()
         {
-            Duration = new TimeSpan();
             Steps = new List<LivingDocStep>();
             DataTable = new LivingDocDataTable();
             Attachments = new List<string>();

@@ -27,8 +27,6 @@ namespace Expressium.LivingDoc.Models
 
         public LivingDocProject()
         {
-            Duration = new TimeSpan();
-
             Features = new List<LivingDocFeature>();
             History = new LivingDocProjectHistory();
 
@@ -244,8 +242,7 @@ namespace Expressium.LivingDoc.Models
                             {
                                 if (matchingScenario.Examples.Count > indexId)
                                 {
-                                    var existingExample = example;
-                                    existingExample.History.Add(new LivingDocExampleHistoryResults
+                                    example.History.Add(new LivingDocExampleHistoryResults
                                     {
                                         Date = livingDocProject.Date,
                                         Status = matchingScenario.Examples[indexId].GetStatus()

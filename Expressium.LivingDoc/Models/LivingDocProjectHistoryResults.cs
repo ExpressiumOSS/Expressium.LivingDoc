@@ -11,19 +11,9 @@ namespace Expressium.LivingDoc.Models
         public int Failed { get; set; }
         public int Skipped { get; set; }
 
-        public LivingDocProjectHistoryResults()
-        {
-            Date = DateTime.MinValue;
-
-            Passed = 0;
-            Incomplete = 0;
-            Failed = 0;
-            Skipped = 0;
-        }
-
         public string GetDate()
         {
-            return LivingDocUtilities.FormatAsString(Date);
+            return Date.FormatAsString();
         }
 
         public int GetNumberOfTests()

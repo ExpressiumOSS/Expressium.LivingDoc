@@ -219,10 +219,7 @@ namespace Expressium.LivingDoc.Models
 
         public bool HasDataTable()
         {
-            if (Examples.Any(example => example.HasDataTable()))
-                return true;
-
-            return false;
+            return Examples.Any(example => example.HasDataTable());
         }
     }
 }
