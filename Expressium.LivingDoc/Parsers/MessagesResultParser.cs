@@ -11,7 +11,7 @@ namespace Expressium.LivingDoc.Parsers
         internal void ParseTestResults(CucumberMessages messages, LivingDocProject livingDocProject)
         {
             // Assign Test Execution Environment Details...
-            var meta = messages.Meta.FirstOrDefault();
+            var meta = messages.Metas.FirstOrDefault();
             if (meta == null)
                 throw new InvalidOperationException("No Meta message found in the Cucumber messages file. The file may be empty or malformed.");
 
@@ -68,6 +68,16 @@ namespace Expressium.LivingDoc.Parsers
                 .GroupBy(f => f.TestStepId)
                 .ToDictionary(g => g.Key, g => g.First());
 
+            var testCaseStartedById = messages.TestCaseStarted
+                .Where(t => t.Id != null)
+                .GroupBy(t => t.Id)
+                .ToDictionary(g => g.Key, g => g.First());
+
+            var testCaseFinishedByStartedId = messages.TestCaseFinished
+                .Where(t => t.TestCaseStartedId != null)
+                .GroupBy(t => t.TestCaseStartedId)
+                .ToDictionary(g => g.Key, g => g.First());
+
             foreach (var feature in livingDocProject.Features)
             {
                 foreach (var scenario in feature.Scenarios)
@@ -100,13 +110,12 @@ namespace Expressium.LivingDoc.Parsers
                         }
 
                         // Find Scenario TestCaseStarted...
-                        var testCaseStarted = messages.TestCaseStarted.Find(g => g.Id == testCaseStartedId);
-                        if (testCaseStarted == null)
+                        if (testCaseStartedId == null ||
+                            !testCaseStartedById.TryGetValue(testCaseStartedId, out var testCaseStarted))
                             continue;
 
                         // Find Scenario TestCaseFinished...
-                        var testCaseFinished = messages.TestCaseFinished.Find(j => j.TestCaseStartedId == testCaseStarted.Id);
-                        if (testCaseFinished == null)
+                        if (!testCaseFinishedByStartedId.TryGetValue(testCaseStarted.Id, out var testCaseFinished))
                             continue;
 
                         // Asign Before and After Hook Failures...
@@ -118,7 +127,7 @@ namespace Expressium.LivingDoc.Parsers
                         // Assign Scenario Attachments...
                         if (testCaseStarted.Id != null)
                         {
-                            var attachments = messages.Attachment.FindAll(a => a.TestCaseStartedId != null && a.TestCaseStartedId.Contains(testCaseStarted.Id));
+                            var attachments = messages.Attachments.Where(a => a.TestCaseStartedId != null && a.TestCaseStartedId.Contains(testCaseStarted.Id)).ToList();
                             if (attachments.Count > 0)
                             {
                                 foreach (var attachment in attachments)
@@ -142,15 +151,15 @@ namespace Expressium.LivingDoc.Parsers
             if (testCase == null)
                 return;
 
-            var hookTestSteps = testCase.TestSteps.FindAll(g => g.HookId != null);
+            var hookTestSteps = testCase.TestSteps.Where(g => g.HookId != null);
             foreach (var hookTestStep in hookTestSteps)
             {
-                var testStepFinished = messages.TestStepFinished.Find(k => k.TestStepId == hookTestStep.Id);
+                var testStepFinished = messages.TestStepFinished.FirstOrDefault(k => k.TestStepId == hookTestStep.Id);
                 if (testStepFinished != null)
                 {
                     if (testStepFinished.TestStepResult.Exception != null)
                     {
-                        var hook = messages.Hook.Find(d => d.Id == hookTestStep.HookId);
+                        var hook = messages.Hooks.FirstOrDefault(d => d.Id == hookTestStep.HookId);
                         if (hook != null)
                         {
                             if (hook.Type == HookType.BEFORE_TEST_CASE)
@@ -166,15 +175,16 @@ namespace Expressium.LivingDoc.Parsers
 
         private static LivingDocStep CreateHookStep(string name, TestStepFinished testStepFinished)
         {
-            var hookStep = new LivingDocStep();
-            hookStep.Name = name;
-            hookStep.Keyword = "Hook";
-            hookStep.Type = LivingDocStepTypes.Hook.ToString();
-            hookStep.Status = LivingDocStatuses.Failed.ToString();
-            hookStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
-            hookStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message;
-            hookStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
-            return hookStep;
+            return new LivingDocStep
+            {
+                Name = name,
+                Keyword = "Hook",
+                Type = LivingDocStepTypes.Hook.ToString(),
+                Status = LivingDocStatuses.Failed.ToString(),
+                ExceptionType = testStepFinished.TestStepResult.Exception.Type,
+                ExceptionMessage = testStepFinished.TestStepResult.Exception.Message,
+                ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace
+            };
         }
 
         internal PickleStep GetPickleStep(CucumberMessages messages, LivingDocScenario scenario, LivingDocStep step)
@@ -191,7 +201,7 @@ namespace Expressium.LivingDoc.Parsers
         private PickleStep GetPickleStepForScenarioStep(CucumberMessages messages, LivingDocScenario scenario, LivingDocStep step)
         {
             // Normal Step in Scenario (no Examples table)...
-            var pickle = messages.Pickles.Find(x => x.AstNodeIds.Contains(scenario.Id));
+            var pickle = messages.Pickles.FirstOrDefault(x => x.AstNodeIds.Contains(scenario.Id));
             if (pickle == null)
                 return null;
 
@@ -201,7 +211,7 @@ namespace Expressium.LivingDoc.Parsers
         private PickleStep GetPickleStepForExampleTableStep(CucumberMessages messages, LivingDocScenario scenario, LivingDocStep step)
         {
             // Normal Step in Scenario with Examples table...
-            var pickle = messages.Pickles.Find(x => x.AstNodeIds.Contains(scenario.Id) && x.AstNodeIds.Contains(step.TableBodyId));
+            var pickle = messages.Pickles.FirstOrDefault(x => x.AstNodeIds.Contains(scenario.Id) && x.AstNodeIds.Contains(step.TableBodyId));
             if (pickle == null)
                 return null;
 

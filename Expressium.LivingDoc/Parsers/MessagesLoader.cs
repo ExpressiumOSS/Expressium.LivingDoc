@@ -16,7 +16,7 @@ namespace Expressium.LivingDoc.Parsers
                     var envelope = enumerator.Current;
 
                     if (envelope.Meta != null)
-                        messages.Meta.Add(envelope.Meta);
+                        messages.Metas.Add(envelope.Meta);
 
                     if (envelope.GherkinDocument != null)
                         messages.GherkinDocuments.Add(envelope.GherkinDocument);
@@ -43,10 +43,10 @@ namespace Expressium.LivingDoc.Parsers
                         messages.TestRunFinished.Add(envelope.TestRunFinished);
 
                     if (envelope.Attachment != null)
-                        messages.Attachment.Add(envelope.Attachment);
+                        messages.Attachments.Add(envelope.Attachment);
 
                     if (envelope.Hook != null)
-                        messages.Hook.Add(envelope.Hook);
+                        messages.Hooks.Add(envelope.Hook);
                 }
             }
 

@@ -5,7 +5,7 @@ namespace Expressium.LivingDoc.Parsers
 {
     internal class CucumberMessages
     {
-        internal List<Meta> Meta { get; }
+        internal List<Meta> Metas { get; }
         internal List<GherkinDocument> GherkinDocuments { get; }
         internal List<Pickle> Pickles { get; }
         internal List<TestCase> TestCases { get; }
@@ -14,12 +14,12 @@ namespace Expressium.LivingDoc.Parsers
         internal List<TestCaseFinished> TestCaseFinished { get; }
         internal List<TestRunStarted> TestRunStarted { get; }
         internal List<TestRunFinished> TestRunFinished { get; }
-        internal List<Attachment> Attachment { get; }
-        internal List<Hook> Hook { get; }
+        internal List<Attachment> Attachments { get; }
+        internal List<Hook> Hooks { get; }
 
         internal CucumberMessages()
         {
-            Meta = new List<Meta>();
+            Metas = new List<Meta>();
             GherkinDocuments = new List<GherkinDocument>();
             Pickles = new List<Pickle>();
             TestCases = new List<TestCase>();
@@ -28,8 +28,8 @@ namespace Expressium.LivingDoc.Parsers
             TestCaseFinished = new List<TestCaseFinished>();
             TestRunStarted = new List<TestRunStarted>();
             TestRunFinished = new List<TestRunFinished>();
-            Attachment = new List<Attachment>();
-            Hook = new List<Hook>();
+            Attachments = new List<Attachment>();
+            Hooks = new List<Hook>();
         }
     }
 }

@@ -28,6 +28,9 @@ namespace Expressium.LivingDoc.Parsers
         public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var stringValue = reader.GetString();
+            if (stringValue == null)
+                return default;
+
             return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
         }
 

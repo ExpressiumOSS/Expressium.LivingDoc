@@ -49,20 +49,23 @@ namespace Expressium.LivingDoc.Parsers
 
         internal static void ParseBackground(LivingDocFeature livingDocFeature, Background background)
         {
-            var livingDocBackground = new LivingDocBackground();
-
-            livingDocBackground.Id = background.Id;
-            livingDocBackground.Description = background.Description;
-            livingDocBackground.Name = background.Name;
-            livingDocBackground.Keyword = background.Keyword;
+            var livingDocBackground = new LivingDocBackground
+            {
+                Id = background.Id,
+                Description = background.Description,
+                Name = background.Name,
+                Keyword = background.Keyword
+            };
 
             foreach (var step in background.Steps)
             {
-                var livingDocStep = new LivingDocStep();
-                livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
-                livingDocStep.Keyword = step.Keyword.Trim();
-                livingDocStep.Id = step.Id;
-                livingDocStep.Type = LivingDocStepTypes.Background.ToString();
+                var livingDocStep = new LivingDocStep
+                {
+                    Name = WebUtility.HtmlEncode(step.Text),
+                    Keyword = step.Keyword.Trim(),
+                    Id = step.Id,
+                    Type = LivingDocStepTypes.Background.ToString()
+                };
                 livingDocBackground.Steps.Add(livingDocStep);
             }
 
@@ -71,18 +74,19 @@ namespace Expressium.LivingDoc.Parsers
 
         internal static void ParseRule(LivingDocFeature livingDocFeature, Rule rule)
         {
-            var livingDocRule = new LivingDocRule();
+            var livingDocRule = new LivingDocRule
+            {
+                Id = rule.Id,
+                Description = rule.Description,
+                Name = rule.Name,
+                Keyword = rule.Keyword
+            };
 
             if (rule.Tags != null)
             {
                 foreach (var tag in rule.Tags)
                     livingDocRule.Tags.Add(tag.Name);
             }
-
-            livingDocRule.Id = rule.Id;
-            livingDocRule.Description = rule.Description;
-            livingDocRule.Name = rule.Name;
-            livingDocRule.Keyword = rule.Keyword;
 
             livingDocFeature.Rules.Add(livingDocRule);
 
@@ -97,19 +101,20 @@ namespace Expressium.LivingDoc.Parsers
 
         internal static void ParseScenario(LivingDocFeature livingDocFeature, Scenario scenario, string ruleId = null)
         {
-            var livingDocScenario = new LivingDocScenario();
+            var livingDocScenario = new LivingDocScenario
+            {
+                RuleId = ruleId,
+                Id = scenario.Id,
+                Description = scenario.Description,
+                Name = scenario.Name,
+                Keyword = scenario.Keyword
+            };
 
             if (scenario.Tags != null)
             {
                 foreach (var tag in scenario.Tags)
                     livingDocScenario.Tags.Add(tag.Name);
             }
-
-            livingDocScenario.RuleId = ruleId;
-            livingDocScenario.Id = scenario.Id;
-            livingDocScenario.Description = scenario.Description;
-            livingDocScenario.Name = scenario.Name;
-            livingDocScenario.Keyword = scenario.Keyword;
 
             livingDocFeature.Scenarios.Add(livingDocScenario);
 
@@ -121,9 +126,11 @@ namespace Expressium.LivingDoc.Parsers
                     int tableIndexId = 1;
                     foreach (var tableBodyRow in example.TableBody)
                     {
-                        var livingDocExample = new LivingDocExample();
-                        livingDocExample.Name = example.Name;
-                        livingDocExample.Description = example.Description;
+                        var livingDocExample = new LivingDocExample
+                        {
+                            Name = example.Name,
+                            Description = example.Description
+                        };
                         livingDocScenario.Examples.Add(livingDocExample);
 
                         ParseScenarioBackgroundSteps(livingDocExample, livingDocFeature, tableIndexId++);
@@ -160,10 +167,12 @@ namespace Expressium.LivingDoc.Parsers
         {
             foreach (var step in scenario.Steps)
             {
-                var livingDocStep = new LivingDocStep();
-                livingDocStep.Id = step.Id;
-                livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
-                livingDocStep.Keyword = step.Keyword.Trim();
+                var livingDocStep = new LivingDocStep
+                {
+                    Id = step.Id,
+                    Name = WebUtility.HtmlEncode(step.Text),
+                    Keyword = step.Keyword.Trim()
+                };
 
                 ParseStepDataTable(livingDocStep, step);
 
@@ -175,12 +184,14 @@ namespace Expressium.LivingDoc.Parsers
         {
             foreach (var step in scenario.Steps)
             {
-                var livingDocStep = new LivingDocStep();
-                livingDocStep.Id = step.Id;
-                livingDocStep.TableBodyId = tableBodyRowId;
-                livingDocStep.Name = WebUtility.HtmlEncode(step.Text);
-                livingDocStep.Type = LivingDocStepTypes.Scenario.ToString();
-                livingDocStep.Keyword = step.Keyword.Trim();
+                var livingDocStep = new LivingDocStep
+                {
+                    Id = step.Id,
+                    TableBodyId = tableBodyRowId,
+                    Name = WebUtility.HtmlEncode(step.Text),
+                    Type = LivingDocStepTypes.Scenario.ToString(),
+                    Keyword = step.Keyword.Trim()
+                };
 
                 ParseStepDataTable(livingDocStep, step);
 
