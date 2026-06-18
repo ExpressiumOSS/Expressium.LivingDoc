@@ -1,12 +1,12 @@
 # Expressium LivingDoc
 
 ## Introduction
-Expressium LivingDoc is an open-source tool that generates a single
-HTML test report in a Living Documentation style for ReqnRoll projects.
-The report is built upon the Cucumber Messages format produced by ReqnRoll
-during the execution of Behavior-Driven Development (BDD) tests.
+> Expressium LivingDoc — Reporting, Analytics and Living Documentation for ReqnRoll
+
+Expressium LivingDoc is an open-source tool that brings reporting, analytics and Living Documentation
+together in a single HTML test report for ReqnRoll projects.
 The final HTML test report may along with linked attachments
-be distributed to a public location enabling easy access by the stackholders.
+be distributed to a public location enabling easy access by the quality and product stakeholders.
 
 <br />
 <p align="center">
@@ -45,7 +45,7 @@ based on previous Cucumber Messages files.
 Historical test results are visualized as trends in Analytics
 along with a date-based status list within each scenario.
 
-An additional health status - Broken, Regressed, Flaky, New, or Fixed —
+An additional health status — Broken, Regressed, Flaky, New, or Fixed —
 is derived from historical results and displayed in the scenario tags.
 The history analysis is limited to the four most recent test runs.
 In a pipeline, the previous Cucumber message files
