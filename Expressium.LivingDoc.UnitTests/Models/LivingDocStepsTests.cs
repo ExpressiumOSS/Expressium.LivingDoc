@@ -155,5 +155,74 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(step.IsFailed(), Is.False);
             Assert.That(step.IsIncomplete(), Is.False);
         }
+
+        [Test]
+        public void LivingDocStep_IsIncomplete_IncompleteStatus_ReturnsTrue()
+        {
+            var step = new LivingDocStep { Status = LivingDocStatuses.Incomplete.ToString() };
+
+            Assert.That(step.IsIncomplete(), Is.True);
+            Assert.That(step.IsPassed(), Is.False);
+            Assert.That(step.IsFailed(), Is.False);
+            Assert.That(step.IsSkipped(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocStep_IsSkipped_SkippedStatus_ReturnsTrue()
+        {
+            var step = new LivingDocStep { Status = LivingDocStatuses.Skipped.ToString() };
+
+            Assert.That(step.IsSkipped(), Is.True);
+            Assert.That(step.IsPassed(), Is.False);
+            Assert.That(step.IsFailed(), Is.False);
+            Assert.That(step.IsIncomplete(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocStep_GetFullName_CombinesKeywordAndName()
+        {
+            var step = new LivingDocStep { Keyword = "Given", Name = "I am logged in" };
+
+            Assert.That(step.GetFullName(), Is.EqualTo("Given I am logged in"));
+        }
+
+        [Test]
+        public void LivingDocStep_GetDataStatus_ReturnsPrefixedStatus()
+        {
+            var step = new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() };
+
+            Assert.That(step.GetDataStatus(), Is.EqualTo("@" + LivingDocStatuses.Passed.ToString()));
+        }
+
+        [Test]
+        public void LivingDocStep_GetDataStatus_NullStatus_ReturnsPrefixedSkipped()
+        {
+            var step = new LivingDocStep();
+
+            Assert.That(step.GetDataStatus(), Is.EqualTo("@" + LivingDocStatuses.Skipped.ToString()));
+        }
+
+        [TestCase("Failed", "1")]
+        [TestCase("Incomplete", "2")]
+        [TestCase("Pending", "2")]
+        [TestCase("Undefined", "2")]
+        [TestCase("Ambiguous", "2")]
+        [TestCase("Passed", "3")]
+        [TestCase("Skipped", "4")]
+        [TestCase("Unknown", "4")]
+        public void LivingDocStep_GetStatusSortId_ReturnsCorrectRank(string status, string expected)
+        {
+            var step = new LivingDocStep { Status = status };
+
+            Assert.That(step.GetStatusSortId(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void LivingDocStep_GetStatusSortId_NullStatus_ReturnsSkippedRank()
+        {
+            var step = new LivingDocStep();
+
+            Assert.That(step.GetStatusSortId(), Is.EqualTo("4"));
+        }
     }
 }

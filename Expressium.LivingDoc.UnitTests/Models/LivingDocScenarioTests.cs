@@ -363,5 +363,46 @@ namespace Expressium.LivingDoc.UnitTests.Models
             var scenario2 = new LivingDocScenario();
             Assert.That(scenario2.GetStatus(), Is.EqualTo(LivingDocStatuses.Skipped.ToString()));
         }
+
+        [Test]
+        public void LivingDocScenario_GetDataStatus_ReturnsPrefixedStatus()
+        {
+            var scenario = new LivingDocScenario();
+            var example = new LivingDocExample();
+            example.Steps.Add(new LivingDocStep { Status = LivingDocStatuses.Passed.ToString() });
+            scenario.Examples.Add(example);
+
+            Assert.That(scenario.GetDataStatus(), Is.EqualTo("@" + LivingDocStatuses.Passed.ToString()));
+        }
+
+        [Test]
+        public void LivingDocScenario_GetDataStatus_NoExamples_ReturnsPrefixedSkipped()
+        {
+            var scenario = new LivingDocScenario();
+
+            Assert.That(scenario.GetDataStatus(), Is.EqualTo("@" + LivingDocStatuses.Skipped.ToString()));
+        }
+
+        [TestCase("Failed", "1")]
+        [TestCase("Incomplete", "2")]
+        [TestCase("Passed", "3")]
+        [TestCase("Skipped", "4")]
+        public void LivingDocScenario_GetStatusSortId_ReturnsCorrectRank(string status, string expected)
+        {
+            var scenario = new LivingDocScenario();
+            var example = new LivingDocExample();
+            example.Steps.Add(new LivingDocStep { Status = status });
+            scenario.Examples.Add(example);
+
+            Assert.That(scenario.GetStatusSortId(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void LivingDocScenario_GetStatusSortId_NoExamples_ReturnsSkippedRank()
+        {
+            var scenario = new LivingDocScenario();
+
+            Assert.That(scenario.GetStatusSortId(), Is.EqualTo("4"));
+        }
     }
 }

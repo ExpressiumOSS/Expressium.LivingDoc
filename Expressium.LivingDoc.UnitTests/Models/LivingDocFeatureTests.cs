@@ -98,6 +98,25 @@ namespace Expressium.LivingDoc.UnitTests.Models
             Assert.That(feature.GetDataStatus(), Is.EqualTo("@" + LivingDocStatuses.Passed.ToString()));
         }
 
+        [TestCase(LivingDocStatuses.Failed, "1")]
+        [TestCase(LivingDocStatuses.Incomplete, "2")]
+        [TestCase(LivingDocStatuses.Passed, "3")]
+        [TestCase(LivingDocStatuses.Skipped, "4")]
+        public void LivingDocFeature_GetStatusSortId_ReturnsCorrectRank(LivingDocStatuses stepStatus, string expected)
+        {
+            var feature = CreateFeatureWithScenario(stepStatus);
+
+            Assert.That(feature.GetStatusSortId(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void LivingDocFeature_GetStatusSortId_NoScenarios_ReturnsSkippedRank()
+        {
+            var feature = new LivingDocFeature();
+
+            Assert.That(feature.GetStatusSortId(), Is.EqualTo("4"));
+        }
+
         // ---------------------------------------------------------------------------
         // GetStatus / IsPassed / IsIncomplete / IsFailed / IsSkipped
         // ---------------------------------------------------------------------------
