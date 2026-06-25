@@ -293,9 +293,8 @@ namespace Expressium.LivingDoc.Generators
             ///////////////////////////////////////////////////////
             // Toggle option for visibility of Background steps...
             ///////////////////////////////////////////////////////
-            //var hasBackgrounds = example.Steps?.Any(x => x.Type == LivingDocStepTypes.Background.ToString()) ?? false;
-            //if (hasBackgrounds)
-            //    listOfLines.Add("<button class='scenario-backgrounds bi bi-chevron-double-down' title='Toggle Backgrounds' onclick=\"toggleBackgrounds(this)\"></button>");
+            // if (example.HasBackgrounds())
+            //    listOfLines.Add("<button class='scenario-backgrounds bi bi-type-bold' title='Toggle Backgrounds' onclick=\"toggleBackgrounds(this)\"></button>");
             ///////////////////////////////////////////////////////
 
             if (example.HasStacktraces())
@@ -366,7 +365,7 @@ namespace Expressium.LivingDoc.Generators
             ///////////////////////////////////////////////////////
             //if (step.Type == LivingDocStepTypes.Background.ToString())
             //{
-            //    if (isPassed)
+            //    if (step.IsPassed() || step.IsSkipped())
             //        listOfLines.Add($"<li class='backgrounds' style='display: none;'>");
             //    else
             //        listOfLines.Add($"<li class='backgrounds' style='display: block;'>");

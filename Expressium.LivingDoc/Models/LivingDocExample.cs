@@ -75,5 +75,10 @@ namespace Expressium.LivingDoc.Models
         {
             return Steps?.Any(step => step.ExceptionStackTrace != null) ?? false;
         }
+
+        internal bool HasBackgrounds()
+        {
+            return Steps?.Any(x => x.Type == LivingDocStepTypes.Background.ToString()) ?? false;
+        }
     }
 }
