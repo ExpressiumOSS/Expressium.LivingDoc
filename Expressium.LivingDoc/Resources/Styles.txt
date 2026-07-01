@@ -3,6 +3,7 @@
         
         /* Bootstrap Grayscale */
         --bs-gray-075: #fdfdfe;
+        --bs-gray-075: #fefefe;
         --bs-gray-090: #f9fafb;
         --bs-gray-100: #f8f9fa;
         --bs-gray-125: #f6f7f8;
@@ -24,11 +25,11 @@
 
         /* Footer */
         --color-text-footer: var(--bs-gray-600);
-        --color-bg-footer: var(--bs-gray-100);
+        --color-bg-footer: var(--bs-gray-125);
 
         /* Navigation */
         --color-text-navigation: var(--bs-gray-900);
-        --color-bg-navigation: var(--bs-gray-100);
+        --color-bg-navigation: var(--bs-gray-125);
         --color-bg-navigation-indicator: var(--bs-gray-500);
 
         /* Tables */
@@ -86,10 +87,10 @@
         --color-failed: #E84330;
         --color-skipped: #9E9E9E;
 
-        --color-passed: #439C49;
+        --color-passed: #45A14B;
         --color-incomplete: #F5C01A;
-        --color-failed: #E24330;
-        --color-skipped: #9B9B9B;
+        --color-failed: #E6422F;
+        --color-skipped: #9C9C9C;
 
         --color-total: var(--bs-gray-900);
 

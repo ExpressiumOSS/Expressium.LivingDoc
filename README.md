@@ -3,10 +3,11 @@
 ## Introduction
 > Expressium LivingDoc — Reporting, Analytics and Living Documentation for ReqnRoll
 
-Expressium LivingDoc is an open-source tool that brings reporting, analytics and Living Documentation
-together in a single HTML test report for ReqnRoll projects.
-The final HTML test report may along with linked attachments
-be distributed to a public location enabling easy access by the quality and product stakeholders.
+Expressium LivingDoc is an open-source tool that combines reporting, analytics, and living documentation
+into a single HTML test report for ReqnRoll projects. 
+It transforms automated test results into meaningful insights and living documentation. 
+The generated test report can be shared with quality and product stakeholders, 
+providing clear visibility into the current state of product quality.
 
 <br />
 <p align="center">
@@ -17,10 +18,9 @@ be distributed to a public location enabling easy access by the quality and prod
 **Example:** [https://expressium.dev/reqnroll/LivingDoc.html](https://expressium.dev/reqnroll/LivingDoc.html)
 
 ## Getting Started
-Once a ReqnRoll test project has been created, you can easily integrate
-the Expressium LivingDoc report by adding the Expressium LivingDoc PlugIn NuGet package
-to the project and customizing the ReqnRoll formatter configuration.
-The formatter configuration may include relative paths and predefined ReqnRoll substitution variables.
+Once you have created a ReqnRoll test project, integrating Expressium LivingDoc is straightforward.
+Simply add the Expressium LivingDoc PlugIn NuGet package to your project and configure the ReqnRoll formatter. 
+The formatter configuration supports relative paths and predefined ReqnRoll substitution variables.
 
 * Add the Expressium.LivingDoc.ReqnrollPlugin NuGet package to the ReqnRoll test project...
 * Setup the Expressium formatters properties in the ReqnRoll configuration in the test project...
@@ -40,7 +40,7 @@ The formatter configuration may include relative paths and predefined ReqnRoll s
 ```
 
 ## History Analysis
-The Expressium LivingDoc report may optionally include historical test results 
+The Expressium LivingDoc report can optionally include historical test results 
 based on previous Cucumber Messages files.
 Historical test results are visualized as trends in Analytics
 along with a date-based status list within each scenario.
