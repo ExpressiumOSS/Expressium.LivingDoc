@@ -13,7 +13,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
             var messagesParser = new MessagesParser();
             var livingDocProject = messagesParser.ConvertToLivingDoc(inputFilePath);
 
-            Assert.That(livingDocProject.ProtocolVersion, Is.EqualTo("33.0.4"));
+            Assert.That(livingDocProject.ProtocolVersion, Is.EqualTo("34.2.1"));
             Assert.That(livingDocProject.ImplementationName, Is.EqualTo("fake-cucumber"));
             Assert.That(livingDocProject.ImplementationVersion, Is.EqualTo("123.45.6"));
             Assert.That(livingDocProject.RuntimeName, Is.EqualTo("Node.js"));

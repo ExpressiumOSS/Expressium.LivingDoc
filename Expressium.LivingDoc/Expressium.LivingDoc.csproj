@@ -36,7 +36,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AngleSharp" Version="1.7.1" />
+		<PackageReference Include="AngleSharp" Version="1.8.2" />
 		<PackageReference Include="Cucumber.Messages" Version="34.2.1" />
 	</ItemGroup>
 
