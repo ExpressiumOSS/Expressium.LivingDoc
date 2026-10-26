@@ -2,26 +2,25 @@
     :root {
         
         /* Bootstrap Grayscale */
-        --bs-gray-075: #fdfdfe;
-        --bs-gray-075: #fefefe;
-        --bs-gray-090: #f9fafb;
+        --bs-gray-010: #fefefe;
+        --bs-gray-050: #f9fafb;
         --bs-gray-100: #f8f9fa;
-        --bs-gray-125: #f6f7f8;
         --bs-gray-150: #f1f3f5;
         --bs-gray-200: #e9ecef;
         --bs-gray-300: #dee2e6;
         --bs-gray-400: #ced4da;
-        --bs-gray-450: #bec5cc;
         --bs-gray-500: #adb5bd;
-        --bs-gray-600: #6c757d;
-        --bs-gray-650: #565d63; /* 5b636a */;
+        --bs-gray-550: #99a2ab;
+        --bs-gray-600: #6c757d; 
+        --bs-gray-650: #5b626a;
         --bs-gray-700: #495057;
         --bs-gray-800: #343a40;
         --bs-gray-900: #212529;
 
         /* Header */
-        --color-text-header: var(--bs-gray-900);
-        --color-bg-header: #dfe7f2; /* #d4dfec */
+        --color-text-header: var(--bs-gray-800);
+        --color-bg-header: #dfe7f2;
+        --color-bg-header: #E1E8F0;
 
         /* Footer */
         --color-text-footer: var(--bs-gray-600);
@@ -32,34 +31,35 @@
         --color-bg-navigation: var(--bs-gray-100);
         --color-bg-navigation-indicator: var(--bs-gray-500);
 
-        /* Tables */
-        --color-bg-table-header: var(--bs-gray-100);
-        --color-border-table-header: var(--bs-white);
-
-        /* Groups */
-        --color-bg-group: var(--bs-gray-075);
-        --color-border-group: #ECECEC;
-
-        /* Outlines */
-        --color-border-grid: #ECECEC;
-        --color-border-splitter: #ECECEC;
-
-        /* Surfaces */
-        --color-bg-hover: #F5F8FC;
-        --color-bg-selected: #EEF4FA;
+        /* Splitter */
+        --color-border-splitter: var(--bs-gray-200);
 
         /* Scrollbars */
-        --color-text-scrollbar: #969696;
+        --color-text-scrollbar: var(--bs-gray-550);
         --color-bg-scrollbar: var(--bs-white);
+
+        /* Grids */
+        --color-text-grid-header: var(--bs-gray-800);
+        --color-bg-grid-header: var(--bs-gray-100);
+        --color-border-grid-header: var(--bs-white);
+        --color-border-grid: var(--bs-gray-150);
+        --color-bg-grid-hover: #F5F8FC;
+        --color-bg-grid-selected: #F2F6FA;
+
+        /* Groups */
+        --color-bg-group: var(--bs-gray-010);
+        --color-bg-group-filter: var(--bs-gray-010);
+        --color-border-group: var(--bs-gray-200);
 
         /* Texts */
         --color-text: var(--bs-gray-900);
         --color-text-darkgray: var(--bs-gray-700);
+        --color-text-dimgray: var(--bs-gray-650);
         --color-text-gray: var(--bs-gray-600);
 
         /* Special Texts */
         --color-text-keyword: #25576b;
-        --color-text-link: #295f75;
+        --color-text-link: var(--bs-gray-650);
 
         /* Tags */
         --color-text-tag: #338689;
@@ -67,44 +67,38 @@
 
         /* Badges */
         --color-text-badge: var(--bs-white);
-        --color-bg-badge: #969696;
+        --color-bg-badge: var(--bs-gray-550);
 
         /* Buttons */
         --color-text-button: var(--bs-gray-900);
-        --color-bg-button: var(--bs-gray-090);
+        --color-bg-button: var(--bs-gray-050);
         --color-border-button: var(--bs-gray-400);
         --color-text-button-inactive: var(--bs-gray-600);
-        --color-bg-button-inactive: var(--bs-gray-090);
+        --color-bg-button-inactive: var(--bs-gray-050);
         --color-border-button-inactive: var(--bs-gray-300);
         --color-text-button-hover: var(--bs-gray-900);
-        --color-bg-button-hover: var(--bs-gray-100);
+        --color-bg-button-hover: var(--bs-gray-050);
         --color-border-button-hover: var(--bs-gray-500);
-        --color-bg-button-selected: var(--color-bg-selected);
+        --color-bg-button-selected: var(--color-bg-grid-selected);
 
         /* Status colors */
-        --color-passed: #47A64E;
-        --color-incomplete: #F7C21A;
-        --color-failed: #E84330;
-        --color-skipped: #9E9E9E;
-
-        --color-passed: #45A14B;
-        --color-incomplete: #F5C01A;
-        --color-failed: #E6422F;
-        --color-skipped: #9C9C9C;
-
-        --color-total: var(--bs-gray-900);
+        --color-passed: #34A853;
+        --color-incomplete: #FBBC05;
+        --color-failed: #EA4335;
+        --color-skipped: #9AA0A6;
+        --color-total: var(--bs-gray-800);
 
         /* Status backgrounds */
-        --color-bg-passed: #EAF6EB;
-        --color-bg-incomplete: #FFF6D8;
-        --color-bg-failed: #FAE8E5;
-        --color-bg-skipped: #F0F2F4;
+        --color-bg-passed: #E6F4EA;
+        --color-bg-incomplete: #FEF7E0;
+        --color-bg-failed: #FCE9E7;
+        --color-bg-skipped: #F1F3F4;
 
         /* Status texts */
-        --color-text-passed: #2C5F30;
-        --color-text-incomplete: #8A6500;
-        --color-text-failed: #9E2B21;
-        --color-text-skipped: var(--bs-gray-700);
+        --color-text-passed: #137333;
+        --color-text-incomplete: #7A4F01;
+        --color-text-failed: #A50E0E;
+        --color-text-skipped: #3C4043;
     }
    
     body, html {
@@ -117,7 +111,7 @@
     }
    
     header {
-        padding: 0.50em 1.00em;
+        padding: 0.625em 1.00em;
         color: var(--color-text-header);
         background-color: var(--color-bg-header);
     }
@@ -165,7 +159,7 @@
 
     .splitter-wrapper {
         display: flex;
-        height: calc(100% - 9.75em); /* Adjust for header and footer height */
+        height: calc(100% - 10.00em); /* Adjust for header and footer height */
         flex-direction: row; /* Change to row for vertical splitter */
         border-bottom: 1px solid var(--color-border-splitter);
     }
@@ -225,7 +219,7 @@
     }
 
     .filter-group {
-        background-color: var(--color-bg-group);
+        background-color: var(--color-bg-group-filter);
         padding: 0.5em;
         margin-top: 0.125em;
         margin-bottom: 0.50em;
@@ -245,7 +239,7 @@
         box-sizing: border-box;
         border-width: 1px;
         outline: none;
-        background-color: var(--color-bg-group);
+        background-color: var(--color-bg-group-filter);
         border: hidden;
     }
 
@@ -254,6 +248,8 @@
         overflow: auto;
         height: calc(100% - 4.75em); /* Adjust for filter and search height */
         padding-right: 0.375em;
+        margin-left: 0.125em;
+        margin-right: 0.125em;
     }
 
     th, td {
@@ -261,8 +257,9 @@
     }
 
     th {
-        background-color: var(--color-bg-table-header);
-        border: 1px solid var(--color-border-table-header);
+        background-color: var(--color-bg-grid-header);
+        border: 1px solid var(--color-border-grid-header);
+        color: var(--color-text-grid-header);
         font-weight: 600;
     }
     
@@ -277,7 +274,7 @@
 
     table.list-view tr:hover,
     table.tree-view tr:hover td.grid-border {
-        background-color: var(--color-bg-hover);
+        background-color: var(--color-bg-grid-hover);
     }
 
     table.list-view th,
@@ -297,11 +294,11 @@
     }
 
     table.tree-view tr.active td.grid-border {
-        background-color: var(--color-bg-selected);
+        background-color: var(--color-bg-grid-selected);
     }
 
     table.list-view tr.active {
-        background-color: var(--color-bg-selected);
+        background-color: var(--color-bg-grid-selected);
     }
 
     /* Buttons */
@@ -346,11 +343,6 @@
         background-color: var(--color-bg-button-selected);
     }
 
-    .grid-folder {
-        text-align: center;
-        width: 1.5em;
-    }
-
     .grid-folder-name {
         color: var(--color-text-gray);
         font-weight: 500;
@@ -372,14 +364,15 @@
     }
 
     .grid-toggle {
-        color: var(--color-text-gray);
+        color: var(--color-text-dimgray);
         cursor: pointer;
         text-align: center;
         width: 1.5em;
     }
     
     .grid-indent {
-        width: 1.25em;
+        width: 1.5em;
+        min-width: 1.5em;
     }
 
     .page-name {
@@ -404,12 +397,12 @@
     }
 
     .chart-filter {
-        padding: 1.0em 1.0em;
-        padding-bottom: 0.5em;
+        padding: 1.250em 1.250em;
+        padding-bottom: 0.75em;
         background-color: var(--color-bg-group);
         border-radius: 1.00em;
         border: 1px solid var(--color-border-group);
-        margin-bottom: 0.50em;
+        margin-bottom: 0.6250em;
     }
 
     .chart-status {
@@ -850,7 +843,7 @@
     }
 
     .analytics-trends,
-    .analytics-healths {
+    .analytics-history {
         padding-left: 16px;
         padding-right: 16px;
         margin: auto;
@@ -872,7 +865,7 @@
     }
 
     .analytics-list td {
-        border: 1px solid var(--color-border-table-header);
+        border: 1px solid var(--color-border-grid-header);
     }
 
     .card {
