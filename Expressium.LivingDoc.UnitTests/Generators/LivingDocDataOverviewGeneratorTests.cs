@@ -81,7 +81,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             Assert.That(listOfLines.Count, Is.EqualTo(10));
             Assert.That(listOfLines[0], Is.EqualTo("<tr>"));
-            Assert.That(listOfLines[1], Is.EqualTo("<td class='grid-folder'>\ud83d\udcc2</td>"));
+            Assert.That(listOfLines[1], Is.EqualTo("<td class='grid-toggle'><span class='bi bi-chevron-down'></span></td>"));
             Assert.That(listOfLines[3], Does.Contain("Root Folder"));
             Assert.That(listOfLines[6], Does.Contain("loadExpandAll()"));
             Assert.That(listOfLines[7], Does.Contain("loadCollapseAll()"));
@@ -99,7 +99,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines.Count, Is.EqualTo(8));
             Assert.That(listOfLines[0], Does.Contain("data-role='folder'"));
             Assert.That(listOfLines[0], Does.Contain("data-name='"));
-            Assert.That(listOfLines[2], Is.EqualTo("<td class='grid-folder'>\ud83d\udcc2</td>"));
+            Assert.That(listOfLines[2], Is.EqualTo("<td data-collapse='false' class='grid-toggle' title='Toggle Folder' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>"));
             Assert.That(listOfLines[4], Does.Contain("SubFolder"));
             Assert.That(listOfLines[4], Does.Contain("grid-folder-name"));
             Assert.That(listOfLines[7], Is.EqualTo("</tr>"));

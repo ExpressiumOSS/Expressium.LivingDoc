@@ -104,12 +104,13 @@
         function filterView() {
             var navLinkActive = document.querySelectorAll('a.navigation-link.active');
             if (navLinkActive.length > 0) {
-                name = navLinkActive[0].textContent.toLowerCase();
+                var name = navLinkActive[0].textContent.toLowerCase();
 
                 if (name == "overview") {
                     filterDataByRole("scenario");
                     filterDataFeatures();
                     filterDataFolders();
+                    filterDataFolderDescendants();
                 }
                 else if (name == "features") {
                     filterDataByRole("feature");
@@ -132,15 +133,7 @@
             var table = document.getElementById("table-list");
             var tr = table.getElementsByTagName("tr");
 
-            var statuses = [];
-            var prefilters = document.getElementsByTagName("button");
-            for (var i = 0; i < prefilters.length; i++) {
-                var prefilter = prefilters[i].getAttribute("data-prefilter");
-                var active = prefilters[i].className.includes(" active");
-                if (active) {
-                    statuses.push(prefilter);
-                }
-            }
+            var statuses = getActivePrefilters();
 
             for (var i = 0; i < tr.length; i++) {
                 var role = tr[i].getAttribute("data-role");
@@ -180,6 +173,12 @@
 
                 tr[i].style.display = found ? "" : "none";
             }
+        }
+    </script>
+    <script>
+        function getActivePrefilters() {
+            var buttons = document.querySelectorAll('button[data-prefilter].active');
+            return Array.from(buttons, button => button.getAttribute("data-prefilter"));
         }
     </script>
     <script>
@@ -356,6 +355,52 @@
         }
     </script>
     <script>
+        function filterDataFolderDescendants() {
+            const table = document.getElementById("table-list");
+            if (!table) return;
+
+            // Get all collapsed folder paths
+            const collapsedFolders = Array.from(
+                table.querySelectorAll('[data-role="folder"][data-collapse="true"]'),
+                folder => folder.dataset.name
+            );
+
+            // Check if a path is inside a collapsed folder
+            const isInsideCollapsedFolder = path =>
+                collapsedFolders.some(folder => path?.startsWith(folder));
+
+            const hiddenFeatureIds = new Set();
+
+            // Hide features inside collapsed folders
+            for (const feature of table.querySelectorAll('[data-role="feature"]')) {
+                if (isInsideCollapsedFolder(feature.dataset.parent)) {
+                    feature.style.display = "none";
+                    hiddenFeatureIds.add(feature.dataset.featureid);
+                }
+            }
+
+            // Hide subfolders inside collapsed folders
+            for (const folder of table.querySelectorAll('[data-role="folder"]')) {
+                const path = folder.dataset.name;
+
+                const shouldHide = collapsedFolders.some(parent =>
+                    path !== parent && path.startsWith(parent)
+                );
+
+                if (shouldHide) {
+                    folder.style.display = "none";
+                }
+            }
+
+            // Hide scenarios belonging to hidden features
+            for (const scenario of table.querySelectorAll('[data-role="scenario"]')) {
+                if (hiddenFeatureIds.has(scenario.dataset.featureid)) {
+                    scenario.style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script>
         function sortTableByColumn(n) {
             var table = document.getElementById("table-grid");
             var count = 0;
@@ -474,24 +519,30 @@
     </script>
     <script>
         function loadCollapseAll() {
-            var table = document.getElementById("table-list");
-            var tr = table.getElementsByTagName("tr");
+            const rows = document.querySelectorAll('#table-list tr[data-role="feature"], #table-list tr[data-role="folder"]');
 
-            for (var i = 0; i < tr.length; i++) {
-                var role = tr[i].getAttribute("data-role");
+            for (var i = 0; i < rows.length; i++) {
+                var cell = rows[i].querySelector('td[data-collapse="false"]');
 
-                if (role == "feature") {
-                    var cells = tr[i].getElementsByTagName("td");
+                if (!cell) 
+                    continue;
 
-                    for (var a = 0; a < cells.length; a++) {
-                        var collapse = cells[a].getAttribute('data-collapse');
+                cell.innerHTML = "<span class='bi bi-chevron-right'></span>";
+                cell.setAttribute('data-collapse', 'true');
+                rows[i].setAttribute('data-collapse', 'true');
+            }
 
-                        if (collapse == "false") {
-                            cells[a].innerHTML = "<span class='bi bi-chevron-right'></span>";
-                            cells[a].setAttribute('data-collapse', 'true');
-                            tr[i].setAttribute('data-collapse', 'true');
-                        }
-                    }
+            for (var i = 0; i < rows.length; i++) {
+                var cell = rows[i].querySelector('td[data-collapse="true"]');
+
+                if (!cell) 
+                    continue;
+
+                var role = rows[i].getAttribute("data-role");
+                if (role == "folder") {
+                    cell.innerHTML = '<span class="bi bi-chevron-down"></span>';
+                    cell.dataset.collapse = 'false';
+                    rows[i].dataset.collapse = 'false';
                 }
             }
 
@@ -500,25 +551,17 @@
     </script>
     <script>
         function loadExpandAll() {
-            var table = document.getElementById("table-list");
-            var tr = table.getElementsByTagName("tr");
+            const rows = document.querySelectorAll('#table-list tr[data-role="feature"], #table-list tr[data-role="folder"]');
 
-            for (var i = 0; i < tr.length; i++) {
-                var role = tr[i].getAttribute("data-role");
+            for (let i = 0; i < rows.length; i++) {
+                const cell = rows[i].querySelector('td[data-collapse="true"]');
 
-                if (role == "feature") {
-                    var cells = tr[i].getElementsByTagName("td");
+                if (!cell)
+                    continue;
 
-                    for (var a = 0; a < cells.length; a++) {
-                        var collapse = cells[a].getAttribute('data-collapse');
-
-                        if (collapse == "true") {
-                            cells[a].innerHTML = "<span class='bi bi-chevron-down'></span>";
-                            cells[a].setAttribute('data-collapse', 'false');
-                            tr[i].setAttribute('data-collapse', 'false');
-                        }
-                    }
-                }
+                cell.innerHTML = '<span class="bi bi-chevron-down"></span>';
+                cell.dataset.collapse = 'false';
+                rows[i].dataset.collapse = 'false';
             }
 
             filterView();
@@ -539,13 +582,9 @@
     </script>
     <script>
         function clearAllfilters() {
-            var prefilters = document.getElementsByTagName("button");
+            var prefilters = document.querySelectorAll('button[data-prefilter].active');
             for (var i = 0; i < prefilters.length; i++) {
-                var prefilter = prefilters[i].getAttribute("data-prefilter");
-                var active = prefilters[i].className.includes(" active");
-                if (active) {
-                    prefilters[i].className = prefilters[i].className.replace(" active", "");
-                }
+                prefilters[i].classList.remove('active');
             }
 
             var input = document.getElementById("filter-by-keywords");

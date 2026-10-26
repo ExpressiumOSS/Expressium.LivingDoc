@@ -92,14 +92,11 @@ namespace Expressium.LivingDoc.Generators
             var listOfLines = new List<string>();
 
             listOfLines.Add($"<tr>");
-            listOfLines.Add($"<td class='grid-folder'>📂</td>");
+            listOfLines.Add($"<td class='grid-toggle'><span class='bi bi-chevron-down'></span></td>");
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - 1}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add("</td>");
             listOfLines.Add("<td class='grid-border align-right' colspan='2'>");
-
-            //listOfLines.Add("<button class='grid-expand bi bi-plus-lg' title='Expand All Features' onclick='loadExpandAll()'></button>");
-            //listOfLines.Add("<button class='grid-collapse bi bi-dash-lg' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
 
             listOfLines.Add("<button class='grid-expand bi bi-chevron-down' title='Expand All Features' onclick='loadExpandAll()'></button>");
             listOfLines.Add("<button class='grid-collapse bi bi-chevron-up' title='Collapse All Features' onclick='loadCollapseAll()'></button>");
@@ -119,7 +116,7 @@ namespace Expressium.LivingDoc.Generators
             for (var i = 0; i < indent; i++)
                 listOfLines.Add("<td></td>");
 
-            listOfLines.Add("<td class='grid-folder'>📂</td>");
+            listOfLines.Add("<td data-collapse='false' class='grid-toggle' title='Toggle Folder' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
             listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add("</td>");
@@ -149,11 +146,11 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<a href='#'>{feature.Name}</a>");
             listOfLines.Add($"</td>");
 
-            if (project.ExperimentFlag)
+            if (project.ExperimentGridFlag)
             {
                 listOfLines.Add($"<td class='grid-border align-right' width='100'>");
                 listOfLines.Add($"<span class='status-pill bgcolor-skipped' title='Scenarios'>{feature.GetNumberOfScenarios()}x</span>");
-                listOfLines.Add($"<span class='status-pill bgcolor-passed' style='width: 50px;' title='Coverage'>{feature.GetCoverage()}%</span>");
+                listOfLines.Add($"<span class='status-pill bgcolor-passed' style='width: 50px;' title='Pass Rate'>{feature.GetPassRate()}%</span>");
                 listOfLines.Add($"</td>");
             }
             else
@@ -194,7 +191,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<a href='#'>{scenario.Name}</a>");
             listOfLines.Add("</td>");
 
-            if (project.ExperimentFlag && scenario.HasHealth())
+            if (project.ExperimentHealthFlag && project.ExperimentGridFlag && scenario.HasHealth())
             {
                 symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(scenario.Health);
                 listOfLines.Add($"<td class='grid-border align-right'><span class='{symbol} health-symbol' title='{scenario.Health}'></span></td>");
