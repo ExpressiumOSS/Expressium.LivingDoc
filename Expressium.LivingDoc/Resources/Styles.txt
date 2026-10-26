@@ -5,12 +5,11 @@
         --bs-gray-010: #fefefe;
         --bs-gray-050: #f9fafb;
         --bs-gray-100: #f8f9fa;
-        --bs-gray-150: #f1f3f5;
         --bs-gray-200: #e9ecef;
         --bs-gray-300: #dee2e6;
         --bs-gray-400: #ced4da;
         --bs-gray-500: #adb5bd;
-        --bs-gray-550: #99a2ab;
+        --bs-gray-550: #969696;
         --bs-gray-600: #6c757d; 
         --bs-gray-650: #5b626a;
         --bs-gray-700: #495057;
@@ -42,7 +41,7 @@
         --color-text-grid-header: var(--bs-gray-800);
         --color-bg-grid-header: var(--bs-gray-100);
         --color-border-grid-header: var(--bs-white);
-        --color-border-grid: var(--bs-gray-150);
+        --color-border-grid: var(--bs-gray-200);
         --color-bg-grid-hover: #F5F8FC;
         --color-bg-grid-selected: #F2F6FA;
 
@@ -52,9 +51,8 @@
         --color-border-group: var(--bs-gray-200);
 
         /* Texts */
-        --color-text: var(--bs-gray-900);
+        --color-text-body: var(--bs-gray-900);
         --color-text-darkgray: var(--bs-gray-700);
-        --color-text-dimgray: var(--bs-gray-650);
         --color-text-gray: var(--bs-gray-600);
 
         /* Special Texts */
@@ -106,7 +104,7 @@
         margin: 0;
         overflow: hidden;
         font-size: 16px;
-        color: var(--color-text);
+        color: var(--color-text-body);
         /* font-family: system-ui, "Segoe UI Variable Small", "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
     }
    
@@ -122,7 +120,7 @@
     }
 
     .project-date {
-        color: var(--color-text-darkgray);      
+        color: var(--color-text-darkgray);       
         padding-left: 0.125em;
     }
 
@@ -364,7 +362,7 @@
     }
 
     .grid-toggle {
-        color: var(--color-text-dimgray);
+        color: var(--color-text-gray);
         cursor: pointer;
         text-align: center;
         width: 1.5em;
