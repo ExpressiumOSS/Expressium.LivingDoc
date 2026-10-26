@@ -208,6 +208,40 @@ start chrome "file:///C://Company/LivingDoc.html?filterByKeywords=TA-3001"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 
+## Analytics
+Test automation analytics is the practice of collecting, aggregating, and interpreting data from automated test executions to make decisions about software quality, release readiness, and engineering efficiency.
+The Expressium LivingDoc report provides an overview of test execution results, including the following metrics...
+
+<p align="center">
+<img src="MetricsOverview.png"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
+
+<p align="center">
+<img src="MetricsFeatures.png"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
+
+***Metrics***
+- **Passed Percentage** = Passed / Total × 100
+- **Failed Percentage** = Failed / Total × 100
+- **Incomplete Percentage** = Incomplete / Total × 100
+- **Skipped Percentage** = Skipped / Total × 100
+- **Duration** = Last Timestamp - First Timestamp
+- **Pass Rate** = Passed / (Passed + Failed) × 100
+- **Flaky Rate** = Flaky / Total × 100
+- **Coverage** = (Passed + Failed) / Total × 100
+
+***Definitions***
+- **Passed Percentage** = Percentage of all scenarios that passed.
+- **Failed Percentage** = Percentage of all scenarios that failed.
+- **Incomplete Percentage** = Percentage of all scenarios that were incomplete.
+- **Skipped Percentage** = Percentage of all scenarios that were skipped.
+- **Duration** = Total test execution time from first test start to last test finish.
+- **Pass Rate** = Percentage of executed scenarios that passed.
+- **Flaky Rate** = Percentage of all scenarios classified as flaky.
+- **Coverage** = Percentage of all completed scenarios with a passed or failed result.
+
 ## The LivingDoc Process
 The Expressium LivingDoc process uses the Reqnroll PlugIn to capture test execution results and output them as Cucumber Messages (NDJSON).
 These messages are parsed into an object-oriented model, which the Generator transforms into a self-contained HTML LivingDoc test report.
