@@ -176,11 +176,11 @@ namespace Expressium.LivingDoc.Models
             var numberOfPassed = GetNumberOfPassedScenarios();
             var numberOfFailed = GetNumberOfFailedScenarios();
 
-            var numberOfScenarios = numberOfPassed + numberOfFailed;
-            if (numberOfScenarios == 0)
+            var numberOfExecuted = numberOfPassed + numberOfFailed;
+            if (numberOfExecuted == 0)
                 return 0;
 
-            return (int)Math.Round(numberOfPassed * 100.0 / numberOfScenarios, MidpointRounding.AwayFromZero);
+            return (int)Math.Round(numberOfPassed * 100.0 / numberOfExecuted, MidpointRounding.AwayFromZero);
         }
 
         public string GetPassRateSortId()
@@ -190,13 +190,13 @@ namespace Expressium.LivingDoc.Models
 
         public int GetFlakyRate()
         {
-            var numberOfScenarios = GetNumberOfScenarios();
-            if (numberOfScenarios == 0)
+            var numberOfTotal = GetNumberOfScenarios();
+            if (numberOfTotal == 0)
                 return 0;
 
-            var flakyScenarios = Scenarios.Sum(s => (s.IsFlaky() ? 1 : 0) * s.Examples.Count);
+            var numberOfFlaky = Scenarios.Sum(s => (s.IsFlaky() ? 1 : 0) * s.Examples.Count);
 
-            return (int)Math.Round(flakyScenarios * 100.0 / numberOfScenarios, MidpointRounding.AwayFromZero);
+            return (int)Math.Round(numberOfFlaky * 100.0 / numberOfTotal, MidpointRounding.AwayFromZero);
         }
 
         public string GetFlakyRateSortId()
@@ -206,14 +206,15 @@ namespace Expressium.LivingDoc.Models
 
         public int GetCoverage()
         {
-            var numberOfScenarios = GetNumberOfScenarios();
-            if (numberOfScenarios == 0)
+            var numberOfTotal = GetNumberOfScenarios();
+            if (numberOfTotal == 0)
                 return 0;
 
             var numberOfPassed = GetNumberOfPassedScenarios();
             var numberOfFailed = GetNumberOfFailedScenarios();
+            var numberOfExecuted = numberOfPassed + numberOfFailed;
 
-            return (int)Math.Round(100.0f / numberOfScenarios * (numberOfPassed + numberOfFailed), MidpointRounding.AwayFromZero);
+            return (int)Math.Round(100.0f / numberOfTotal * numberOfExecuted, MidpointRounding.AwayFromZero);
         }
 
         public string GetCoverageSortId()

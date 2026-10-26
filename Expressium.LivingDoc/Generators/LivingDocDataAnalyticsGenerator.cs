@@ -45,10 +45,10 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Scenarios.ToString()));
 
-            if (project.ExperimentFlag)
+            if (project.ExperimentHistoryFlag)
             {
                 listOfLines.AddRange(GenerateDataAnalyticsHealthOverview());
-                listOfLines.AddRange(GenerateDataAnalyticsHealth());
+                listOfLines.AddRange(GenerateDataAnalyticsHistory());
             }
 
             listOfLines.Add("</div>");
@@ -398,7 +398,7 @@ namespace Expressium.LivingDoc.Generators
             return listOfLines;
         }
 
-        internal List<string> GenerateDataAnalyticsHealth()
+        internal List<string> GenerateDataAnalyticsHistory()
         {
             var listOfLines = new List<string>();
 
@@ -407,9 +407,9 @@ namespace Expressium.LivingDoc.Generators
 
             listOfLines.Add("<hr>");
 
-            listOfLines.Add("<!-- Data Analytics Health Chart -->");
-            listOfLines.Add("<div class='section analytics-healths'>");
-            listOfLines.Add("<span class='chart-name'>Health</span>");
+            listOfLines.Add("<!-- Data Analytics History Chart -->");
+            listOfLines.Add("<div class='section analytics-history'>");
+            listOfLines.Add("<span class='chart-name'>History</span>");
             listOfLines.Add("<div class='section'>");
 
             listOfLines.Add("<table class='analytics-list'>");

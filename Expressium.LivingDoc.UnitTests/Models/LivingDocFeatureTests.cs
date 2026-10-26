@@ -520,6 +520,8 @@ namespace Expressium.LivingDoc.UnitTests.Models
             feature.Scenarios.Add(CreateScenario(CreateExample(LivingDocStatuses.Passed)));
             feature.Scenarios.Add(CreateScenario(CreateExample(LivingDocStatuses.Passed)));
             feature.Scenarios.Add(CreateScenario(CreateExample(LivingDocStatuses.Failed)));
+            feature.Scenarios.Add(CreateScenario(CreateExample(LivingDocStatuses.Skipped)));  // skipped should not count toward pass rate
+            feature.Scenarios.Add(CreateScenario(CreateExample(LivingDocStatuses.Incomplete)));  // incomplete should not count toward pass rate
 
             // 2 passed out of 3 = 66.67 % → rounds to 67
             Assert.That(feature.GetPassRate(), Is.EqualTo(67));

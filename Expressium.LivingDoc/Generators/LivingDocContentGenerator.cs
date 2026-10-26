@@ -54,7 +54,12 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<!-- Left Splitter Section -->");
             listOfLines.Add("<div id='splitter-left' class='bg-white p-3'>");
             //listOfLines.Add("<div class='card'>");
-            listOfLines.AddRange(GenerateFilters());
+
+            if (project.ExperimentFilterFlag)
+                listOfLines.AddRange(GenerateNewFilters());
+            else
+                listOfLines.AddRange(GenerateFilters());
+
             listOfLines.Add("<div id='filter-list'></div>");
             //listOfLines.Add("</div>");
             listOfLines.Add("</div>");
@@ -84,7 +89,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateStatusFilters());
             listOfLines.AddRange(GenerateSearchFilter());
 
-            if (project.ExperimentFlag && project.HasHealth())
+            if (project.ExperimentHealthFlag && project.HasHealth())
                 listOfLines.AddRange(GenerateHealthFilters());
 
             return listOfLines;
@@ -191,8 +196,8 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateSearchNewFilter());
             listOfLines.AddRange(GenerateStatusNewFilters());
 
-            if (project.ExperimentFlag && project.HasHealth())
-                listOfLines.AddRange(GenerateHealthFilters());
+            if (project.ExperimentHealthFlag && project.HasHealth())
+                listOfLines.AddRange(GenerateHealthNewFilters());
 
             listOfLines.Add("</div>");
 
@@ -247,6 +252,30 @@ namespace Expressium.LivingDoc.Generators
                 var symbol = LivingDocDataUtilitiesGenerator.GetStatusSymbol(prefilter.ToLower());
                 listOfLines.Add($"<button class='filter-option' data-prefilter='@{prefilter}' title='Preset Filter with {prefilter}' onclick='togglePrefilter(this)'><span class='{symbol} color-{prefilter.ToLower()} status-symbol'></span><span>{prefilter}</span></button>");
             }
+            listOfLines.Add("<button class='filter-option' title='Preset All Status Filters' onclick='clearAllfilters()'><span>All</span></button>");
+            listOfLines.Add("</div>");
+
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateHealthNewFilters()
+        {
+            var listOfLines = new List<string>();
+
+            listOfLines.Add("<!-- Health Filters Section -->");
+            listOfLines.Add("<div class='section layout-row'>");
+
+            listOfLines.Add("<div class='layout-column align-left'>");
+
+            foreach (var health in Enum.GetValues(typeof(LivingDocHealths)))
+            {
+                var prefilters = health.ToString();
+                var symbol = LivingDocDataUtilitiesGenerator.GetHealtSymbol(prefilters);
+                listOfLines.Add($"<button class='filter-option' data-prefilter='@{prefilters}' title='Preset Filter with {prefilters}' onclick='togglePrefilter(this)'><span class='{symbol} status-symbol health-symbol'></span><span>{prefilters}</span></button>");
+            }
+            listOfLines.Add("<button class='filter-option' title='Preset All Health Filters' onclick='clearAllfilters()'><span>All</span></button>");
 
             listOfLines.Add("</div>");
 

@@ -23,14 +23,20 @@ namespace Expressium.LivingDoc.Models
         public List<LivingDocFeature> Features { get; set; }
         public LivingDocProjectHistory History { get; set; }
 
-        internal bool ExperimentFlag { get; set; }
+        internal bool ExperimentFilterFlag { get; set; }
+        internal bool ExperimentGridFlag { get; set; }
+        internal bool ExperimentHealthFlag { get; set; }
+        internal bool ExperimentHistoryFlag { get; set; }
 
         public LivingDocProject()
         {
             Features = new List<LivingDocFeature>();
             History = new LivingDocProjectHistory();
 
-            ExperimentFlag = false; // Additional health visualization...
+            ExperimentFilterFlag = false;  // Additional filter visualization...
+            ExperimentGridFlag = false;    // Additional grid visualization...
+            ExperimentHealthFlag = false;  // Additional health visualization...
+            ExperimentHistoryFlag = false; // Additional history visualization...
         }
 
         internal string GetApplicationName()

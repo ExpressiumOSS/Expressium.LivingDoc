@@ -278,9 +278,9 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             project.Features.Add(feature);
 
             var generator = new LivingDocDataAnalyticsGenerator(project);
-            var listOfLines = generator.GenerateDataAnalyticsHealth();
+            var listOfLines = generator.GenerateDataAnalyticsHistory();
 
-            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics Health Chart -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Analytics History Chart -->"));
             Assert.That(listOfLines.Any(l => l.Contains("Login Scenario")), Is.True);
             Assert.That(listOfLines.Any(l => l.Contains("history-failed")), Is.True);
             Assert.That(listOfLines.Any(l => l.Contains("history-passed")), Is.True);
