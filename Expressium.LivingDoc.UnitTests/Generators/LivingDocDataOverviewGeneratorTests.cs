@@ -79,13 +79,13 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataOverviewGenerator(livingDocProject);
             var listOfLines = generator.GenerateOverviewHeaderFolder("\\Root Folder");
 
-            Assert.That(listOfLines.Count, Is.EqualTo(10));
+            Assert.That(listOfLines.Count, Is.EqualTo(9));
             Assert.That(listOfLines[0], Is.EqualTo("<tr>"));
-            Assert.That(listOfLines[1], Is.EqualTo("<td class='grid-toggle'><span class='bi bi-chevron-down'></span></td>"));
-            Assert.That(listOfLines[3], Does.Contain("Root Folder"));
-            Assert.That(listOfLines[6], Does.Contain("loadExpandAll()"));
-            Assert.That(listOfLines[7], Does.Contain("loadCollapseAll()"));
-            Assert.That(listOfLines[9], Is.EqualTo("</tr>"));
+            Assert.That(listOfLines[1], Is.EqualTo("<td class='grid-border' colspan='9'>"));
+            Assert.That(listOfLines[2], Does.Contain("Root Folder"));
+            Assert.That(listOfLines[5], Does.Contain("loadExpandAll()"));
+            Assert.That(listOfLines[6], Does.Contain("loadCollapseAll()"));
+            Assert.That(listOfLines[8], Is.EqualTo("</tr>"));
         }
 
         [Test]
@@ -96,13 +96,13 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataOverviewGenerator(livingDocProject);
             var listOfLines = generator.GenerateOverviewFolder("\\Root\\SubFolder", 1);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(8));
+            Assert.That(listOfLines.Count, Is.EqualTo(7));
             Assert.That(listOfLines[0], Does.Contain("data-role='folder'"));
             Assert.That(listOfLines[0], Does.Contain("data-name='"));
-            Assert.That(listOfLines[2], Is.EqualTo("<td data-collapse='false' class='grid-toggle' title='Toggle Folder' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>"));
-            Assert.That(listOfLines[4], Does.Contain("SubFolder"));
-            Assert.That(listOfLines[4], Does.Contain("grid-folder-name"));
-            Assert.That(listOfLines[7], Is.EqualTo("</tr>"));
+            Assert.That(listOfLines[1], Is.EqualTo("<td data-collapse='false' class='grid-toggle' title='Toggle Folder' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>"));
+            Assert.That(listOfLines[3], Does.Contain("SubFolder"));
+            Assert.That(listOfLines[3], Does.Contain("grid-folder-name"));
+            Assert.That(listOfLines[6], Is.EqualTo("</tr>"));
         }
 
         [Test]
@@ -113,14 +113,13 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataOverviewGenerator(livingDocProject);
             var listOfLines = generator.GenerateOverviewFeature(livingDocProject.Features[0], 1);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(9));
+            Assert.That(listOfLines.Count, Is.EqualTo(8));
             Assert.That(listOfLines[0], Does.Contain("data-role='feature'"));
             Assert.That(listOfLines[0], Does.Contain("data-featureid='"));
             Assert.That(listOfLines[0], Does.Contain("loadFeature(this)"));
-            Assert.That(listOfLines[2], Does.Contain("loadCollapse(this)"));
-            Assert.That(listOfLines[4], Does.Contain("color-passed"));
-            Assert.That(listOfLines[5], Does.Contain("Login Feature"));
-            Assert.That(listOfLines[8], Is.EqualTo("</tr>"));
+            Assert.That(listOfLines[3], Does.Contain("color-passed"));
+            Assert.That(listOfLines[4], Does.Contain("Login Feature"));
+            Assert.That(listOfLines[7], Is.EqualTo("</tr>"));
         }
 
         [Test]
@@ -131,14 +130,14 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataOverviewGenerator(livingDocProject);
             var listOfLines = generator.GenerateOverviewScenario(livingDocProject.Features[0], livingDocProject.Features[0].Scenarios[0], 1);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(9));
+            Assert.That(listOfLines.Count, Is.EqualTo(8));
             Assert.That(listOfLines[0], Does.Contain("data-role='scenario'"));
             Assert.That(listOfLines[0], Does.Contain("data-featureid='"));
             Assert.That(listOfLines[0], Does.Contain("data-scenarioid='"));
             Assert.That(listOfLines[0], Does.Contain("loadScenario(this)"));
-            Assert.That(listOfLines[4], Does.Contain("color-passed"));
-            Assert.That(listOfLines[5], Does.Contain("Successful User Login with Valid Credentials"));
-            Assert.That(listOfLines[8], Is.EqualTo("</tr>"));
+            Assert.That(listOfLines[3], Does.Contain("color-passed"));
+            Assert.That(listOfLines[4], Does.Contain("Successful User Login with Valid Credentials"));
+            Assert.That(listOfLines[7], Is.EqualTo("</tr>"));
         }
 
         [TestCase(null, "")]

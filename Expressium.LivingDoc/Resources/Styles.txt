@@ -18,7 +18,6 @@
 
         /* Header */
         --color-text-header: var(--bs-gray-800);
-        --color-bg-header: #dfe7f2;
         --color-bg-header: #E1E8F0;
 
         /* Footer */
@@ -57,7 +56,7 @@
 
         /* Special Texts */
         --color-text-keyword: #25576b;
-        --color-text-link: var(--bs-gray-650);
+        --color-text-link: #356585;
 
         /* Tags */
         --color-text-tag: #338689;
@@ -80,7 +79,7 @@
         --color-bg-button-selected: var(--color-bg-grid-selected);
 
         /* Status colors */
-        --color-passed: #34A853;
+        --color-passed: #33a351;
         --color-incomplete: #FBBC05;
         --color-failed: #EA4335;
         --color-skipped: #9AA0A6;
@@ -281,14 +280,10 @@
         padding-right: 6px;
     }
    
+    table.tree-view th,
     table.tree-view td {
-        padding-left: 2px;
-        padding-right: 2px;
-    }
-
-    table.tree-view td.grid-border { 
         padding-left: 4px;
-        padding-right: 2px;
+        padding-right: 4px;
     }
 
     table.tree-view tr.active td.grid-border {
@@ -368,11 +363,6 @@
         width: 1.5em;
     }
     
-    .grid-indent {
-        width: 1.5em;
-        min-width: 1.5em;
-    }
-
     .page-name {
         font-size: 1.375em;
         font-weight: 600;
@@ -841,7 +831,8 @@
     }
 
     .analytics-trends,
-    .analytics-history {
+    .analytics-history,
+    .analytics-environment {
         padding-left: 16px;
         padding-right: 16px;
         margin: auto;
