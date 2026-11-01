@@ -68,7 +68,7 @@ namespace Expressium.LivingDoc
         /// <returns></returns>
         /// <exception cref="IOException"></exception>
         /// <exception cref="ApplicationException"></exception>
-        public LivingDocProject Convert(string inputPath, string title)
+        public LivingDocProject Convert(string inputPath, string title, string propertiesPath = null)
         {
             try
             {
@@ -76,6 +76,15 @@ namespace Expressium.LivingDoc
                 var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
                 if (!string.IsNullOrEmpty(title))
                     livingDocProject.Title = title;
+
+                try
+                {
+                    if (!string.IsNullOrEmpty(propertiesPath) && File.Exists(propertiesPath))
+                        livingDocProject.Properties = LivingDocSerializer.DeserializeAsJson<LivingDocProperties>(propertiesPath);
+                }
+                catch
+                {
+                }
 
                 return livingDocProject;
             }

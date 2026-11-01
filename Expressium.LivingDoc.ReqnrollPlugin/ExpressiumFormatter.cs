@@ -12,6 +12,7 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
         public string OutputFilePath { get; private set; }
         public string OutputFileTitle { get; private set; }
         public string HistoryPath { get; private set; }
+        public string PropertiesFilePath { get; private set; }
 
         public ExpressiumFormatter(IFormattersConfigurationProvider configurationProvider, IFormatterLog logger, IFileSystem fileSystem) : base(configurationProvider, logger, fileSystem, "expressium")
         {
@@ -27,6 +28,9 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
 
             if (formatterConfiguration.ContainsKey("historyPath"))
                 HistoryPath = formatterConfiguration["historyPath"].ToString();
+
+            if (formatterConfiguration.ContainsKey("propertiesFilePath"))
+                PropertiesFilePath = formatterConfiguration["propertiesFilePath"].ToString();
         }
 
         public override void Dispose()
@@ -36,7 +40,7 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
             if (!string.IsNullOrWhiteSpace(HistoryPath))
             {
                 var livingDocConverter = new LivingDocConverter();
-                var livingDocProject = livingDocConverter.Convert(OutputFilePath, OutputFileTitle);
+                var livingDocProject = livingDocConverter.Convert(OutputFilePath, OutputFileTitle, PropertiesFilePath);
 
                 var historyDirectory = Path.GetDirectoryName(Path.GetFullPath(HistoryPath));
                 if (!Directory.Exists(historyDirectory))

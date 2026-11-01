@@ -12,7 +12,7 @@ namespace Expressium.LivingDoc.Cli
     {
         static void Main(string[] args)
         {
-            if (args.Length == 7 && args[0] == "--generate")
+            if ((args.Length == 7 || args.Length == 8) && args[0] == "--generate")
             {
                 // Generating a LivingDoc Test Report based on a Cucumber Messages NDJSON file...
                 Console.WriteLine("");
@@ -21,8 +21,12 @@ namespace Expressium.LivingDoc.Cli
                 Console.WriteLine("Output: " + args[4]);
                 Console.WriteLine("Title: " + args[6]);
 
+                string propertiesPath = null;
+                if (args.Length == 8)
+                    propertiesPath = args[7];
+
                 var livingDocConverter = new LivingDocConverter();
-                var livingDocProject = livingDocConverter.Convert(args[2], args[6]);
+                var livingDocProject = livingDocConverter.Convert(args[2], args[6], propertiesPath);
                 livingDocConverter.Generate(livingDocProject, args[4]);
 
                 Console.WriteLine("Generating LivingDoc Report Completed");
