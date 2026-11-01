@@ -56,7 +56,10 @@
 
         /* Special Texts */
         --color-text-keyword: #25576b;
+        --color-text-link: #295f75;            /* Original V150 */
         --color-text-link: #356585;
+        --color-text-link: var(--bs-gray-650); /* Light gray */
+        --color-text-link: #4A626C;            /* Mixed steel blue */
 
         /* Tags */
         --color-text-tag: #338689;
@@ -279,11 +282,11 @@
         padding-left: 6px;
         padding-right: 6px;
     }
-   
+          
     table.tree-view th,
     table.tree-view td {
-        padding-left: 4px;
-        padding-right: 4px;
+        padding-left: 2px;
+        padding-right: 2px;
     }
 
     table.tree-view tr.active td.grid-border {
@@ -292,6 +295,11 @@
 
     table.list-view tr.active {
         background-color: var(--color-bg-grid-selected);
+    }
+
+    table.tree-view td.grid-border {
+        padding-left: 4px;
+        padding-right 4px;
     }
 
     /* Buttons */
@@ -360,9 +368,13 @@
         color: var(--color-text-gray);
         cursor: pointer;
         text-align: center;
-        width: 1.5em;
+        width: 1.25em;
     }
     
+    .grid-indent {
+        width: 1.75em;
+    }
+
     .page-name {
         font-size: 1.375em;
         font-weight: 600;
@@ -832,7 +844,7 @@
 
     .analytics-trends,
     .analytics-history,
-    .analytics-environment {
+    .analytics-properties {
         padding-left: 16px;
         padding-right: 16px;
         margin: auto;

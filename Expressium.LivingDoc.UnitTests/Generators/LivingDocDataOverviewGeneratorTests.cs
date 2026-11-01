@@ -96,13 +96,13 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             var generator = new LivingDocDataOverviewGenerator(livingDocProject);
             var listOfLines = generator.GenerateOverviewFolder("\\Root\\SubFolder", 1);
 
-            Assert.That(listOfLines.Count, Is.EqualTo(7));
+            Assert.That(listOfLines.Count, Is.EqualTo(10));
             Assert.That(listOfLines[0], Does.Contain("data-role='folder'"));
             Assert.That(listOfLines[0], Does.Contain("data-name='"));
             Assert.That(listOfLines[1], Is.EqualTo("<td data-collapse='false' class='grid-toggle' title='Toggle Folder' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>"));
-            Assert.That(listOfLines[3], Does.Contain("SubFolder"));
-            Assert.That(listOfLines[3], Does.Contain("grid-folder-name"));
-            Assert.That(listOfLines[6], Is.EqualTo("</tr>"));
+            Assert.That(listOfLines[6], Does.Contain("SubFolder"));
+            Assert.That(listOfLines[6], Does.Contain("grid-folder-name"));
+            Assert.That(listOfLines[9], Is.EqualTo("</tr>"));
         }
 
         [Test]

@@ -27,6 +27,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Features.ToString()));
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Features.ToString()));
+            listOfLines.AddRange(GenerateDataAnalyticsProperties());
 
             listOfLines.Add("</div>");
 
@@ -44,6 +45,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Scenarios.ToString()));
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Scenarios.ToString()));
+            listOfLines.AddRange(GenerateDataAnalyticsProperties());
 
             if (project.ExperimentHistoryFlag)
             {
@@ -67,6 +69,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(GenerateDataAnalyticsStatusChart(AnalyticsType.Steps.ToString()));
             listOfLines.AddRange(GenerateDataAnalyticsDuration());
             listOfLines.AddRange(GenerateDataAnalyticsTrends(AnalyticsType.Steps.ToString()));
+            listOfLines.AddRange(GenerateDataAnalyticsProperties());
 
             listOfLines.Add("</div>");
 
@@ -346,6 +349,38 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("</tbody>");
             listOfLines.Add("</table>");
 
+            listOfLines.Add("</div>");
+            listOfLines.Add("</div>");
+
+            return listOfLines;
+        }
+
+        internal List<string> GenerateDataAnalyticsProperties()
+        {
+            var listOfLines = new List<string>();
+
+            if (project.Properties == null || project.Properties.properties == null || project.Properties.properties.Count() == 0)
+                return listOfLines;
+
+            listOfLines.Add("<hr>");
+            listOfLines.Add("<!-- Data Analytics Properties -->");
+            listOfLines.Add("<div class='section analytics-properties'>");
+            listOfLines.Add("<span class='chart-name'>Properties</span>");
+            listOfLines.Add("<div class='section'>");
+            listOfLines.Add("<table class='analytics-list'>");
+            listOfLines.Add("<thead>");
+            listOfLines.Add("<tr>");
+            listOfLines.Add("<th>Name</th>");
+            listOfLines.Add("<th>Value</th>");
+            listOfLines.Add("</tr>");
+            listOfLines.Add("</thead>");
+            listOfLines.Add("<tbody>");
+
+            foreach (var property in project.Properties.properties)
+                listOfLines.Add($"<tr><td>{property.name}</td><td>{property.value}</td></tr>");
+
+            listOfLines.Add("</tbody>");
+            listOfLines.Add("</table>");
             listOfLines.Add("</div>");
             listOfLines.Add("</div>");
 

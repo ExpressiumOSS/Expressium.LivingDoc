@@ -113,11 +113,16 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<tr data-name='{folder}' data-role='folder'>");
 
             for (var i = 0; i < indent - 1; i++)
-                listOfLines.Add("<td></td>");
+                listOfLines.Add("<td class='grid-indent'></td>");
 
             listOfLines.Add("<td data-collapse='false' class='grid-toggle' title='Toggle Folder' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
-            listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
-            listOfLines.Add($"📂 <span class='grid-folder-name'>{GetFolderName(folder)}</span>");
+
+            listOfLines.Add($"<td class='grid-border grid-indent'>");
+            listOfLines.Add($"<span>📂</span>");
+            listOfLines.Add("</td>");
+
+            listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent - 1}'>");
+            listOfLines.Add($"<span class='grid-folder-name'>{GetFolderName(folder)}</span>");
             listOfLines.Add("</td>");
             listOfLines.Add("<td class='grid-border align-right'></td>");
 
@@ -133,7 +138,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<tr data-parent='{feature.GetFolder()}' data-name='{feature.Id}' data-role='feature' data-featureid='{feature.Id}' onclick=\"loadFeature(this);\">");
 
             for (var i = 0; i < indent - 1; i++)
-                listOfLines.Add("<td></td>");
+                listOfLines.Add("<td class='grid-indent'></td>");
 
             listOfLines.Add("<td data-collapse='false' class='grid-toggle' title='Toggle Feature' onclick=\"loadCollapse(this);\"><span class='bi bi-chevron-down'></span></td>");
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
@@ -178,9 +183,9 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add($"<tr data-parent='{feature.Id}' data-role='scenario' data-tags='{feature.Name} {scenario.GetDataStatus()} {feature.GetDataTags()} {scenario.GetDataTags()} {ruleTags} {feature.Uri}' data-featureid='{feature.Id}' data-scenarioid='{scenario.Id}' onclick=\"loadScenario(this);\">");
 
             for (var i = 0; i < indent - 1; i++)
-                listOfLines.Add("<td></td>");
+                listOfLines.Add("<td class='grid-indent'></td>");
 
-            listOfLines.Add("<td></td>");
+            listOfLines.Add("<td class='grid-indent'></td>");
             listOfLines.Add($"<td class='grid-border' colspan='{NumberOfColumns - indent}'>");
 
             var status = scenario.GetStatus().ToLower();
