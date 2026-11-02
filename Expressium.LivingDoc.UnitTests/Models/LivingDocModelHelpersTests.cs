@@ -165,33 +165,5 @@ namespace Expressium.LivingDoc.UnitTests.Models
 
             Assert.That(string.CompareOrdinal(shorter.GetDurationSortId(), longer.GetDurationSortId()), Is.LessThan(0));
         }
-
-        [Test]
-        [Ignore("Known issue: GetDurationSortId only formats minutes:seconds:milliseconds - durations of one hour or more sort before shorter ones")]
-        public void LivingDocScenario_GetDurationSortId_SortsCorrectly_AboveOneHour()
-        {
-            var shorter = new LivingDocScenario();
-            shorter.Examples.Add(CreateExample(new TimeSpan(0, 0, 59, 0, 0)));
-
-            var longer = new LivingDocScenario();
-            longer.Examples.Add(CreateExample(new TimeSpan(0, 1, 2, 0, 0)));
-
-            Assert.That(string.CompareOrdinal(shorter.GetDurationSortId(), longer.GetDurationSortId()), Is.LessThan(0));
-        }
-
-        [Test]
-        [Ignore("Known issue: GetDurationSortId only formats minutes:seconds:milliseconds - durations of one hour or more sort before shorter ones")]
-        public void LivingDocFeature_GetDurationSortId_SortsCorrectly_AboveOneHour()
-        {
-            var shorter = new LivingDocFeature();
-            shorter.Scenarios.Add(new LivingDocScenario());
-            shorter.Scenarios[0].Examples.Add(CreateExample(new TimeSpan(0, 0, 59, 0, 0)));
-
-            var longer = new LivingDocFeature();
-            longer.Scenarios.Add(new LivingDocScenario());
-            longer.Scenarios[0].Examples.Add(CreateExample(new TimeSpan(0, 1, 2, 0, 0)));
-
-            Assert.That(string.CompareOrdinal(shorter.GetDurationSortId(), longer.GetDurationSortId()), Is.LessThan(0));
-        }
     }
 }

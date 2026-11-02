@@ -1,5 +1,6 @@
 ﻿using Io.Cucumber.Messages.Types;
 using System;
+using System.Net;
 using System.Text.RegularExpressions;
 
 namespace Expressium.LivingDoc.Parsers
@@ -33,6 +34,14 @@ namespace Expressium.LivingDoc.Parsers
                 return value;
 
             return CapitalizeWordsRegex.Replace(value, m => m.Value.ToUpper());
+        }
+
+        /// <summary>
+        /// All Gherkin text and test results are HTML encoded once when parsed, so the generators can write them to the report as is.
+        /// </summary>
+        internal static string HtmlEncode(this string value)
+        {
+            return WebUtility.HtmlEncode(value);
         }
     }
 }

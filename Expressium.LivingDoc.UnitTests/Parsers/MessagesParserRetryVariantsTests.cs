@@ -33,7 +33,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             var scenario = livingDocProject.Features[0].Scenarios[0];
 
-            Assert.That(scenario.Name, Is.EqualTo("Test cases won't retry when the status is AMBIGUOUS"));
+            Assert.That(scenario.Name, Is.EqualTo("Test cases won&#39;t retry when the status is AMBIGUOUS"));
             Assert.That(scenario.Examples[0].Steps[0].Status, Is.EqualTo(LivingDocStatuses.Ambiguous.ToString()));
         }
 
@@ -64,7 +64,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             var scenario = livingDocProject.Features[0].Scenarios[0];
 
-            Assert.That(scenario.Name, Is.EqualTo("Test cases won't retry when the status is PENDING"));
+            Assert.That(scenario.Name, Is.EqualTo("Test cases won&#39;t retry when the status is PENDING"));
             Assert.That(scenario.Examples[0].Steps[0].Status, Is.EqualTo(LivingDocStatuses.Pending.ToString()));
         }
 
@@ -95,7 +95,7 @@ namespace Expressium.LivingDoc.UnitTests.Parsers
 
             var scenario = livingDocProject.Features[0].Scenarios[0];
 
-            Assert.That(scenario.Name, Is.EqualTo("Test cases won't retry when the status is UNDEFINED"));
+            Assert.That(scenario.Name, Is.EqualTo("Test cases won&#39;t retry when the status is UNDEFINED"));
             Assert.That(scenario.Examples[0].Steps[0].Status, Is.EqualTo(LivingDocStatuses.Undefined.ToString()));
         }
     }

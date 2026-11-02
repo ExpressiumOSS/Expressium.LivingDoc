@@ -150,8 +150,11 @@ namespace Expressium.LivingDoc.Generators
                     if (!string.IsNullOrEmpty(scenario.RuleId))
                     {
                         var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
-                        listOfLines.AddRange(GenerateDataScenarioRule(rule, previousRule));
-                        previousRule = scenario.RuleId;
+                        if (rule != null)
+                        {
+                            listOfLines.AddRange(GenerateDataScenarioRule(rule, previousRule));
+                            previousRule = scenario.RuleId;
+                        }
                     }
 
                     int index = 1;

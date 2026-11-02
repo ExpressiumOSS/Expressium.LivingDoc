@@ -2,6 +2,7 @@ using Expressium.LivingDoc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace Expressium.LivingDoc.Generators
 {
@@ -377,7 +378,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<tbody>");
 
             foreach (var property in project.Properties.properties)
-                listOfLines.Add($"<tr><td>{property.name}</td><td>{property.value}</td></tr>");
+                listOfLines.Add($"<tr><td>{WebUtility.HtmlEncode(property.name)}</td><td>{WebUtility.HtmlEncode(property.value)}</td></tr>");
 
             listOfLines.Add("</tbody>");
             listOfLines.Add("</table>");

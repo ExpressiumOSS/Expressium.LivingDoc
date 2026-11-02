@@ -75,7 +75,7 @@ namespace Expressium.LivingDoc
                 var messagesParser = new MessagesParser();
                 var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
                 if (!string.IsNullOrEmpty(title))
-                    livingDocProject.Title = title;
+                    livingDocProject.Title = title.HtmlEncode();
 
                 try
                 {
@@ -198,7 +198,7 @@ namespace Expressium.LivingDoc
                 var messagesParser = new MessagesParser();
                 var livingDocProject = messagesParser.ConvertToLivingDoc(inputPath);
                 if (!string.IsNullOrEmpty(title))
-                    livingDocProject.Title = title;
+                    livingDocProject.Title = title.HtmlEncode();
                 var livingDocProjectGenerator = new LivingDocProjectGenerator(livingDocProject);
                 livingDocProjectGenerator.Generate(outputPath);
             }
@@ -230,7 +230,7 @@ namespace Expressium.LivingDoc
                 var messagesParser = new MessagesParser();
                 var livingDocProjectMaster = messagesParser.ConvertToLivingDoc(inputPaths[0]);
                 if (!string.IsNullOrEmpty(title))
-                    livingDocProjectMaster.Title = title;
+                    livingDocProjectMaster.Title = title.HtmlEncode();
 
                 for (int i = 1; i < inputPaths.Count; i++)
                 {

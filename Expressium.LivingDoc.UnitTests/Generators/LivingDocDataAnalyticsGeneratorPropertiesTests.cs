@@ -104,7 +104,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        [Ignore("Known issue: property names and values are not HTML encoded")]
         public void LivingDocDataAnalyticsGenerator_GenerateDataAnalyticsProperties_HtmlEncodesNameAndValue()
         {
             var project = CreateProjectWithProperties(("<Branch>", "feature/a&b"));

@@ -175,7 +175,8 @@ namespace Expressium.LivingDoc.Generators
             if (!string.IsNullOrEmpty(scenario.RuleId))
             {
                 var rule = feature.Rules.Find(r => r.Id == scenario.RuleId);
-                ruleTags = rule.GetTags();
+                if (rule != null)
+                    ruleTags = rule.GetTags();
             }
 
             var listOfLines = new List<string>();

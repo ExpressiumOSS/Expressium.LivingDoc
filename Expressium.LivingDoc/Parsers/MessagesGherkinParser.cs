@@ -1,6 +1,5 @@
 ﻿using Expressium.LivingDoc.Models;
 using Io.Cucumber.Messages.Types;
-using System.Net;
 
 namespace Expressium.LivingDoc.Parsers
 {
@@ -38,12 +37,12 @@ namespace Expressium.LivingDoc.Parsers
             if (feature.Tags != null)
             {
                 foreach (var tag in feature.Tags)
-                    livingDocFeature.Tags.Add(tag.Name);
+                    livingDocFeature.Tags.Add(tag.Name.HtmlEncode());
             }
 
-            livingDocFeature.Description = feature.Description;
-            livingDocFeature.Uri = uri;
-            livingDocFeature.Name = feature.Name;
+            livingDocFeature.Description = feature.Description.HtmlEncode();
+            livingDocFeature.Uri = uri.HtmlEncode();
+            livingDocFeature.Name = feature.Name.HtmlEncode();
             livingDocFeature.Keyword = feature.Keyword;
         }
 
@@ -52,8 +51,8 @@ namespace Expressium.LivingDoc.Parsers
             var livingDocBackground = new LivingDocBackground
             {
                 Id = background.Id,
-                Description = background.Description,
-                Name = background.Name,
+                Description = background.Description.HtmlEncode(),
+                Name = background.Name.HtmlEncode(),
                 Keyword = background.Keyword
             };
 
@@ -61,7 +60,7 @@ namespace Expressium.LivingDoc.Parsers
             {
                 var livingDocStep = new LivingDocStep
                 {
-                    Name = WebUtility.HtmlEncode(step.Text),
+                    Name = step.Text.HtmlEncode(),
                     Keyword = step.Keyword.Trim(),
                     Id = step.Id,
                     Type = LivingDocStepTypes.Background.ToString()
@@ -77,15 +76,15 @@ namespace Expressium.LivingDoc.Parsers
             var livingDocRule = new LivingDocRule
             {
                 Id = rule.Id,
-                Description = rule.Description,
-                Name = rule.Name,
+                Description = rule.Description.HtmlEncode(),
+                Name = rule.Name.HtmlEncode(),
                 Keyword = rule.Keyword
             };
 
             if (rule.Tags != null)
             {
                 foreach (var tag in rule.Tags)
-                    livingDocRule.Tags.Add(tag.Name);
+                    livingDocRule.Tags.Add(tag.Name.HtmlEncode());
             }
 
             livingDocFeature.Rules.Add(livingDocRule);
@@ -105,15 +104,15 @@ namespace Expressium.LivingDoc.Parsers
             {
                 RuleId = ruleId,
                 Id = scenario.Id,
-                Description = scenario.Description,
-                Name = scenario.Name,
+                Description = scenario.Description.HtmlEncode(),
+                Name = scenario.Name.HtmlEncode(),
                 Keyword = scenario.Keyword
             };
 
             if (scenario.Tags != null)
             {
                 foreach (var tag in scenario.Tags)
-                    livingDocScenario.Tags.Add(tag.Name);
+                    livingDocScenario.Tags.Add(tag.Name.HtmlEncode());
             }
 
             livingDocFeature.Scenarios.Add(livingDocScenario);
@@ -128,8 +127,8 @@ namespace Expressium.LivingDoc.Parsers
                     {
                         var livingDocExample = new LivingDocExample
                         {
-                            Name = example.Name,
-                            Description = example.Description
+                            Name = example.Name.HtmlEncode(),
+                            Description = example.Description.HtmlEncode()
                         };
                         livingDocScenario.Examples.Add(livingDocExample);
 
@@ -170,7 +169,7 @@ namespace Expressium.LivingDoc.Parsers
                 var livingDocStep = new LivingDocStep
                 {
                     Id = step.Id,
-                    Name = WebUtility.HtmlEncode(step.Text),
+                    Name = step.Text.HtmlEncode(),
                     Keyword = step.Keyword.Trim()
                 };
 
@@ -188,7 +187,7 @@ namespace Expressium.LivingDoc.Parsers
                 {
                     Id = step.Id,
                     TableBodyId = tableBodyRowId,
-                    Name = WebUtility.HtmlEncode(step.Text),
+                    Name = step.Text.HtmlEncode(),
                     Type = LivingDocStepTypes.Scenario.ToString(),
                     Keyword = step.Keyword.Trim()
                 };
@@ -208,7 +207,7 @@ namespace Expressium.LivingDoc.Parsers
             {
                 var dataTableRow = new LivingDocDataTableRow();
                 foreach (var cell in row.Cells)
-                    dataTableRow.Cells.Add(cell.Value);
+                    dataTableRow.Cells.Add(cell.Value.HtmlEncode());
                 livingDocStep.DataTable.Rows.Add(dataTableRow);
             }
         }
@@ -217,7 +216,7 @@ namespace Expressium.LivingDoc.Parsers
         {
             var dataTableRow = new LivingDocDataTableRow();
             foreach (var tableHeaderRowCell in examples.TableHeader.Cells)
-                dataTableRow.Cells.Add(tableHeaderRowCell.Value);
+                dataTableRow.Cells.Add(tableHeaderRowCell.Value.HtmlEncode());
             livingDocExample.DataTable.Rows.Add(dataTableRow);
         }
 
@@ -225,7 +224,7 @@ namespace Expressium.LivingDoc.Parsers
         {
             var dataTableRow = new LivingDocDataTableRow();
             foreach (var tableBodyRowCell in tableBodyRow.Cells)
-                dataTableRow.Cells.Add(tableBodyRowCell.Value);
+                dataTableRow.Cells.Add(tableBodyRowCell.Value.HtmlEncode());
             livingDocExample.DataTable.Rows.Add(dataTableRow);
         }
     }

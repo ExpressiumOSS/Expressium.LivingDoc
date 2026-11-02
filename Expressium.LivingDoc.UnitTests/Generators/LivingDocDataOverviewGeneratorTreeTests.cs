@@ -230,7 +230,6 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
-        [Ignore("Known issue: GenerateOverviewScenario throws NullReferenceException when RuleId does not match a rule")]
         public void LivingDocDataOverviewGenerator_GenerateOverviewScenario_UnknownRuleId_DoesNotThrow()
         {
             var feature = CreateFeature("Payments", "Features/payments.feature", "Pay By Card");
@@ -238,16 +237,58 @@ namespace Expressium.LivingDoc.UnitTests.Generators
 
             var generator = new LivingDocDataOverviewGenerator(new LivingDocProject());
 
-            Assert.DoesNotThrow(() => generator.GenerateOverviewScenario(feature, feature.Scenarios[0], 2));
+            List<string> listOfLines = null;
+            Assert.DoesNotThrow(() => listOfLines = generator.GenerateOverviewScenario(feature, feature.Scenarios[0], 2));
+            Assert.That(listOfLines[0], Does.Contain("data-role='scenario'"));
         }
 
         [Test]
-        [Platform("Win", Reason = "Known issue: on Linux/macOS Path.GetDirectoryName does not treat '\\' as a separator, so GetFolder returns null")]
-        public void LivingDocFeature_GetFolder_BackslashUri_ReturnsFolder()
+        public void LivingDocDataObjectsGenerator_GenerateDataScenarios_UnknownRuleId_DoesNotThrow()
         {
-            var feature = new LivingDocFeature { Uri = "Features\\Login\\login.feature" };
+            var feature = CreateFeature("Payments", "Features/payments.feature", "Pay By Card");
+            feature.Scenarios[0].RuleId = "missing-rule";
 
-            Assert.That(feature.GetFolder(), Is.EqualTo("Features\\Login"));
+            var project = new LivingDocProject();
+            project.Features.Add(feature);
+
+            var generator = new LivingDocDataObjectsGenerator(project);
+
+            List<string> listOfLines = null;
+            Assert.DoesNotThrow(() => listOfLines = generator.GenerateDataScenarios());
+            Assert.That(listOfLines, Has.Some.Contains("Pay By Card"));
+            Assert.That(listOfLines, Has.None.Contains("<!-- Data Rule"));
+        }
+
+        [Test]
+        public void LivingDocConverter_Generate_UnknownRuleId_ProducesReport()
+        {
+            var feature = CreateFeature("Payments", "Features/payments.feature", "Pay By Card");
+            feature.Scenarios[0].RuleId = "missing-rule";
+
+            var project = new LivingDocProject { Title = "Unknown Rule" };
+            project.Features.Add(feature);
+
+            var outputFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "LivingDocUnknownRule_" + System.Guid.NewGuid().ToString("N") + ".html");
+            try
+            {
+                new LivingDocConverter().Generate(project, outputFilePath);
+                Assert.That(System.IO.File.ReadAllText(outputFilePath), Does.Contain("Pay By Card"));
+            }
+            finally
+            {
+                System.IO.File.Delete(outputFilePath);
+            }
+        }
+
+        [Test]
+        [TestCase("Features/Login/login.feature", "Features\\Login")]
+        [TestCase("Features/Login/Admin/admin.feature", "Features\\Login\\Admin")]
+        [TestCase("login.feature", null)]
+        public void LivingDocFeature_GetFolder_ForwardSlashUri_ReturnsBackslashFolder(string uri, string expected)
+        {
+            var feature = new LivingDocFeature { Uri = uri };
+
+            Assert.That(feature.GetFolder(), Is.EqualTo(expected));
         }
     }
 }

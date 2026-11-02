@@ -2,7 +2,6 @@
 using Io.Cucumber.Messages.Types;
 using System;
 using System.Linq;
-using System.Net;
 
 namespace Expressium.LivingDoc.Parsers
 {
@@ -116,7 +115,7 @@ namespace Expressium.LivingDoc.Parsers
 
                             // Assign actual Step Text from PickleStep... 
                             if (!string.IsNullOrWhiteSpace(pickleStep.Text))
-                                step.Name = WebUtility.HtmlEncode(pickleStep.Text);
+                                step.Name = pickleStep.Text.HtmlEncode();
 
                             if (!testStepByPickleStepId.TryGetValue(pickleStep.Id, out var testStep))
                                 continue;
@@ -202,9 +201,9 @@ namespace Expressium.LivingDoc.Parsers
                 Keyword = "Hook",
                 Type = LivingDocStepTypes.Hook.ToString(),
                 Status = LivingDocStatuses.Failed.ToString(),
-                ExceptionType = testStepFinished.TestStepResult.Exception.Type,
-                ExceptionMessage = testStepFinished.TestStepResult.Exception.Message,
-                ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace
+                ExceptionType = testStepFinished.TestStepResult.Exception.Type.HtmlEncode(),
+                ExceptionMessage = testStepFinished.TestStepResult.Exception.Message.HtmlEncode(),
+                ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace.HtmlEncode()
             };
         }
 
@@ -259,13 +258,13 @@ namespace Expressium.LivingDoc.Parsers
         internal static void ParseTestResultsSteps(LivingDocStep livingDocStep, TestStepFinished testStepFinished)
         {
             livingDocStep.Status = testStepFinished.TestStepResult.Status.ToString().ToLower().CapitalizeWords();
-            livingDocStep.Message = WebUtility.HtmlEncode(testStepFinished.TestStepResult.Message);
+            livingDocStep.Message = testStepFinished.TestStepResult.Message.HtmlEncode();
 
             if (testStepFinished.TestStepResult.Exception != null)
             {
-                livingDocStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type;
-                livingDocStep.ExceptionMessage = WebUtility.HtmlEncode(testStepFinished.TestStepResult.Exception.Message);
-                livingDocStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace;
+                livingDocStep.ExceptionType = testStepFinished.TestStepResult.Exception.Type.HtmlEncode();
+                livingDocStep.ExceptionMessage = testStepFinished.TestStepResult.Exception.Message.HtmlEncode();
+                livingDocStep.ExceptionStackTrace = testStepFinished.TestStepResult.Exception.StackTrace.HtmlEncode();
             }
 
             // Work-around for Failing, Pending, Undefined and Ambiguous Step Messages...
