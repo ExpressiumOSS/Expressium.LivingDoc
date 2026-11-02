@@ -104,6 +104,14 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         }
 
         [Test]
+        public void LivingDocDataUtilitiesGenerator_GetHealtSymbol_Invalid_ReturnsExpectedClass()
+        {
+            var result = LivingDocDataUtilitiesGenerator.GetHealtSymbol(LivingDocHealths.Invalid.ToString());
+
+            Assert.That(result, Is.EqualTo("bi bi-cloud-fog"));
+        }
+
+        [Test]
         public void LivingDocDataUtilitiesGenerator_GetHealtSymbol_UnrecognisedValue_ReturnsEmptyString()
         {
             var result = LivingDocDataUtilitiesGenerator.GetHealtSymbol("something-unexpected");
