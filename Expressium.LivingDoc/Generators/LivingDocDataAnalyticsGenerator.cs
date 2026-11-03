@@ -360,7 +360,7 @@ namespace Expressium.LivingDoc.Generators
         {
             var listOfLines = new List<string>();
 
-            if (project.Properties == null || project.Properties.properties == null || project.Properties.properties.Count() == 0)
+            if (project.Properties == null || project.Properties.Count == 0)
                 return listOfLines;
 
             listOfLines.Add("<hr>");
@@ -371,14 +371,14 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<table class='analytics-list'>");
             listOfLines.Add("<thead>");
             listOfLines.Add("<tr>");
-            listOfLines.Add("<th>Name</th>");
-            listOfLines.Add("<th>Value</th>");
+            listOfLines.Add("<th width='50%'>Name</th>");
+            listOfLines.Add("<th width='50%'>Value</th>");
             listOfLines.Add("</tr>");
             listOfLines.Add("</thead>");
             listOfLines.Add("<tbody>");
 
-            foreach (var property in project.Properties.properties)
-                listOfLines.Add($"<tr><td>{WebUtility.HtmlEncode(property.name)}</td><td>{WebUtility.HtmlEncode(property.value)}</td></tr>");
+            foreach (var property in project.Properties)
+                listOfLines.Add($"<tr><td>{WebUtility.HtmlEncode(property.Name)}</td><td>{WebUtility.HtmlEncode(property.Value)}</td></tr>");
 
             listOfLines.Add("</tbody>");
             listOfLines.Add("</table>");

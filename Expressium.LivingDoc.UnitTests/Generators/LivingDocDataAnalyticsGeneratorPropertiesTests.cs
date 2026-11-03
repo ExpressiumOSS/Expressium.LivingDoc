@@ -9,9 +9,9 @@ namespace Expressium.LivingDoc.UnitTests.Generators
         private static LivingDocProject CreateProjectWithProperties(params (string Name, string Value)[] properties)
         {
             var project = new LivingDocProject();
-            project.Properties.properties = properties
-                .Select(p => new LivingDocProperties.Property { name = p.Name, value = p.Value })
-                .ToArray();
+            project.Properties = properties
+                .Select(p => new LivingDocProperty { Name = p.Name, Value = p.Value })
+                .ToList();
 
             return project;
         }
@@ -61,8 +61,8 @@ namespace Expressium.LivingDoc.UnitTests.Generators
                 "<table class='analytics-list'>",
                 "<thead>",
                 "<tr>",
-                "<th>Name</th>",
-                "<th>Value</th>",
+                "<th width='50%'>Name</th>",
+                "<th width='50%'>Value</th>",
                 "</tr>",
                 "</thead>",
                 "<tbody>",

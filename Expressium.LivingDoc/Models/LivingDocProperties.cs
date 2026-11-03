@@ -2,15 +2,9 @@
 
 namespace Expressium.LivingDoc.Models
 {
-    public class LivingDocProperties
+    public class LivingDocProperty
     {
-        public Property[] properties { get; set; }
-
-        public class Property
-        {
-            public string name { get; set; }
-            public string value { get; set; }
-        }
-
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

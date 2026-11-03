@@ -80,7 +80,7 @@ namespace Expressium.LivingDoc
                 try
                 {
                     if (!string.IsNullOrEmpty(propertiesPath) && File.Exists(propertiesPath))
-                        livingDocProject.Properties = LivingDocSerializer.DeserializeAsJson<LivingDocProperties>(propertiesPath);
+                        livingDocProject.Properties = LivingDocSerializer.DeserializeAsJson<List<LivingDocProperty>>(propertiesPath);
                 }
                 catch
                 {

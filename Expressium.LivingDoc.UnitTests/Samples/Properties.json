@@ -1,44 +1,42 @@
-{
-  "properties": [
-    {
-      "name": "Run ID",
-      "value": "RUN-1042"
-    },
-    {
-      "name": "Run Name",
-      "value": "Nightly Regression"
-    },
-    {
-      "name": "Environment",
-      "value": "Staging"
-    },
-    {
-      "name": "Browser",
-      "value": "Chrome"
-    },
-    {
-      "name": "Operating System",
-      "value": "Linux"
-    },
-    {
-      "name": "Build Version",
-      "value": "2.5.1"
-    },
-    {
-      "name": "Git Branch",
-      "value": "main"
-    },
-    {
-      "name": "Git Commit",
-      "value": "a3f92b1"
-    },
-    {
-      "name": "Triggered By",
-      "value": "CI/CD Pipeline"
-    },
-    {
-      "name": "Custom Property",
-      "value": "Any value"
-    }
-  ]
-}
+[
+  {
+    "name": "Run ID",
+    "value": "RUN-1042"
+  },
+  {
+    "name": "Run Name",
+    "value": "Nightly Regression"
+  },
+  {
+    "name": "Environment",
+    "value": "Staging"
+  },
+  {
+    "name": "Browser",
+    "value": "Chrome"
+  },
+  {
+    "name": "Operating System",
+    "value": "Linux"
+  },
+  {
+    "name": "Build Version",
+    "value": "2.5.1"
+  },
+  {
+    "name": "Git Branch",
+    "value": "main"
+  },
+  {
+    "name": "Git Commit",
+    "value": "a3f92b1"
+  },
+  {
+    "name": "Triggered By",
+    "value": "CI/CD Pipeline"
+  },
+  {
+    "name": "Custom Property",
+    "value": "Any value"
+  }
+]
