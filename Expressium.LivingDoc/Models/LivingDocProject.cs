@@ -22,7 +22,7 @@ namespace Expressium.LivingDoc.Models
 
         public List<LivingDocFeature> Features { get; set; }
         public LivingDocProjectHistory History { get; set; }
-        public List<LivingDocProperty> Properties { get; set; }
+        public LivingDocProperties Properties { get; set; }
 
         internal bool ExperimentFilterFlag { get; set; }
         internal bool ExperimentGridFlag { get; set; }
@@ -33,7 +33,7 @@ namespace Expressium.LivingDoc.Models
         {
             Features = new List<LivingDocFeature>();
             History = new LivingDocProjectHistory();
-            Properties = new List<LivingDocProperty>();
+            Properties = new LivingDocProperties();
 
             ExperimentFilterFlag = false;  // Additional filter visualization...
             ExperimentGridFlag = false;    // Additional grid visualization...
@@ -158,6 +158,11 @@ namespace Expressium.LivingDoc.Models
         public bool HasHealth()
         {
             return Features.Any(feature => feature.Scenarios.Any(scenario => scenario.Health != null));
+        }
+
+        public bool HasProperties()
+        {
+            return Properties.Sections.Any(section => section.Properties.Count > 0);
         }
 
         public List<string> GetFolders()

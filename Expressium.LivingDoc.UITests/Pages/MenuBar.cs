@@ -11,6 +11,7 @@ namespace Expressium.LivingDoc.UITests.Pages
         private readonly By Scenarios = By.XPath("//a[text()='Scenarios']");
         private readonly By Steps = By.XPath("//a[text()='Steps']");
         private readonly By Analytics = By.XPath("//a[text()='Analytics']");
+        private readonly By Properties = By.XPath("//a[text()='Properties']");
 
         public MenuBar(ILog logger, IWebDriver driver) : base(logger, driver)
         {
@@ -44,6 +45,12 @@ namespace Expressium.LivingDoc.UITests.Pages
         {
             logger.Info($"ClickAnalytics()");
             Analytics.ClickLink(driver);
+        }
+
+        public void ClickProperties()
+        {
+            logger.Info($"ClickProperties()");
+            Properties.ClickLink(driver);
         }
 
         #region Extensions

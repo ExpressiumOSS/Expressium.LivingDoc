@@ -80,7 +80,22 @@ namespace Expressium.LivingDoc
                 try
                 {
                     if (!string.IsNullOrEmpty(propertiesPath) && File.Exists(propertiesPath))
-                        livingDocProject.Properties = LivingDocSerializer.DeserializeAsJson<List<LivingDocProperty>>(propertiesPath);
+                    {
+                        var properties = LivingDocSerializer.DeserializeAsJson<LivingDocProperties>(propertiesPath);
+
+                        foreach (var section in properties.Sections)
+                        {
+                            section.Name = section.Name.HtmlEncode();
+
+                            foreach (var property in section.Properties)
+                            {
+                                property.Name = property.Name.HtmlEncode();
+                                property.Value = property.Value.HtmlEncode();
+                            }
+                        }
+
+                        livingDocProject.Properties = properties;
+                    }
                 }
                 catch
                 {

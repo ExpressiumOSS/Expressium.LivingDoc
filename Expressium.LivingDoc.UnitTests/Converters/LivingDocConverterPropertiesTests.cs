@@ -1,6 +1,5 @@
 using Expressium.LivingDoc.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -29,30 +28,75 @@ namespace Expressium.LivingDoc.UnitTests.Converters
                 Directory.Delete(tempDirectory, true);
         }
 
+        private static LivingDocPropertySection CreateSection(string name, string propertyName, string propertyValue)
+        {
+            var section = new LivingDocPropertySection { Name = name };
+            section.Properties.Add(new LivingDocProperty { Name = propertyName, Value = propertyValue });
+            return section;
+        }
+
         [Test]
         public void LivingDocProject_Constructor_InitializesEmptyProperties()
         {
             var livingDocProject = new LivingDocProject();
 
             Assert.That(livingDocProject.Properties, Is.Not.Null);
-            Assert.That(livingDocProject.Properties, Is.Empty);
+            Assert.That(livingDocProject.Properties.Sections, Is.Not.Null);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
+            Assert.That(livingDocProject.HasProperties(), Is.False);
         }
 
         [Test]
-        public void LivingDocConverter_Convert_WithPropertiesPath_LoadsAllProperties()
+        public void LivingDocPropertySection_Constructor_InitializesEmptyProperties()
+        {
+            var section = new LivingDocPropertySection();
+
+            Assert.That(section.Name, Is.Null);
+            Assert.That(section.Properties, Is.Not.Null);
+            Assert.That(section.Properties, Is.Empty);
+        }
+
+        [Test]
+        public void LivingDocProject_HasProperties_WithPopulatedSection_IsTrue()
+        {
+            var livingDocProject = new LivingDocProject();
+            livingDocProject.Properties.Sections.Add(CreateSection("Environment", "Environment", "Staging"));
+
+            Assert.That(livingDocProject.HasProperties(), Is.True);
+        }
+
+        [Test]
+        public void LivingDocProject_HasProperties_WithOnlyEmptySections_IsFalse()
+        {
+            var livingDocProject = new LivingDocProject();
+            livingDocProject.Properties.Sections.Add(new LivingDocPropertySection { Name = "Empty" });
+
+            Assert.That(livingDocProject.HasProperties(), Is.False);
+        }
+
+        [Test]
+        public void LivingDocConverter_Convert_WithPropertiesPath_LoadsAllSections()
         {
             var livingDocConverter = new LivingDocConverter();
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", propertiesFilePath);
 
-            var properties = livingDocProject.Properties;
-            Assert.That(properties, Is.Not.Null);
-            Assert.That(properties.Count, Is.EqualTo(10));
-            Assert.That(properties[0].Name, Is.EqualTo("Run ID"));
-            Assert.That(properties[0].Value, Is.EqualTo("RUN-1042"));
-            Assert.That(properties[1].Name, Is.EqualTo("Run Name"));
-            Assert.That(properties[1].Value, Is.EqualTo("Nightly Regression"));
-            Assert.That(properties[9].Name, Is.EqualTo("Custom Property"));
-            Assert.That(properties[9].Value, Is.EqualTo("Any value"));
+            var sections = livingDocProject.Properties.Sections;
+            Assert.That(sections, Is.Not.Null);
+            Assert.That(sections.Count, Is.EqualTo(2));
+            Assert.That(sections[0].Name, Is.EqualTo("Environment"));
+            Assert.That(sections[0].Properties.Count, Is.EqualTo(4));
+            Assert.That(sections[0].Properties[0].Name, Is.EqualTo("Environment"));
+            Assert.That(sections[0].Properties[0].Value, Is.EqualTo("Staging"));
+            Assert.That(sections[0].Properties[1].Name, Is.EqualTo("Application Version"));
+            Assert.That(sections[0].Properties[1].Value, Is.EqualTo("2.5.0"));
+            Assert.That(sections[1].Name, Is.EqualTo("Test Run"));
+            Assert.That(sections[1].Properties.Count, Is.EqualTo(4));
+            Assert.That(sections[1].Properties[0].Name, Is.EqualTo("Run ID"));
+            Assert.That(sections[1].Properties[0].Value, Is.EqualTo("RUN-1042"));
+            Assert.That(sections[1].Properties[1].Name, Is.EqualTo("Run Name"));
+            Assert.That(sections[1].Properties[1].Value, Is.EqualTo("Nightly Regression"));
+            Assert.That(sections.Sum(s => s.Properties.Count), Is.EqualTo(8));
+            Assert.That(livingDocProject.HasProperties(), Is.True);
         }
 
         [Test]
@@ -61,11 +105,14 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var livingDocConverter = new LivingDocConverter();
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", propertiesFilePath);
 
-            var names = livingDocProject.Properties.Select(p => p.Name).ToArray();
-            Assert.That(names, Is.EqualTo(new[]
+            var sectionNames = livingDocProject.Properties.Sections.Select(s => s.Name).ToArray();
+            Assert.That(sectionNames, Is.EqualTo(new[] { "Environment", "Test Run" }));
+
+            var propertyNames = livingDocProject.Properties.Sections.SelectMany(s => s.Properties).Select(p => p.Name).ToArray();
+            Assert.That(propertyNames, Is.EqualTo(new[]
             {
-                "Run ID", "Run Name", "Environment", "Browser", "Operating System",
-                "Build Version", "Git Branch", "Git Commit", "Triggered By", "Custom Property"
+                "Environment", "Application Version", "Build ID", "Operating System",
+                "Run ID", "Run Name", "Triggered By", "Git Commit"
             }));
         }
 
@@ -76,7 +123,8 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle");
 
             Assert.That(livingDocProject.Properties, Is.Not.Null);
-            Assert.That(livingDocProject.Properties, Is.Empty);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
+            Assert.That(livingDocProject.HasProperties(), Is.False);
         }
 
         [TestCase(null)]
@@ -87,7 +135,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", path);
 
             Assert.That(livingDocProject.Properties, Is.Not.Null);
-            Assert.That(livingDocProject.Properties, Is.Empty);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
         }
 
         [Test]
@@ -101,7 +149,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             Assert.That(livingDocProject, Is.Not.Null);
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.GreaterThan(0));
             Assert.That(livingDocProject.Properties, Is.Not.Null);
-            Assert.That(livingDocProject.Properties, Is.Empty);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
         }
 
         [Test]
@@ -117,20 +165,49 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             Assert.That(livingDocProject.Title, Is.EqualTo("MyProjectTitle"));
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.GreaterThan(0));
             Assert.That(livingDocProject.Properties, Is.Not.Null);
-            Assert.That(livingDocProject.Properties, Is.Empty);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
         }
 
         [Test]
-        public void LivingDocConverter_Convert_WithEmptyPropertiesArray_HasEmptyProperties()
+        public void LivingDocConverter_Convert_WithEmptySectionsArray_HasEmptyProperties()
         {
             var emptyPath = Path.Combine(tempDirectory, "empty-properties.json");
-            File.WriteAllText(emptyPath, "[]");
+            File.WriteAllText(emptyPath, "{ \"sections\": [] }");
 
             var livingDocConverter = new LivingDocConverter();
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", emptyPath);
 
             Assert.That(livingDocProject.Properties, Is.Not.Null);
-            Assert.That(livingDocProject.Properties, Is.Empty);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
+        }
+
+        [Test]
+        public void LivingDocConverter_Convert_WithNullSections_HasEmptyProperties()
+        {
+            var nullPath = Path.Combine(tempDirectory, "null-sections.json");
+            File.WriteAllText(nullPath, "{ \"sections\": null }");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", nullPath);
+
+            Assert.That(livingDocProject.Properties, Is.Not.Null);
+            Assert.That(livingDocProject.Properties.Sections, Is.Not.Null);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
+        }
+
+        [Test]
+        public void LivingDocConverter_Convert_WithSectionWithoutProperties_LoadsEmptySection()
+        {
+            var sectionPath = Path.Combine(tempDirectory, "section-without-properties.json");
+            File.WriteAllText(sectionPath, "{ \"sections\": [ { \"name\": \"Environment\" } ] }");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", sectionPath);
+
+            Assert.That(livingDocProject.Properties.Sections.Count, Is.EqualTo(1));
+            Assert.That(livingDocProject.Properties.Sections[0].Name, Is.EqualTo("Environment"));
+            Assert.That(livingDocProject.Properties.Sections[0].Properties, Is.Empty);
+            Assert.That(livingDocProject.HasProperties(), Is.False);
         }
 
         [Test]
@@ -138,20 +215,22 @@ namespace Expressium.LivingDoc.UnitTests.Converters
         {
             // Deserialization is case insensitive...
             var pascalCasePath = Path.Combine(tempDirectory, "pascal-properties.json");
-            File.WriteAllText(pascalCasePath, "[ { \"Name\": \"Environment\", \"Value\": \"Production\" } ]");
+            File.WriteAllText(pascalCasePath, "{ \"Sections\": [ { \"Name\": \"Environment\", \"Properties\": [ { \"Name\": \"Environment\", \"Value\": \"Production\" } ] } ] }");
 
             var livingDocConverter = new LivingDocConverter();
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", pascalCasePath);
 
-            Assert.That(livingDocProject.Properties.Count, Is.EqualTo(1));
-            Assert.That(livingDocProject.Properties[0].Name, Is.EqualTo("Environment"));
-            Assert.That(livingDocProject.Properties[0].Value, Is.EqualTo("Production"));
+            Assert.That(livingDocProject.Properties.Sections.Count, Is.EqualTo(1));
+            Assert.That(livingDocProject.Properties.Sections[0].Name, Is.EqualTo("Environment"));
+            Assert.That(livingDocProject.Properties.Sections[0].Properties.Count, Is.EqualTo(1));
+            Assert.That(livingDocProject.Properties.Sections[0].Properties[0].Name, Is.EqualTo("Environment"));
+            Assert.That(livingDocProject.Properties.Sections[0].Properties[0].Value, Is.EqualTo("Production"));
         }
 
         [Test]
         public void LivingDocConverter_Convert_WithUnrelatedJsonFile_HasNoProperties()
         {
-            // A valid JSON object instead of the expected array...
+            // A valid JSON object without any sections...
             var unrelatedPath = Path.Combine(tempDirectory, "unrelated.json");
             File.WriteAllText(unrelatedPath, "{ \"environment\": \"Staging\" }");
 
@@ -159,7 +238,22 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", unrelatedPath);
 
             Assert.That(livingDocProject.Properties, Is.Not.Null);
-            Assert.That(livingDocProject.Properties, Is.Empty);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
+        }
+
+        [Test]
+        public void LivingDocConverter_Convert_WithLegacyFlatPropertiesArray_HasNoProperties()
+        {
+            // The former flat [ { "name": ..., "value": ... } ] format is no longer supported...
+            var legacyPath = Path.Combine(tempDirectory, "legacy-flat-properties.json");
+            File.WriteAllText(legacyPath, "[ { \"name\": \"Environment\", \"value\": \"Staging\" } ]");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", legacyPath);
+
+            Assert.That(livingDocProject.GetNumberOfFeatures(), Is.GreaterThan(0));
+            Assert.That(livingDocProject.Properties, Is.Not.Null);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
         }
 
         [Test]
@@ -174,7 +268,7 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.GreaterThan(0));
             Assert.That(livingDocProject.Properties, Is.Not.Null);
-            Assert.That(livingDocProject.Properties, Is.Empty);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
         }
 
         [Test]
@@ -188,8 +282,8 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             livingDocConverter.MergeProject(livingDocProject, inputFilePathTwo);
 
             Assert.That(livingDocProject.GetNumberOfFeatures(), Is.EqualTo(2));
-            Assert.That(livingDocProject.Properties.Count, Is.EqualTo(10));
-            Assert.That(livingDocProject.Properties[0].Value, Is.EqualTo("RUN-1042"));
+            Assert.That(livingDocProject.Properties.Sections.Count, Is.EqualTo(2));
+            Assert.That(livingDocProject.Properties.Sections[1].Properties[0].Value, Is.EqualTo("RUN-1042"));
         }
 
         [Test]
@@ -203,22 +297,23 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             livingDocConverter.MergeProject(livingDocProject, inputFilePathTwo);
 
             Assert.That(livingDocProject.Properties, Is.Not.Null);
-            Assert.That(livingDocProject.Properties, Is.Empty);
+            Assert.That(livingDocProject.Properties.Sections, Is.Empty);
         }
 
         [Test]
         public void LivingDocProject_Merge_DoesNotOverwriteMasterProperties()
         {
             var master = new LivingDocProject();
-            master.Properties.Add(new LivingDocProperty { Name = "Environment", Value = "Staging" });
+            master.Properties.Sections.Add(CreateSection("Environment", "Environment", "Staging"));
 
             var slave = new LivingDocProject();
-            slave.Properties.Add(new LivingDocProperty { Name = "Environment", Value = "Production" });
+            slave.Properties.Sections.Add(CreateSection("Environment", "Environment", "Production"));
 
             master.Merge(slave);
 
-            Assert.That(master.Properties.Count, Is.EqualTo(1));
-            Assert.That(master.Properties[0].Value, Is.EqualTo("Staging"));
+            Assert.That(master.Properties.Sections.Count, Is.EqualTo(1));
+            Assert.That(master.Properties.Sections[0].Properties.Count, Is.EqualTo(1));
+            Assert.That(master.Properties.Sections[0].Properties[0].Value, Is.EqualTo("Staging"));
         }
 
         [Test]
@@ -227,11 +322,11 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var master = new LivingDocProject();
 
             var slave = new LivingDocProject();
-            slave.Properties = new List<LivingDocProperty> { new LivingDocProperty { Name = "Environment", Value = "Production" } };
+            slave.Properties.Sections.Add(CreateSection("Environment", "Environment", "Production"));
 
             master.Merge(slave);
 
-            Assert.That(master.Properties, Is.Empty);
+            Assert.That(master.Properties.Sections, Is.Empty);
         }
 
         [Test]
@@ -244,7 +339,8 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             livingDocConverter.MergeHistory(livingDocProject, historyPath);
 
             Assert.That(livingDocProject.History.Scenarios.Count, Is.EqualTo(4));
-            Assert.That(livingDocProject.Properties.Count, Is.EqualTo(10));
+            Assert.That(livingDocProject.Properties.Sections.Count, Is.EqualTo(2));
+            Assert.That(livingDocProject.Properties.Sections.Sum(s => s.Properties.Count), Is.EqualTo(8));
         }
 
         [Test]
@@ -258,9 +354,10 @@ namespace Expressium.LivingDoc.UnitTests.Converters
 
             var reloadedProject = livingDocConverter.Import(outputFilePath);
 
-            Assert.That(reloadedProject.Properties.Count, Is.EqualTo(10));
-            Assert.That(reloadedProject.Properties[7].Name, Is.EqualTo("Git Commit"));
-            Assert.That(reloadedProject.Properties[7].Value, Is.EqualTo("a3f92b1"));
+            Assert.That(reloadedProject.Properties.Sections.Count, Is.EqualTo(2));
+            Assert.That(reloadedProject.Properties.Sections[1].Name, Is.EqualTo("Test Run"));
+            Assert.That(reloadedProject.Properties.Sections[1].Properties[3].Name, Is.EqualTo("Git Commit"));
+            Assert.That(reloadedProject.Properties.Sections[1].Properties[3].Value, Is.EqualTo("a3f92b1"));
         }
 
         [Test]
@@ -275,11 +372,11 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             var reloadedProject = livingDocConverter.Import(outputFilePath);
 
             Assert.That(reloadedProject.Properties, Is.Not.Null);
-            Assert.That(reloadedProject.Properties, Is.Empty);
+            Assert.That(reloadedProject.Properties.Sections, Is.Empty);
         }
 
         [Test]
-        public void LivingDocConverter_Generate_WithProperties_HtmlContainsPropertiesSection()
+        public void LivingDocConverter_Generate_WithProperties_HtmlContainsPropertiesSections()
         {
             var outputFilePath = Path.Combine(tempDirectory, "properties.html");
 
@@ -288,9 +385,43 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             livingDocConverter.Generate(livingDocProject, outputFilePath);
 
             var html = File.ReadAllText(outputFilePath);
-            Assert.That(html, Does.Contain("class=\"section analytics-properties\""));
+            Assert.That(html, Does.Contain("id=\"properties\""));
+            Assert.That(html, Does.Contain("<!-- Data Properties -->"));
+            Assert.That(html, Does.Contain("<!-- Data Properties Section -->"));
+            Assert.That(html, Does.Contain("class=\"section properties-section\""));
+            Assert.That(html, Does.Contain("class=\"properties-list\""));
+            Assert.That(html, Does.Contain("Test Run"));
+            Assert.That(html, Does.Contain("Application Version"));
+            Assert.That(html, Does.Contain("build-458"));
             Assert.That(html, Does.Contain("Nightly Regression"));
             Assert.That(html, Does.Contain("CI/CD Pipeline"));
+        }
+
+        [Test]
+        public void LivingDocConverter_Generate_WithProperties_HtmlContainsOneTablePerSection()
+        {
+            var outputFilePath = Path.Combine(tempDirectory, "properties-sections.html");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", propertiesFilePath);
+            livingDocConverter.Generate(livingDocProject, outputFilePath);
+
+            var html = File.ReadAllText(outputFilePath);
+            var numberOfTables = html.Split(new[] { "class=\"properties-list\"" }, StringSplitOptions.None).Length - 1;
+            Assert.That(numberOfTables, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void LivingDocConverter_Generate_WithProperties_HtmlContainsPropertiesNavigationLink()
+        {
+            var outputFilePath = Path.Combine(tempDirectory, "properties-navigation.html");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", propertiesFilePath);
+            livingDocConverter.Generate(livingDocProject, outputFilePath);
+
+            var html = File.ReadAllText(outputFilePath);
+            Assert.That(html, Does.Contain("onclick=\"loadProperties()\""));
         }
 
         [Test]
@@ -303,8 +434,57 @@ namespace Expressium.LivingDoc.UnitTests.Converters
             livingDocConverter.Generate(livingDocProject, outputFilePath);
 
             var html = File.ReadAllText(outputFilePath);
-            Assert.That(html, Does.Not.Contain("class=\"section analytics-properties\""));
+            Assert.That(html, Does.Not.Contain("onclick=\"loadProperties()\""));
+            Assert.That(html, Does.Not.Contain("<!-- Data Properties Section -->"));
             Assert.That(html, Does.Not.Contain("Nightly Regression"));
+            Assert.That(html, Does.Not.Contain("CI/CD Pipeline"));
+        }
+
+        [Test]
+        public void LivingDocConverter_Convert_WithSpecialCharacterProperties_EncodesOnLoad()
+        {
+            var specialPath = Path.Combine(tempDirectory, "special-load-properties.json");
+            File.WriteAllText(specialPath, "{ \"sections\": [ { \"name\": \"<i>Build</i> & Run\", \"properties\": [ { \"name\": \"<b>Owner</b>\", \"value\": \"<script>alert('x')</script> & more\" } ] } ] }");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", specialPath);
+
+            var section = livingDocProject.Properties.Sections[0];
+            Assert.That(section.Name, Is.EqualTo("&lt;i&gt;Build&lt;/i&gt; &amp; Run"));
+            Assert.That(section.Properties[0].Name, Is.EqualTo("&lt;b&gt;Owner&lt;/b&gt;"));
+            Assert.That(section.Properties[0].Value, Is.EqualTo("&lt;script&gt;alert(&#39;x&#39;)&lt;/script&gt; &amp; more"));
+        }
+
+        [Test]
+        public void LivingDocConverter_Convert_WithNullPropertyValue_KeepsNull()
+        {
+            var nullValuePath = Path.Combine(tempDirectory, "null-value-properties.json");
+            File.WriteAllText(nullValuePath, "{ \"sections\": [ { \"name\": \"Environment\", \"properties\": [ { \"name\": \"Browser\", \"value\": null } ] } ] }");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", nullValuePath);
+
+            Assert.That(livingDocProject.Properties.Sections[0].Properties[0].Name, Is.EqualTo("Browser"));
+            Assert.That(livingDocProject.Properties.Sections[0].Properties[0].Value, Is.Null);
+        }
+
+        [Test]
+        public void LivingDocConverter_Generate_WithSpecialCharacterProperties_HtmlIsEncoded()
+        {
+            var specialPath = Path.Combine(tempDirectory, "special-properties.json");
+            File.WriteAllText(specialPath, "{ \"sections\": [ { \"name\": \"<i>Build</i>\", \"properties\": [ { \"name\": \"<b>Owner</b>\", \"value\": \"<script>alert('x')</script>\" } ] } ] }");
+
+            var outputFilePath = Path.Combine(tempDirectory, "special-properties.html");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(inputFilePath, "MyProjectTitle", specialPath);
+            livingDocConverter.Generate(livingDocProject, outputFilePath);
+
+            var html = File.ReadAllText(outputFilePath);
+            Assert.That(html, Does.Not.Contain("<script>alert('x')</script>"));
+            Assert.That(html, Does.Contain("&lt;script&gt;"));
+            Assert.That(html, Does.Contain("&lt;b&gt;Owner&lt;/b&gt;"));
+            Assert.That(html, Does.Contain("&lt;i&gt;Build&lt;/i&gt;"));
         }
     }
 }

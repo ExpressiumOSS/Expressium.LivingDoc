@@ -186,6 +186,7 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines, Does.Contain("<!-- Data Overview -->"));
             Assert.That(listOfLines, Does.Contain("<!-- Data Features View -->"));
             Assert.That(listOfLines, Does.Contain("<!-- Data Analytics -->"));
+            Assert.That(listOfLines, Does.Contain("<!-- Data Properties -->"));
         }
 
         [Test]

@@ -1,0 +1,46 @@
+{
+  "Sections": [
+    {
+      "Name": "Environment",
+      "Properties": [
+        {
+          "Name": "Environment",
+          "Value": "Staging"
+        },
+        {
+          "Name": "Application Version",
+          "Value": "2.5.0"
+        },
+        {
+          "Name": "Build ID",
+          "Value": "build-458"
+        },
+        {
+          "Name": "Operating System",
+          "Value": "Microsoft Windows 10.0.26200"
+        }
+      ]
+    },
+    {
+      "Name": "Test Run",
+      "Properties": [
+        {
+          "Name": "Run ID",
+          "Value": "RUN-1042"
+        },
+        {
+          "Name": "Run Name",
+          "Value": "Nightly Regression"
+        },
+        {
+          "Name": "Triggered By",
+          "Value": "CI/CD Pipeline"
+        },
+        {
+          "Name": "Git Commit",
+          "Value": "a3f92b1"
+        }
+      ]
+    }
+  ]
+}

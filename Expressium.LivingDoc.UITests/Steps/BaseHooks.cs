@@ -40,8 +40,9 @@ namespace Expressium.LivingDoc.UITests.Steps
         {
             var inputFile = Path.Combine(Directory.GetCurrentDirectory(), "LivingDoc.ndjson");
             var outputFile = Path.Combine(Directory.GetCurrentDirectory(), "LivingDoc.html");
+            var propertiesFile = Path.Combine(Directory.GetCurrentDirectory(), "Properties.json");
             var livingDocConverter = new LivingDocConverter();
-            var livingDocProject = livingDocConverter.Convert(inputFile, "Expressium Coffeeshop");
+            var livingDocProject = livingDocConverter.Convert(inputFile, "Expressium Coffeeshop", propertiesFile);
             livingDocConverter.Generate(livingDocProject, outputFile);
         }
 

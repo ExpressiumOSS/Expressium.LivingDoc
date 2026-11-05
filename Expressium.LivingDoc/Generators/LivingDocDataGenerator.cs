@@ -56,5 +56,15 @@ namespace Expressium.LivingDoc.Generators
 
             return listOfLines;
         }
+
+        internal List<string> GenerateDataProperties()
+        {
+            var listOfLines = new List<string>();
+
+            var generator = new LivingDocDataPropertiesGenerator(project);
+            listOfLines.AddRange(generator.GenerateDataProjectPropertiesView());
+
+            return listOfLines;
+        }
     }
 }

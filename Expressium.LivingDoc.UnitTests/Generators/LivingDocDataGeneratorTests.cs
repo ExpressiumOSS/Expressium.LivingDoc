@@ -146,5 +146,43 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines, Has.Some.Contains("id='analytics-steps'"));
             Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
         }
+
+        [Test]
+        public void LivingDocDataGenerator_GenerateDataProperties_Without_Properties()
+        {
+            var project = new LivingDocProject();
+
+            var generator = new LivingDocDataGenerator(project);
+            var listOfLines = generator.GenerateDataProperties();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Properties -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div id='properties'>"));
+            Assert.That(listOfLines, Does.Not.Contain("<!-- Data Properties Section -->"));
+            Assert.That(listOfLines, Does.Not.Contain("<table class='properties-list'>"));
+            Assert.That(listOfLines, Has.None.StartsWith("<tr><td>"));
+            Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
+        }
+
+        [Test]
+        public void LivingDocDataGenerator_GenerateDataProperties_With_Properties()
+        {
+            var project = CreateLivingDocProject();
+            var section = new LivingDocPropertySection { Name = "Environment" };
+            section.Properties.Add(new LivingDocProperty { Name = "Operating System", Value = "Windows 10" });
+            section.Properties.Add(new LivingDocProperty { Name = "Browser", Value = "Chrome" });
+            project.Properties.Sections.Add(section);
+
+            var generator = new LivingDocDataGenerator(project);
+            var listOfLines = generator.GenerateDataProperties();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines[0], Is.EqualTo("<!-- Data Properties -->"));
+            Assert.That(listOfLines[1], Is.EqualTo("<div id='properties'>"));
+            Assert.That(listOfLines, Does.Contain("<tr><td>Operating System</td><td>Windows 10</td></tr>"));
+            Assert.That(listOfLines, Does.Contain("<tr><td>Browser</td><td>Chrome</td></tr>"));
+            Assert.That(listOfLines, Does.Contain("<span class='chart-name'>Environment</span>"));
+            Assert.That(listOfLines.Last(), Is.EqualTo("</div>"));
+        }
     }
 }

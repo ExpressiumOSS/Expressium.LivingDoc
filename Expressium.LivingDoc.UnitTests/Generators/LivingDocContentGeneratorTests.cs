@@ -50,6 +50,42 @@ namespace Expressium.LivingDoc.UnitTests.Generators
             Assert.That(listOfLines[5], Does.Contain("loadViewMode('steps-view','Steps')"));
             Assert.That(listOfLines[6], Does.Contain("title='Analytics'"));
             Assert.That(listOfLines[6], Does.Contain("loadAnalytics()"));
+            Assert.That(listOfLines, Has.None.Contains("loadProperties()"));
+            Assert.That(listOfLines.Last(), Is.EqualTo("</nav>"));
+        }
+
+        [Test]
+        public void LivingDocContentGenerator_GenerateNavigation_With_Properties()
+        {
+            var project = new LivingDocProject();
+            var section = new LivingDocPropertySection { Name = "Environment" };
+            section.Properties.Add(new LivingDocProperty { Name = "Oprating System", Value = "Windows 10" });
+            project.Properties.Sections.Add(section);
+
+            var generator = new LivingDocContentGenerator(project);
+
+            var listOfLines = generator.GenerateNavigation();
+
+            Assert.That(listOfLines, Is.Not.Null);
+            Assert.That(listOfLines.Count, Is.EqualTo(9));
+            Assert.That(listOfLines[6], Does.Contain("title='Analytics'"));
+            Assert.That(listOfLines[7], Does.Contain("title='Properties'"));
+            Assert.That(listOfLines[7], Does.Contain("loadProperties()"));
+            Assert.That(listOfLines.Last(), Is.EqualTo("</nav>"));
+        }
+
+        [Test]
+        public void LivingDocContentGenerator_GenerateNavigation_With_Only_Empty_Sections()
+        {
+            var project = new LivingDocProject();
+            project.Properties.Sections.Add(new LivingDocPropertySection { Name = "Environment" });
+
+            var generator = new LivingDocContentGenerator(project);
+
+            var listOfLines = generator.GenerateNavigation();
+
+            Assert.That(listOfLines.Count, Is.EqualTo(8));
+            Assert.That(listOfLines, Has.None.Contains("loadProperties()"));
         }
 
         [Test]

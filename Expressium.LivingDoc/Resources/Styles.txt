@@ -3,7 +3,7 @@
         
         /* Bootstrap Grayscale */
         --bs-gray-010: #fefefe;
-        --bs-gray-050: #f9fafb;
+        --bs-gray-050: #fafbfc;
         --bs-gray-100: #f8f9fa;
         --bs-gray-200: #e9ecef;
         --bs-gray-300: #dee2e6;
@@ -18,7 +18,7 @@
 
         /* Header */
         --color-text-header: var(--bs-gray-800);
-        --color-bg-header: #E1E8F0;
+        --color-bg-header: #dfe7f2;
 
         /* Footer */
         --color-text-footer: var(--bs-gray-600);
@@ -56,10 +56,8 @@
 
         /* Special Texts */
         --color-text-keyword: #25576b;
-        --color-text-link: #295f75;            /* Original V150 */
-        --color-text-link: #356585;
-        --color-text-link: var(--bs-gray-650); /* Light gray */
-        --color-text-link: #4A626C;            /* Mixed steel blue */
+        --color-text-link: #295f75;
+        --color-text-link: #285D73; /* Darker keyword color for links */    
 
         /* Tags */
         --color-text-tag: #338689;
@@ -248,8 +246,6 @@
         overflow: auto;
         height: calc(100% - 4.75em); /* Adjust for filter and search height */
         padding-right: 0.375em;
-        margin-left: 0.125em;
-        margin-right: 0.125em;
     }
 
     th, td {
@@ -844,13 +840,14 @@
 
     .analytics-trends,
     .analytics-history,
-    .analytics-properties {
+    .properties-section {
         padding-left: 16px;
         padding-right: 16px;
         margin: auto;
     }
 
-    .analytics-list {
+    .analytics-list,
+    .properties-list {
         width: 100%;
     }
 

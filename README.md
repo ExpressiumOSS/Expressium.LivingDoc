@@ -132,6 +132,59 @@ public void AfterScenario()
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 
+## Project Properties
+The Expressium LivingDoc report can be enriched with project properties defined in an external JSON file
+generated during test execution and will be shown as a separate view of the report.
+Properties are organized in named sections, and each section is rendered as its own table.
+
+***ReqnRoll.json***
+```json
+{
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
+  "formatters": {
+    "expressium": {
+      "outputFilePath": "LivingDoc.ndjson",
+      "outputFileTitle": "Expressium.Coffeeshop.Web.API.Tests",
+      "propertiesFilePath": "Properties.json"
+    }
+  }
+}
+```
+
+<br />
+
+***BaseHook.cs***
+```c#
+[BeforeTestRun]
+public static void BeforeTestRun()
+{
+    var properties = new LivingDocProperties();
+
+    var environmentSection = new LivingDocPropertySection { Name = "Environment" };
+    environmentSection.Properties.Add(new LivingDocProperty { Name = "Environment", Value = Environment.GetEnvironmentVariable("BUILD_ENVIRONMENT") });
+    environmentSection.Properties.Add(new LivingDocProperty { Name = "Application Version", Value = Environment.GetEnvironmentVariable("APPLICATION_VERSION") });
+    environmentSection.Properties.Add(new LivingDocProperty { Name = "Build ID", Value = Environment.GetEnvironmentVariable("BUILD_BUILDID") });
+    environmentSection.Properties.Add(new LivingDocProperty { Name = "Operating System", Value = Environment.GetEnvironmentVariable("AGENT_OS") });
+    properties.Sections.Add(environmentSection);
+
+    var testRunSection = new LivingDocPropertySection { Name = "Test Run" };
+    testRunSection.Properties.Add(new LivingDocProperty { Name = "Run ID", Value = Environment.GetEnvironmentVariable("BUILD_BUILDNUMBER") });
+    testRunSection.Properties.Add(new LivingDocProperty { Name = "Run Name", Value = Environment.GetEnvironmentVariable("BUILD_DEFINITIONNAME") });
+    testRunSection.Properties.Add(new LivingDocProperty { Name = "Triggered By", Value = Environment.GetEnvironmentVariable("BUILD_REASON") });
+    testRunSection.Properties.Add(new LivingDocProperty { Name = "Git Commit", Value = Environment.GetEnvironmentVariable("BUILD_SOURCEVERSION") });
+    properties.Sections.Add(testRunSection);
+
+    var propertiesJson = System.Text.Json.JsonSerializer.Serialize(properties, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+    File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "Properties.json"), propertiesJson);
+}
+```
+
+<br />
+<p align="center">
+<img src="ProjectProperties.png"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
+
 ## Command Line Interface
 For many different purposes, it may be desirable to customize the final Expressium LivingDoc test report.
 You can achieve this by creating a separate custom CLI project, adding a project reference to the ReqnRoll test project

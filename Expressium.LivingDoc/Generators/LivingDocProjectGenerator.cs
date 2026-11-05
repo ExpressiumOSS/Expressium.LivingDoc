@@ -118,6 +118,7 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.AddRange(generator.GenerateDataListViews());
             listOfLines.AddRange(generator.GenerateDataObjects());
             listOfLines.AddRange(generator.GenerateDataAnalytics());
+            listOfLines.AddRange(generator.GenerateDataProperties());
 
             listOfLines.Add("</data>");
 

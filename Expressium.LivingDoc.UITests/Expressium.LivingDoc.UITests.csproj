@@ -31,6 +31,9 @@
 		<None Update="LivingDoc.ndjson">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="Properties.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 	
 </Project>

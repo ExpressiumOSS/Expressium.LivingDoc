@@ -101,6 +101,16 @@
         }
     </script>
     <script>
+        function loadProperties() {
+            var properties = document.getElementById("properties").innerHTML;
+            document.getElementById('splitter-right').innerHTML = properties;
+
+            clearActiveListItems();
+
+            document.getElementById("splitter-right").scrollTop = 0;
+        }
+    </script>
+    <script>
         function filterView() {
             var navLinkActive = document.querySelectorAll('a.navigation-link.active');
             if (navLinkActive.length > 0) {

@@ -39,6 +39,10 @@ namespace Expressium.LivingDoc.Generators
             listOfLines.Add("<a class='navigation-link' title='Scenarios List View' href='#' onclick=\"loadViewMode('scenarios-view','Scenarios');\">Scenarios</a>");
             listOfLines.Add("<a class='navigation-link' title='Steps List View' href='#' onclick=\"loadViewMode('steps-view','Steps');\">Steps</a>");
             listOfLines.Add("<a class='navigation-link' title='Analytics' href='#' onclick=\"loadAnalytics()\">Analytics</a>");
+
+            if (project.HasProperties())
+                listOfLines.Add("<a class='navigation-link' title='Properties' href='#' onclick=\"loadProperties()\">Properties</a>");
+
             listOfLines.Add("</nav>");
 
             return listOfLines;
