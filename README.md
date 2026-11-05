@@ -1,5 +1,17 @@
 # Expressium LivingDoc
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+- [History Insights](#history-insights)
+- [Scenario Attachments](#scenario-attachments)
+- [Project Properties](#project-properties)
+- [Command Line Interface](#command-line-interface)
+- [Merging Reports](#merging-reports)
+- [Deep Linking](#deep-linking)
+- [Analytics Metrics](#analytics-metrics)
+- [The LivingDoc Process](#the-livingdoc-process)
+
 ## Introduction
 > Expressium LivingDoc — Reporting, Analytics and Living Documentation for ReqnRoll
 
@@ -44,7 +56,7 @@ dotnet add package Expressium.LivingDoc.ReqnrollPlugin
 }
 ```
 
-## History Analysis
+## History Insights
 The Expressium LivingDoc report can optionally include historical test results 
 based on previous Cucumber Messages files.
 Historical test results are visualized as trends in Analytics
@@ -261,7 +273,7 @@ start chrome "file:///C://Company/LivingDoc.html?filterByKeywords=TA-3001"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 
-## Analytics
+## Analytics Metrics
 Test automation analytics is the practice of collecting, aggregating, and interpreting data from automated test executions to make decisions about software quality, release readiness, and engineering efficiency.
 The Expressium LivingDoc report provides an overview of test execution results, including the following metrics...
 
@@ -275,25 +287,14 @@ The Expressium LivingDoc report provides an overview of test execution results, 
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 
-***Metrics***
-- **Passed Percentage** = Passed / Total × 100
-- **Failed Percentage** = Failed / Total × 100
-- **Incomplete Percentage** = Incomplete / Total × 100
-- **Skipped Percentage** = Skipped / Total × 100
-- **Duration** = Last Timestamp - First Timestamp
-- **Pass Rate** = Passed / (Passed + Failed) × 100
-- **Flaky Rate** = Flaky / Total × 100
-- **Coverage** = (Passed + Failed) / Total × 100
-
-***Definitions***
 - **Passed Percentage** = Percentage of all scenarios that passed.
 - **Failed Percentage** = Percentage of all scenarios that failed.
 - **Incomplete Percentage** = Percentage of all scenarios that were incomplete.
 - **Skipped Percentage** = Percentage of all scenarios that were skipped.
 - **Duration** = Total test execution time from first test start to last test finish.
-- **Pass Rate** = Percentage of executed scenarios that passed.
+- **Pass Rate** = Percentage of executed scenarios with a passed result.
 - **Flaky Rate** = Percentage of all scenarios classified as flaky.
-- **Coverage** = Percentage of all completed scenarios with a passed or failed result.
+- **Coverage** = Percentage of all executed scenarios with a passed or failed result.
 
 ## The LivingDoc Process
 The Expressium LivingDoc process uses the Reqnroll PlugIn to capture test execution results and output them as Cucumber Messages (NDJSON).
