@@ -3,13 +3,12 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
+- [Project Properties](#project-properties)
 - [History Insights](#history-insights)
 - [Scenario Attachments](#scenario-attachments)
-- [Project Properties](#project-properties)
 - [Command Line Interface](#command-line-interface)
 - [Merging Reports](#merging-reports)
 - [Deep Linking](#deep-linking)
-- [Analytics Metrics](#analytics-metrics)
 - [The LivingDoc Process](#the-livingdoc-process)
 
 ## Introduction
@@ -55,6 +54,59 @@ dotnet add package Expressium.LivingDoc.ReqnrollPlugin
   }
 }
 ```
+
+## Project Properties
+The Expressium LivingDoc report can be enriched with project properties defined in an external JSON file
+generated during test execution and will be shown as a separate view of the report.
+Properties are organized in named sections, and each section is rendered as its own table.
+
+***ReqnRoll.json***
+```json
+{
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
+  "formatters": {
+    "expressium": {
+      "outputFilePath": "LivingDoc.ndjson",
+      "outputFileTitle": "Expressium.Coffeeshop.Web.API.Tests",
+      "propertiesFilePath": "Properties.json"
+    }
+  }
+}
+```
+
+<br />
+
+***BaseHook.cs***
+```c#
+[BeforeTestRun]
+public static void BeforeTestRun()
+{
+    var properties = new LivingDocProperties();
+
+    var environmentSection = new LivingDocPropertySection { Name = "Environment" };
+    environmentSection.Properties.Add(new LivingDocProperty { Name = "Environment", Value = Environment.GetEnvironmentVariable("BUILD_ENVIRONMENT") });
+    environmentSection.Properties.Add(new LivingDocProperty { Name = "Application Version", Value = Environment.GetEnvironmentVariable("APPLICATION_VERSION") });
+    environmentSection.Properties.Add(new LivingDocProperty { Name = "Build ID", Value = Environment.GetEnvironmentVariable("BUILD_BUILDID") });
+    environmentSection.Properties.Add(new LivingDocProperty { Name = "Operating System", Value = Environment.GetEnvironmentVariable("AGENT_OS") });
+    properties.Sections.Add(environmentSection);
+
+    var testRunSection = new LivingDocPropertySection { Name = "Test Run" };
+    testRunSection.Properties.Add(new LivingDocProperty { Name = "Run ID", Value = Environment.GetEnvironmentVariable("BUILD_BUILDNUMBER") });
+    testRunSection.Properties.Add(new LivingDocProperty { Name = "Run Name", Value = Environment.GetEnvironmentVariable("BUILD_DEFINITIONNAME") });
+    testRunSection.Properties.Add(new LivingDocProperty { Name = "Triggered By", Value = Environment.GetEnvironmentVariable("BUILD_REASON") });
+    testRunSection.Properties.Add(new LivingDocProperty { Name = "Git Commit", Value = Environment.GetEnvironmentVariable("BUILD_SOURCEVERSION") });
+    properties.Sections.Add(testRunSection);
+
+    var propertiesJson = System.Text.Json.JsonSerializer.Serialize(properties, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+    File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "Properties.json"), propertiesJson);
+}
+```
+
+<br />
+<p align="center">
+<img src="ProjectProperties.png"
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+</p>
 
 ## History Insights
 The Expressium LivingDoc report can optionally include historical test results 
@@ -144,59 +196,6 @@ public void AfterScenario()
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 
-## Project Properties
-The Expressium LivingDoc report can be enriched with project properties defined in an external JSON file
-generated during test execution and will be shown as a separate view of the report.
-Properties are organized in named sections, and each section is rendered as its own table.
-
-***ReqnRoll.json***
-```json
-{
-  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
-  "formatters": {
-    "expressium": {
-      "outputFilePath": "LivingDoc.ndjson",
-      "outputFileTitle": "Expressium.Coffeeshop.Web.API.Tests",
-      "propertiesFilePath": "Properties.json"
-    }
-  }
-}
-```
-
-<br />
-
-***BaseHook.cs***
-```c#
-[BeforeTestRun]
-public static void BeforeTestRun()
-{
-    var properties = new LivingDocProperties();
-
-    var environmentSection = new LivingDocPropertySection { Name = "Environment" };
-    environmentSection.Properties.Add(new LivingDocProperty { Name = "Environment", Value = Environment.GetEnvironmentVariable("BUILD_ENVIRONMENT") });
-    environmentSection.Properties.Add(new LivingDocProperty { Name = "Application Version", Value = Environment.GetEnvironmentVariable("APPLICATION_VERSION") });
-    environmentSection.Properties.Add(new LivingDocProperty { Name = "Build ID", Value = Environment.GetEnvironmentVariable("BUILD_BUILDID") });
-    environmentSection.Properties.Add(new LivingDocProperty { Name = "Operating System", Value = Environment.GetEnvironmentVariable("AGENT_OS") });
-    properties.Sections.Add(environmentSection);
-
-    var testRunSection = new LivingDocPropertySection { Name = "Test Run" };
-    testRunSection.Properties.Add(new LivingDocProperty { Name = "Run ID", Value = Environment.GetEnvironmentVariable("BUILD_BUILDNUMBER") });
-    testRunSection.Properties.Add(new LivingDocProperty { Name = "Run Name", Value = Environment.GetEnvironmentVariable("BUILD_DEFINITIONNAME") });
-    testRunSection.Properties.Add(new LivingDocProperty { Name = "Triggered By", Value = Environment.GetEnvironmentVariable("BUILD_REASON") });
-    testRunSection.Properties.Add(new LivingDocProperty { Name = "Git Commit", Value = Environment.GetEnvironmentVariable("BUILD_SOURCEVERSION") });
-    properties.Sections.Add(testRunSection);
-
-    var propertiesJson = System.Text.Json.JsonSerializer.Serialize(properties, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-    File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "Properties.json"), propertiesJson);
-}
-```
-
-<br />
-<p align="center">
-<img src="ProjectProperties.png"
-     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
-</p>
-
 ## Command Line Interface
 For many different purposes, it may be desirable to customize the final Expressium LivingDoc test report.
 You can achieve this by creating a separate custom CLI project, adding a project reference to the ReqnRoll test project
@@ -272,29 +271,6 @@ start chrome "file:///C://Company/LivingDoc.html?filterByKeywords=TA-3001"
 <img src="DeepLink.png"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
-
-## Analytics Metrics
-Test automation analytics is the practice of collecting, aggregating, and interpreting data from automated test executions to make decisions about software quality, release readiness, and engineering efficiency.
-The Expressium LivingDoc report provides an overview of test execution results, including the following metrics...
-
-<p align="center">
-<img src="MetricsOverview.png"
-     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
-</p>
-
-<p align="center">
-<img src="MetricsFeatures.png"
-     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
-</p>
-
-- **Passed Percentage** = Percentage of all scenarios that passed.
-- **Failed Percentage** = Percentage of all scenarios that failed.
-- **Incomplete Percentage** = Percentage of all scenarios that were incomplete.
-- **Skipped Percentage** = Percentage of all scenarios that were skipped.
-- **Duration** = Total test execution time from first test start to last test finish.
-- **Pass Rate** = Percentage of executed scenarios with a passed result.
-- **Flaky Rate** = Percentage of all scenarios classified as flaky.
-- **Coverage** = Percentage of all executed scenarios with a passed or failed result.
 
 ## The LivingDoc Process
 The Expressium LivingDoc process uses the Reqnroll PlugIn to capture test execution results and output them as Cucumber Messages (NDJSON).
