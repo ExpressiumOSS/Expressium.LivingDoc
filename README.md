@@ -1,17 +1,6 @@
 # Expressium LivingDoc
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Getting Started](#getting-started)
-- [Project Properties](#project-properties)
-- [History Insights](#history-insights)
-- [Scenario Attachments](#scenario-attachments)
-- [Command Line Interface](#command-line-interface)
-- [Merging Reports](#merging-reports)
-- [Deep Linking](#deep-linking)
-- [The LivingDoc Process](#the-livingdoc-process)
-
-## Introduction
+## Overview
 > Expressium LivingDoc — Reporting, Analytics and Living Documentation for ReqnRoll
 
 Expressium LivingDoc is an open-source tool that combines reporting, analytics, and living documentation
@@ -23,7 +12,7 @@ providing clear visibility into the current state of product quality.
 <br />
 <p align="center">
 <img src="LivingDoc.png"
-     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%; border: 1px solid #ccc;" />
 </p>
 
 **Example:** [https://expressium.dev/livingdoc/LivingDoc.html](https://expressium.dev/livingdoc/LivingDoc.html)
@@ -83,19 +72,12 @@ public static void BeforeTestRun()
 {
     var properties = new LivingDocProperties();
 
-    var environmentSection = new LivingDocPropertySection { Name = "Environment" };
-    environmentSection.Properties.Add(new LivingDocProperty { Name = "Environment", Value = Environment.GetEnvironmentVariable("BUILD_ENVIRONMENT") });
-    environmentSection.Properties.Add(new LivingDocProperty { Name = "Application Version", Value = Environment.GetEnvironmentVariable("APPLICATION_VERSION") });
-    environmentSection.Properties.Add(new LivingDocProperty { Name = "Build ID", Value = Environment.GetEnvironmentVariable("BUILD_BUILDID") });
-    environmentSection.Properties.Add(new LivingDocProperty { Name = "Operating System", Value = Environment.GetEnvironmentVariable("AGENT_OS") });
-    properties.Sections.Add(environmentSection);
-
-    var testRunSection = new LivingDocPropertySection { Name = "Test Run" };
-    testRunSection.Properties.Add(new LivingDocProperty { Name = "Run ID", Value = Environment.GetEnvironmentVariable("BUILD_BUILDNUMBER") });
-    testRunSection.Properties.Add(new LivingDocProperty { Name = "Run Name", Value = Environment.GetEnvironmentVariable("BUILD_DEFINITIONNAME") });
-    testRunSection.Properties.Add(new LivingDocProperty { Name = "Triggered By", Value = Environment.GetEnvironmentVariable("BUILD_REASON") });
-    testRunSection.Properties.Add(new LivingDocProperty { Name = "Git Commit", Value = Environment.GetEnvironmentVariable("BUILD_SOURCEVERSION") });
-    properties.Sections.Add(testRunSection);
+    var section = new LivingDocPropertySection { Name = "Environment" };
+    section.Properties.Add(new LivingDocProperty { Name = "Environment", Value = Environment.GetEnvironmentVariable("BUILD_ENVIRONMENT") });
+    section.Properties.Add(new LivingDocProperty { Name = "Application Version", Value = Environment.GetEnvironmentVariable("APPLICATION_VERSION") });
+    section.Properties.Add(new LivingDocProperty { Name = "Build ID", Value = Environment.GetEnvironmentVariable("BUILD_BUILDID") });
+    section.Properties.Add(new LivingDocProperty { Name = "Operating System", Value = Environment.GetEnvironmentVariable("AGENT_OS") });
+    properties.Sections.Add(section);
 
     var propertiesJson = System.Text.Json.JsonSerializer.Serialize(properties, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
     File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "Properties.json"), propertiesJson);
@@ -103,6 +85,7 @@ public static void BeforeTestRun()
 ```
 
 <br />
+
 <p align="center">
 <img src="ProjectProperties.png"
      style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
@@ -269,7 +252,7 @@ start chrome "file:///C://Company/LivingDoc.html?filterByKeywords=TA-3001"
 <br />
 <p align="center">
 <img src="DeepLink.png"
-     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%; border: 1px solid #ccc;" />
 </p>
 
 ## The LivingDoc Process
