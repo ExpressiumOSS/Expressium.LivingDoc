@@ -5,6 +5,7 @@
         --bs-gray-010: #fefefe;
         --bs-gray-050: #fafbfc;
         --bs-gray-100: #f8f9fa;
+        --bs-gray-150: #eceff2;
         --bs-gray-200: #e9ecef;
         --bs-gray-300: #dee2e6;
         --bs-gray-400: #ced4da;
@@ -40,7 +41,7 @@
         --color-text-grid-header: var(--bs-gray-800);
         --color-bg-grid-header: var(--bs-gray-100);
         --color-border-grid-header: var(--bs-white);
-        --color-border-grid: var(--bs-gray-200);
+        --color-border-grid: var(--bs-gray-150);
         --color-bg-grid-hover: #F5F8FC;
         --color-bg-grid-selected: #F2F6FA;
 
@@ -57,7 +58,7 @@
         /* Special Texts */
         --color-text-keyword: #25576b;
         --color-text-link: #295f75;
-        --color-text-link: #285D73; /* Darker keyword color for links */    
+        --color-text-link: #355B6A; /* Darker keyword color for links */    
 
         /* Tags */
         --color-text-tag: #338689;

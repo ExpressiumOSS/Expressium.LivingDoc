@@ -1,6 +1,6 @@
 echo off
 
-cd .\Expressium.LivingDoc.UnitTests\bin\Debug\net10.0
+cd .\Expressium.LivingDoc.UnitTests\bin\Debug\net8.0
 
 del .\CCK\Samples\Pending\Pending.html
 Expressium.LivingDoc.Cli.exe --generate --input .\CCK\Samples\pending\pending.ndjson --output .\CCK\Samples\Pending\Pending.html --title "Compatibility Kit Pending"

@@ -85,8 +85,8 @@ namespace Expressium.LivingDoc.Properties {
         ///
         ///            clearActiveListItems();
         ///            x.classList.add(&apos;active&apos;);
-        ///        }
-        ///    &lt;/s [rest of string was truncated]&quot;;.
+        ///
+        ///            docu [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Scripts {
             get {
@@ -121,20 +121,20 @@ namespace Expressium.LivingDoc.Properties {
         ///    :root {
         ///        
         ///        /* Bootstrap Grayscale */
-        ///        --bs-gray-075: #fafbfc;
+        ///        --bs-gray-010: #fefefe;
+        ///        --bs-gray-050: #fafbfc;
         ///        --bs-gray-100: #f8f9fa;
-        ///        --bs-gray-125: #f2f4f6;
-        ///        --bs-gray-150: #f1f3f5;
+        ///        --bs-gray-150: #eceff2;
         ///        --bs-gray-200: #e9ecef;
         ///        --bs-gray-300: #dee2e6;
         ///        --bs-gray-400: #ced4da;
-        ///        --bs-gray-450: #bec5cc;
         ///        --bs-gray-500: #adb5bd;
-        ///        --bs-gray-600: #6c757d;
-        ///        --bs-gray-650: #5b636a;
+        ///        --bs-gray-550: #969696;
+        ///        --bs-gray-600: #6c757d; 
+        ///        --bs-gray-650: #5b626a;
         ///        --bs-gray-700: #495057;
         ///        --bs-gray-800: #343a40;
-        ///        --bs-gra [rest of string was truncated]&quot;;.
+        ///        --bs-gr [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Styles {
             get {

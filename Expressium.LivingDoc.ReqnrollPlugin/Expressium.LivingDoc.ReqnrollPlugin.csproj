@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net10.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<PackageId>Expressium.LivingDoc.ReqnrollPlugin</PackageId>
 		<Title>Expressium LivingDoc Test Report PlugIn for ReqnRoll Projects</Title>
 		<Product>LivingDocPlugIn</Product>

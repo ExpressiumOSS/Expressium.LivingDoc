@@ -1,6 +1,6 @@
 echo off
 
-cd .\Expressium.LivingDoc.UnitTests\bin\Debug\net10.0
+cd .\Expressium.LivingDoc.UnitTests\bin\Debug\net8.0
 
 del .\CCK\Samples\All-Statuses\AllStatuses.html
 Expressium.LivingDoc.Cli.exe --generate --input .\CCK\Samples\all-statuses\all-statuses.ndjson --output .\CCK\Samples\All-Statuses\AllStatuses.html --title "Compatibility Kit All Statuses"
