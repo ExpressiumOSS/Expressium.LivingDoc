@@ -74,6 +74,9 @@
 	  <None Update="Samples\native.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Samples\native-history.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Samples\parallelTestRunsOne.ndjson">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

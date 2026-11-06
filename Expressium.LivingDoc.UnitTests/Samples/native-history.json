@@ -1,0 +1,90 @@
+{
+  "Title": "Expressium.Coffeeshop.Web.API.Tests",
+  "Date": "2025-09-04T12:42:28+02:00",
+  "Duration": "00:00:12.1110000",
+  "Features": [
+    {
+      "Id": "8b0f6c1e-3a7d-4d6e-9b55-3001a0c0f001",
+      "Tags": [
+        "@TA-3000",
+        "@BusinessTests"
+      ],
+      "Description": "\tAs a User\r\n\tI want to send a Contact Us inquiry\r\n\tSo that I can receive detailed product information",
+      "Name": "Contact Us",
+      "Uri": "BusinessTests/Features",
+      "Scenarios": [
+        {
+          "Id": "8b0f6c1e-3a7d-4d6e-9b55-3001a0c0f002",
+          "Tags": [
+            "@TA-3001"
+          ],
+          "Name": "Successful Submitting a Contact Us Inquiry",
+          "Health": "Fixed",
+          "Examples": [
+            {
+              "Duration": "00:00:12.1110000",
+              "Steps": [
+                {
+                  "Keyword": "Given",
+                  "Name": "I have logged in with valid user credentials",
+                  "Status": "Passed",
+                  "Duration": "00:00:00"
+                },
+                {
+                  "Keyword": "When",
+                  "Name": "I complete and submit the Contact Us formular",
+                  "Status": "Passed",
+                  "Duration": "00:00:00"
+                },
+                {
+                  "Keyword": "Then",
+                  "Name": "I should receive an inquiry confirmation message",
+                  "Status": "Passed",
+                  "Duration": "00:00:00"
+                }
+              ],
+              "History": [
+                {
+                  "Date": "2025-09-01T06:30:00+02:00",
+                  "Status": "Skipped"
+                },
+                {
+                  "Date": "2025-09-02T15:50:00+02:00",
+                  "Status": "Incomplete"
+                },
+                {
+                  "Date": "2025-09-03T19:36:40+02:00",
+                  "Status": "Failed"
+                },
+                {
+                  "Date": "2025-09-04T12:42:28+02:00",
+                  "Status": "Passed"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "History": {
+    "Features": [
+      { "Date": "2025-09-01T06:30:00+02:00", "Passed": 0, "Incomplete": 0, "Failed": 0, "Skipped": 1 },
+      { "Date": "2025-09-02T15:50:00+02:00", "Passed": 0, "Incomplete": 1, "Failed": 0, "Skipped": 0 },
+      { "Date": "2025-09-03T19:36:40+02:00", "Passed": 0, "Incomplete": 0, "Failed": 1, "Skipped": 0 },
+      { "Date": "2025-09-04T12:42:28+02:00", "Passed": 1, "Incomplete": 0, "Failed": 0, "Skipped": 0 }
+    ],
+    "Scenarios": [
+      { "Date": "2025-09-01T06:30:00+02:00", "Passed": 2, "Incomplete": 1, "Failed": 2, "Skipped": 0 },
+      { "Date": "2025-09-02T15:50:00+02:00", "Passed": 4, "Incomplete": 2, "Failed": 1, "Skipped": 0 },
+      { "Date": "2025-09-03T19:36:40+02:00", "Passed": 3, "Incomplete": 2, "Failed": 2, "Skipped": 0 },
+      { "Date": "2025-09-04T12:42:28+02:00", "Passed": 6, "Incomplete": 1, "Failed": 3, "Skipped": 0 }
+    ],
+    "Steps": [
+      { "Date": "2025-09-01T06:30:00+02:00", "Passed": 0, "Incomplete": 0, "Failed": 0, "Skipped": 3 },
+      { "Date": "2025-09-02T15:50:00+02:00", "Passed": 2, "Incomplete": 1, "Failed": 0, "Skipped": 0 },
+      { "Date": "2025-09-03T19:36:40+02:00", "Passed": 2, "Incomplete": 0, "Failed": 1, "Skipped": 0 },
+      { "Date": "2025-09-04T12:42:28+02:00", "Passed": 3, "Incomplete": 0, "Failed": 0, "Skipped": 0 }
+    ]
+  }
+}

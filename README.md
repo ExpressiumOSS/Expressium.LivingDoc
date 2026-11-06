@@ -12,7 +12,7 @@ providing clear visibility into the current state of product quality.
 <br />
 <p align="center">
 <img src="LivingDoc.png"
-     style="display: block; margin-left: auto; margin-right: auto; width: 80%; border: 1px solid #ccc;" />
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 
 **Example:** [https://expressium.dev/livingdoc/LivingDoc.html](https://expressium.dev/livingdoc/LivingDoc.html)
@@ -252,7 +252,7 @@ start chrome "file:///C://Company/LivingDoc.html?filterByKeywords=TA-3001"
 <br />
 <p align="center">
 <img src="DeepLink.png"
-     style="display: block; margin-left: auto; margin-right: auto; width: 80%; border: 1px solid #ccc;" />
+     style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
 </p>
 
 ## The LivingDoc Process
