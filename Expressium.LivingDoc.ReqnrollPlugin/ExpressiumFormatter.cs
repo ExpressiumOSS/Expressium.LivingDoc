@@ -37,11 +37,13 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
         {
             base.Dispose();
 
+            var outputHtmlFilePath = Path.ChangeExtension(OutputFilePath, ".html");
+
+            var livingDocConverter = new LivingDocConverter();
+            var livingDocProject = livingDocConverter.Convert(OutputFilePath, OutputFileTitle, PropertiesFilePath);
+
             if (!string.IsNullOrWhiteSpace(HistoryPath))
             {
-                var livingDocConverter = new LivingDocConverter();
-                var livingDocProject = livingDocConverter.Convert(OutputFilePath, OutputFileTitle, PropertiesFilePath);
-
                 var historyDirectory = Path.GetDirectoryName(Path.GetFullPath(HistoryPath));
                 if (!Directory.Exists(historyDirectory))
                     Directory.CreateDirectory(historyDirectory);
@@ -50,18 +52,9 @@ namespace Expressium.LivingDoc.ReqnrollPlugin
                 File.Copy(OutputFilePath, historyFileName, true);
 
                 livingDocConverter.MergeHistory(livingDocProject, HistoryPath);
-
-                var outputHtmlFilePath = OutputFilePath.Replace(Path.GetExtension(OutputFilePath), ".html");
-                livingDocConverter.Generate(livingDocProject, outputHtmlFilePath);
             }
-            else
-            {
-                var outputHtmlFilePath = OutputFilePath.Replace(Path.GetExtension(OutputFilePath), ".html");
 
-                var livingDocConverter = new LivingDocConverter();
-                var livingDocProject = livingDocConverter.Convert(OutputFilePath, OutputFileTitle);
-                livingDocConverter.Generate(livingDocProject, outputHtmlFilePath);
-            }
+            livingDocConverter.Generate(livingDocProject, outputHtmlFilePath);
         }
     }
 }

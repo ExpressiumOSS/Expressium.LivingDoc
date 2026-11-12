@@ -296,7 +296,7 @@
 
     table.tree-view td.grid-border {
         padding-left: 4px;
-        padding-right 4px;
+        padding-right: 2px;
     }
 
     /* Buttons */
